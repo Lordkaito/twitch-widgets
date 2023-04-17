@@ -1,183 +1,63 @@
-let eventsLimit = 5,
-    userLocale = "en-US",
-    includeFollowers = true,
-    includeRedemptions = true,
-    includeHosts = true,
-    minHost = 0,
-    includeRaids = true,
-    minRaid = 0,
-    includeSubs = true,
-    includeGifters = true,
-    includeTips = true,
-    minTip = 0,
-    includeCheers = true,
-    direction = "top",
-    minCheer = 0,
-    giftCount = 0;
+let mainObj = {};
+const setGoalType = (type) => {
+  switch (type) {
+    case "sub":
+      let subGoal = new Goal("sub");
+      return subGoal.init();
+    case "follower":
+      let followGoal = new Goal("follow");
+      return followGoal.init();
+    case "cheer":
+      let cheerGoal = new Goal("cheer");
+      return cheerGoal.init();
+    case "tip":
+      let tipGoal = new Goal("tip");
+      return tipGoal.init();
+  }
+};
 
-let userCurrency,
-    totalEvents = 0;
-
-window.addEventListener('onEventReceived', function (obj) {
-    if (typeof obj.detail.event.itemId !== "undefined") {
-        obj.detail.listener = "redemption-latest"
-    }
-    
-    if (obj.detail.listener.indexOf("-latest")<0) return;
-    const listener = obj.detail.listener.split("-")[0];
-    const event = obj.detail.event;
-
-    if (listener === 'follower') {
-        if (includeFollowers) {
-            addEvent('follower', 'Follower', event.name);
-        }
-    } else if (listener === 'redemption') {
-        if (includeRedemptions) {
-            addEvent('redemption', 'Redeemed', event.name);
-        }
-    } else if (listener === 'subscriber') {
-        if (includeSubs) {
-            if (event.amount === 'gift') {
-                addEvent('sub', `Sub gift`, event.name);
-            } else {
-                addEvent('sub', `Sub X${event.amount}`, event.name);
-            }
-            if (event.gifted && includeGifters) {
-                if (giftCount === 0) {
-                    addEvent('sub', `Gift X${event.count}`, event.sender);
-                    giftCount = event.count;
-                }
-                giftCount--;
-            }
-
-        }
-    } else if (listener === 'host') {
-        if (includeHosts && minHost <= event.amount) {
-            addEvent('host', `Host ${event.amount.toLocaleString()}`, event.name);
-        }
-    } else if (listener === 'cheer') {
-        if (includeCheers && minCheer <= event.amount) {
-            addEvent('cheer', `${event.amount.toLocaleString()} Bits`, event.name);
-        }
-    } else if (listener === 'tip') {
-        if (includeTips && minTip <= event.amount) {
-            addEvent('tip', event.amount.toLocaleString(userLocale, {
-                style: 'currency',
-                minimumFractionDigits: 0,
-                currency: userCurrency.code
-            }), event.name);
-        }
-    } else if (listener === 'raid') {
-        if (includeRaids && minRaid <= event.amount) {
-            addEvent('raid', `Raid ${event.amount.toLocaleString()}`, event.name);
-        }
-    }
+window.addEventListener("onWidgetLoad", function (obj) {
+  mainObj.data = obj["detail"]["session"]["data"];
+  mainObj.recents = obj["detail"]["recents"];
+  mainObj.currency = obj["detail"]["currency"];
+  mainObj.channelName = obj["detail"]["channel"]["username"];
+  mainObj.apiToken = obj["detail"]["channel"]["apiToken"];
+  mainObj.fieldData = obj["detail"]["fieldData"];
+  console.log(mainObj);
+  const goalType = mainObj.fieldData.goalType;
+  setGoalType(goalType);
 });
+class Goal {
+  constructor(type) {
+    this.type = type;
+  }
 
-window.addEventListener('onWidgetLoad', function (obj) {
-    let recents = obj.detail.recents;
+  init() {
+    return this.type;
+  }
 
-    recents.sort(function (a, b) {
-        return Date.parse(a.createdAt) - Date.parse(b.createdAt);
-    });
+  get objective() {
+    // let objective = mainObj.fieldData.objective;
+    let objective = 20;
+    // mainObj.data.type-goal = objective ---- this will set the goal in SE the same as the goal in fieldData, to make it easier to change the goal, instead of going to SE main page you can do this from the overlay
+    // maybe we want to allow people to change goal from SE main page, cause not sure if everyone will want to go into the widget to be able to edit this goal
+    return objective;
+  }
 
-    userCurrency = obj.detail.currency;
-    const fieldData = obj.detail.fieldData;
-    eventsLimit = fieldData.eventsLimit;
-    includeFollowers = (fieldData.includeFollowers === "yes");
-    includeRedemptions = (fieldData.includeRedemptions === "yes");
-    includeHosts = (fieldData.includeHosts === "yes");
-    minHost = fieldData.minHost;
-    includeRaids = (fieldData.includeRaids === "yes");
-    minRaid = fieldData.minRaid;
-    includeSubs = (fieldData.includeSubs === "yes");
-    includeGifters = (fieldData.includeGifters === "yes");
-    includeTips = (fieldData.includeTips === "yes");
-    minTip = fieldData.minTip;
-    includeCheers = (fieldData.includeCheers === "yes");
-    minCheer = fieldData.minCheer;
-    direction = fieldData.direction;
-
-    let eventIndex;
-    for (eventIndex = 0; eventIndex < recents.length; eventIndex++) {
-        const event = recents[eventIndex];
-
-        if (event.type === 'follower') {
-            if (includeFollowers) {
-                addEvent('follower', 'Follower', event.name);
-            }
-        } else if (event.type === 'redemption') {
-            if (includeRedemptions) {
-                addEvent('redemption', 'Redeemed', event.name);
-            }
-        } else if (event.type === 'subscriber') {
-            if (includeSubs) {
-                if (event.amount === 'gift') {
-                    addEvent('sub', `Sub gift`, event.name);
-                } else {
-                    if (event.gifted && includeGifters && event.amount === event.count) {
-                        addEvent('sub', `Gift X${event.amount}`, event.sender);
-                    }
-                    addEvent('sub', `Sub X${event.amount}`, event.name);
-                }
-            }
-            if (event.gifted && includeGifters) {
-                if (giftCount === 0) {
-                    addEvent('sub', `Gift X${event.count}`, event.sender);
-                    giftCount = event.count;
-                }
-                giftCount--;
-            }
-        } else if (event.type === 'host') {
-            if (includeHosts && minHost <= event.amount) {
-                addEvent('host', `Host ${event.amount.toLocaleString()}`, event.name);
-            }
-        } else if (event.type === 'cheer') {
-            if (includeCheers && minCheer <= event.amount) {
-                addEvent('cheer', `${event.amount.toLocaleString()} Bits`, event.name);
-            }
-        } else if (event.type === 'tip') {
-            if (includeTips && minTip <= event.amount) {
-                addEvent('tip', event.amount.toLocaleString(userLocale, {
-                    style: 'currency',
-                    minimumFractionDigits: 0,
-                    currency: userCurrency.code
-                }), event.name);
-            }
-        } else if (event.type === 'raid') {
-            if (includeRaids && minRaid <= event.amount) {
-                addEvent('raid', `Raid ${event.amount.toLocaleString()}`, event.name);
-            }
-        }
-    }
-});
-
-
-function addEvent(type, text, username) {
-    totalEvents += 1;
-    const element =
-        `
-    <div class="event-container" id="event-${totalEvents}">
-		<div class="backgroundsvg"></div>
-        <div class="event-image event-${type}"></div>
-        <div class="username-container">${username.toUpperCase()}</div>
-       <div class="details-container">${text.toUpperCase()}</div>
-    </div>`;
-    if (direction === "bottom") {
-        $('.main-container').append(element);
-    } else {
-        $('.main-container').prepend(element);
-    }
-    if (totalEvents > eventsLimit) {
-        removeEvent(totalEvents - eventsLimit);
-    }
+  get current() {
+    // if type is cheer or tip, we will use cheer.count, cause this resets on every session (you dont want a cheer/tip goal to count from your starting streaming career)
+    // otherwise we will follower/sub-total, which is the total amount of followers/subs you have ever had, great for this kind of goals
+    let current = 0;
+    return current;
+  }
 }
 
-function removeEvent(eventId) {
-    $(`#event-${eventId}`).animate({
-        height: 0,
-        opacity: 0
-    }, 'slow', function () {
-        $(`#event-${eventId}`).remove();
-    });
+const grow = () => {
+  let progressBar = document.querySelector(".progress-bar");
+  let currentWidth = progressBar.offsetWidth;
+  console.log(currentWidth)
+  progressBar.style.width = `${currentWidth + 10}px`;
 }
+
+const click = document.querySelector(".click");
+click.addEventListener("click", grow);
