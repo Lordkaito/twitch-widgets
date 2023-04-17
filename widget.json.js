@@ -5,23 +5,10 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  goalType: {
-    type: "dropdown",
-    label: "Goal type:",
-    value: "sub",
-    group: "Customization",
-    options: {
-      sub: "Sub",
-      follower: "Follow",
-      cheer: "Cheer",
-      tip: "Tip",
-    },
-  },
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value:
-      "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
+    value: "(user) just suscribed!",
     group: "Events",
   },
   followText: {
@@ -101,8 +88,8 @@ let fieldData = {
     value: "pink",
     group: "Customization",
     options: {
-      pink: "Pink",
-      purple: "Purple",
+      pink: "Light",
+      purple: "Dark",
     },
   },
 };
