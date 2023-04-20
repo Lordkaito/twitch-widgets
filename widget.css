@@ -47,13 +47,13 @@ main {
   animation-fill-mode: forwards;
 }
 
-#lines {
+/* #lines {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-}
+} */
 
 #small-line {
   width: 2px;
@@ -77,16 +77,18 @@ main {
 
 .main-container {
   max-width: 37.5rem;
-  background-color: #fbebef;
-  margin-bottom: 1.875rem;
+  background-color: #ffc976;
+  /* margin-bottom: 1.875rem; */
   border-radius: 3.125rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 40px;
   left: 1.875rem;
   width: 100%;
-  border: 4px solid #fff;
+  border: 5px solid red;
+  background-image: url("https://i.postimg.cc/y8p2nGsy/onda-chat-patata.png");
+  background-repeat: repeat;
 }
 
 .identifier-container {
@@ -129,7 +131,6 @@ main {
 }
 
 .username-info {
-  background-color: white;
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
@@ -139,6 +140,18 @@ main {
   justify-content: center;
   gap: 5px;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  position: relative;
+}
+
+.patatas {
+  position: absolute;
+  right: -0.4rem;
+  bottom: -0.8rem;
+}
+
+.patatas img {
+  width: 30px;
+  height: 30px;
 }
 
 .username-badges {
@@ -187,7 +200,6 @@ main {
   word-wrap: break-word;
   display: inline-block;
   width: 31.25rem;
-  /* color: #ff9eb9; */
   white-space: normal;
   margin-right: 0.625rem;
   padding-top: 1.25rem;
@@ -226,7 +238,7 @@ main {
 .prons {
   max-width: 100%;
   text-align: center;
-  background: white;
+  background: red;
   border-radius: 1.25rem;
   padding: 5px;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
@@ -332,14 +344,18 @@ main {
 .event-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   max-width: 37rem;
-  padding: 1rem 1rem 0.6rem 1rem;
   animation-fill-mode: forwards;
   animation-duration: 0.8s;
   left: 1.875rem;
   text-align: right;
+  border-radius: 30px;
+  margin-top: 25px;
+  animation-name: slideMessage;
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
 }
 
 .sand-container {
@@ -365,12 +381,41 @@ main {
   width: 100%;
   height: 100%;
   top: 0;
-  text-align: right;
+  /* text-align: right; */
   z-index: 1;
   color: white;
   letter-spacing: normal;
   font-size: 1.375rem;
   animation: showNames 0.5s ease-in-out forwards;
+  text-transform: lowercase;
+}
+
+.follow-container,
+.sub-container,
+.tip-container,
+.cheer-container,
+.raid-container,
+.bulk-container {
+  padding-right: 20px;
+  text-align: center;
+  border-radius: 30px;
+  background-color: rgb(157, 186, 115);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.event-image {
+  background-color: red;
+  border-radius: 30px 0 0 30px;
+}
+
+.event-image img {
+  width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  transform: translateY(5px);
 }
 
 @keyframes showNames {
