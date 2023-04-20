@@ -186,6 +186,12 @@ class Message {
   async createMainContainerElement() {
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
+    const animation = fieldData.animation;
+    if(animation === "false") {
+      superMainContainer.style.animationName = "";
+    } else {
+      superMainContainer.style.animationName = "twinkle";
+    }
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");

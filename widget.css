@@ -43,13 +43,13 @@ main {
   display: flex;
   align-items: center;
   /* animation-name: twinkle; */
-  /* animation-duration: 0.5s;
-  animation-fill-mode: forwards; */
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
-/* @keyframes twinkle {
+@keyframes twinkle {
   0% {
     opacity: 1;
   }
@@ -69,7 +69,7 @@ main {
   100% {
     opacity: 1;
   }
-} */
+}
 
 #lines {
   display: flex;
@@ -136,7 +136,7 @@ main {
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 40px;
   left: 1.875rem;
   width: 100%;
   border-radius: 10px;
@@ -417,7 +417,7 @@ main {
   transform: scaleX(-1);
 }
 
-/* @keyframes twinkleOut {
+@keyframes twinkleOut {
   0% {
     opacity: 1;
   }
@@ -437,7 +437,7 @@ main {
   100% {
     opacity: 0;
   }
-} */
+}
 
 @keyframes removeMessage {
   0% {

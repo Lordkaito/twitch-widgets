@@ -53,6 +53,16 @@ let fieldData = {
     group: "Customization",
     value: "1080",
   },
+  animation: {
+    type: "dropdown",
+    label: "Turn on animation:",
+    value: "false",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
