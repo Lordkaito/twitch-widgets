@@ -14,19 +14,19 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
     label: "Custom text for Cheers (max 40)",
-    value: "cheered x(amount)!",
+    value: "(user) cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "(user) tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
@@ -38,7 +38,7 @@ let fieldData = {
   bulkGiftText: {
     type: "text",
     label: "Custom text for many gifts at once (max 40)",
-    value: "(sender) (amount) sub(s)!",
+    value: "(sender) gifted (amount) sub(s)!",
     group: "Events",
   },
   raidText: {
@@ -52,15 +52,6 @@ let fieldData = {
     type: "text",
     group: "Customization",
     value: "1080",
-  },
-  deleteMessages: {
-    label: "Time to delete messages (max 60):",
-    type: "number",
-    group: "Customization",
-    value: 10,
-    min: 1,
-    max: 60,
-    step: 1,
   },
   displayBadges: {
     type: "dropdown",
