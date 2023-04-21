@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitoasdf_",
+        displayName: "Lordkaito_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -405,7 +405,7 @@ let events = {
           },
         ],
         channel: "lordkaito_",
-        text: "Test message aksjd hfakjsd fakjsd fkajsd fkjadshf aksdhfjkads fkasdfasdfasdfasdf",
+        text: "Hola que tal texto de mensaje",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
