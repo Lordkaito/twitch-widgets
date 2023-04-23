@@ -1,5 +1,5 @@
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Comfortaa', cursive;
   font-size: 0.875rem;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -58,7 +58,7 @@ main {
 #small-line {
   width: 2px;
   height: 0;
-  background-color: #ffeab7;
+  background-color: yellow;
   animation: growLine 0.5s 1.5s forwards;
 }
 
@@ -71,22 +71,22 @@ main {
 #big-line {
   width: 2px;
   height: 0px;
-  background-color: #ffeab7;
+  background-color: yellow;
   transition: height 1s ease-in-out;
 }
 
 .main-container {
   max-width: 37.5rem;
-  background-color: #fbebef;
+  background-color: #ffbbcd;
   margin-bottom: 1.875rem;
-  border-radius: 3.125rem;
+  border-radius: 0.7rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
+  margin-top: 50px;
   left: 1.875rem;
   width: 100%;
-  border: 4px solid #fff;
+  border: 4px solid #e8526a;
 }
 
 .identifier-container {
@@ -98,8 +98,8 @@ main {
 }
 
 .icon {
-  border-radius: 50%;
-  /* height: 50px; */
+  border-radius: 50px;
+  height: 50px;
   width: 50px;
   display: flex;
   align-items: center;
@@ -123,22 +123,99 @@ main {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -1.5625rem;
-  left: 4.5rem;
+  top: -2rem;
+  left: 0;
+  right: 0;
   gap: 10px;
 }
 
 .username-info {
-  background-color: white;
+  background-color: #ec6989;
+  opacity: 97%;
+  min-width: 200px;
+  max-width: 500px;
   width: fit-content;
-  border-radius: 1.25rem;
+  border-radius: 0.5rem;
   text-align: center;
-  padding: 0.6rem 1.7rem;
+  padding: 1rem 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  position: relative;
+  /* box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px; */
+}
+
+.strawberries {
+  width: 70px;
+}
+
+.strawberries:first-child {
+  transform: scaleX(-1);
+  position: absolute;
+  left: -3.8rem;
+}
+
+.strawberries:last-child {
+  position: absolute;
+  right: -3.8rem;
+}
+
+.flower {
+  position: absolute;
+  z-index: 1;
+  width: 20px;
+}
+
+.flower-1 {
+  left: 1.5rem;
+  bottom: 3.2rem;
+  transform: rotate(-25deg);
+}
+
+.flower-2 {
+  left: 4.5rem;
+  bottom: 1.5rem;
+  transform: rotate(25deg);
+}
+
+.flower-3 {
+  right: 20rem;
+  bottom: 1.5rem;
+  transform: rotate(25deg);
+}
+
+.flower-4 {
+  right: 16.5rem;
+  bottom: 3.2rem;
+  transform: rotate(25deg);
+}
+
+.flower-5 {
+  right: 24.5rem;
+  top: 1rem;
+}
+
+.flower-6 {
+  right: 22rem;
+  top: 3rem;
+}
+
+.flower-7 {
+  left: 9.5rem;
+  top: 1rem;
+}
+
+.flower-8 {
+  left: 6.8rem;
+  top: 3rem;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: white;
 }
 
 .username-badges {
@@ -154,7 +231,8 @@ main {
 
 .capitalize-user {
   font-weight: bold;
-  font-size: 1.35rem;
+  font-size: 1.3125rem;
+  color: #fff
 }
 
 .message-container {
@@ -174,12 +252,12 @@ main {
 }
 
 .message-icon {
-  height: 55px;
-  width: 55px;
+  height: 20px;
+  width: 20px;
 }
 
 .text {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 700;
 }
 
@@ -187,12 +265,13 @@ main {
   word-wrap: break-word;
   display: inline-block;
   width: 31.25rem;
-  /* color: #ff9eb9; */
+  color: #972537;
   white-space: normal;
   margin-right: 0.625rem;
-  padding-top: 1.25rem;
-  padding-left: 0.9rem;
-  padding-right: 1rem;
+  /* padding-top: 1.5rem; */
+  padding: 2rem 1.5rem 1rem 1.5rem;
+  /* padding-left: 1.25rem; */
+  /* padding-right: 1rem; */
 }
 
 .bar {
@@ -330,7 +409,6 @@ main {
 }
 
 .event-container {
-  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -363,7 +441,7 @@ main {
 .cheer-name,
 .raid-name,
 .bulk-name {
-  /* width: 100%; */
+  width: 100%;
   height: 100%;
   top: 0;
   text-align: right;
@@ -371,8 +449,7 @@ main {
   color: white;
   letter-spacing: normal;
   font-size: 1.375rem;
-  animation: showNames 1s ease-in-out forwards;
-  text-shadow: 0 0 0.2em #9da0f5, 0 0 0.2em #9da0f5;
+  animation: showNames 0.5s ease-in-out forwards;
 }
 
 @keyframes showNames {
@@ -401,12 +478,12 @@ main {
   width: 30px;
 }
 
-.left-paw-container svg {
-  animation: showLeftPaw 1s ease-in-out forwards;
+.left-paw-container img {
+  animation: showLeftPaw 0.5s ease-in-out forwards;
 }
 
-.right-paw-container svg {
-  animation: showRightPaw 1s ease-in-out forwards;
+.right-paw-container img {
+  animation: showRightPaw 0.5s ease-in-out forwards;
 }
 
 .purple-background {
@@ -482,7 +559,7 @@ main {
 .paws-container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 10px;
   width: 100%;
 }
