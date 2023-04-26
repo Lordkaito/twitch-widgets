@@ -35,16 +35,18 @@ main {
   max-height: 1080px;
   position: absolute;
   bottom: 0;
-  width: 100%;
+  /* width: 100%; */
   padding: 50px;
 }
 
 .super-main-container {
   display: flex;
   align-items: center;
+  justify-content: center;
   animation-name: slideMessage;
-  animation-duration: 0.8s;
+  animation-duration: 0.7s;
   animation-fill-mode: forwards;
+  margin-top: 7rem;
 }
 
 #lines {
@@ -78,12 +80,12 @@ main {
 .main-container {
   max-width: 37.5rem;
   background-color: #ffbbcd;
-  margin-bottom: 1.875rem;
+  margin-bottom: 0.2rem;
+  margin-left: 20px;
   border-radius: 0.7rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
   left: 1.875rem;
   width: 100%;
   border: 4px solid #e8526a;
@@ -168,54 +170,155 @@ main {
 }
 
 .flower-1 {
-  left: 1.5rem;
-  bottom: 3.2rem;
+  left: -1rem;
+  bottom: 2rem;
   transform: rotate(-25deg);
 }
 
 .flower-2 {
-  left: 4.5rem;
-  bottom: 1.5rem;
+  left: 3rem;
+  bottom: -1rem;
   transform: rotate(25deg);
 }
 
 .flower-3 {
-  right: 20rem;
-  bottom: 1.5rem;
+  right: -1rem;
+  bottom: 2rem;
   transform: rotate(25deg);
 }
 
 .flower-4 {
-  right: 16.5rem;
-  bottom: 3.2rem;
+  right: 3rem;
+  bottom: -1rem;
   transform: rotate(25deg);
 }
 
 .flower-5 {
-  right: 24.5rem;
-  top: 1rem;
+  right: 6.5rem;
+  top: -2.7rem;
 }
 
 .flower-6 {
-  right: 22rem;
-  top: 3rem;
+  right: 3.7rem;
+  top: -1rem;
 }
 
 .flower-7 {
-  left: 9.5rem;
-  top: 1rem;
+  left: 6.5rem;
+  top: -2.7rem;
 }
 
 .flower-8 {
-  left: 6.8rem;
-  top: 3rem;
+  left: 3.7rem;
+  top: -1rem;
 }
 
-.dot {
-  height: 10px;
-  width: 10px;
+.dot-1,
+.dot-2,
+.dot-3 {
+  height: 8px;
+  width: 8px;
   border-radius: 50%;
   background-color: white;
+  opacity: 0;
+}
+
+.event-dot-1,
+.event-dot-2,
+.event-dot-3 {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0;
+}
+
+.heart-1,
+.heart-2,
+.heart-3 {
+  opacity: 0;
+}
+
+.event-heart-1,
+.event-heart-2,
+.event-heart-3 {
+  opacity: 0;
+}
+
+/* .dot-3 {
+  display: none;
+} */
+
+.heart-1 {
+  animation: showHearts 0.6s 0.2s ease-in forwards;
+}
+
+.dot-1 {
+  animation: showHearts 0.6s 0.3s ease-in forwards;
+}
+
+.heart-2 {
+  animation: showHearts 0.6s 0.4s ease-in forwards;
+}
+
+.dot-2 {
+  animation: showHearts 0.6s 0.5s ease-in forwards;
+}
+
+.heart-3 {
+  animation: showHearts 0.6s 0.6s ease-in forwards;
+}
+
+.dot-3 {
+  animation: showHearts 0.6s 0.7s ease-in forwards;
+}
+
+.event-heart-1 {
+  animation: showHearts 0.6s 0.2s ease-in forwards;
+}
+
+.event-dot-1 {
+  animation: showHearts 0.6s 0.3s ease-in forwards;
+}
+
+.event-heart-2 {
+  animation: showHearts 0.6s 0.4s ease-in forwards;
+}
+
+.event-dot-2 {
+  animation: showHearts 0.6s 0.5s ease-in forwards;
+}
+
+.event-heart-3 {
+  animation: showHearts 0.6s 0.6s ease-in forwards;
+}
+
+.event-dot-3 {
+  animation: showHearts 0.6s 0.7s ease-in forwards;
+}
+
+.hearts-container {
+  width: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  position: absolute;
+  top: -8rem;
+  left: -3.6rem;
+}
+
+.event-hearts-container {
+  width: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  position: absolute;
+  top: -1rem;
+  left: -1.9rem;
 }
 
 .username-badges {
@@ -344,6 +447,23 @@ main {
 @keyframes slideMessage {
   0% {
     transform: scale(0);
+    /* transform-origin: center; */
+  }
+
+  50% {
+    transform: scale(110%);
+    /* transform-origin: center; */
+  }
+
+  100% {
+    transform: scale(100%);
+    /* transform-origin: center; */
+  }
+}
+
+@keyframes slideMessageEvent {
+  0% {
+    transform: scale(0);
     transform-origin: bottom left;
   }
 
@@ -394,31 +514,34 @@ main {
 @keyframes removeMessage {
   0% {
     transform: scale(100%);
-    transform-origin: bottom left;
+    transform-origin: center center;
   }
 
   50% {
     transform: scale(110%);
-    transform-origin: bottom left;
+    transform-origin: center center;
   }
 
   100% {
     transform: scale(0%);
-    transform-origin: bottom left;
+    transform-origin: center center;
   }
 }
 
 .event-container {
+  position: relative;
+  left: 1.875rem;
+  top: 1rem;
+  max-width: 37rem;
+  height: 100%;
+  padding: 1rem 1rem 0.6rem 1rem;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  max-width: 37rem;
-  padding: 1rem 1rem 0.6rem 1rem;
   animation-fill-mode: forwards;
   animation-duration: 0.8s;
-  left: 1.875rem;
-  text-align: right;
+  animation-name: slideMessageEvent;
 }
 
 .sand-container {
@@ -441,15 +564,45 @@ main {
 .cheer-name,
 .raid-name,
 .bulk-name {
-  width: 100%;
+  /* width: 60%; */
   height: 100%;
-  top: 0;
-  text-align: right;
+  text-align: center;
   z-index: 1;
-  color: white;
+  color: #eb6385;
   letter-spacing: normal;
   font-size: 1.375rem;
   animation: showNames 0.5s ease-in-out forwards;
+  padding: 0.5rem;
+}
+
+.dots-and-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+  max-width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: .3rem;
+  padding: 0 0.4rem;
+  margin-top: 0.8rem;
+  margin-left: 2rem;
+}
+
+.dark-dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  background-color: black;
+}
+
+.dark-dot:nth-child(2) {
+  order: 2;
+  margin-right: 0.3rem;
+}
+
+.dark-dot:nth-child(1) {
+  margin-left: 0.3rem;
 }
 
 @keyframes showNames {
@@ -605,5 +758,15 @@ main {
 
   100% {
     height: 1.5rem;
+  }
+}
+
+@keyframes showHearts {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

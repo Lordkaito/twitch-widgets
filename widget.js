@@ -232,7 +232,7 @@ class Message {
     const superMainContainer = document.createElement("div");
     const flowers = this.flowers;
     flowers.forEach((flower) => {
-      superMainContainer.appendChild(flower);
+      mainContainer.appendChild(flower);
     });
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
@@ -588,8 +588,12 @@ class Follow {
     nameContainer.classList.add("follow-name");
     nameContainer.innerText = nameAndText;
 
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    dotsAndName.appendChild(nameContainer);
+
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -658,8 +662,17 @@ class BulkGift {
     nameContainer.classList.add("bulk-name");
     nameContainer.innerText = nameAndText;
 
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dark-dot");
+      dotsAndName.appendChild(dot);
+    }
+    dotsAndName.appendChild(nameContainer);
+
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -760,8 +773,17 @@ class Sub {
     nameContainer.classList.add("sub-name");
     nameContainer.innerText = nameAndText;
 
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dark-dot");
+      dotsAndName.appendChild(dot);
+    }
+    dotsAndName.appendChild(nameContainer);
+
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -813,8 +835,17 @@ class Raid {
     nameContainer.classList.add("raid-name");
     nameContainer.innerText = nameAndText;
 
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dark-dot");
+      dotsAndName.appendChild(dot);
+    }
+    dotsAndName.appendChild(nameContainer);
+
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -853,9 +884,12 @@ class Cheer {
     const mantarayaContainer = document.createElement("div");
     const sandContainer = document.createElement("div");
 
+    // this is the name of the person who sent the cheer
     const { name } = this;
+    // this is the amount of bits they sent
     const amount = this.amount;
 
+    // this is the text to show when people cheer
     let cheerText = fieldData.cheerText;
     let text = `${name} cheered x${amount}`;
     if (cheerText != "") {
@@ -865,12 +899,24 @@ class Cheer {
     }
     const nameAndText = `${text}`;
 
+    // this is the container for the text
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("cheer-name");
     nameContainer.innerText = nameAndText;
 
+    // this is the container for the dots and the text
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dark-dot");
+      dotsAndName.appendChild(dot);
+    }
+    dotsAndName.appendChild(nameContainer);
+
+    // this is the container for the entire cheer
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -930,8 +976,17 @@ class Tip {
     nameContainer.classList.add("tip-name");
     nameContainer.innerText = nameAndText;
 
+    const dotsAndName = document.createElement("div");
+    dotsAndName.classList.add("dots-and-name");
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dark-dot");
+      dotsAndName.appendChild(dot);
+    }
+    dotsAndName.appendChild(nameContainer);
+
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(nameContainer);
+    mainContainer.appendChild(dotsAndName);
 
     return mainContainer;
   }
@@ -1070,7 +1125,7 @@ const sendMessage = async () => {
 //       elem.classList.add("scale-down");
 //       setTimeout(() => {
 //         elem.remove();
-//       }, 100000000);
+//       }, 1000);
 //     }, 200);
 //   }
 // };
@@ -1082,27 +1137,24 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.6s";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1000);
   }
 };
 const removeEvent = (mainContainer, event) => {
   const elem = mainContainer;
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
-  elem.querySelector(".left-paw").style.animationName = "hideLeftPaw";
-  elem.querySelector(".right-paw").style.animationName = "hideRightPaw";
+  elem.style.animationName = "removeMessage";
   setTimeout(() => {
     elem.remove();
-  }, 100000000);
+  }, 1000);
 };
 
 let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
-let initalEvent = true;
+let initialEvent = true;
 
 window.addEventListener("onEventReceived", async (obj) => {
-  if (initalEvent) initalEvent = false;
-
   let { listener, event } = obj.detail;
   if (event.bulkGifted) listener = "bulk";
 
@@ -1124,9 +1176,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       bulk
         .init()
         .then((bulkContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            bulkContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(bulkContainer, "bulk-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(bulkContainer);
         })
         .finally(() => {
@@ -1138,11 +1195,21 @@ window.addEventListener("onEventReceived", async (obj) => {
       message
         .init()
         .then((mainContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            const hearts = heartsContainer(3, listener);
+            if (hearts.children.length === 3) {
+              mainContainer.style.marginTop = "7rem";
+              hearts.style.top = "-5.9rem";
+            }
+            let main = mainContainer.querySelector(".main-container");
+            main.appendChild(hearts);
+          }
           setTimeout(() => {
             removeMessage(mainContainer);
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(mainContainer);
-          mainCont.appendChild(heartsContainer());
         })
         .finally(() => {
           $("main").scrollTop($("main")[0].scrollHeight);
@@ -1153,9 +1220,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       follow
         .init()
         .then((followContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            followContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(followContainer, "follow-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(followContainer);
         })
         .finally(() => {
@@ -1167,9 +1239,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       sub
         .init()
         .then((subContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            subContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(subContainer, "sub-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(subContainer);
         })
         .finally(() => {
@@ -1181,9 +1258,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       raid
         .init()
         .then((raidContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            raidContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(raidContainer, "raid-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(raidContainer);
         })
         .finally(() => {
@@ -1195,9 +1277,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       cheer
         .init()
         .then((cheerContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            cheerContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(cheerContainer, "cheer-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(cheerContainer);
         })
         .finally(() => {
@@ -1209,9 +1296,14 @@ window.addEventListener("onEventReceived", async (obj) => {
       tip
         .init()
         .then((tipContainer) => {
+          if (initialEvent) {
+            initialEvent = false;
+          } else {
+            tipContainer.appendChild(heartsContainer(2, listener));
+          }
           setTimeout(() => {
             removeEvent(tipContainer, "tip-name");
-          }, fieldData.deleteMessages * 100000000);
+          }, fieldData.deleteMessages * 1000);
           mainCont.appendChild(tipContainer);
         })
         .finally(() => {
@@ -1223,22 +1315,32 @@ window.addEventListener("onEventReceived", async (obj) => {
   }
 });
 
-const heartsContainer = () => {
+let heartFirst = true;
+let lastEvent = "message";
+const heartsContainer = (amount, listener) => {
+  if (lastEvent !== "message") amount = 2;
   const hearts = document.createElement("div");
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < amount; i++) {
     const heart = document.createElement("svg");
     const dot = document.createElement("div");
-    dot.classList.add("dot");
-    heart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
+    listener === "message"
+      ? dot.classList.add(`dot-${i + 1}`)
+      : dot.classList.add(`event-dot-${i + 1}`);
+    heart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15"
     height="20" viewBox="0 0 100 100" stroke-width="100" stroke="white">
     <image id="Capa_1_copia_2" data-name="Capa 1 copia 2" y="1" width="100" height="99"
       xlink:href="data:img/png;base64,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" />
   </svg>`;
-    hearts.classList.add("hearts-container");
-    heart.classList.add(`heart-${i}`);
+    listener === "message"
+      ? hearts.classList.add("hearts-container")
+      : hearts.classList.add(`event-hearts-container`);
+    heart.classList.add(`heart-${i + 1}`);
     hearts.appendChild(heart);
     hearts.appendChild(dot);
   }
+  hearts.lastElementChild.remove();
+  heartFirst = !heartFirst;
+  lastEvent = listener;
 
   return hearts;
 };
