@@ -664,11 +664,6 @@ class BulkGift {
 
     const dotsAndName = document.createElement("div");
     dotsAndName.classList.add("dots-and-name");
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dark-dot");
-      dotsAndName.appendChild(dot);
-    }
     dotsAndName.appendChild(nameContainer);
 
     mainContainer.classList.add("event-container");
@@ -769,17 +764,13 @@ class Sub {
 
     nameAndText = `${text}`;
 
+
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("sub-name");
     nameContainer.innerText = nameAndText;
 
     const dotsAndName = document.createElement("div");
     dotsAndName.classList.add("dots-and-name");
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dark-dot");
-      dotsAndName.appendChild(dot);
-    }
     dotsAndName.appendChild(nameContainer);
 
     mainContainer.classList.add("event-container");
@@ -837,11 +828,6 @@ class Raid {
 
     const dotsAndName = document.createElement("div");
     dotsAndName.classList.add("dots-and-name");
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dark-dot");
-      dotsAndName.appendChild(dot);
-    }
     dotsAndName.appendChild(nameContainer);
 
     mainContainer.classList.add("event-container");
@@ -899,22 +885,14 @@ class Cheer {
     }
     const nameAndText = `${text}`;
 
-    // this is the container for the text
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("cheer-name");
     nameContainer.innerText = nameAndText;
 
-    // this is the container for the dots and the text
     const dotsAndName = document.createElement("div");
     dotsAndName.classList.add("dots-and-name");
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dark-dot");
-      dotsAndName.appendChild(dot);
-    }
     dotsAndName.appendChild(nameContainer);
 
-    // this is the container for the entire cheer
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(dotsAndName);
 
@@ -978,11 +956,6 @@ class Tip {
 
     const dotsAndName = document.createElement("div");
     dotsAndName.classList.add("dots-and-name");
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dark-dot");
-      dotsAndName.appendChild(dot);
-    }
     dotsAndName.appendChild(nameContainer);
 
     mainContainer.classList.add("event-container");
