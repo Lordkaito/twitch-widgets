@@ -85,31 +85,11 @@ let fieldData = {
   theme: {
     type: "dropdown",
     label: "Theme",
-    value: "pink",
+    value: "dark",
     group: "Customization",
     options: {
       pink: "Light",
       purple: "Dark",
     },
   },
-  transparency: {
-    type: "dropdown",
-    label: "Transparency",
-    value: "true",
-    group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
-  },
-  chatBoxSize: {
-    type: "dropdown",
-    label: "Chat box size",
-    value: "small",
-    group: "Customization",
-    options: {
-      small: "Small",
-      regular: "Normal"
-    }
-  }
 };

@@ -86,7 +86,7 @@ class Message {
         </path> <path class="st0" d="M493.382,203.663C446.836,123.973,367.709,0,256,0C144.291,0,65.164,123.973,18.618,203.663 c-46.546,79.701,60.509,171.8,237.382,171.8C432.873,375.464,539.927,283.364,493.382,203.663z M106.673,279.273 c-24.637,0-44.609-19.973-44.609-44.6c0-24.646,19.972-44.609,44.609-44.609c24.627,0,44.6,19.964,44.6,44.609 C151.273,259.3,131.3,279.273,106.673,279.273z M194.718,127.618c0-28.5,23.1-51.591,51.591-51.591 c28.481,0,51.582,23.091,51.582,51.591c0,28.482-23.101,51.582-51.582,51.582C217.818,179.2,194.718,156.1,194.718,127.618z M282.764,328.146c-21.209,0-38.4-17.191-38.4-38.4c0-21.209,17.191-38.4,38.4-38.4c21.209,0,38.4,17.191,38.4,38.4 C321.164,310.954,303.973,328.146,282.764,328.146z M421.009,262.7c-22.174-3.59-38.492-25.064-34.964-46.891 c3.401-20.991,23.691-32.208,44.054-26.172c18.955,5.627,32.046,24.618,30.328,43.337 C458.645,252.345,441.554,266.027,421.009,262.7z"></path> </g> </g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#ad5b61;} </style> <g> <path class="st0" d="M193.945,399.491c0,26.182,0,45.436,0,59.754c0,27.928,12.4,52.755,62.054,52.755 c49.655,0,62.054-24.827,62.054-52.755c0-14.318,0-33.572,0-59.754c-20,2.509-40.727,3.9-62.054,3.9 C234.673,403.391,213.945,402,193.945,399.491z"></path> <path class="st0" d="M493.382,203.663C446.836,123.973,367.709,0,256,0C144.291,0,65.164,123.973,18.618,203.663 c-46.546,79.701,60.509,171.8,237.382,171.8C432.873,375.464,539.927,283.364,493.382,203.663z M106.673,279.273 c-24.637,0-44.609-19.973-44.609-44.6c0-24.646,19.972-44.609,44.609-44.609c24.627,0,44.6,19.964,44.6,44.609 C151.273,259.3,131.3,279.273,106.673,279.273z M194.718,127.618c0-28.5,23.1-51.591,51.591-51.591 c28.481,0,51.582,23.091,51.582,51.591c0,28.482-23.101,51.582-51.582,51.582C217.818,179.2,194.718,156.1,194.718,127.618z M282.764,328.146c-21.209,0-38.4-17.191-38.4-38.4c0-21.209,17.191-38.4,38.4-38.4c21.209,0,38.4,17.191,38.4,38.4 C321.164,310.954,303.973,328.146,282.764,328.146z M421.009,262.7c-22.174-3.59-38.492-25.064-34.964-46.891 c3.401-20.991,23.691-32.208,44.054-26.172c18.955,5.627,32.046,24.618,30.328,43.337 C458.645,252.345,441.554,266.027,421.009,262.7z"></path> </g> </g></svg>`;
         break;
       case "sub":
-        roleImage.classList.add("role-offset")
+        roleImage.classList.add("role-offset");
         roleImage.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="67.029 -20 377.9 368.6" width="25" height="25">
         <path d="M137.542,212.252c-8.77,12.118-14.043,26.836-14.043,42.895c0,40.566,32.858,73.449,73.432,73.449 c24.335,0,45.692-11.913,59.06-30.127c13.386,18.214,34.75,30.127,59.052,30.127c40.608,0,73.441-32.883,73.441-73.449 c0-16.058-5.274-30.776-14.027-42.895c29.279-9.658,50.513-36.881,50.513-69.385c0-40.566-32.85-73.433-73.433-73.433 c-7.774,0-15.137,1.522-22.114,3.718C329.235,32.718,296.493,0,255.991,0c-40.475,0-73.259,32.718-73.416,73.153 c-6.976-2.196-14.339-3.718-22.105-3.718c-40.592,0-73.441,32.866-73.441,73.433C87.029,175.371,108.263,202.594,137.542,212.252z M255.991,141.624c21.119,0,38.239,17.104,38.239,38.214c0,21.101-17.12,38.205-38.239,38.205 c-21.101,0-38.238-17.104-38.238-38.205C217.754,158.728,234.891,141.624,255.991,141.624z" stroke="#fff" stroke-width="30" fill="#f8c2a6"/>
         </svg>
@@ -179,6 +179,10 @@ class Message {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+
+    if (fieldData.chatBoxSize == "small") {
+      mainContainer.style.maxWidth = "33.5rem";
+    }
     if (this.isMod) mainContainer.classList.add("mods-background");
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
@@ -210,7 +214,7 @@ class Message {
     const usernameInfoContainer = document.createElement("div");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-    usernameInfo.appendChild(this.flower)
+    usernameInfo.appendChild(this.flower);
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(this.createRoleContainer());
@@ -969,6 +973,13 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
+  let main = document.querySelector("main");
+
+  if (fieldData.transparency == "false") {
+    console.log(fieldData.transparency);
+    main.style.maskImage = "none";
+    main.style.webkitMaskImage = "none";
+  }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -996,24 +1007,28 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 1000);
+    }, 1000000);
   }
 };
 
 const removeEvent = (mainContainer, event) => {
   const elem = mainContainer;
-  elem.querySelector(".fungi-img-container-2").style.animationName = "hideRightStar";
+  elem.querySelector(".fungi-img-container-2").style.animationName =
+    "hideRightStar";
   elem.querySelector(".fungi-img-container-2").style.animationDuration = "0.7s";
-  elem.querySelector(".fungi-img-container-2").style.animationFillMode = "forwards";
+  elem.querySelector(".fungi-img-container-2").style.animationFillMode =
+    "forwards";
 
-  elem.querySelector(".fungi-img-container-1").style.animationName = "hideLeftStar";
+  elem.querySelector(".fungi-img-container-1").style.animationName =
+    "hideLeftStar";
   elem.querySelector(".fungi-img-container-1").style.animationDuration = "0.7s";
-  elem.querySelector(".fungi-img-container-1").style.animationFillMode = "forwards";
+  elem.querySelector(".fungi-img-container-1").style.animationFillMode =
+    "forwards";
 
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
   setTimeout(() => {
     elem.remove();
-  }, 1000);
+  }, 1000000);
 };
 
 let repeatedEvents = 0;
@@ -1044,7 +1059,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((bulkContainer) => {
           setTimeout(() => {
             removeEvent(bulkContainer, "bulk");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(bulkContainer);
         })
         .finally(() => {
@@ -1058,7 +1073,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((mainContainer) => {
           setTimeout(() => {
             removeMessage(mainContainer);
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(mainContainer);
         })
         .finally(() => {
@@ -1072,7 +1087,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((followContainer) => {
           setTimeout(() => {
             removeEvent(followContainer, "follow-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(followContainer);
         })
         .finally(() => {
@@ -1086,7 +1101,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((subContainer) => {
           setTimeout(() => {
             removeEvent(subContainer, "sub-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(subContainer);
         })
         .finally(() => {
@@ -1100,7 +1115,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((raidContainer) => {
           setTimeout(() => {
             removeEvent(raidContainer, "raid-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(raidContainer);
         })
         .finally(() => {
@@ -1114,7 +1129,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((cheerContainer) => {
           setTimeout(() => {
             removeEvent(cheerContainer, "cheer-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(cheerContainer);
         })
         .finally(() => {
@@ -1128,7 +1143,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         .then((tipContainer) => {
           setTimeout(() => {
             removeEvent(tipContainer, "tip-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessages * 1000000);
           mainCont.appendChild(tipContainer);
         })
         .finally(() => {
