@@ -216,6 +216,11 @@ main {
   color: var(--user-color);
   font-weight: bold;
   font-size: 1.35rem;
+  display: inline-block;
+  width: 12ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .message-container {
@@ -468,6 +473,10 @@ main {
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 0.5s ease-in-out forwards;
+  background-color: #e4ad9a;
+  padding: 3px 20px;
+  border-radius: 40px;
+  text-shadow: 0 2px 0.2em #c19585;
 }
 
 @keyframes showNames {
@@ -492,8 +501,9 @@ main {
 
 .fungi-img-container-1 img,
 .fungi-img-container-2 img {
-  height: 30px;
-  width: 30px;
+  height: 46px;
+  width: 60px;
+  transform: scale(0.65);
 }
 
 .fungi-img-container-1 img {
@@ -509,6 +519,14 @@ main {
 
 .fungi-img-container-2 {
   order: 2;
+}
+
+.role-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
 .role-offset {
@@ -544,21 +562,21 @@ main {
 
 @keyframes showLeftFungi {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-100%) scale(0.65);
   }
 
   100% {
-    transform: translateX(0%);
+    transform: translateX(0%) scale(0.65);
   }
 }
 
 @keyframes showRightFungi {
   0% {
-    transform: translateX(100%) rotateY(180deg);
+    transform: translateX(100%) rotateY(180deg) scale(0.65);
   }
 
   100% {
-    transform: translateX(0%) rotateY(180deg);
+    transform: translateX(0%) rotateY(180deg) scale(0.65);
   }
 }
 
@@ -580,7 +598,7 @@ main {
     opacity: 1;
   }
 
-  100% {
+  100% { 
     transform: translateX(100%);
     opacity: 0;
   }
@@ -590,7 +608,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   width: 100%;
 }
 

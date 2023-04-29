@@ -62,10 +62,20 @@ let fieldData = {
     max: 60,
     step: 1,
   },
+  allowDeleteMessages: {
+    type: "dropdown",
+    label: "Delete messages on/off:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
