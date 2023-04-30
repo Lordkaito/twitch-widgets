@@ -7,9 +7,129 @@ const PRONOUNS_API = {
   pronouns: `${PRONOUNS_API_BASE}/pronouns`,
 };
 
+const colors = {
+  streamer: {
+    text: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    user: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    prons: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+  },
+  mod: {
+    text: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    user: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    prons: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+  },
+  vip: {
+    text: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    user: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    prons: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+  },
+  sub: {
+    text: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    user: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    prons: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+  },
+  viewer: {
+    text: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    user: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+    prons: {
+      background: "#6441a5",
+      text: "#ffffff",
+      border: "#6441a5",
+    },
+  },
+};
+
+const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
+const priorities = {
+  streamer: 1,
+  mod: 2,
+  vip: 3,
+  sub: 4,
+  viewer: 5,
+};
+
 class Message {
   constructor(message) {
     this.message = message;
+  }
+
+  get roles() {
+    const priorityRole = [];
+    const tags = this.message.data.tags;
+    console.log(tags);
+    let keys = Object.keys(tags);
+    keys.forEach((key) => {
+      if (roles.includes(key) && tags[key] === "1") {
+        priorityRole.push({ role: key, priority: priorities[key] });
+      }
+    });
+
+    if(priorityRole.length === 0 && this.isStreamer) {
+      priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
+      return priorityRole[0];
+    }
+
+    if (priorityRole.length === 0) {
+      priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
+      return priorityRole[0];
+    }
+    return priorityRole[0];
   }
 
   async init() {
@@ -112,20 +232,10 @@ class Message {
     return borderDecoration;
   }
 
-  get identifierImg() {
-    const identifierImg = document.createElement("img");
-    identifierImg.src = "";
-    identifierImg.classList.add("identifier-img");
-    return identifierImg;
-  }
-
   get renderedText() {
     return this.message.data.renderedText;
   }
 
-  get data() {
-    return this.message.data;
-  }
 
   get text() {
     return this.message.data.text;
@@ -179,11 +289,12 @@ class Message {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    mainContainer.classList.add(`${this.roles.role}-main-container`);
 
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
     }
-    if (this.isMod) mainContainer.classList.add("mods-background");
+    // if (this.isMod) mainContainer.classList.add("mods-background");
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
@@ -210,10 +321,12 @@ class Message {
   }
 
   async createUsernameInfoElement() {
+    const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
+    usernameInfo.classList.add(role.role);
     usernameInfo.appendChild(this.flower);
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
@@ -281,6 +394,7 @@ class Message {
   async createRenderedTextElement() {
     const renderedText = document.createElement("div");
     renderedText.classList.add("rendered-text");
+    renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
   }
@@ -321,6 +435,7 @@ class Message {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
+    pronouns.classList.add(`${this.roles.role}-prons`)
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -1088,7 +1203,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       follow
         .init()
         .then((followContainer) => {
-          if(fieldData.allowDeleteMessages === "true"){
+          if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(followContainer, "follow-name");
             }, fieldData.deleteMessages * 1000000000);
@@ -1104,7 +1219,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       sub
         .init()
         .then((subContainer) => {
-          if(fieldData.allowDeleteMessages === "true") {
+          if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(subContainer, "sub-name");
             }, fieldData.deleteMessages * 1000000000);
@@ -1120,7 +1235,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       raid
         .init()
         .then((raidContainer) => {
-          if(fieldData.allowDeleteMessages === "true"){
+          if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(raidContainer, "raid-name");
             }, fieldData.deleteMessages * 1000000000);
@@ -1136,7 +1251,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       cheer
         .init()
         .then((cheerContainer) => {
-          if(fieldData.allowDeleteMessages === "true"){
+          if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(cheerContainer, "cheer-name");
             }, fieldData.deleteMessages * 1000000000);
@@ -1152,7 +1267,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       tip
         .init()
         .then((tipContainer) => {
-          if(fieldData.allowDeleteMessages === "true") {
+          if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(tipContainer, "tip-name");
             }, fieldData.deleteMessages * 1000000000);

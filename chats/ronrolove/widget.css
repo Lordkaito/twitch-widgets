@@ -26,6 +26,56 @@
   letter-spacing: 0.125rem;
 }
 
+.viewer {
+  background-color: #b18882;
+  color: white;
+}
+
+.viewer-prons {
+  background-color: #b18882;
+  color: white;
+}
+
+.streamer {
+  background-color: pink;
+  color: white;
+}
+
+.streamer-prons {
+  background-color: pink;
+  color: white;
+}
+
+.mod {
+  background-color: green;
+  color: white;
+}
+
+.mod-prons {
+  background-color: green;
+  color: white;
+}
+
+.vip {
+  background-color: yellow;
+  color: white;
+}
+
+.vip-prons {
+  background-color: yellow;
+  color: white;
+}
+
+.subscriber {
+  background-color: pink;
+  color: white;
+}
+
+.subscriber-prons {
+  background-color: pink;
+  color: white;
+}
+
 .scale-up {
   transform: scale(1.1);
   transition: transform 0.2s;
@@ -58,8 +108,14 @@ main {
   align-items: center;
   justify-content: flex-end;
   z-index: 1;
-  -webkit-mask-image: -webkit-gradient(linear, left 16%, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-  mask-image: linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,1));
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left 16%,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
 
 .super-main-container {
@@ -173,7 +229,6 @@ main {
 }
 
 .username-info {
-  background-color: var(--user-background-color);
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
@@ -299,7 +354,7 @@ main {
 .prons {
   max-width: 100%;
   text-align: center;
-  background: var(--pronouns-background-color);
+  /* background: var(--pronouns-background-color); */
   border-radius: 1.25rem;
   padding: 7px;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
@@ -598,7 +653,7 @@ main {
     opacity: 1;
   }
 
-  100% { 
+  100% {
     transform: translateX(100%);
     opacity: 0;
   }
