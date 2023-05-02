@@ -22,7 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
-    <script src="../../libs/resize.js"></script>
+    <script src="../../slibs/resize.js"></script>
   </head>
 
   <body>
@@ -38,16 +38,11 @@
       />
       <div class="main-container"></div> -->
       <link rel="stylesheet" href="css.css" />
+      <link rel="stylesheet" href="index.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
-        rel="stylesheet"
-      />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
         rel="stylesheet"
       />
 
@@ -61,46 +56,10 @@
         integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
         crossorigin="anonymous"
       ></script>
+      <script src="main.js"></script>
       <main class="main">
-        <!-- <div class="container">
-          <div class="goal-name">
-            <p>Goal</p>
-          </div>
-          <div class="progress-bar-container">
-            <p class="progression"></p>
-            <div class="img-progress">
-              <div class="progress-bar">
-              </div>
-              <div class="img-container">
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div class="container">
-          <div class="hidden-container" id="hidden">
-            <div class="img-container">
-              <img
-                src="https://i.postimg.cc/hvs4D0z6/patita.png"
-                alt=""
-                id="image"
-              />
-            </div>
-          </div>
-          <div class="goal-name">
-            <p>Goal</p>
-          </div>
-          <div id="round">
-            <div class="progress-bar-container">
-              <p class="progression"></p>
-              <div class="img-progress">
-                <div class="progress-bar"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="filter"></div>
       </main>
-
-      <button class="click">Click</button>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

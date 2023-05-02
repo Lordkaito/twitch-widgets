@@ -5,41 +5,10 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  goalObjectiveQuantity: {
-    type: "number",
-    label: "Goal objective:",
-    value: 10,
-    group: "Customization",
-    min: 1,
-    max: 100000,
-    step: 1,
-  },
-  goalStartQuantity: {
-    type: "number",
-    label: "Goal start:",
-    value: 0,
-    group: "Customization",
-    min: 1,
-    max: 100000,
-    step: 1,
-  },
-  goalType: {
-    type: "dropdown",
-    label: "Goal type:",
-    value: "subscriber",
-    group: "Customization",
-    options: {
-      subscriber: "Sub",
-      follower: "Follow",
-      cheer: "Cheer",
-      tip: "Tip",
-    },
-  },
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value:
-      "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
+    value: "(user) just suscribed!",
     group: "Events",
   },
   followText: {
@@ -88,15 +57,25 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 10,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
   },
+  allowDeleteMessages: {
+    type: "dropdown",
+    label: "Delete messages on/off:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
@@ -119,8 +98,28 @@ let fieldData = {
     value: "pink",
     group: "Customization",
     options: {
-      pink: "Pink",
-      purple: "Purple",
+      pink: "Light",
+      purple: "Dark",
     },
   },
+  transparency: {
+    type: "dropdown",
+    label: "Transparency",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  chatBoxSize: {
+    type: "dropdown",
+    label: "Chat box size",
+    value: "small",
+    group: "Customization",
+    options: {
+      small: "Small",
+      regular: "Normal"
+    }
+  }
 };

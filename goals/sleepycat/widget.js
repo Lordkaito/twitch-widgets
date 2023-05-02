@@ -30,6 +30,7 @@ const init = (obj, initGoalCallback) => {
 const initGoal = (type) => {
   let current = goalStartQuantity;
   let step;
+  const progression = document.querySelector(".progression");
   let progressBarWidth = document.querySelector(
     ".progress-bar-container"
   ).offsetWidth;
@@ -46,7 +47,6 @@ const initGoal = (type) => {
     step: step,
   };
 
-  const progression = document.querySelector(".progression");
   progression.innerText = goal.current + "/" + goalObjectiveQuantity;
 };
 
@@ -75,7 +75,6 @@ window.addEventListener("onEventReceived", async (obj) => {
   }
 
   if (goal.type === "tip" || goal.type === "cheer") {
-    console.log("asdfafsdasdfadsf");
     dictionary[listener] === goal.type && growBitsTips(obj.detail);
     return;
   } else {
@@ -89,60 +88,50 @@ const growBitsTips = (data) => {
   let amount = data.event.amount;
   let progressBar = document.querySelector(".progress-bar");
   let progressImg = document.querySelector(".img-container");
-  let currentLeft = progressBar.offsetWidth;
+  let currentWidth = progressBar.offsetWidth;
   let step = goal.step * amount;
+  const progression = document.querySelector(".progression");
   if (
     goal.current < goalObjectiveQuantity &&
     goal.current + amount >= goalObjectiveQuantity
   ) {
-    progressImg.style.position = "absolute";
-    progressImg.style.right = `10px`;
-    progressImg.style.top = `8px`;
     progressBar.style.width = `100%`;
-    const progression = document.querySelector(".progression");
+    hidden.style.width = `100%`;
+    progressImg.style.left = `${hidden.offsetWidth - 32}px`;
     let total = goal.current + amount;
-    total > goalObjectiveQuantity
-      ? (progression.innerText =
-          goalObjectiveQuantity + "/" + goalObjectiveQuantity)
+    total >= goalObjectiveQuantity
+      ? (progression.innerText = "Goal completed!")
       : (progression.innerText = total + "/" + goalObjectiveQuantity);
     return;
   }
   goal.current += amount;
-  progressBar.style.width = `${currentLeft + step}px`;
-  const progression = document.querySelector(".progression");
+  progressBar.style.width = `${currentWidth + step}px`;
+  hidden.style.width = `${currentWidth + step}px`;
+  progressImg.style.left = `${hidden.offsetWidth + 14}px`;
   progression.innerText = goal.current + "/" + goalObjectiveQuantity;
 };
 
 let total;
-const grow = (type = "sub", amount = 1) => {
+const grow = (amount = 1) => {
   let progressBar = document.querySelector(".progress-bar");
-  let currentLeft = progressBar.offsetLeft;
+  let progressImg = document.querySelector(".img-container");
+  let currentWidth = progressBar.offsetWidth;
+  const progression = document.querySelector(".progression");
   total = goal.current + amount;
   if (goal.current + amount >= goalObjectiveQuantity) {
-    progressBar.style.left = `0`;
-    const progression = document.querySelector(".progression");
-    total > goalObjectiveQuantity
-      ? (progression.innerText =
-          goalObjectiveQuantity + "/" + goalObjectiveQuantity)
+    hidden.style.width = `100%`;
+    progressBar.style.width = `100%`;
+    progressImg.style.left = `${hidden.offsetWidth - 32}px`;
+    total >= goalObjectiveQuantity
+      ? (progression.innerText = "Goal completed!")
       : (progression.innerText = total + "/" + goalObjectiveQuantity);
     return;
   }
   if (goal.current < goalObjectiveQuantity) {
     goal.current += amount;
-    progressBar.style.left = `${currentLeft + goal.step * amount}px`;
-    const progression = document.querySelector(".progression");
-
+    hidden.style.width = `${currentWidth + goal.step * amount}px`;
+    progressBar.style.width = `${currentWidth + goal.step * amount}px`;
+    progressImg.style.left = `${hidden.offsetWidth + 14}px`;
     progression.innerText = goal.current + "/" + goalObjectiveQuantity;
   }
 };
-
-// const setInitialGrow = () => {
-//   if (goalStartQuantity !== 0) {
-//     let progressBar = document.querySelector(".progress-bar");
-//     let currentLeft = progressBar.offsetLeft;
-//     let step = goal.step * goalStartQuantity;
-//     progressBar.style.left = `${currentLeft + step}px`;
-//     const progression = document.querySelector(".progression");
-//     progression.innerText = `${goal.current}/${goalObjectiveQuantity}`;
-//   }
-// };
