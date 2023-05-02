@@ -510,12 +510,7 @@ main {
   height: 1000px;
 }
 
-.follow-name,
-.sub-name,
-.tip-name,
-.cheer-name,
-.raid-name,
-.bulk-name {
+.event-name {
   max-width: 300px;
   height: 100%;
   top: 0;
