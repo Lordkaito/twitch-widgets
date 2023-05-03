@@ -14,19 +14,19 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
     label: "Custom text for Cheers (max 40)",
-    value: "cheered x(amount)!",
+    value: "(user) cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "(user) tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
@@ -115,7 +115,7 @@ let fieldData = {
   chatBoxSize: {
     type: "dropdown",
     label: "Chat box size",
-    value: "small",
+    value: "regular",
     group: "Customization",
     options: {
       small: "Small",

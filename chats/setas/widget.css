@@ -1,17 +1,20 @@
 :root {
-  --message-color: #9c706a;
-  --message-background-color: #fff3eb;
-  --message-border-color: #b18882;
+  --message-color: #f2ded7;
+  --message-background-color: #7a6564;
+  --message-border-color: #f5ded6;
   --user-color: white;
-  --user-background-color: #b18882;
+  --user-background-color: #95915d;
   --user-border-color: #e6e6e6;
   --user-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
-  --pronouns-color: white;
-  --pronouns-background-color: #b18882;
+  --pronouns-color: #bebc97;
+  --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
+  --event-background-color: transparent;
+  --event-shadow-color: #a38c79;
+  --event-color: #ead7cd;
 }
 
 * {
@@ -108,14 +111,14 @@ main {
   align-items: center;
   justify-content: flex-end;
   z-index: 1;
-  -webkit-mask-image: -webkit-gradient(
+  /* -webkit-mask-image: -webkit-gradient(
     linear,
     left 16%,
     left top,
     from(rgba(0, 0, 0, 1)),
     to(rgba(0, 0, 0, 0))
   );
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); */
 }
 
 .super-main-container {
@@ -188,7 +191,7 @@ main {
   margin-top: 40px;
   left: 1.875rem;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 20px;
   border: 5px solid var(--message-border-color);
 }
 
@@ -239,21 +242,63 @@ main {
   gap: 5px;
   box-shadow: var(--user-shadow);
   position: relative;
+  background-color: var(--user-background-color);
 }
 
 .flower {
   position: absolute;
-  top: -1.4rem;
-  right: -3rem;
-  transform: scale(0.7);
+  bottom: -0.4rem;
+  right: -0.5rem;
 }
 
 .leafs {
   position: absolute;
-  right: -1.1rem;
-  top: -2rem;
-  transform: scale(0.7);
+  right: 1.5rem;
+  bottom: -0.4rem;
   z-index: 2;
+  animation: turnAround 0.5s ease-in-out 0.5s;
+}
+
+.butterfly-container {
+  position: absolute;
+  top: -0.8rem;
+  left: -0.8rem;
+}
+
+/* @keyframes turnAround {
+  0% {
+    transform: scaleX(1);
+  }
+
+  25% {
+    transform: scaleX(0);
+  }
+
+  50% {
+    transform: scaleX(-1);
+  }
+
+  75% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+} */
+
+@keyframes turnAround {
+  0% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
 }
 
 .username-badges {
@@ -346,7 +391,7 @@ main {
   text-align: center;
   width: 6.25rem;
   justify-self: right;
-  margin-right: 2rem;
+  margin-right: 10rem;
   position: relative;
   z-index: 1;
 }
@@ -354,7 +399,7 @@ main {
 .prons {
   max-width: 100%;
   text-align: center;
-  /* background: var(--pronouns-background-color); */
+  background: var(--pronouns-background-color);
   border-radius: 1.25rem;
   padding: 7px;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
@@ -511,7 +556,7 @@ main {
 }
 
 .event-name {
-  max-width: 300px;
+  max-width: 250px;
   height: 100%;
   top: 0;
   text-align: center;
@@ -519,14 +564,14 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 1;
-  color: white;
+  color: var(--event-color);
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 0.5s ease-in-out forwards;
-  background-color: #e4ad9a;
-  padding: 3px 20px;
+  background-color: var(--event-background-color);
+  padding: 3px 0px;
   border-radius: 40px;
-  text-shadow: 0 2px 0.2em #c19585;
+  text-shadow: 0 2px 0.2em var(--event-shadow-color);
 }
 
 @keyframes showNames {
@@ -549,25 +594,25 @@ main {
   }
 }
 
-.fungi-img-container-1 img,
-.fungi-img-container-2 img {
+.event-leafs-container-1 img,
+.event-leafs-container-2 img {
   height: 46px;
   width: 60px;
   transform: scale(0.65);
 }
 
-.fungi-img-container-1 img {
+.event-leafs-container-1 img {
   animation: showLeftFungi 0.5s ease-in-out forwards;
 }
 
-.fungi-img-container-2 img {
+.event-leafs-container-2 img {
   order: 2;
   transition: none;
   transform: rotateY(180deg);
   animation: showRightFungi 0.5s ease-in-out forwards;
 }
 
-.fungi-img-container-2 {
+.event-leafs-container-2 {
   order: 2;
 }
 

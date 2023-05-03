@@ -1,0 +1,42 @@
+{
+  "goalObjectiveQuantity": {
+    "type": "number",
+    "label": "Goal objective",
+    "value": 10,
+    "group": "Customization",
+    "min": 1,
+    "max": 100000,
+    "step": 1
+  },
+  "goalStartQuantity": {
+    "type": "number",
+    "label": "Goal start",
+    "value": 0,
+    "group": "Customization",
+    "min": 0,
+    "max": 100000,
+    "step": 1
+  },
+  "goalType": {
+    "type": "dropdown",
+    "label": "Goal type",
+    "value": "subscriber",
+    "group": "Customization",
+    "options": {
+      "subscriber": "Sub",
+      "follower": "Follow",
+      "cheer": "Cheer",
+      "tip": "Tip"
+    }
+  },
+  "goalTheme": {
+    "type": "dropdown",
+    "label": "Goal theme",
+    "value": "blue",
+    "group": "Customization",
+    "options": {
+      "blue": "Blue",
+      "pink": "Pink"
+    }
+  }
+}

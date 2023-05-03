@@ -14,19 +14,19 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
     label: "Custom text for Cheers (max 40)",
-    value: "cheered x(amount)!",
+    value: "(user) cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "(user) tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
@@ -57,7 +57,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 2,
+    value: 60,
     min: 1,
     max: 60,
     step: 1,
@@ -75,7 +75,7 @@ let fieldData = {
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
-    value: "true",
+    value: "false",
     group: "Customization",
     options: {
       true: "Yes",
@@ -102,16 +102,16 @@ let fieldData = {
       purple: "Dark",
     },
   },
-  transparency: {
-    type: "dropdown",
-    label: "Transparency",
-    value: "true",
-    group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
-  },
+  // transparency: {
+  //   type: "dropdown",
+  //   label: "Transparency",
+  //   value: "true",
+  //   group: "Customization",
+  //   options: {
+  //     true: "Yes",
+  //     false: "No",
+  //   },
+  // },
   chatBoxSize: {
     type: "dropdown",
     label: "Chat box size",
