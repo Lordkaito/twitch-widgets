@@ -57,7 +57,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
@@ -102,20 +102,20 @@ let fieldData = {
       purple: "Dark",
     },
   },
-  // transparency: {
-  //   type: "dropdown",
-  //   label: "Transparency",
-  //   value: "true",
-  //   group: "Customization",
-  //   options: {
-  //     true: "Yes",
-  //     false: "No",
-  //   },
-  // },
+  transparency: {
+    type: "dropdown",
+    label: "Transparency",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
   chatBoxSize: {
     type: "dropdown",
     label: "Chat box size",
-    value: "small",
+    value: "regular",
     group: "Customization",
     options: {
       small: "Small",

@@ -1,6 +1,8 @@
 // let fieldData = {};
 let currentEvent = null;
 
+const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
+
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
   user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
@@ -184,11 +186,14 @@ class mainEvent {
   }
 
   get leafs() {
+    const leafsContainer = document.createElement("div");
     const leafs = document.createElement("img");
-    leafs.src = "https://i.postimg.cc/3RQyp4L5/margarita.png";
+    leafs.src = "https://i.postimg.cc/Z5hf4JGS/margarita-der.png";
     leafs.classList.add("leafs");
+    leafsContainer.classList.add("leafs-container");
+    leafsContainer.appendChild(leafs);
 
-    return leafs;
+    return leafsContainer;
   }
 
   get emotes() {
@@ -213,8 +218,10 @@ class mainEvent {
     mainContainer.classList.add("main-container");
     mainContainer.classList.add(`${this.roles.role}-main-container`); // not being used for ronros, but useful for future chats if we need to style them differently
     mainContainer.appendChild(this.flower);
-    mainContainer.appendChild(this.leafs);
-
+    for (let i = 0; i < 2; i++) {
+      let leaf = this.leafs;
+      mainContainer.appendChild(this.leafs);
+    }
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
     }
@@ -248,7 +255,7 @@ class mainEvent {
     usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    if(this.isSub) {
+    if (this.isSub) {
       usernameInfoContainer.appendChild(this.butterfly);
     }
     return usernameInfoContainer;
@@ -335,7 +342,7 @@ class mainEvent {
       minPriorityRole.role = "viewer";
     }
 
-    roleImage.innerHTML = `<svg height="40px" width="40px" version="1.1" id="x32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fff" stroke-width="90"> <g> <path d="M449.469,110.076C366.072,76.721,319.373,0,255.996,0C192.619,0,145.927,76.721,62.531,110.076 c-56.854,22.748-76.72,80.055-30.022,126.754c36.889,36.897,111.242,55.038,175.385,61.04 c-1.51,46.071-6.614,75.586-21.974,108.512c-19.72,42.254-5.64,92.962,42.254,104.228c47.896,11.267,75.778-48.14,81.695-101.416 c3.38-30.42,3.717-75.026,0.406-111.939c62.68-6.568,133.498-24.71,169.215-60.426C526.19,190.131,506.323,132.825,449.469,110.076 z"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g> <path fill="#b48e7b" d="M449.469,110.076C366.072,76.721,319.373,0,255.996,0C192.619,0,145.927,76.721,62.531,110.076 c-56.854,22.748-76.72,80.055-30.022,126.754c36.889,36.897,111.242,55.038,175.385,61.04 c-1.51,46.071-6.614,75.586-21.974,108.512c-19.72,42.254-5.64,92.962,42.254,104.228c47.896,11.267,75.778-48.14,81.695-101.416 c3.38-30.42,3.717-75.026,0.406-111.939c62.68-6.568,133.498-24.71,169.215-60.426C526.19,190.131,506.323,132.825,449.469,110.076 z"></path> </g> </g></svg>`
+    roleImage.innerHTML = `<svg height="40px" width="40px" version="1.1" id="x32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fff" stroke-width="90"> <g> <path d="M449.469,110.076C366.072,76.721,319.373,0,255.996,0C192.619,0,145.927,76.721,62.531,110.076 c-56.854,22.748-76.72,80.055-30.022,126.754c36.889,36.897,111.242,55.038,175.385,61.04 c-1.51,46.071-6.614,75.586-21.974,108.512c-19.72,42.254-5.64,92.962,42.254,104.228c47.896,11.267,75.778-48.14,81.695-101.416 c3.38-30.42,3.717-75.026,0.406-111.939c62.68-6.568,133.498-24.71,169.215-60.426C526.19,190.131,506.323,132.825,449.469,110.076 z"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g> <path fill="#b48e7b" d="M449.469,110.076C366.072,76.721,319.373,0,255.996,0C192.619,0,145.927,76.721,62.531,110.076 c-56.854,22.748-76.72,80.055-30.022,126.754c36.889,36.897,111.242,55.038,175.385,61.04 c-1.51,46.071-6.614,75.586-21.974,108.512c-19.72,42.254-5.64,92.962,42.254,104.228c47.896,11.267,75.778-48.14,81.695-101.416 c3.38-30.42,3.717-75.026,0.406-111.939c62.68-6.568,133.498-24.71,169.215-60.426C526.19,190.131,506.323,132.825,449.469,110.076 z"></path> </g> </g></svg>`;
 
     // switch (minPriorityRole.role) {
     //   case "streamer":
@@ -739,13 +746,15 @@ const removeEvent = (mainContainer, event) => {
   const elem = mainContainer;
   elem.querySelector(".event-leafs-container-2").style.animationName =
     "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration = "0.7s";
+  elem.querySelector(".event-leafs-container-2").style.animationDuration =
+    "0.7s";
   elem.querySelector(".event-leafs-container-2").style.animationFillMode =
     "forwards";
 
   elem.querySelector(".event-leafs-container-1").style.animationName =
     "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration = "0.7s";
+  elem.querySelector(".event-leafs-container-1").style.animationDuration =
+    "0.7s";
   elem.querySelector(".event-leafs-container-1").style.animationFillMode =
     "forwards";
 
