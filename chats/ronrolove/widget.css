@@ -105,7 +105,7 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
   z-index: 1;
   -webkit-mask-image: -webkit-gradient(
@@ -187,7 +187,7 @@ main {
   flex-direction: column;
   margin-top: 40px;
   left: 1.875rem;
-  width: 100%;
+  /*width: 100%;*/
   border-radius: 40px;
   border: 5px solid var(--message-border-color);
 }
@@ -224,7 +224,7 @@ main {
   justify-content: center;
   position: absolute;
   top: -1.7rem;
-  left: 3rem;
+  left: 1.5rem;
   gap: 10px;
 }
 
@@ -311,12 +311,13 @@ main {
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
-  width: 31.25rem;
+  min-width: 28.5rem;
+  max-width: 31.25rem;
   color: var(--message-color);
   white-space: normal;
   margin-right: 0.625rem;
   padding-top: 1.25rem;
-  padding-left: 1.25rem;
+  padding-left: 0.8rem;
   padding-right: 1rem;
   animation: twinkleText 0.5 1 forwards;
 }
@@ -392,18 +393,20 @@ main {
 
 @keyframes slideMessage {
   0% {
-    transform: scale(0);
-    transform-origin: bottom center;
+    /*transform: scale(0);
+    transform-origin: bottom center; */
+    opacity: 0;
   }
 
   50% {
-    transform: scale(110%);
-    transform-origin: bottom center;
+    /*transform: scale(110%);
+    transform-origin: bottom center;*/
   }
 
   100% {
-    transform: scale(100%);
-    transform-origin: bottom center;
+    /*transform: scale(100%);
+    transform-origin: bottom center;*/
+    opacity: 1;
   }
 }
 
@@ -468,18 +471,20 @@ main {
 
 @keyframes removeMessage {
   0% {
-    transform: scale(100%);
-    transform-origin: bottom center;
+    /*transform: scale(100%);
+    transform-origin: bottom center;*/
+    opacity: 1;
   }
 
   50% {
-    transform: scale(110%);
-    transform-origin: bottom center;
+    /*transform: scale(110%);
+    transform-origin: bottom center;*/
   }
 
   100% {
-    transform: scale(0%);
-    transform-origin: bottom center;
+    /*transform: scale(0%);
+    transform-origin: bottom center;*/
+    opacity: 0;
   }
 }
 
@@ -662,7 +667,6 @@ main {
 .fungi-container {
   display: flex;
   align-items: center;
-  justify-content: center;
   width: 100%;
 }
 

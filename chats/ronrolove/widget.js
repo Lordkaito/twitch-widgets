@@ -302,11 +302,6 @@ class Message {
     mainContainer.classList.add("main-container");
     mainContainer.classList.add(`${this.roles.role}-main-container`);
 
-    if (fieldData.chatBoxSize == "small") {
-      mainContainer.style.maxWidth = "33.5rem";
-    }
-    // if (this.isMod) mainContainer.classList.add("mods-background");
-
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
     mainContainer.appendChild(this.createBarElement());

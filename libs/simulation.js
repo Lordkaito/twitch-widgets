@@ -405,7 +405,7 @@ let events = {
           },
         ],
         channel: "lordkaito_",
-        text: "Hola que tal texto de mensaje",
+        text: "Hola que tal",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",

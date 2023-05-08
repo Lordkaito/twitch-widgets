@@ -17,7 +17,9 @@ progress.style.setProperty("--progress-bar-left", "0");
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
   SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
-    if (data !== null || data !== undefined || data !== "") {
+    if (data === null) {
+      apiData = gained;
+    } else {
       apiData = data;
     }
     init(obj, initGoal, apiData);
@@ -97,8 +99,13 @@ const grow = (type, amount = 1, data) => {
     hidden.style.width = `100%`;
     progressBar.style.width = `100%`;
     progressImg.style.left = `${hidden.offsetWidth - 40}px`;
+    let customGoalText = "";
+    if (mainObj.fieldData.goalText != "") {
+      customGoalText = mainObj.fieldData.goalText;
+    }
     total >= goalObjectiveQuantity
-      ? (progression.innerText = "Goal completed!")
+      ? (progression.innerText =
+          customGoalText != "" ? customGoalText : "Goal completed!")
       : (progression.innerText = total + "/" + goalObjectiveQuantity);
     return;
   }
@@ -138,6 +145,17 @@ const initGoal = (type, data) => {
     step = progressBarWidth / goalObjectiveQuantity;
   } else {
     step = progressBarWidth / (goalObjectiveQuantity - goalStartQuantity);
+  }
+  
+  let goalTitle = ""
+  if(mainObj.fieldData.title != "") {
+  	goalTitle = mainObj.fieldData.title
+    const title = document.querySelector('.goal-title')
+    const maxChars = 11;
+    if(goalTitle.length > maxChars) {
+      goalTitle = goalTitle.substring(0, maxChars)
+    }
+    title.innerText = goalTitle
   }
 
   goal = {

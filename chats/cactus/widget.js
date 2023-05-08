@@ -281,8 +281,8 @@ class Message {
     mainContainer.appendChild(this.createBarElement());
     mainContainer.appendChild(this.createDecorationElement());
     superMainContainer.appendChild(mainContainer);
-    if(this.isSub) {
-      mainContainer.appendChild(this.lianas)
+    if (this.isSub) {
+      mainContainer.appendChild(this.lianas);
     }
 
     return superMainContainer;
@@ -291,7 +291,7 @@ class Message {
   get lianas() {
     const lianas = document.createElement("img");
     const lianasContainer = document.createElement("div");
-    lianas.src = "https://i.postimg.cc/fbHGMZVB/lianas.png"
+    lianas.src = "https://i.postimg.cc/fbHGMZVB/lianas.png";
     lianas.classList.add("lianas");
     lianasContainer.classList.add("lianas-container");
     lianasContainer.appendChild(lianas);
@@ -417,12 +417,23 @@ class Message {
     return leafs;
   }
 
+  get cactus() {
+    const cactus = document.createElement("img");
+    cactus.src = "https://i.postimg.cc/9X4hF4tT/planta-pron.png";
+    cactus.classList.add("cactus");
+
+    return cactus;
+  }
+
   async createPronounsContainer() {
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
     pronouns.classList.add("prons");
     // pronounsContainer.appendChild(this.leafs);
     pronounsContainer.classList.add("pronouns");
+    if (this.isSub) {
+      pronounsContainer.appendChild(this.cactus);
+    }
     pronouns.innerText = await this.getUserPronoun();
     pronouns.innerText == ""
       ? (pronounsContainer.style.display = "none")
