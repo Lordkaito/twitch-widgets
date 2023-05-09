@@ -26,56 +26,6 @@
   letter-spacing: 0.125rem;
 }
 
-/* .viewer {
-  background-color: #b18882;
-  color: white;
-}
-
-.viewer-prons {
-  background-color: #b18882;
-  color: white;
-}
-
-.streamer {
-  background-color: #ffc3c3;
-  color: white;
-}
-
-.streamer-prons {
-  background-color: #ffc3c3;
-  color: white;
-}
-
-.mod {
-  background-color: #d2ceb3;
-  color: white;
-}
-
-.mod-prons {
-  background-color: #d2ceb3;
-  color: white;
-}
-
-.vip {
-  background-color: #fcdba1;
-  color: white;
-}
-
-.vip-prons {
-  background-color: #fcdba1;
-  color: white;
-}
-
-.subscriber {
-  background-color: #ffc3c3;
-  color: white;
-}
-
-.subscriber-prons {
-  background-color: #ffc3c3;
-  color: white;
-} */
-
 .scale-up {
   transform: scale(1.1);
   transition: transform 0.2s;
@@ -174,11 +124,11 @@ main {
 .main-container {
   max-width: 37.5rem;
   background: var(--message-background-color);
-  margin-bottom: 1.875rem;
+  margin-bottom: 3rem;
   border-radius: 0.5rem;
   position: relative;
   display: grid;
-  margin-top: 40px;
+  margin-top: 4rem;
   left: 1.875rem;
   width: 100%;
   border-radius: 40px;
@@ -371,6 +321,7 @@ main {
   justify-self: right;
   margin-right: 2rem;
   position: relative;
+  top: -2rem;
   z-index: 1;
 }
 
@@ -381,6 +332,16 @@ main {
   border-radius: 1.25rem;
   padding: 7px;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.cactus {
+  transform: scale(0.8);
+  position: absolute;
+  top: -2rem;
+  right: 1rem;
 }
 
 .separator {
@@ -554,7 +515,7 @@ main {
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 0.5s ease-in-out forwards;
-  background-color: #c394b3;
+  background-color: rgba(250, 136, 216, .5);
   padding: 3px 20px;
   border-radius: 40px;
   text-shadow: 0 2px 0.2em #c19585;
@@ -607,6 +568,17 @@ main {
   justify-content: center;
   width: 40px;
   height: 40px;
+  animation: rotateRole 1s ease-in-out 0.5s forwards;
+}
+
+@keyframes rotateRole {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .role-offset {

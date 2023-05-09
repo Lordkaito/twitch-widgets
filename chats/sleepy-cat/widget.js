@@ -30,7 +30,7 @@ class Message {
         iconBackground: "#9da0f5",
         textColor: "#d55482",
         borderColor: "#fff",
-        shadow: "#f57198"
+        shadow: "#f57198",
       };
     } else {
       colorObj = {
@@ -41,7 +41,7 @@ class Message {
         iconBackground: "#9da0f5",
         textColor: "#686bb7",
         borderColor: "#fff",
-        shadow: "#f57198"
+        shadow: "#f57198",
       };
     }
     return colorObj;
@@ -564,7 +564,7 @@ class Follow {
         iconBackground: "#9da0f5",
         textColor: "#d55482",
         borderColor: "#fff",
-        shadow: "#f57198"
+        shadow: "#f57198",
       };
     } else {
       colorObj = {
@@ -575,7 +575,7 @@ class Follow {
         iconBackground: "#9da0f5",
         textColor: "#686bb7",
         borderColor: "#fff",
-        shadow: "#686bb7"
+        shadow: "#686bb7",
       };
     }
     return colorObj;
@@ -626,19 +626,19 @@ class Follow {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
-    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow}) drop-shadow(0 0 5px ${this.themeColor().shadow})`
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
-    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow}) drop-shadow(0 0 5px ${this.themeColor().shadow})`
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     const rightPawContainer = document.createElement("div");
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -648,7 +648,9 @@ class Follow {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("follow-name");
-    nameContainer.style.textShadow = `0 0 0.2em ${this.themeColor().shadow}, 0 0 0.2em ${this.themeColor().shadow}`
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");
@@ -672,6 +674,35 @@ class BulkGift {
     const bulkContainer = await this.createMainBulkContainer();
 
     return bulkContainer;
+  }
+
+  themeColor() {
+    const theme = fieldData.theme;
+    let colorObj = {};
+    if (theme == "pink") {
+      colorObj = {
+        messageBackground: "#faaac5",
+        userColor: "#faaac5",
+        userBackground: "#fff",
+        pronsColor: "#faaac5",
+        iconBackground: "#9da0f5",
+        textColor: "#d55482",
+        borderColor: "#fff",
+        shadow: "#f57198",
+      };
+    } else {
+      colorObj = {
+        messageBackground: "#c4c8ff",
+        userColor: "#9da0f5",
+        userBackground: "#fff",
+        pronsColor: "#9da0f5",
+        iconBackground: "#9da0f5",
+        textColor: "#686bb7",
+        borderColor: "#fff",
+        shadow: "#686bb7",
+      };
+    }
+    return colorObj;
   }
 
   get sender() {
@@ -726,17 +757,19 @@ class BulkGift {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
     const rightPawContainer = document.createElement("div");
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -746,6 +779,9 @@ class BulkGift {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("bulk-name");
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");
@@ -767,6 +803,35 @@ class Sub {
     if (this.originalName == currentEvent) {
       return;
     }
+  }
+
+  themeColor() {
+    const theme = fieldData.theme;
+    let colorObj = {};
+    if (theme == "pink") {
+      colorObj = {
+        messageBackground: "#faaac5",
+        userColor: "#faaac5",
+        userBackground: "#fff",
+        pronsColor: "#faaac5",
+        iconBackground: "#9da0f5",
+        textColor: "#d55482",
+        borderColor: "#fff",
+        shadow: "#f57198",
+      };
+    } else {
+      colorObj = {
+        messageBackground: "#c4c8ff",
+        userColor: "#9da0f5",
+        userBackground: "#fff",
+        pronsColor: "#9da0f5",
+        iconBackground: "#9da0f5",
+        textColor: "#686bb7",
+        borderColor: "#fff",
+        shadow: "#686bb7",
+      };
+    }
+    return colorObj;
   }
 
   async init() {
@@ -855,17 +920,19 @@ class Sub {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
     const rightPawContainer = document.createElement("div");
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -875,6 +942,9 @@ class Sub {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("sub-name");
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");
@@ -898,6 +968,35 @@ class Raid {
     const raidContainer = await this.createMainRaidContainer();
 
     return raidContainer;
+  }
+
+  themeColor() {
+    const theme = fieldData.theme;
+    let colorObj = {};
+    if (theme == "pink") {
+      colorObj = {
+        messageBackground: "#faaac5",
+        userColor: "#faaac5",
+        userBackground: "#fff",
+        pronsColor: "#faaac5",
+        iconBackground: "#9da0f5",
+        textColor: "#d55482",
+        borderColor: "#fff",
+        shadow: "#f57198",
+      };
+    } else {
+      colorObj = {
+        messageBackground: "#c4c8ff",
+        userColor: "#9da0f5",
+        userBackground: "#fff",
+        pronsColor: "#9da0f5",
+        iconBackground: "#9da0f5",
+        textColor: "#686bb7",
+        borderColor: "#fff",
+        shadow: "#686bb7",
+      };
+    }
+    return colorObj;
   }
 
   get name() {
@@ -935,17 +1034,19 @@ class Raid {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
     const rightPawContainer = document.createElement("div");
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -955,6 +1056,9 @@ class Raid {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("raid-name");
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");
@@ -977,6 +1081,35 @@ class Cheer {
     const cheerContainer = await this.createMaincheerContainer();
 
     return cheerContainer;
+  }
+
+  themeColor() {
+    const theme = fieldData.theme;
+    let colorObj = {};
+    if (theme == "pink") {
+      colorObj = {
+        messageBackground: "#faaac5",
+        userColor: "#faaac5",
+        userBackground: "#fff",
+        pronsColor: "#faaac5",
+        iconBackground: "#9da0f5",
+        textColor: "#d55482",
+        borderColor: "#fff",
+        shadow: "#f57198",
+      };
+    } else {
+      colorObj = {
+        messageBackground: "#c4c8ff",
+        userColor: "#9da0f5",
+        userBackground: "#fff",
+        pronsColor: "#9da0f5",
+        iconBackground: "#9da0f5",
+        textColor: "#686bb7",
+        borderColor: "#fff",
+        shadow: "#686bb7",
+      };
+    }
+    return colorObj;
   }
 
   get name() {
@@ -1018,17 +1151,19 @@ class Cheer {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
     const rightPawContainer = document.createElement("div");
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -1038,6 +1173,9 @@ class Cheer {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("cheer-name");
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");
@@ -1060,6 +1198,35 @@ class Tip {
     const tipContainer = await this.createMainTipContainer();
 
     return tipContainer;
+  }
+
+  themeColor() {
+    const theme = fieldData.theme;
+    let colorObj = {};
+    if (theme == "pink") {
+      colorObj = {
+        messageBackground: "#faaac5",
+        userColor: "#faaac5",
+        userBackground: "#fff",
+        pronsColor: "#faaac5",
+        iconBackground: "#9da0f5",
+        textColor: "#d55482",
+        borderColor: "#fff",
+        shadow: "#f57198",
+      };
+    } else {
+      colorObj = {
+        messageBackground: "#c4c8ff",
+        userColor: "#9da0f5",
+        userBackground: "#fff",
+        pronsColor: "#9da0f5",
+        iconBackground: "#9da0f5",
+        textColor: "#686bb7",
+        borderColor: "#fff",
+        shadow: "#686bb7",
+      };
+    }
+    return colorObj;
   }
 
   get name() {
@@ -1106,17 +1273,19 @@ class Tip {
     const leftPaw = document.createElement("svg");
     leftPaw.classList.add("left-paw");
     const leftPawContainer = document.createElement("div");
+    leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
     const rightPawContainer = document.createElement("div");
+    rightPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     rightPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
-</svg>`
+</svg>`;
 
     leftPawContainer.classList.add("left-paw-container");
     leftPawContainer.appendChild(leftPaw);
@@ -1126,6 +1295,9 @@ class Tip {
 
     const nameContainer = document.createElement("p");
     nameContainer.classList.add("tip-name");
+    nameContainer.style.textShadow = `0 0 0.2em ${
+      this.themeColor().shadow
+    }, 0 0 0.2em ${this.themeColor().shadow}`;
     nameContainer.innerText = nameAndText;
 
     pawsContainer.classList.add("paws-container");

@@ -179,7 +179,7 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/VLhkn06G/arbusto.png";
+    flower.src = "https://i.postimg.cc/fbDmJpb1/margarita-izq.png";
     flower.classList.add("flower");
 
     return flower;
@@ -217,11 +217,11 @@ class mainEvent {
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     mainContainer.classList.add(`${this.roles.role}-main-container`); // not being used for ronros, but useful for future chats if we need to style them differently
-    mainContainer.appendChild(this.flower);
-    for (let i = 0; i < 2; i++) {
-      let leaf = this.leafs;
-      mainContainer.appendChild(this.leafs);
-    }
+    // mainContainer.appendChild(this.flower);
+    // for (let i = 0; i < 2; i++) {
+    //   let leaf = this.leafs;
+    //   mainContainer.appendChild(this.leafs);
+    // }
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
     }
@@ -233,16 +233,16 @@ class mainEvent {
     return superMainContainer;
   }
 
-  get butterfly() {
-    const img = document.createElement("img");
-    const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-    img.classList.add("butterfly");
-    imgContainer.classList.add("butterfly-container");
-    imgContainer.appendChild(img);
+  // get butterfly() {
+  //   const img = document.createElement("img");
+  //   const imgContainer = document.createElement("div");
+  //   img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
+  //   img.classList.add("butterfly");
+  //   imgContainer.classList.add("butterfly-container");
+  //   imgContainer.appendChild(img);
 
-    return imgContainer;
-  }
+  //   return imgContainer;
+  // }
 
   async createUsernameInfoElement() {
     const role = this.roles;
@@ -252,12 +252,13 @@ class mainEvent {
     usernameInfo.classList.add("username-info");
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(this.createRoleContainer());
+    for (let i = 0; i < 2; i++) {
+      let flower = this.flower;
+      flower.classList.add("flower-" + (i + 1));
+      usernameInfo.appendChild(flower);
+    }
     usernameInfoContainer.appendChild(usernameInfo);
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    if (this.isSub) {
-      usernameInfoContainer.appendChild(this.butterfly);
-    }
     return usernameInfoContainer;
   }
 
@@ -625,30 +626,29 @@ class mainEvent {
       text = eventText;
     }
 
+    let thanks = "Thank you for being a supporter!";
+
+    if (fieldData.thanksMessage != "") {
+      thanks = fieldData.thanksMessage;
+    }
+
     const nameAndText = `${text}`;
     const nameContainer = document.createElement("p");
+    const thanksMessage = document.createElement("p");
+    thanksMessage.classList.add("thanks-message");
+    thanksMessage.innerText = thanks;
+    const thanksAndNameContainer = document.createElement("div");
+    thanksAndNameContainer.classList.add("thanks-and-name-container");
 
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/XqVp1MSs/hoja-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`event-leafs-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
     mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
 
+    thanksAndNameContainer.appendChild(nameContainer);
+    thanksAndNameContainer.appendChild(thanksMessage);
+
+    mainContainer.appendChild(thanksAndNameContainer);
     return mainContainer;
   }
 }
@@ -737,7 +737,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 1000);
+    }, 100000000);
   }
 };
 
@@ -760,7 +760,7 @@ const removeEvent = (mainContainer, event) => {
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
   setTimeout(() => {
     elem.remove();
-  }, 1000);
+  }, 100000000);
 };
 
 let repeatedEvents = 0;
@@ -792,11 +792,11 @@ window.addEventListener("onEventReceived", async (obj) => {
       if (listener === "message") {
         setTimeout(() => {
           removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 1000);
+        }, fieldData.deleteMessages * 100000000);
       } else {
         setTimeout(() => {
           removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 1000);
+        }, fieldData.deleteMessages * 100000000);
       }
     }
     mainCont.appendChild(mainContainer);

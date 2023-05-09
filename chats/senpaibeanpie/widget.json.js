@@ -111,5 +111,11 @@ let fieldData = {
       small: "Small",
       regular: "Normal"
     }
+  },
+  thanksMessage: {
+    type: "text",
+    label: "Thank you message (max 40)",
+    value: "Thank you for watching!",
+    group: "Customization",
   }
 };

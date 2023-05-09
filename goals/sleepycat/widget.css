@@ -18,12 +18,13 @@ main {
   width: 100%;
   display: grid;
   place-content: center;
+  margin-bottom: 4rem;
 }
 
 .container {
   display: flex;
   align-items: center;
-  height: 200px;
+  height: 250px;
   width: 37rem;
   position: relative;
 }
@@ -34,7 +35,7 @@ main {
   padding: 0.4rem 1.5rem;
   background-color: #c5c8ff;
   border-radius: 50px;
-  border: 5px solid white;
+  border: 5px solid #ffeab6;
   display: grid;
   place-content: center;
 }
@@ -88,7 +89,7 @@ main {
 .img-container {
   position: absolute;
   z-index: 2;
-  top: 6.1rem;
+  top: 7.9rem;
   left: 1rem;
   transition: left 0.2s;
 }
@@ -105,11 +106,11 @@ main {
 
 .goal-name {
   position: absolute;
-  top: 2.2rem;
+  top: 3.9rem;
   left: 3rem;
   width: 14rem;
   height: 3.5rem;
-  background-color: #fff;
+  background-color: #fff4f4;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
   border-radius: 40px;
   text-align: center;
@@ -125,6 +126,28 @@ main {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
 }
 
 .widget {

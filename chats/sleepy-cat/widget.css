@@ -372,7 +372,7 @@ main {
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 1s ease-in-out forwards;
-  text-shadow: 0 0 0.2em #9da0f5, 0 0 0.2em #9da0f5;
+  text-shadow: 0 0 5px #9da0f5;
 }
 
 @keyframes showNames {

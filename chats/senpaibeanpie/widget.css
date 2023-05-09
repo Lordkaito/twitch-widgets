@@ -1,26 +1,29 @@
 :root {
-  --message-color: #f2ded7;
-  --message-background-color: #7a6564;
-  --message-border-color: #f5ded6;
-  --user-color: white;
-  --user-background-color: #95915d;
-  --user-border-color: #e6e6e6;
+  --message-color: #F8F7FD;
+  --message-background-color: transparent;
+  --message-border-color: transparent;
+  --user-color: #FFB3C6;
+  --user-background-color: transparent;
+  --user-border-color: transparent;
   --user-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
-  --pronouns-color: #bebc97;
-  --pronouns-background-color: #ffffff;
-  --pronouns-border-color: #e6e6e6;
+  --pronouns-color: #F8F7FD;
+  --pronouns-background-color: transparent;
+  --pronouns-border-color: transparent;
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
-  --mods-background-color: #d1cfb4;
+  --mods-background-color: transparent;
   --mods-message-border: #fff3eb;
   --event-background-color: transparent;
   --event-shadow-color: #a38c79;
   --event-color: #ead7cd;
+  --event-border: #F8F7FD;
+  --event-user-color: #FFB3C6;
+  --event-thanks-color: #F8F7FD;
 }
 
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 0.875rem;
-  font-weight: 700;
+  /* font-weight: 700; */
   overflow-wrap: break-word;
   margin: 0;
   padding: 0;
@@ -175,13 +178,14 @@ main {
 .main-container {
   max-width: 37.5rem;
   background: var(--message-background-color);
-  margin-bottom: 1.875rem;
   border-radius: 0.5rem;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  left: 1.875rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* left: 1.875rem; */
   width: 100%;
   border-radius: 20px;
   border: 5px solid var(--message-border-color);
@@ -197,7 +201,6 @@ main {
   display: inline-block;
   top: -1.75rem;
   left: 1.6875rem;
-  border: 1px solid blue;
 }
 
 .border-decoration-container {
@@ -213,34 +216,39 @@ main {
 
 .username-info-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 9fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: -1.7rem;
-  left: 3rem;
-  gap: 10px;
+  grid-template-rows: 1fr 1fr;
+  place-content: center;
+  /* align-items: center;
+  justify-content: center; */
+  /* position: absolute; */
+  /* gap: 10px; */
+  width: 100%;
+  /* border: 1px solid red; */
 }
 
 .username-info {
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
-  padding: 0.6rem 1.7rem;
+  /* padding: 0.6rem 1.7rem; */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  box-shadow: var(--user-shadow);
+  /* box-shadow: var(--user-shadow); */
   position: relative;
   background-color: var(--user-background-color);
 }
 
 .flower {
-  position: absolute;
+  /* position: absolute;
   bottom: -0.4rem;
-  right: -0.5rem;
+  right: -0.5rem; */
+  height: calc(100% - 7px);
+}
+
+.flower-1 {
+  order: -1;
 }
 
 .leafs {
@@ -291,7 +299,7 @@ main {
   }
 
   100% {
-    transform: rotate( 360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -319,32 +327,37 @@ main {
 .capitalize-user {
   color: var(--user-color);
   font-weight: bold;
-  font-size: 1.35rem;
+  font-size: 1.8rem;
   display: inline-block;
   width: 12ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
+  padding: 0 .5rem;
 }
 
 .message-container {
-  padding-left: 1.1875rem;
+  /* padding-left: 1.1875rem; */
   flex-grow: 1;
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  margin-top: .5rem;
+  /* margin-bottom: 1.25rem; */
+  /* border: 1px solid red; */
 }
 
 .message-icon-container {
   display: flex;
   flex-grow: 1;
   align-items: center;
-  gap: 0.625rem;
-  margin-top: 0.625rem;
+  /* gap: 0.625rem; */
+  /* margin-top: 0.625rem; */
 }
 
 .text {
   font-size: 1.5rem;
-  font-weight: 700;
+  /* font-weight: 700; */
+  text-align: center;
 }
 
 @keyframes twinkleText {
@@ -363,10 +376,10 @@ main {
   width: 31.25rem;
   color: var(--message-color);
   white-space: normal;
-  margin-right: 0.625rem;
-  padding-top: 1.25rem;
-  padding-left: 1.25rem;
-  padding-right: 1rem;
+  /* margin-right: 0.625rem; */
+  /* padding-top: 1.25rem; */
+  /* padding-left: 1.25rem; */
+  /* padding-right: 1rem; */
   animation: twinkleText 0.5 1 forwards;
 }
 
@@ -390,12 +403,12 @@ main {
 
 .pronouns {
   color: var(--pronouns-color);
-  font-size: 12px;
+  /* font-size: 12px; */
   text-transform: uppercase;
   text-align: center;
-  width: 6.25rem;
-  justify-self: right;
-  margin-right: 10rem;
+  /* width: 6.25rem;
+  justify-self: right; */
+  /* margin-right: 10rem; */
   position: relative;
   z-index: 1;
 }
@@ -405,8 +418,10 @@ main {
   text-align: center;
   background: var(--pronouns-background-color);
   border-radius: 1.25rem;
-  padding: 7px;
-  box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  /* padding: 7px; */
+  font-size: 1.2rem;
+  font-weight: bold;
+  /* box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px; */
 }
 
 .separator {
@@ -533,16 +548,30 @@ main {
 }
 
 .event-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
   max-width: 37rem;
-  padding: 1rem 1rem 0.6rem 1rem;
+  padding: .5rem 2rem;
   animation-fill-mode: forwards;
   animation-duration: 0.8s;
-  left: 1.875rem;
-  width: 37.5rem;
+  border: 3px solid var(--event-border);
+  border-radius: 4rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.thanks-and-name-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+  padding: 0 1rem;
+}
+
+.thanks-message {
+  font-size: 1.5rem;
+  color: var(--event-thanks-color);
+  text-align: center;
 }
 
 .sand-container {
@@ -560,7 +589,7 @@ main {
 }
 
 .event-name {
-  max-width: 300px;
+  /* max-width: 300px; */
   height: 100%;
   top: 0;
   text-align: center;
@@ -568,14 +597,15 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 1;
-  color: var(--event-color);
+  color: var(--event-user-color);
   letter-spacing: normal;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   animation: showNames 0.5s ease-in-out forwards;
   background-color: var(--event-background-color);
-  padding: 3px 0px;
+  /* padding: 3px 0px; */
   border-radius: 40px;
-  text-shadow: 0 2px 0.2em var(--event-shadow-color);
+  /* text-shadow: 0 2px 0.2em var(--event-shadow-color); */
 }
 
 @keyframes showNames {
