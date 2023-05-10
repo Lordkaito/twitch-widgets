@@ -148,28 +148,37 @@ class mainEvent {
   }
 
   get roles() {
-    const priorityRole = [];
+    let priorityRole = [];
     const tags = this.event.data.tags;
+    console.log(tags);
     let keys = Object.keys(tags);
     keys.forEach((key) => {
       if (roles.includes(key) && tags[key] === "1") {
+        console.log(key);
         priorityRole.push({ role: key, priority: priorities[key] });
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
-      console.log("streamer");
+    if (this.isStreamer) {
+      priorityRole = [];
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
       return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
+      priorityRole = [];
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
       return priorityRole[0];
     }
-    priorityRole.sort((a, b) => a.priority - b.priority);
-    return priorityRole[0];
-    return priorityRole
+
+    let minPriorityRole = [];
+    if (priorityRole.length >= 1) {
+      priorityRole.sort((a, b) => {
+        return a.priority - b.priority;
+      });
+    }
+
+    return minPriorityRole.length === 0 ? priorityRole[0] : minPriorityRole[0];
   }
 
   eventType() {
@@ -280,7 +289,9 @@ class mainEvent {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
-    capitalizeUser.style.color = `${colors[role.role].user.text}`
+    if (this.isStreamer) {
+      capitalizeUser.style.color = `${colors[role.role].user.text}`;
+    }
     return capitalizeUser;
   }
 
@@ -304,9 +315,12 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
-
-    pronouns.style.color = `${colors[this.roles.role].user.text}`
-    pronouns.style.backgroundColor = `${colors[this.roles.role].user.background}`
+    if (this.isStreamer) {
+      pronouns.style.color = `${colors[this.roles.role].user.text}`;
+    }
+    pronouns.style.backgroundColor = `${
+      colors[this.roles.role].user.background
+    }`;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
