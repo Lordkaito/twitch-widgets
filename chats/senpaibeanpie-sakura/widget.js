@@ -179,7 +179,7 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/fbDmJpb1/margarita-izq.png";
+    flower.src = "https://i.postimg.cc/vHBd3bdk/SAKURA.png";
     flower.classList.add("flower");
 
     return flower;
@@ -737,30 +737,16 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1000);
   }
 };
 
 const removeEvent = (mainContainer, event) => {
   const elem = mainContainer;
-  elem.querySelector(".event-leafs-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-2").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(".event-leafs-container-1").style.animationName =
-    "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-1").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(`.${event}`).style.animationName = "hideNames";
+  elem.style.animationName = "removeMessage";
   setTimeout(() => {
     elem.remove();
-  }, 100000000);
+  }, 1000);
 };
 
 let repeatedEvents = 0;
@@ -792,11 +778,11 @@ window.addEventListener("onEventReceived", async (obj) => {
       if (listener === "message") {
         setTimeout(() => {
           removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 100000000);
+        }, fieldData.deleteMessages * 1000);
       } else {
         setTimeout(() => {
           removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 100000000);
+        }, fieldData.deleteMessages * 1000);
       }
     }
     mainCont.appendChild(mainContainer);

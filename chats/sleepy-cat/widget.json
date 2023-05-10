@@ -14,19 +14,19 @@
   "followText": {
     "type": "text",
     "label": "Custom text for FOLLOW (max 40)",
-    "value": "Fulanito just followed!",
+    "value": "(user) just followed!",
     "group": "Events"
   },
   "cheerText": {
     "type": "text",
     "label": "Custom text for Cheers (max 40)",
-    "value": "cheered x(amount)!",
+    "value": "(user) cheered x(amount)!",
     "group": "Events"
   },
   "tipText": {
     "type": "text",
     "label": "Custom text for Tips (max 40)",
-    "value": "Tipped $(amount)!",
+    "value": "(user) tipped $(amount)!",
     "group": "Events"
   },
   "giftSubText": {
@@ -57,39 +57,50 @@
     "label": "Time to delete messages (max 60):",
     "type": "number",
     "group": "Customization",
-    "value": 10,
+    "value": 60,
     "min": 1,
     "max": 60,
     "step": 1
+  },
+  "allowDeleteMessages": {
+    "type": "dropdown",
+    "label": "Delete messages on/off:",
+    "value": "true",
+    "group": "Customization",
+    "options": { "true": "Yes", "false": "No" }
   },
   "displayBadges": {
     "type": "dropdown",
     "label": "Show badges:",
     "value": "false",
     "group": "Customization",
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
+    "options": { "true": "Yes", "false": "No" }
   },
   "allowPronouns": {
     "type": "dropdown",
     "label": "Show pronouns:",
     "value": "true",
     "group": "Customization",
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
+    "options": { "true": "Yes", "false": "No" }
   },
   "theme": {
     "type": "dropdown",
     "label": "Theme",
     "value": "pink",
     "group": "Customization",
-    "options": {
-      "pink": "Light",
-      "purple": "Dark"
-    }
+    "options": { "pink": "Light", "purple": "Dark" }
+  },
+  "chatBoxSize": {
+    "type": "dropdown",
+    "label": "Chat box size",
+    "value": "small",
+    "group": "Customization",
+    "options": { "small": "Small", "regular": "Normal" }
+  },
+  "thanksMessage": {
+    "type": "text",
+    "label": "Thank you message (max 40)",
+    "value": "Thank you for watching!",
+    "group": "Customization"
   }
 }
