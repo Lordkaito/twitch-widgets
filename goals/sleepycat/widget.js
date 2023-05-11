@@ -15,15 +15,15 @@ const progress = document.querySelector(".progress-bar-container");
 progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
-  // let apiData;
-  // SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
-  //   if (data === null) {
-  //     apiData = gained;
-  //   } else {
-  //     apiData = data;
-  //   }
-  //   init(obj, initGoal, apiData);
-  // });
+  let apiData;
+  SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
+    if (data === null) {
+      apiData = gained;
+    } else {
+      apiData = data;
+    }
+    init(obj, initGoal, apiData);
+  });
 });
 
 const init = (obj, initGoalCallback, data) => {
@@ -35,18 +35,11 @@ const init = (obj, initGoalCallback, data) => {
   mainObj.apiToken = obj["detail"]["channel"]["apiToken"];
   mainObj.fieldData = obj["detail"]["fieldData"];
 
-  if (mainObj.fieldData.resetGoalData === "true") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    // SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
-  }
-
   goalType = mainObj.fieldData.goalType;
   goalStartQuantity = mainObj.fieldData.goalStartQuantity;
+  if (mainObj.fieldData.goalStartQuantity === null) {
+    goalStartQuantity = 0;
+  }
   goalObjectiveQuantity = mainObj.fieldData.goalObjectiveQuantity;
   initGoalCallback(goalType, data);
 };
@@ -72,15 +65,15 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
@@ -119,6 +112,27 @@ const grow = (type, amount = 1, data) => {
 };
 
 window.addEventListener("onEventReceived", function (obj) {
+  if (obj.detail.event.value === "reset") {
+    let clear = {
+      subscriber: { type: "subscriber", amount: 0 },
+      follower: { type: "follower", amount: 0 },
+      tip: { type: "tip", amount: 0 },
+      cheer: { type: "cheer", amount: 0 },
+    };
+    SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
+    window.location.reload();
+  }
+
+  //if (mainObj.fieldData.resetGoalData === "true") {
+  //let clear = {
+  // subscriber: { type: "subscriber", amount: 0 },
+  //follower: { type: "follower", amount: 0 },
+  //tip: { type: "tip", amount: 0 },
+  // cheer: { type: "cheer", amount: 0 },
+  //};
+  // SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
+  //}
+
   progressFn(obj.detail.event);
 });
 
@@ -129,10 +143,10 @@ const initGoal = (type, data) => {
     const goalText = document.querySelector(".goal-name");
     const progressBar = document.querySelector(".progress-bar");
     const progression = document.querySelector(".progression");
-    goalText.style.color = "#ea769b";
-    progressBar.style.backgroundColor = "#c9527a";
-    progression.style.textShadow = `-1px -1px 0 #c9527a, 1px -1px 0 #c9527a, -1px 1px 0 #c9527a,
-    1px 1px 0 #c9527a`;
+    goalText.style.color = "#ff9eb9";
+    progressBar.style.backgroundColor = "#ff9eb9";
+    progression.style.textShadow = `-1px -1px 0 #ff9eb9, 1px -1px 0 #ff9eb9, -1px 1px 0 #ff9eb9,
+    1px 1px 0 #ff9eb9`;
   }
   let current = goalStartQuantity;
   let step;
@@ -146,16 +160,16 @@ const initGoal = (type, data) => {
   } else {
     step = progressBarWidth / (goalObjectiveQuantity - goalStartQuantity);
   }
-  
-  let goalTitle = ""
-  if(mainObj.fieldData.title != "") {
-  	goalTitle = mainObj.fieldData.title
-    const title = document.querySelector('.goal-title')
+
+  let goalTitle = "";
+  if (mainObj.fieldData.title != "") {
+    goalTitle = mainObj.fieldData.title;
+    const title = document.querySelector(".goal-title");
     const maxChars = 11;
-    if(goalTitle.length > maxChars) {
-      goalTitle = goalTitle.substring(0, maxChars)
+    if (goalTitle.length > maxChars) {
+      goalTitle = goalTitle.substring(0, maxChars);
     }
-    title.innerText = goalTitle
+    title.innerText = goalTitle;
   }
 
   goal = {
