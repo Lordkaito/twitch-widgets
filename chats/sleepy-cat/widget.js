@@ -922,8 +922,8 @@ class Sub {
     const leftPawContainer = document.createElement("div");
     leftPaw.style.filter = `drop-shadow(0 0 5px ${this.themeColor().shadow})`;
     leftPaw.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-cloud-filled" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M10.04 4.305c2.195 -.667 4.615 -.224 6.36 1.176c1.386 1.108 2.188 2.686 2.252 4.34l.003 .212l.091 .003c2.3 .107 4.143 1.961 4.25 4.27l.004 .211c0 2.407 -1.885 4.372 -4.255 4.482l-.21 .005h-11.878l-.222 -.008c-2.94 -.11 -5.317 -2.399 -5.43 -5.263l-.005 -.216c0 -2.747 2.08 -5.01 4.784 -5.417l.114 -.016l.07 -.181c.663 -1.62 2.056 -2.906 3.829 -3.518l.244 -.08z" stroke-width="0" fill="white"></path>
 </svg>`;
     const rightPaw = document.createElement("svg");
     rightPaw.classList.add("right-paw");
@@ -1470,57 +1470,56 @@ const removeEvent = (mainContainer, event) => {
   }, 100000000);
 };
 
+const blacklisted = (name) => {
+  let username = name.toLowerCase().trim();
+  let blacklist = [];
+  let blackListFieldData = fieldData.usersBlackList.split(",");
+  blackListFieldData.forEach((nick) => {
+    blacklist.push(nick.toLowerCase().trim());
+  });
+  return blacklist.includes(username);
+};
+
+const ignoreMessagesStartingWith = (message) => {
+  let ignoreList = [];
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+  ignoreListFieldData.forEach((symbol) => {
+    ignoreList.push(symbol.trim());
+  });
+  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
+};
+
 let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
 
 window.addEventListener("onEventReceived", async (obj) => {
+  console.log(obj);
   let { listener, event } = obj.detail;
-  if (event.bulkGifted) listener = "bulk";
 
-  const mainCont = document.querySelector("main");
-
-  if (isBulk && repeatedEvents < maxEvents) {
-    repeatedEvents++;
+  if (listener === "subscriber-latest") {
+    holdedEvent(event);
     return;
   }
 
-  repeatedEvents = 0;
-  isBulk = false;
-  maxEvents = 0;
+  const mainCont = document.querySelector("main");
+
   switch (listener) {
-    case "bulk":
-      maxEvents = event.count;
-      isBulk = true;
-      const bulk = new BulkGift(event);
-      bulk
-        .init()
-        .then((bulkContainer) => {
-          setTimeout(() => {
-            removeEvent(bulkContainer, "bulk-name");
-          }, fieldData.deleteMessages * 100000000);
-          mainCont.appendChild(bulkContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
     case "message":
+      let isBlackListed = blacklisted(event.data.displayName);
+      if (isBlackListed) return;
+      let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+      if (specialSymbols) return;
       const message = new Message(event);
       message
         .init()
         .then((mainContainer) => {
-          setTimeout(() => {
-            removeMessage(mainContainer);
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeMessage(mainContainer);
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(mainContainer);
-
-          setTimeout(() => {
-            const bigLine = mainContainer.querySelector("#big-line");
-            const messageContainer =
-              mainContainer.querySelector(".message-container");
-            bigLine.style.height = `${messageContainer.offsetHeight}px`;
-          }, 500);
         })
         .finally(() => {
           $("main").scrollTop($("main")[0].scrollHeight);
@@ -1531,23 +1530,27 @@ window.addEventListener("onEventReceived", async (obj) => {
       follow
         .init()
         .then((followContainer) => {
-          setTimeout(() => {
-            removeEvent(followContainer, "follow-name");
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(followContainer, "follow-name");
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(followContainer);
         })
         .finally(() => {
           $("main").scrollTop($("main")[0].scrollHeight);
         });
       break;
-    case "subscriber-latest":
+    case "subscriber":
       const sub = new Sub(event);
       sub
         .init()
         .then((subContainer) => {
-          setTimeout(() => {
-            removeEvent(subContainer, "sub-name");
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(subContainer, "sub-name");
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(subContainer);
         })
         .finally(() => {
@@ -1559,9 +1562,11 @@ window.addEventListener("onEventReceived", async (obj) => {
       raid
         .init()
         .then((raidContainer) => {
-          setTimeout(() => {
-            removeEvent(raidContainer, "raid-name");
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(raidContainer, "raid-name");
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(raidContainer);
         })
         .finally(() => {
@@ -1573,9 +1578,11 @@ window.addEventListener("onEventReceived", async (obj) => {
       cheer
         .init()
         .then((cheerContainer) => {
-          setTimeout(() => {
-            removeEvent(cheerContainer, "cheer-name");
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(cheerContainer, "cheer-name");
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(cheerContainer);
         })
         .finally(() => {
@@ -1587,9 +1594,11 @@ window.addEventListener("onEventReceived", async (obj) => {
       tip
         .init()
         .then((tipContainer) => {
-          setTimeout(() => {
-            removeEvent(tipContainer, "tip-name");
-          }, fieldData.deleteMessages * 100000000);
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(tipContainer, "tip-name");
+            }, fieldData.deleteMessages * 100000000);
+          }
           mainCont.appendChild(tipContainer);
         })
         .finally(() => {
@@ -1597,6 +1606,131 @@ window.addEventListener("onEventReceived", async (obj) => {
         });
       break;
     default:
-      return;
+      console.log(event);
+      const bulk = new BulkGift(event);
+      bulk
+        .init()
+        .then((bulkContainer) => {
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(bulkContainer, "bulk");
+            }, fieldData.deleteMessages * 100000000);
+          }
+          mainCont.appendChild(bulkContainer);
+        })
+        .finally(() => {
+          $("main").scrollTop($("main")[0].scrollHeight);
+        });
+      break;
   }
 });
+
+let storedEvents = [];
+let eventCounter = 0;
+let eventTimer = null;
+let firstEvent = true;
+let previousSender = "";
+
+const dispatchNewEvent = (event) => {
+  if (
+    previousSender === currentSender ||
+    firstEvent === true ||
+    previousSender === ""
+  ) {
+    storedEvents.push(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+    previousSender = "";
+  }
+
+  if (eventTimer) {
+    clearTimeout(eventTimer);
+  }
+
+  eventTimer = setTimeout(() => {
+    if (storedEvents.length > 1) {
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "bulk",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      eventCounter += storedEvents.length;
+      console.log(
+        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
+      );
+      previousSender = "";
+    } else if (storedEvents.length === 1) {
+      console.log("heresdfadsf");
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "subscriber",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      previousSender = "";
+    }
+    storedEvents = [];
+    eventTimer = null;
+    eventCounter = 0;
+  }, 500);
+  firstEvent = false;
+  previousSender = event.sender;
+};
+
+const holdedEvent = async (event) => {
+  if (event.gifted) {
+    currentSender = event.sender;
+    dispatchNewEvent(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+  }
+};
+
+// messages on/off need to be here and the opacity, blacklists

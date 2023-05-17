@@ -92,4 +92,16 @@ let fieldData = {
       purple: "Dark",
     },
   },
+  usersBlackList: {
+    type: "text",
+    label: "Users blacklist (separated by comma)",
+    value: "user1, user2",
+    group: "Customization"
+  },
+  specialCharsBlackList: {
+    type: "text",
+    label: "Special chars (separated by comma)",
+    value: "hola",
+    group: "Customization"
+  }
 };

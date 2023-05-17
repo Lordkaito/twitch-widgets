@@ -104,6 +104,25 @@ const priorities = {
   viewer: 5,
 };
 
+const blacklisted = (name) => {
+  let username = name.toLowerCase().trim();
+  let blacklist = [];
+  let blackListFieldData = fieldData.usersBlackList.split(",");
+  blackListFieldData.forEach((nick) => {
+    blacklist.push(nick.toLowerCase().trim());
+  });
+  return blacklist.includes(username);
+};
+
+const ignoreMessagesStartingWith = (message) => {
+  let ignoreList = [];
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+  ignoreListFieldData.forEach((symbol) => {
+    ignoreList.push(symbol.trim());
+  });
+  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
+};
+
 class Message {
   constructor(message) {
     this.message = message;
@@ -112,11 +131,9 @@ class Message {
   get roles() {
     let priorityRole = [];
     const tags = this.message.data.tags;
-    console.log(tags);
     let keys = Object.keys(tags);
     keys.forEach((key) => {
       if (roles.includes(key) && tags[key] === "1") {
-        console.log(key);
         priorityRole.push({ role: key, priority: priorities[key] });
       }
     });
@@ -144,6 +161,7 @@ class Message {
   }
 
   async init() {
+    if (this.blacklisted) return;
     this.roleImages;
     let idSelector = this.ids;
     return await this.createMainContainerElement();
@@ -771,6 +789,10 @@ class Sub {
     return trimmed;
   }
 
+  get isResub() {
+    return this.sub.amount > 1;
+  }
+
   async createMainSubContainer() {
     const mainContainer = document.createElement("div");
 
@@ -796,6 +818,9 @@ class Sub {
         giftText = giftText.replace("(user)", name);
       }
       text = giftText;
+      nameAndText = `${text}`;
+    } else if (this.isResub) {
+      text =  name + ` Se ha resuscrito por ${amount} meses!`;
       nameAndText = `${text}`;
     } else {
       text = subText != "" ? subText : name + text;
@@ -1155,40 +1180,194 @@ let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
 
+let previousEvent = "";
+let previousSender = "";
+let currentSender = "";
+let sameEventsAmount = 0;
+
+const isSameSender = (event) => {
+  if (event.sender != "" && event.sender != null) {
+    if (event.sender == previousSender) {
+      previousSender = event.sender;
+      return true;
+    }
+    previousSender = event.sender;
+  }
+  return false;
+};
+
+const isSameEvent = (listener, event) => {
+  if (listener != "" && listener != null) {
+    if (listener == previousEvent) {
+      previousEvent = listener;
+      return isSameSender(event);
+    }
+    previousEvent = listener;
+  }
+  return false;
+};
+
+// window.addEventListener("onEventReceived", async (obj) => {
+//   let { listener, event } = obj.detail;
+//   holdedEvent = event;
+//   if(holdedEvent != event) {
+//   }
+//   let sameEvent = isSameEvent(listener, event);
+
+//   if (sameEvent) {
+//     sameEventsAmount++;
+//     return;
+//   } else {
+//     const mainCont = document.querySelector("main");
+
+//     switch (listener) {
+//       case "message":
+//         let isBlackListed = blacklisted(event.data.displayName);
+//         if(isBlackListed) return;
+//         let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+//         if(specialSymbols) return;
+//         const message = new Message(event);
+//         message
+//           .init()
+//           .then((mainContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeMessage(mainContainer);
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(mainContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       case "follower-latest":
+//         const follow = new Follow(event);
+//         follow
+//           .init()
+//           .then((followContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(followContainer, "follow-name");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(followContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       case "subscriber-latest":
+//         const sub = new Sub(event);
+//         sub
+//           .init()
+//           .then((subContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(subContainer, "sub-name");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(subContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       case "raid-latest":
+//         const raid = new Raid(event);
+//         raid
+//           .init()
+//           .then((raidContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(raidContainer, "raid-name");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(raidContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       case "cheer-latest":
+//         const cheer = new Cheer(event);
+//         cheer
+//           .init()
+//           .then((cheerContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(cheerContainer, "cheer-name");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(cheerContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       case "tip-latest":
+//         const tip = new Tip(event);
+//         tip
+//           .init()
+//           .then((tipContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(tipContainer, "tip-name");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(tipContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//           });
+//         break;
+//       default:
+//         const bulk = new BulkGift(event, sameEventsAmount);
+//         bulk
+//           .init()
+//           .then((bulkContainer) => {
+//             if (fieldData.allowDeleteMessages === "true") {
+//               setTimeout(() => {
+//                 removeEvent(bulkContainer, "bulk");
+//               }, fieldData.deleteMessages * 100000000);
+//             }
+//             mainCont.appendChild(bulkContainer);
+//           })
+//           .finally(() => {
+//             $("main").scrollTop($("main")[0].scrollHeight);
+//             sameEventsAmount = 0;
+//           });
+//         break;
+//     }
+//   }
+//   // if (event.bulkGifted) listener = "bulk";
+//   // if (isBulk && repeatedEvents < maxEvents) {
+//   //   repeatedEvents++;
+//   //   return;
+//   // }
+
+//   // repeatedEvents = 0;
+//   // isBulk = false;
+//   // maxEvents = 0;
+// });
+
 window.addEventListener("onEventReceived", async (obj) => {
+  console.log(obj);
   let { listener, event } = obj.detail;
-  if (event.bulkGifted) listener = "bulk";
 
-  const mainCont = document.querySelector("main");
-
-  if (isBulk && repeatedEvents < maxEvents) {
-    repeatedEvents++;
+  if (listener === "subscriber-latest") {
+    holdedEvent(event);
     return;
   }
 
-  repeatedEvents = 0;
-  isBulk = false;
-  maxEvents = 0;
+  const mainCont = document.querySelector("main");
+
   switch (listener) {
-    case "bulk":
-      maxEvents = event.count;
-      isBulk = true;
-      const bulk = new BulkGift(event);
-      bulk
-        .init()
-        .then((bulkContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(bulkContainer, "bulk");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(bulkContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
     case "message":
+      let isBlackListed = blacklisted(event.data.displayName);
+      if (isBlackListed) return;
+      let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+      if (specialSymbols) return;
       const message = new Message(event);
       message
         .init()
@@ -1220,7 +1399,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           $("main").scrollTop($("main")[0].scrollHeight);
         });
       break;
-    case "subscriber-latest":
+    case "subscriber":
       const sub = new Sub(event);
       sub
         .init()
@@ -1285,6 +1464,128 @@ window.addEventListener("onEventReceived", async (obj) => {
         });
       break;
     default:
-      return;
+      console.log(event);
+      const bulk = new BulkGift(event);
+      bulk
+        .init()
+        .then((bulkContainer) => {
+          if (fieldData.allowDeleteMessages === "true") {
+            setTimeout(() => {
+              removeEvent(bulkContainer, "bulk");
+            }, fieldData.deleteMessages * 100000000);
+          }bc
+          mainCont.appendChild(bulkContainer);
+        })
+        .finally(() => {
+          $("main").scrollTop($("main")[0].scrollHeight);
+        });
+      break;
   }
 });
+
+let storedEvents = [];
+let eventCounter = 0;
+let eventTimer = null;
+let firstEvent = true;
+
+const dispatchNewEvent = (event) => {
+  if (
+    previousSender === currentSender ||
+    firstEvent === true ||
+    previousSender === ""
+  ) {
+    storedEvents.push(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+    previousSender = "";
+  }
+
+  if (eventTimer) {
+    clearTimeout(eventTimer);
+  }
+
+  eventTimer = setTimeout(() => {
+    if (storedEvents.length > 1) {
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "bulk",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      eventCounter += storedEvents.length;
+      console.log(
+        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
+      );
+      previousSender = "";
+    } else if (storedEvents.length === 1) {
+      console.log("heresdfadsf");
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "subscriber",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      previousSender = "";
+    }
+    storedEvents = [];
+    eventTimer = null;
+    eventCounter = 0;
+  }, 500);
+  firstEvent = false;
+  previousSender = event.sender;
+};
+
+const holdedEvent = async (event) => {
+  if (event.gifted) {
+    currentSender = event.sender;
+    dispatchNewEvent(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+  }
+};

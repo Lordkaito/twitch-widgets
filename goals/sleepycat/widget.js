@@ -16,14 +16,14 @@ progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
-  SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
-    if (data === null) {
-      apiData = gained;
-    } else {
-      apiData = data;
-    }
-    init(obj, initGoal, apiData);
-  });
+  // SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
+  //   if (data === null) {
+  //     apiData = gained;
+  //   } else {
+  //   }
+  // });
+  apiData = gained;
+  init(obj, initGoal, apiData);
 });
 
 const init = (obj, initGoalCallback, data) => {
@@ -44,8 +44,10 @@ const init = (obj, initGoalCallback, data) => {
   initGoalCallback(goalType, data);
 };
 
-const progressFn = (data) => {
-  if (data.type === "subscriber" || data.type === "follower") {
+const progressFn = (data, listener) => {
+  if (data.type === "subscriber" && data.gifted === true) {
+    grow(data.type, data.amount);
+  } else if (data.type === "subscriber" || data.type === "follower") {
     grow(data.type);
   } else {
     grow(data.type, data.amount);
@@ -65,19 +67,19 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     default:
       break;
@@ -123,6 +125,12 @@ window.addEventListener("onEventReceived", function (obj) {
     window.location.reload();
   }
 
+  if (obj.detail.listener === "grow") {
+    progressFn(obj.detail.event, listener);
+  } else {
+    holdedEvent(obj.detail.event);
+  }
+
   //if (mainObj.fieldData.resetGoalData === "true") {
   //let clear = {
   // subscriber: { type: "subscriber", amount: 0 },
@@ -133,7 +141,7 @@ window.addEventListener("onEventReceived", function (obj) {
   // SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
   //}
 
-  progressFn(obj.detail.event);
+  // progressFn(obj.detail.event);
 });
 
 const initGoal = (type, data) => {
@@ -163,13 +171,13 @@ const initGoal = (type, data) => {
 
   let goalTitle = "";
   if (mainObj.fieldData.title != "") {
-    goalTitle = mainObj.fieldData.title;
+    // goalTitle = mainObj.fieldData.title;
     const title = document.querySelector(".goal-title");
     const maxChars = 11;
-    if (goalTitle.length > maxChars) {
-      goalTitle = goalTitle.substring(0, maxChars);
-    }
-    title.innerText = goalTitle;
+    // if (goalTitle.length > maxChars) {
+    //   goalTitle = goalTitle.substring(0, maxChars);
+    // }
+    // title.innerText = goalTitle;
   }
 
   goal = {
@@ -183,5 +191,114 @@ const initGoal = (type, data) => {
     mainObj.fieldData.startFromCero === "false"
   ) {
     grow("initial", 1, data);
+  }
+};
+
+let storedEvents = [];
+let eventCounter = 0;
+let eventTimer = null;
+let firstEvent = true;
+let previousSender = "";
+
+const dispatchNewEvent = (event) => {
+  if (
+    previousSender === currentSender ||
+    firstEvent === true ||
+    previousSender === ""
+  ) {
+    storedEvents.push(event);
+  } else {
+    event.amount = 1;
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "grow",
+          event: event,
+        },
+      })
+    );
+    previousSender = "";
+  }
+
+  if (eventTimer) {
+    clearTimeout(eventTimer);
+  }
+
+  eventTimer = setTimeout(() => {
+    if (storedEvents.length > 1) {
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "grow",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      eventCounter += storedEvents.length;
+      console.log(
+        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
+      );
+      previousSender = "";
+    } else if (storedEvents.length === 1) {
+      console.log("heresdfadsf");
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "grow",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      previousSender = "";
+    }
+    storedEvents = [];
+    eventTimer = null;
+    eventCounter = 0;
+  }, 500);
+  firstEvent = false;
+  previousSender = event.sender;
+};
+
+const holdedEvent = (event) => {
+  if (event.gifted) {
+    currentSender = event.sender;
+    dispatchNewEvent(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "grow",
+          event: event,
+        },
+      })
+    );
   }
 };

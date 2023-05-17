@@ -1,8 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
 
-const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
-
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
   user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
