@@ -65,7 +65,7 @@ main {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  transform-style: preserve-3d;
+  /* transform-style: preserve-3d; */
 }
 
 .main-container {
@@ -417,19 +417,19 @@ main {
   0% {
     transform: scale(0);
     transform-origin: bottom center;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
   }
 
   50% {
     transform: scale(110%);
     transform-origin: bottom center;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
   }
 
   100% {
     transform: scale(100%);
     transform-origin: bottom center;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
   }
 }
 

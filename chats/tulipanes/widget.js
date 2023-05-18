@@ -119,6 +119,7 @@ class mainEvent {
   }
 
   get isStreamer() {
+    console.log(this.event.data.displayName.toLowerCase());
     return (
       this.event.data.displayName.toLowerCase() ==
       this.event.data.channel.toLowerCase()
@@ -217,8 +218,6 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = `${colors[role.role].text.background}`;
-    // mainContainer.classList.add(`${this.roles.role}-main-container`); // not being used for ronros, but useful for future chats if we need to style them differently
     mainContainer.appendChild(this.flower);
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
@@ -538,6 +537,7 @@ class mainEvent {
   }
 
   get name() {
+    console.log(this.event);
     const name = this.event.name;
     const trimmed = this.trimName(name);
 
@@ -553,6 +553,14 @@ class mainEvent {
     return trimmed;
   }
 
+  get isResub() {
+    if (this.event.originalEventName === "subscriber-latest") {
+      return this.event.amount > 1;
+    }
+
+    return false;
+  }
+
   async createMainEventContainer() {
     const mainContainer = document.createElement("div");
 
@@ -566,6 +574,7 @@ class mainEvent {
       giftSubText,
       bulkGiftText,
       raidText,
+      resubText,
     } = fieldData;
 
     const dictionary = {
@@ -576,11 +585,18 @@ class mainEvent {
       giftsub: giftSubText,
       bulkgift: bulkGiftText,
       raid: raidText,
+      resub: resubText,
     };
 
     const amount = this.amount;
-    const sender = this.event.name;
+    console.log(amount);
+    let sender = this.event.sender;
+    if (this.event.originalEventName === "raid-latest")
+      sender = this.event.name;
     let eventText = dictionary[this.event.type];
+    if (this.isResub) {
+      eventText = dictionary["resub"];
+    }
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -593,8 +609,10 @@ class mainEvent {
         text = eventText;
       }
     }
-
+    console.log(this.event.bulkGifted);
     if (this.event.bulkGifted) {
+      sender = this.event.sender;
+      console.log(this.event);
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -613,6 +631,7 @@ class mainEvent {
       eventText = eventText.replace("(user)", name);
       eventText = eventText.replace("(amount)", amount);
       eventText = eventText.replace("(sender)", sender);
+      eventText = eventText.replace("(months)", amount);
       text = eventText;
     }
 
@@ -697,10 +716,10 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
 
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
+  if (fieldData.transparency == "false") {
+    main.style.maskImage = "none";
+    main.style.webkitMaskImage = "none";
+  }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -758,8 +777,38 @@ let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
 
+const blacklisted = (name) => {
+  let username = name.toLowerCase().trim();
+  let blacklist = [];
+  let blackListFieldData = fieldData.usersBlackList.split(",");
+  blackListFieldData.forEach((nick) => {
+    blacklist.push(nick.toLowerCase().trim());
+  });
+  return blacklist.includes(username);
+};
+
+const ignoreMessagesStartingWith = (message) => {
+  let ignoreList = [];
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+  if (ignoreListFieldData !== "") {
+    ignoreListFieldData.forEach((symbol) => {
+      ignoreList.push(symbol.trim());
+    });
+  }
+
+  if (ignoreList.length === 1 && ignoreList[0] === "") {
+    return false;
+  }
+  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
+};
+
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
+
+  if (listener === "subscriber-latest") {
+    holdedEvent(event);
+    return;
+  }
 
   const mainCont = document.querySelector("main");
 
@@ -778,18 +827,140 @@ window.addEventListener("onEventReceived", async (obj) => {
     maxEvents = event.count;
     listener = "bulk";
   }
+  let isBlackListed = blacklisted(event.data.displayName);
+  if (isBlackListed) return;
+  let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+  if (specialSymbols) return;
   events.init.then((mainContainer) => {
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
-        setTimeout(() => {
-          removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 100000000);
+        if (fieldData.allowDeleteMessages === "true") {
+          setTimeout(() => {
+            removeMessage(mainContainer);
+          }, fieldData.deleteMessages * 1000);
+        }
       } else {
-        setTimeout(() => {
-          removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 100000000);
+        if (fieldData.allowDeleteMessages === "true") {
+          setTimeout(() => {
+            removeEvent(mainContainer, "event-name");
+          }, fieldData.deleteMessages * 1000);
+        }
       }
     }
     mainCont.appendChild(mainContainer);
   });
 });
+
+let storedEvents = [];
+let eventCounter = 0;
+let eventTimer = null;
+let firstEvent = true;
+let previousEvent = "";
+let previousSender = "";
+let currentSender = "";
+let sameEventsAmount = 0;
+
+const dispatchNewEvent = (event) => {
+  if (
+    previousSender === currentSender ||
+    firstEvent === true ||
+    previousSender === ""
+  ) {
+    console.log("same event");
+    storedEvents.push(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+    previousSender = "";
+  }
+
+  if (eventTimer) {
+    clearTimeout(eventTimer);
+  }
+
+  eventTimer = setTimeout(() => {
+    if (storedEvents.length > 1) {
+      console.log("se envian los eventos");
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "bulk",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: "bulkgift",
+              bulkGifted: true,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      eventCounter += storedEvents.length;
+      console.log(
+        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
+      );
+      previousSender = "";
+    } else if (storedEvents.length === 1) {
+      console.log("heresdfadsf");
+      window.dispatchEvent(
+        new CustomEvent("onEventReceived", {
+          detail: {
+            listener: "subscriber",
+            event: {
+              amount: storedEvents.length,
+              avatar: event.avatar,
+              displayName: event.displayName,
+              gifted: event.gifted,
+              sender: storedEvents[0].sender,
+              type: event.type,
+              tier: event.tier,
+              message: event.message,
+              name: event.name,
+              quantity: event.quantity,
+              sessionTop: event.sessionTop,
+              providerId: event.providerId,
+              originalEventName: event.originalEventName,
+            },
+          },
+        })
+      );
+      previousSender = "";
+    }
+    storedEvents = [];
+    eventTimer = null;
+    eventCounter = 0;
+  }, 500);
+  firstEvent = false;
+  previousSender = event.sender;
+};
+
+const holdedEvent = async (event) => {
+  if (event.gifted) {
+    currentSender = event.sender;
+    dispatchNewEvent(event);
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "subscriber",
+          event: event,
+        },
+      })
+    );
+  }
+};

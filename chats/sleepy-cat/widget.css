@@ -37,6 +37,14 @@ main {
   bottom: 0;
   width: 100%;
   padding: 50px;
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left 25%,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
 
 .super-main-container {
@@ -45,6 +53,8 @@ main {
   animation-name: slideMessage;
   animation-duration: 0.8s;
   animation-fill-mode: forwards;
+  transform-style: flat;
+  transform-box: fill-box;
 }
 
 #lines {
@@ -265,17 +275,23 @@ main {
 @keyframes slideMessage {
   0% {
     transform: scale(0);
+    transform-box: fill-box;
     transform-origin: bottom left;
+    transform-style: flat;
   }
 
   50% {
     transform: scale(110%);
+    transform-box: fill-box;
     transform-origin: bottom left;
+    transform-style: flat;
   }
 
   100% {
     transform: scale(100%);
+    transform-box: fill-box;
     transform-origin: bottom left;
+    transform-style: flat;
   }
 }
 

@@ -11,6 +11,12 @@ let fieldData = {
     value: "(user) just suscribed!",
     group: "Events",
   },
+  resubText: {
+    type: "text",
+    label: "Custom text for RESUB (max 40)",
+    value: "(user) just resubscribed for (months) months!",
+    group: "Events",
+  },
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
@@ -103,5 +109,15 @@ let fieldData = {
     label: "Special chars (separated by comma)",
     value: "hola",
     group: "Customization"
+  },
+  allowDeleteMessages: {
+    type: "dropdown",
+    label: "Delete messages on/off:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
   }
 };

@@ -840,9 +840,9 @@ class Sub {
     return subContainer;
   }
 
-  // get message() {
-  //   return this.sub.message;
-  // }
+  get isResub() {
+    return this.sub.amount > 1;
+  }
 
   get isGifted() {
     let gifted = false;
@@ -898,6 +898,7 @@ class Sub {
     let giftText = fieldData.giftSubText;
     let text = " Se ha suscrito!";
     let nameAndText;
+    let resubText = fieldData.resubText;
 
     if (!isBulkGifted && isGifted) {
       if (giftText == "") {
@@ -907,6 +908,11 @@ class Sub {
         giftText = giftText.replace("(user)", name);
       }
       text = giftText;
+      nameAndText = `${text}`;
+    } else if (this.isResub) {
+      resubText = resubText.replace("(user)", name);
+      resubText = resubText.replace("(months)", amount);
+      text = resubText != "" ? resubText : name + text;
       nameAndText = `${text}`;
     } else {
       text = subText != "" ? subText : name + text;
@@ -1444,7 +1450,7 @@ const sendMessage = async () => {
 //       elem.classList.add("scale-down");
 //       setTimeout(() => {
 //         elem.remove();
-//       }, 100000000);
+//       }, 1000);
 //     }, 200);
 //   }
 // };
@@ -1456,7 +1462,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.6s";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1000);
   }
 };
 const removeEvent = (mainContainer, event) => {
@@ -1467,7 +1473,7 @@ const removeEvent = (mainContainer, event) => {
   elem.querySelector(".right-paw").style.animationName = "hideRightPaw";
   setTimeout(() => {
     elem.remove();
-  }, 100000000);
+  }, 1000);
 };
 
 const blacklisted = (name) => {
@@ -1483,9 +1489,15 @@ const blacklisted = (name) => {
 const ignoreMessagesStartingWith = (message) => {
   let ignoreList = [];
   let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
-  ignoreListFieldData.forEach((symbol) => {
-    ignoreList.push(symbol.trim());
-  });
+  if (ignoreListFieldData !== "") {
+    ignoreListFieldData.forEach((symbol) => {
+      ignoreList.push(symbol.trim());
+    });
+  }
+
+  if (ignoreList.length === 1 && ignoreList[0] === "") {
+    return false;
+  }
   return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
 };
 
@@ -1517,9 +1529,15 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeMessage(mainContainer);
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(mainContainer);
+          setTimeout(() => {
+            const bigLine = mainContainer.querySelector("#big-line");
+            const messageContainer =
+              mainContainer.querySelector(".message-container");
+            bigLine.style.height = `${messageContainer.offsetHeight}px`;
+          }, 500);
         })
         .finally(() => {
           $("main").scrollTop($("main")[0].scrollHeight);
@@ -1533,7 +1551,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(followContainer, "follow-name");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(followContainer);
         })
@@ -1549,7 +1567,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(subContainer, "sub-name");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(subContainer);
         })
@@ -1565,7 +1583,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(raidContainer, "raid-name");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(raidContainer);
         })
@@ -1581,7 +1599,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(cheerContainer, "cheer-name");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(cheerContainer);
         })
@@ -1597,7 +1615,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(tipContainer, "tip-name");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(tipContainer);
         })
@@ -1614,7 +1632,7 @@ window.addEventListener("onEventReceived", async (obj) => {
           if (fieldData.allowDeleteMessages === "true") {
             setTimeout(() => {
               removeEvent(bulkContainer, "bulk");
-            }, fieldData.deleteMessages * 100000000);
+            }, fieldData.deleteMessages * 1000);
           }
           mainCont.appendChild(bulkContainer);
         })

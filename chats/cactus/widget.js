@@ -117,9 +117,15 @@ const blacklisted = (name) => {
 const ignoreMessagesStartingWith = (message) => {
   let ignoreList = [];
   let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
-  ignoreListFieldData.forEach((symbol) => {
-    ignoreList.push(symbol.trim());
-  });
+  if (ignoreListFieldData !== "") {
+    ignoreListFieldData.forEach((symbol) => {
+      ignoreList.push(symbol.trim());
+    });
+  }
+
+  if (ignoreList.length === 1 && ignoreList[0] === "") {
+    return false;
+  }
   return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
 };
 
@@ -820,7 +826,7 @@ class Sub {
       text = giftText;
       nameAndText = `${text}`;
     } else if (this.isResub) {
-      text =  name + ` Se ha resuscrito por ${amount} meses!`;
+      text = name + ` Se ha resuscrito por ${amount} meses!`;
       nameAndText = `${text}`;
     } else {
       text = subText != "" ? subText : name + text;
@@ -1473,7 +1479,8 @@ window.addEventListener("onEventReceived", async (obj) => {
             setTimeout(() => {
               removeEvent(bulkContainer, "bulk");
             }, fieldData.deleteMessages * 100000000);
-          }bc
+          }
+          bc;
           mainCont.appendChild(bulkContainer);
         })
         .finally(() => {
