@@ -384,7 +384,7 @@ let events = {
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "1"
+          vip: "0"
         },
         nick: "lordkaito_",
         userId: "675807879",

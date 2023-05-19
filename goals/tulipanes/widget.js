@@ -11,11 +11,18 @@ let gained = {
 
 const goalCompletedText = () => {
   const p = document.querySelector(".progression");
-  let text = "GOAL COMPLETED!";
+  let text = "Goal completed!";
+  let completeGoalText = mainObj.fieldData.goalText;
+  if (completeGoalText != "") {
+    let mockText = "GOAL COMPLETADO!";
+    if (completeGoalText.length > mockText.length) {
+      completeGoalText = completeGoalText.substring(0, mockText.length);
+    }
+    text = completeGoalText;
+  }
   let string = "";
   let split = text.split("").forEach((letter) => {
     string += letter + "\n";
-    console.log(string);
   });
   p.innerText = string;
 };
@@ -52,6 +59,28 @@ const init = (obj, initGoalCallback, data) => {
       cheer: { type: "cheer", amount: 0 },
     };
     SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", clear);
+  }
+
+  let theme = mainObj.fieldData.theme;
+  switch (theme) {
+    case "fucsia":
+      image.src = "https://i.postimg.cc/rpdf5h9B/tulifucsia.png";
+      break;
+    case "blue":
+      image.src = "https://i.postimg.cc/jjGZczgL/tuliazul.png";
+      break;
+    case "yellow":
+      image.src = "https://i.postimg.cc/KvZQ0cNr/tuliamarilla.png";
+      break;
+    case "pink":
+      image.src = "https://i.postimg.cc/5tGkGc09/tulirosita.png";
+      break;
+  }
+
+  if (mainObj.fieldData.wateringCanSide === "right") {
+    const reg = document.querySelector(".gifReg");
+    reg.style.transform = "scaleX(-1)";
+    reg.style.left = "-12rem";
   }
 
   goalType = mainObj.fieldData.goalType;

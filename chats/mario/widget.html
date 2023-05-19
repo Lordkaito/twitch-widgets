@@ -22,7 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
-    <script src="../../libs/resize.js"></script>
+    <script src="../../slibs/resize.js"></script>
   </head>
 
   <body>
@@ -41,13 +41,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
-        rel="stylesheet"
-      />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap"
         rel="stylesheet"
       />
 
@@ -61,36 +55,8 @@
         integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
         crossorigin="anonymous"
       ></script>
-      <div class="general">
-        <main class="main">
-          <div class="container">
-            <p class="progressNums"></p>
-            <p class="progression"></p>
-            <div class="gifReg">
-              <img
-                src="https://i.postimg.cc/Kvjn7Crx/regadera-animada.gif"
-                alt=""
-                class="reg"
-              />
-            </div>
-            <div id="round">
-              <div class="progress-bar-container">
-                <div class="img-progress">
-                  <div class="progress-bar"></div>
-                </div>
-              </div>
-            </div>
-            <div class="img-container">
-              <img
-                src="https://i.postimg.cc/j2gy0hTp/tulipan-gordo.png"
-                alt=""
-                id="image"
-              />
-          </div>
-        </main>
-      </div>
-
-      <button class="click">Click</button>
+      <main class="main"></main>
+      <audio id="audio" src="{{eventAudio}}"></audio>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

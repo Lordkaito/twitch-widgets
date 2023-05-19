@@ -715,11 +715,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
-
-  if (fieldData.transparency == "false") {
-    main.style.maskImage = "none";
-    main.style.webkitMaskImage = "none";
-  }
 });
 
 function stringToArray(string = "", separator = ",") {
