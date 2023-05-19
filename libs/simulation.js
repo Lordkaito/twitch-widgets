@@ -376,7 +376,7 @@ let events = {
           "first-msg": "0",
           flags: "",
           id: "726779f6-da00-4d26-8111-7a14f253c94b",
-          mod: "0",
+          mod: "1",
           "returning-chatter": "0",
           "room-id": "675807879",
           subscriber: "0",
@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaito_",
+        displayName: "Lordkait_",
         displayColor: "#FF0000",
         badges: [
           {

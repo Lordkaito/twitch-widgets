@@ -1,7 +1,7 @@
 :root {
   --message-color: #a28363;
   --message-background-color: #fff3eb;
-  --message-border-color: #68b17c;
+  --message-border-color: #acc87d;
   --user-color: white;
   --user-background-color: #95915d;
   --user-border-color: #e6e6e6;
@@ -12,7 +12,7 @@
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
-  --event-background-color: rgba(104, 177, 124, 0.5);
+  --event-background-color: rgba(172, 200, 125, 0.5);
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
@@ -310,8 +310,8 @@ main {
 }
 
 .role {
-  width: 48px;
-  height: 55px;
+  width: 40px;
+  height: 56px;
   transform: scale(0.75);
 }
 

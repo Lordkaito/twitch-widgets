@@ -213,8 +213,8 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    mainContainer.style.backgroundColor = this.userColor;
-    mainContainer.appendChild(await this.createPronounsContainer());
+    // mainContainer.style.backgroundColor = this.userColor;
+    // mainContainer.appendChild(await this.createPronounsContainer());
 
 
     mainContainer.appendChild(this.flower);
@@ -248,7 +248,13 @@ class mainEvent {
     usernameInfo.classList.add("username-info");
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(this.createRoleContainer());
+    const hyphen = document.createElement("span");
+    hyphen.classList.add("hyphen");
+    hyphen.innerText = " - ";
+    usernameInfo.appendChild(hyphen);
+    usernameInfo.appendChild(await this.createPronounsContainer());
+
+    // usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
     // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
@@ -284,14 +290,14 @@ class mainEvent {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
-    capitalizeUser.style.color = this.userColor;
+    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
   createRoleContainer() {
     const roleContainer = document.createElement("span");
     roleContainer.classList.add("role-container");
-    roleContainer.appendChild(this.roleImages);
+    // roleContainer.appendChild(this.roleImages);
     return roleContainer;
   }
 
@@ -309,7 +315,7 @@ class mainEvent {
       pronounsContainer.style.display = "none";
     }
 
-    pronouns.style.color = this.userColor;
+    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;

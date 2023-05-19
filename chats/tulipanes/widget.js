@@ -119,7 +119,6 @@ class mainEvent {
   }
 
   get isStreamer() {
-    console.log(this.event.data.displayName.toLowerCase());
     return (
       this.event.data.displayName.toLowerCase() ==
       this.event.data.channel.toLowerCase()
@@ -149,11 +148,9 @@ class mainEvent {
   get roles() {
     let priorityRole = [];
     const tags = this.event.data.tags;
-    console.log(tags);
     let keys = Object.keys(tags);
     keys.forEach((key) => {
       if (roles.includes(key) && tags[key] === "1") {
-        console.log(key);
         priorityRole.push({ role: key, priority: priorities[key] });
       }
     });
@@ -210,7 +207,6 @@ class mainEvent {
 
   async createMainContainerElement() {
     let role = this.roles;
-    console.log(role);
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
     const animation = fieldData.animation;
@@ -218,6 +214,8 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    // mainContainer.style.backgroundColor = `${colors[role.role].text.background}`;
+    // mainContainer.classList.add(`${this.roles.role}-main-container`); // not being used for ronros, but useful for future chats if we need to style them differently
     mainContainer.appendChild(this.flower);
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
@@ -537,7 +535,6 @@ class mainEvent {
   }
 
   get name() {
-    console.log(this.event);
     const name = this.event.name;
     const trimmed = this.trimName(name);
 
@@ -589,7 +586,6 @@ class mainEvent {
     };
 
     const amount = this.amount;
-    console.log(amount);
     let sender = this.event.sender;
     if (this.event.originalEventName === "raid-latest")
       sender = this.event.name;
@@ -609,10 +605,8 @@ class mainEvent {
         text = eventText;
       }
     }
-    console.log(this.event.bulkGifted);
     if (this.event.bulkGifted) {
       sender = this.event.sender;
-      console.log(this.event);
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -715,6 +709,11 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
+
+  if (fieldData.transparency == "false") {
+    main.style.maskImage = "none";
+    main.style.webkitMaskImage = "none";
+  }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -742,7 +741,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1000);
   }
 };
 
@@ -765,7 +764,7 @@ const removeEvent = (mainContainer, event) => {
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
   setTimeout(() => {
     elem.remove();
-  }, 100000000);
+  }, 1000);
 };
 
 let repeatedEvents = 0;
@@ -804,7 +803,14 @@ window.addEventListener("onEventReceived", async (obj) => {
     holdedEvent(event);
     return;
   }
-
+  
+  if(listener === 'message') {
+    let isBlackListed = blacklisted(event.data.displayName);
+    if (isBlackListed) return;
+  	let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+  	if (specialSymbols) return;
+  }
+  
   const mainCont = document.querySelector("main");
 
   if (isBulk && repeatedEvents < maxEvents) {
@@ -822,10 +828,6 @@ window.addEventListener("onEventReceived", async (obj) => {
     maxEvents = event.count;
     listener = "bulk";
   }
-  let isBlackListed = blacklisted(event.data.displayName);
-  if (isBlackListed) return;
-  let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-  if (specialSymbols) return;
   events.init.then((mainContainer) => {
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
@@ -861,7 +863,6 @@ const dispatchNewEvent = (event) => {
     firstEvent === true ||
     previousSender === ""
   ) {
-    console.log("same event");
     storedEvents.push(event);
   } else {
     window.dispatchEvent(
@@ -881,7 +882,6 @@ const dispatchNewEvent = (event) => {
 
   eventTimer = setTimeout(() => {
     if (storedEvents.length > 1) {
-      console.log("se envian los eventos");
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {
@@ -906,12 +906,8 @@ const dispatchNewEvent = (event) => {
         })
       );
       eventCounter += storedEvents.length;
-      console.log(
-        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
-      );
       previousSender = "";
     } else if (storedEvents.length === 1) {
-      console.log("heresdfadsf");
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {

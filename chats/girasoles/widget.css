@@ -1,18 +1,18 @@
 :root {
-  --message-color: #a28363;
-  --message-background-color: #fff3eb;
-  --message-border-color: #68b17c;
+  --message-color: #fff3eb;
+  --message-background-color: #8c3f0a;
+  --message-border-color: #ffd56f;
   --user-color: white;
   --user-background-color: #95915d;
   --user-border-color: #e6e6e6;
-  --user-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  --user-shadow: rgba(46, 46, 46, 0.38) 0px 3px 3px 1px;
   --pronouns-color: white;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
-  --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
+  --pronouns-shadow-color: rgba(46, 46, 46, 0.38) 0px 3px 3px 1px;
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
-  --event-background-color: rgba(104, 177, 124, 0.5);
+  --event-background-color: rgba(172, 200, 125, 0.5);
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
@@ -207,7 +207,7 @@ main {
   background: var(--pronouns-background-color);
   border-radius: 1.25rem;
   padding: 7px;
-  box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  box-shadow: var(--pronouns-shadow-color);
 }
 
 .separator {
@@ -310,8 +310,8 @@ main {
 }
 
 .role {
-  width: 48px;
-  height: 55px;
+  width: 42px;
+  height: 56px;
   transform: scale(0.75);
 }
 

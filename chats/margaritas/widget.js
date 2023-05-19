@@ -1,8 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
 
-const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
-
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
   user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
@@ -17,13 +15,13 @@ const colors = {
     //   border: "#6441a5",
     // },
     user: {
-      background: "#feedbe",
-      text: "#a28363",
+      background: "#e0c8be",
+      text: "#9c706a",
       border: "",
     },
     prons: {
-      background: "feedbe",
-      text: "#a28363",
+      background: "e0c8be",
+      text: "#9c706a",
       border: "",
     },
   },
@@ -34,13 +32,13 @@ const colors = {
     //   border: "#6441a5",
     // },
     user: {
-      background: "#fabad0",
-      text: "#fef9fd",
+      background: "#acc87d",
+      text: "#9c706a",
       border: "",
     },
     prons: {
-      background: "#fabad0",
-      text: "#fef9fd",
+      background: "#acc87d",
+      text: "#9c706a",
       border: "",
     },
   },
@@ -51,13 +49,13 @@ const colors = {
     //   border: "#6441a5",
     // },
     user: {
-      background: "#fc93c0",
-      text: "#fef9fd",
+      background: "#fdcebf",
+      text: "#9c706a",
       border: "",
     },
     prons: {
-      background: "#fc93c0",
-      text: "#fef9fd",
+      background: "#fdcebf",
+      text: "#9c706a",
       border: "",
     },
   },
@@ -68,13 +66,13 @@ const colors = {
     //   border: "#6441a5",
     // },
     user: {
-      background: "#fb9784",
-      text: "#fef9fd",
+      background: "#ffd56f",
+      text: "#9c706a",
       border: "",
     },
     prons: {
-      background: "#fb9784",
-      text: "#fef9fd",
+      background: "#ffd56f",
+      text: "#9c706a",
       border: "",
     },
   },
@@ -85,13 +83,13 @@ const colors = {
     //   border: "#6441a5",
     // },
     user: {
-      background: "#f6be93",
-      text: "#fef9fd",
+      background: "#b4d5dd",
+      text: "#9c706a",
       border: "",
     },
     prons: {
-      background: "#f6be93",
-      text: "#fef9fd",
+      background: "#b4d5dd",
+      text: "#9c706a",
       border: "",
     },
   },
@@ -148,7 +146,7 @@ class mainEvent {
   }
 
   get roles() {
-    const priorityRole = [];
+    let priorityRole = [];
     const tags = this.event.data.tags;
     let keys = Object.keys(tags);
     keys.forEach((key) => {
@@ -157,18 +155,26 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
+      priorityRole = [];
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
       return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
+      priorityRole = [];
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
       return priorityRole[0];
     }
-    priorityRole.sort((a, b) => a.priority - b.priority);
-    return priorityRole[0];
-    return priorityRole;
+
+    let minPriorityRole = [];
+    if (priorityRole.length >= 1) {
+      priorityRole.sort((a, b) => {
+        return a.priority - b.priority;
+      });
+    }
+
+    return minPriorityRole.length === 0 ? priorityRole[0] : minPriorityRole[0];
   }
 
   eventType() {
@@ -181,7 +187,7 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/mZzMyn9r/mariposillas.png";
+    flower.src = "https://i.postimg.cc/QCDMYgTn/maripoo.png";
     flower.classList.add("flower");
 
     return flower;
@@ -199,11 +205,6 @@ class mainEvent {
     return await this.createMainContainerElement();
   }
 
-  get userColor() {
-    console.log(this.event.data.displayColor)
-    return this.event.data.displayColor;
-  }
-
   async createMainContainerElement() {
     let role = this.roles;
     const mainContainer = document.createElement("div");
@@ -213,10 +214,6 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    mainContainer.style.backgroundColor = this.userColor;
-    mainContainer.appendChild(await this.createPronounsContainer());
-
-
     mainContainer.appendChild(this.flower);
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
@@ -250,7 +247,8 @@ class mainEvent {
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
+    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -284,7 +282,9 @@ class mainEvent {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
-    capitalizeUser.style.color = this.userColor;
+    if (this.isStreamer) {
+      capitalizeUser.style.color = `${colors[role.role].user.text}`;
+    }
     return capitalizeUser;
   }
 
@@ -308,8 +308,12 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
-
-    pronouns.style.color = this.userColor;
+    if (this.isStreamer) {
+      pronouns.style.color = `${colors[this.roles.role].user.text}`;
+    }
+    pronouns.style.backgroundColor = `${
+      colors[this.roles.role].user.background
+    }`;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -338,24 +342,8 @@ class mainEvent {
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
     }
-
-    switch (minPriorityRole.role) {
-      case "streamer":
-        roleImage.src = `https://i.postimg.cc/nhtL7R4N/tulipan-streamer.png`;
-        break;
-      case "mod":
-        roleImage.src = `https://i.postimg.cc/3w8JfkbB/tulipan-mod.png`;
-        break;
-      case "vip":
-        roleImage.src = `https://i.postimg.cc/JndnkRxQ/tulipan-vip.png`;
-        break;
-      case "sub":
-        roleImage.src = `https://i.postimg.cc/9XK0XFrm/tulipan-sub.png`;
-        break;
-      case "viewer":
-        roleImage.src = `https://i.postimg.cc/ZnBqPXDz/tulipan-viewer.png`;
-        break;
-    }
+    
+    roleImage.src = "https://i.postimg.cc/NfgM14YK/margaritaaa.png"
     return roleImage;
   }
 
@@ -544,6 +532,14 @@ class mainEvent {
     return trimmed;
   }
 
+  get isResub() {
+    if (this.event.originalEventName === "subscriber-latest") {
+      return this.event.amount > 1;
+    }
+
+    return false;
+  }
+
   async createMainEventContainer() {
     const mainContainer = document.createElement("div");
 
@@ -557,6 +553,7 @@ class mainEvent {
       giftSubText,
       bulkGiftText,
       raidText,
+      resubText,
     } = fieldData;
 
     const dictionary = {
@@ -567,11 +564,17 @@ class mainEvent {
       giftsub: giftSubText,
       bulkgift: bulkGiftText,
       raid: raidText,
+      resub: resubText,
     };
 
     const amount = this.amount;
-    const sender = this.event.name;
+    let sender = this.event.sender;
+    if (this.event.originalEventName === "raid-latest")
+      sender = this.event.name;
     let eventText = dictionary[this.event.type];
+    if (this.isResub) {
+      eventText = dictionary["resub"];
+    }
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -584,8 +587,8 @@ class mainEvent {
         text = eventText;
       }
     }
-
     if (this.event.bulkGifted) {
+      sender = this.event.sender;
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -604,6 +607,7 @@ class mainEvent {
       eventText = eventText.replace("(user)", name);
       eventText = eventText.replace("(amount)", amount);
       eventText = eventText.replace("(sender)", sender);
+      eventText = eventText.replace("(months)", amount);
       text = eventText;
     }
 
@@ -614,7 +618,7 @@ class mainEvent {
     for (let i = 0; i < 2; i++) {
       const fungi = document.createElement("img");
 
-      fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
+      fungi.src = "https://i.postimg.cc/vH3mXVH3/hojitaaa.png";
 
       fungi.classList.add("fungi");
       const fungiDivContainer = document.createElement("div");
@@ -688,10 +692,10 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
 
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
+  if (fieldData.transparency == "false") {
+    main.style.maskImage = "none";
+    main.style.webkitMaskImage = "none";
+  }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -719,7 +723,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1000);
   }
 };
 
@@ -742,12 +746,37 @@ const removeEvent = (mainContainer, event) => {
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
   setTimeout(() => {
     elem.remove();
-  }, 100000000);
+  }, 1000);
 };
 
 let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
+
+const blacklisted = (name) => {
+  let username = name.toLowerCase().trim();
+  let blacklist = [];
+  let blackListFieldData = fieldData.usersBlackList.split(",");
+  blackListFieldData.forEach((nick) => {
+    blacklist.push(nick.toLowerCase().trim());
+  });
+  return blacklist.includes(username);
+};
+
+const ignoreMessagesStartingWith = (message) => {
+  let ignoreList = [];
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+  if (ignoreListFieldData !== "") {
+    ignoreListFieldData.forEach((symbol) => {
+      ignoreList.push(symbol.trim());
+    });
+  }
+
+  if (ignoreList.length === 1 && ignoreList[0] === "") {
+    return false;
+  }
+  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
+};
 
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
@@ -755,6 +784,13 @@ window.addEventListener("onEventReceived", async (obj) => {
   if (listener === "subscriber-latest") {
     holdedEvent(event);
     return;
+  }
+  
+  if(listener === "message") {
+    let isBlackListed = blacklisted(event.data.displayName);
+  	if (isBlackListed) return;
+  	let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+  	if (specialSymbols) return;
   }
 
   const mainCont = document.querySelector("main");
@@ -777,13 +813,17 @@ window.addEventListener("onEventReceived", async (obj) => {
   events.init.then((mainContainer) => {
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
-        setTimeout(() => {
-          removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 100000000);
+        if (fieldData.allowDeleteMessages === "true") {
+          setTimeout(() => {
+            removeMessage(mainContainer);
+          }, fieldData.deleteMessages * 1000);
+        }
       } else {
-        setTimeout(() => {
-          removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 100000000);
+        if (fieldData.allowDeleteMessages === "true") {
+          setTimeout(() => {
+            removeEvent(mainContainer, "event-name");
+          }, fieldData.deleteMessages * 1000);
+        }
       }
     }
     mainCont.appendChild(mainContainer);

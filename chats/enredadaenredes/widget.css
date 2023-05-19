@@ -1,18 +1,18 @@
 :root {
-  --message-color: #a28363;
-  --message-background-color: #fff3eb;
-  --message-border-color: #68b17c;
+  --message-color: white;
+  --message-background-color: #fff5ed;
+  --message-border-color: #7bb87e;
   --user-color: white;
-  --user-background-color: #95915d;
+  --user-background-color: white;
   --user-border-color: #e6e6e6;
-  --user-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
-  --pronouns-color: white;
+  --user-shadow: red 0px 0px 8px 3px;
+  --pronouns-color: #fff;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
-  --event-background-color: rgba(104, 177, 124, 0.5);
+  --event-background-color: rgba(155, 179, 142, 0.5);
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
@@ -65,12 +65,11 @@ main {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  /* transform-style: preserve-3d; */
+  transform-style: preserve-3d;
 }
 
 .main-container {
   max-width: 37.5rem;
-  background: var(--message-background-color);
   margin-bottom: 1.875rem;
   position: relative;
   display: flex;
@@ -78,15 +77,31 @@ main {
   margin-top: 40px;
   left: 1.875rem;
   width: 100%;
-  border-radius: 40px;
   border: 5px solid var(--message-border-color);
-  /* border: double 4px transparent;
-  border-radius: 80px;
-  background-image: linear-gradient(white, white),
-    radial-gradient(circle at top left, #f00, #3020ff);
-  background-origin: border-box;
-  background-clip: padding-box, border-box; */ // I'm using this for the rainbow chat with gradient borders
+  border: double 4px transparent;
+  border-radius: 5px;
+  background-color: black;
+  box-shadow: red 0px 0px 8px 3px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
 }
+
+/* .main-container::after {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: -0.5rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 40px;
+  border: double 7px transparent;
+  background-image: linear-gradient(white, white),
+    radial-gradient(at bottom, #97e1d8, #e3cd92);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  z-index: -1;
+} */
 
 .username-info-container {
   display: grid;
@@ -94,7 +109,7 @@ main {
   grid-template-rows: 1fr;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  /* position: absolute; */
   top: -1.7rem;
   left: 2rem;
   gap: 10px;
@@ -103,15 +118,15 @@ main {
 .username-info {
   width: fit-content;
   border-radius: 1.25rem;
-  text-align: center;
-  padding: 0.6rem 1.7rem;
+  /* text-align: center; */
+  padding-left: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  box-shadow: var(--user-shadow);
+  /* box-shadow: var(--user-shadow); */
   position: relative;
-  background-color: var(--user-background-color);
+  /* background-color: var(--user-background-color); */
 }
 
 .flower {
@@ -145,19 +160,30 @@ main {
   height: 1.125rem;
 }
 
+.hyphen {
+  width: 1rem;
+  height: 0.125rem;
+  margin: 0 10px;
+  border-radius: 50%;
+  background-color: var(--user-color);
+}
+
 .capitalize-user {
   color: var(--user-color);
   font-weight: bold;
   font-size: 1.35rem;
   display: inline-block;
-  width: 12ch;
+  max-width: 12ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* padding: 0 10px; */
+  text-shadow: rgba(252, 0, 0, 1) 1px 0px 8px, rgba(252, 0, 0, 1) -1px 0px 8px,
+    rgba(252, 0, 0, 1) 0px 1px 8px, rgba(252, 0, 0, 1) 0px -1px 8px;
 }
 
 .message-container {
-  padding-left: 1.1875rem;
+  /* padding-left: 1.1875rem; */
   flex-grow: 1;
   overflow: hidden;
   margin-bottom: 1.25rem;
@@ -168,7 +194,7 @@ main {
   flex-grow: 1;
   align-items: center;
   gap: 0.625rem;
-  margin-top: 0.625rem;
+  /* margin-top: 0.625rem; */
 }
 
 .text {
@@ -179,13 +205,13 @@ main {
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
-  width: 30rem;
+  width: 31.25rem;
   color: var(--message-color);
   white-space: normal;
   margin-right: 0.625rem;
   padding-top: 1.25rem;
   padding-left: 1.25rem;
-  padding-right: 1.7rem;
+  padding-right: 1rem;
   animation: twinkleText 0.5 1 forwards;
 }
 
@@ -193,21 +219,23 @@ main {
   color: var(--pronouns-color);
   font-size: 12px;
   text-transform: uppercase;
-  text-align: center;
+  /* text-align: center; */
   width: 6.25rem;
   justify-self: right;
   margin-right: 2rem;
-  position: relative;
+  /* position: relative; */
+  bottom: -5.3rem;
+  left: 14rem;
   z-index: 1;
 }
 
 .prons {
   max-width: 100%;
   text-align: center;
-  background: var(--pronouns-background-color);
+  /* background: var(--pronouns-background-color); */
   border-radius: 1.25rem;
-  padding: 7px;
-  box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  /* padding: 7px; */
+  /* box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px; */
 }
 
 .separator {
@@ -268,7 +296,7 @@ main {
   background-color: var(--event-background-color);
   padding: 3px 10px;
   border-radius: 40px;
-  /* text-shadow: 0 2px 0.2em var(--event-shadow-color); */
+  text-shadow: 0 2px 0.2em var(--event-shadow-color);
 }
 
 .event-leafs-container-1,
@@ -312,7 +340,7 @@ main {
 .role {
   width: 48px;
   height: 55px;
-  transform: scale(0.75);
+  transform: scale(0.65);
 }
 
 .fungi-container {
@@ -417,19 +445,19 @@ main {
   0% {
     transform: scale(0);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
+    transform-style: preserve-3d;
   }
 
   50% {
     transform: scale(110%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
+    transform-style: preserve-3d;
   }
 
   100% {
     transform: scale(100%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
+    transform-style: preserve-3d;
   }
 }
 
