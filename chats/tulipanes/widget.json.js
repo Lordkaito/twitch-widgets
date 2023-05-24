@@ -81,7 +81,7 @@ let fieldData = {
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",

@@ -150,7 +150,7 @@ main {
   font-weight: bold;
   font-size: 1.35rem;
   display: inline-block;
-  width: 12ch;
+  max-width: 12ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
