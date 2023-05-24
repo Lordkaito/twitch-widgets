@@ -1,0 +1,449 @@
+:root {
+  --message-color: #fff3eb;
+  --message-background-color: linear-gradient(#333, #000, #333, #000, #333, #000, #333, #000);
+  --message-border-color: red;
+  --user-color: white;
+  --user-background-color: linear-gradient(90deg, blue, darkblue);
+  --user-border-color: #e6e6e6;
+  --user-shadow: rgba(46, 46, 46, 0.38) 0px 3px 3px 1px;
+  --pronouns-color: white;
+  --pronouns-background-color: #ffffff;
+  --pronouns-border-color: #e6e6e6;
+  --pronouns-shadow-color: rgba(46, 46, 46, 0.38) 0px 3px 3px 1px;
+  --mods-background-color: #d1cfb4;
+  --mods-message-border: #fff3eb;
+  --event-background-color: rgba(172, 200, 125, 0.5);
+  --event-shadow-color: #a38c79;
+  --event-color: #fef9fd;
+}
+
+* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+.scale-up {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+
+.scale-down {
+  transform: scale(0);
+  transition: transform 0.2s;
+}
+
+.emotes {
+  width: 4.375rem;
+  vertical-align: middle;
+}
+
+main {
+  overflow: hidden;
+  max-height: 1080px;
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 1;
+}
+
+.super-main-container {
+  display: flex;
+  align-items: center;
+  animation-name: slideMessage;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  padding: 0 1rem;
+  /* transform-style: preserve-3d; */
+}
+
+.main-container {
+  max-width: 37.5rem;
+  background: var(--message-background-color);
+  margin-bottom: 1.875rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  left: 1.875rem;
+  width: 100%;
+  border-radius: 40px 0 0px 40px;
+  border: 5px solid var(--message-border-color);
+  /* border: double 4px transparent;
+  border-radius: 80px;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #f00, #3020ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box; */ // I'm using this for the rainbow chat with gradient borders
+}
+
+.username-info-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 9fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -1.7rem;
+  left: 2rem;
+  gap: 10px;
+}
+
+.username-info {
+  width: fit-content;
+  border-radius: 1.25rem;
+  text-align: center;
+  padding: 0.6rem 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: var(--user-shadow);
+  position: relative;
+  border: 1px solid var(--user-border-color);
+  background: var(--user-background-color);
+}
+
+.flower {
+  position: absolute;
+  bottom: -0.5rem;
+  right: 1rem;
+  height: 64px;
+  width: 64px;
+  transform: scale(0.8);
+}
+
+.leafs-container {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.3rem;
+  z-index: 2;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-content: center;
+}
+
+.username-badges {
+  display: flex;
+  gap: 5px;
+}
+
+.badges-img {
+  background-color: transparent;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.capitalize-user {
+  color: var(--user-color);
+  font-weight: bold;
+  font-size: 1.35rem;
+  display: inline-block;
+  width: 12ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-container {
+  padding-left: 1.1875rem;
+  flex-grow: 1;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.message-icon-container {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.625rem;
+}
+
+.text {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.rendered-text {
+  word-wrap: break-word;
+  display: inline-block;
+  width: 30rem;
+  color: var(--message-color);
+  white-space: normal;
+  margin-right: 0.625rem;
+  padding-top: 1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.7rem;
+  animation: twinkleText 0.5 1 forwards;
+}
+
+.pronouns {
+  color: var(--pronouns-color);
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 6.25rem;
+  justify-self: right;
+  margin-right: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.prons {
+  max-width: 100%;
+  text-align: center;
+  background: var(--pronouns-background-color);
+  border-radius: 1.25rem;
+  padding: 7px;
+  box-shadow: var(--pronouns-shadow-color);
+}
+
+.separator {
+  background-color: transparent !important;
+  border: none;
+  justify-content: center;
+  height: 1.25rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: -0.625rem !important;
+  margin-bottom: 1.875rem !important;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-left: 5px;
+}
+
+.emote img {
+  max-width: 3.5rem;
+  width: 100%;
+}
+
+.invert {
+  transform: scaleX(-1);
+}
+
+.event-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 37rem;
+  padding: 1rem 1rem 0.6rem 1rem;
+  animation-fill-mode: forwards;
+  animation-duration: 0.8s;
+  left: 1.875rem;
+  width: 37.5rem;
+}
+
+.widget {
+  width: 800px;
+  height: 1000px;
+}
+
+.event-name {
+  max-width: 300px;
+  height: 100%;
+  top: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  color: var(--event-color);
+  letter-spacing: normal;
+  font-size: 1.5rem;
+  animation: showNames 0.5s ease-in-out forwards;
+  background-color: var(--event-background-color);
+  padding: 3px 10px;
+  border-radius: 40px;
+  /* text-shadow: 0 2px 0.2em var(--event-shadow-color); */
+}
+
+.event-leafs-container-1,
+.event-leafs-container-2 {
+  height: 40px;
+  width: 40px;
+  display: grid;
+  place-content: center;
+}
+
+.event-leafs-container-1 img,
+.event-leafs-container-2 img {
+  height: 37px;
+  width: 40px;
+  transform: scale(0.65);
+}
+
+.event-leafs-container-1 img {
+  animation: showLeftFungi 0.5s ease-in-out forwards;
+}
+
+.event-leafs-container-2 img {
+  order: 2;
+  transition: none;
+  transform: rotateY(180deg);
+  animation: showRightFungi 0.5s ease-in-out forwards;
+}
+
+.event-leafs-container-2 {
+  order: 2;
+}
+
+.role-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.role {
+  width: 42px;
+  height: 56px;
+  transform: scale(0.75);
+}
+
+.fungi-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@keyframes showLeftFungi {
+  0% {
+    transform: translateX(-100%) scale(0.65);
+  }
+
+  100% {
+    transform: translateX(0%) scale(0.65);
+  }
+}
+
+@keyframes showRightFungi {
+  0% {
+    transform: translateX(100%) rotateY(180deg) scale(0.65);
+  }
+
+  100% {
+    transform: translateX(0%) rotateY(180deg) scale(0.65);
+  }
+}
+
+@keyframes hideLeftStar {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes hideRightStar {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes showNames {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hideNames {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes removeMessage {
+  0% {
+    transform: scale(100%);
+    transform-origin: bottom center;
+  }
+
+  50% {
+    transform: scale(110%);
+    transform-origin: bottom center;
+  }
+
+  100% {
+    transform: scale(0%);
+    transform-origin: bottom center;
+  }
+}
+
+@keyframes glowHearts {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideMessage {
+  0% {
+    transform: scale(0);
+    transform-origin: bottom center;
+    /* transform-style: preserve-3d; */
+  }
+
+  50% {
+    transform: scale(110%);
+    transform-origin: bottom center;
+    /* transform-style: preserve-3d; */
+  }
+
+  100% {
+    transform: scale(100%);
+    transform-origin: bottom center;
+    /* transform-style: preserve-3d; */
+  }
+}
+
+@keyframes popUpText {
+  0% {
+    opacity: 0%;
+  }
+
+  40% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
