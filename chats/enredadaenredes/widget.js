@@ -9,94 +9,6 @@ const PRONOUNS_API = {
   pronouns: `${PRONOUNS_API_BASE}/pronouns`,
 };
 
-const colors = {
-  streamer: {
-    // text: {
-    //   background: "#6441a5",
-    //   text: "#ffffff",
-    //   border: "#6441a5",
-    // },
-    user: {
-      background: "#feedbe",
-      text: "#a28363",
-      border: "",
-    },
-    prons: {
-      background: "feedbe",
-      text: "#a28363",
-      border: "",
-    },
-  },
-  mod: {
-    // text: {
-    //   background: "#6441a5",
-    //   text: "#ffffff",
-    //   border: "#6441a5",
-    // },
-    user: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  vip: {
-    // text: {
-    //   background: "#6441a5",
-    //   text: "#ffffff",
-    //   border: "#6441a5",
-    // },
-    user: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  subscriber: {
-    // text: {
-    //   background: "#6441a5",
-    //   text: "#ffffff",
-    //   border: "#6441a5",
-    // },
-    user: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  viewer: {
-    // text: {
-    //   background: "#6441a5",
-    //   text: "#ffffff",
-    //   border: "#6441a5",
-    // },
-    user: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-};
-
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
 const priorities = {
   streamer: 1,
@@ -198,11 +110,6 @@ class mainEvent {
     return await this.createMainContainerElement();
   }
 
-  get userColor() {
-    console.log(this.event.data.displayColor);
-    return this.event.data.displayColor;
-  }
-
   async createMainContainerElement() {
     let role = this.roles;
     const mainContainer = document.createElement("div");
@@ -212,10 +119,10 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = this.userColor;
-    // mainContainer.appendChild(await this.createPronounsContainer());
 
-    mainContainer.appendChild(this.flower);
+    if (this.isSub || this.isStreamer) {
+      mainContainer.appendChild(this.flower);
+    }
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
     }
@@ -225,17 +132,6 @@ class mainEvent {
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
-  }
-
-  get butterfly() {
-    const img = document.createElement("img");
-    const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-    img.classList.add("butterfly");
-    imgContainer.classList.add("butterfly-container");
-    // imgContainer.appendChild(img);
-
-    return imgContainer;
   }
 
   async createUsernameInfoElement() {
@@ -252,9 +148,7 @@ class mainEvent {
     usernameInfo.appendChild(hyphen);
     usernameInfo.appendChild(await this.createPronounsContainer());
 
-    // usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -288,14 +182,12 @@ class mainEvent {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
   createRoleContainer() {
     const roleContainer = document.createElement("span");
     roleContainer.classList.add("role-container");
-    // roleContainer.appendChild(this.roleImages);
     return roleContainer;
   }
 
@@ -312,8 +204,6 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
-
-    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -374,7 +264,6 @@ class mainEvent {
     }
     pronoun = data[0].pronoun_id;
 
-    // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
         pronoun = "ae/aer";
@@ -532,6 +421,14 @@ class mainEvent {
     return this.createMainEventContainer();
   }
 
+  get isResub() {
+    if (this.event.originalEventName === "subscriber-latest") {
+      return this.event.amount > 1;
+    }
+
+    return false;
+  }
+
   get name() {
     const name = this.event.name;
     const trimmed = this.trimName(name);
@@ -561,6 +458,7 @@ class mainEvent {
       giftSubText,
       bulkGiftText,
       raidText,
+      resubText,
     } = fieldData;
 
     const dictionary = {
@@ -571,11 +469,17 @@ class mainEvent {
       giftsub: giftSubText,
       bulkgift: bulkGiftText,
       raid: raidText,
+      resub: resubText,
     };
 
     const amount = this.amount;
-    const sender = this.event.name;
+    let sender = this.event.sender;
+    if (this.event.originalEventName === "raid-latest")
+      sender = this.event.name;
     let eventText = dictionary[this.event.type];
+    if (this.isResub) {
+      eventText = dictionary["resub"];
+    }
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -608,6 +512,7 @@ class mainEvent {
       eventText = eventText.replace("(user)", name);
       eventText = eventText.replace("(amount)", amount);
       eventText = eventText.replace("(sender)", sender);
+      eventText = eventText.replace("(months)", amount);
       text = eventText;
     }
 
@@ -645,16 +550,6 @@ const Widget = {
   globalEmotes: {},
 };
 
-// I'm trash and forgot about this fn
-async function get(URL) {
-  return await fetch(URL)
-    .then(async (res) => {
-      if (!res.ok) return null;
-      return res.json();
-    })
-    .catch((error) => null);
-}
-
 const GLOBAL_EMOTES = {
   ffz: {
     api: "https://api2.frankerfacez.com/v1/set/global",
@@ -688,11 +583,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
-
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -726,18 +616,10 @@ const removeMessage = (mainContainer) => {
 
 const removeEvent = (mainContainer, event) => {
   const elem = mainContainer;
-  elem.querySelector(".event-leafs-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-2").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(".event-leafs-container-1").style.animationName =
+  elem.querySelector(".fungi-div-container").style.animationName =
     "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-1").style.animationFillMode =
+  elem.querySelector(".fungi-div-container").style.animationDuration = "0.7s";
+  elem.querySelector(".fungi-div-container").style.animationFillMode =
     "forwards";
 
   elem.querySelector(`.${event}`).style.animationName = "hideNames";
@@ -782,12 +664,6 @@ window.addEventListener("onEventReceived", async (obj) => {
           removeMessage(mainContainer);
         }, fieldData.deleteMessages * 1000);
         const twinkleElem = mainContainer.querySelector(".flower");
-        console.log(twinkleElem);
-        // setTimeout(() => {
-        //   twinkleElem.style.animationName = "twinkle";
-        //   twinkleElem.style.animationDuration = "0.7s";
-        //   twinkleElem.style.animationFillMode = "forwards";
-        // }, 2000);
       } else {
         setTimeout(() => {
           removeEvent(mainContainer, "event-name");
