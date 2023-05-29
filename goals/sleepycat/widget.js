@@ -114,7 +114,7 @@ const grow = (type, amount = 1, data) => {
 };
 
 window.addEventListener("onEventReceived", function (obj) {
-  let {listener, event} = obj.detail;
+  let { listener, event } = obj.detail;
   if (obj.detail.event.value === "reset") {
     let clear = {
       subscriber: { type: "subscriber", amount: 0 },
@@ -146,20 +146,11 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const initGoal = (type, data) => {
-  if (mainObj.fieldData.goalTheme === "pink") {
-    image.src = "https://i.postimg.cc/hvs4D0z6/patita.png ";
-    round.style.backgroundColor = "pink";
-    const goalText = document.querySelector(".goal-name");
-    const progressBar = document.querySelector(".progress-bar");
-    const progression = document.querySelector(".progression");
-    goalText.style.color = "#ff9eb9";
-    progressBar.style.backgroundColor = "#ff9eb9";
-    progression.style.textShadow = `-1px -1px 0 #ff9eb9, 1px -1px 0 #ff9eb9, -1px 1px 0 #ff9eb9,
-    1px 1px 0 #ff9eb9`;
-  }
+  image.src = "https://i.postimg.cc/0NKkvZr6/nueva-patita.png";
+  // round.style.backgroundColor = "pink";
+  const progression = document.querySelector(".progression");
   let current = goalStartQuantity;
   let step;
-  const progression = document.querySelector(".progression");
   let progressBarWidth = document.querySelector(
     ".progress-bar-container"
   ).offsetWidth;

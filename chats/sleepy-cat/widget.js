@@ -19,31 +19,16 @@ class Message {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -62,12 +47,9 @@ class Message {
   }
 
   get icon() {
-    const pinkPaw = "https://i.postimg.cc/26mxNNZ9/huella2.png";
-    const purplePaw = "https://i.postimg.cc/Y2zs9b2m/huella1.png";
-    if (fieldData.theme == "pink") {
-      return pinkPaw;
-    }
-    return purplePaw;
+    const paw = "https://i.postimg.cc/k4rng8tT/nueva-huellita.png";
+
+    return paw;
   }
 
   getRole() {
@@ -553,31 +535,16 @@ class Follow {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -677,31 +644,16 @@ class BulkGift {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -806,31 +758,16 @@ class Sub {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -977,31 +914,16 @@ class Raid {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -1090,31 +1012,16 @@ class Cheer {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 
@@ -1207,31 +1114,16 @@ class Tip {
   }
 
   themeColor() {
-    const theme = fieldData.theme;
-    let colorObj = {};
-    if (theme == "pink") {
-      colorObj = {
-        messageBackground: "#faaac5",
-        userColor: "#faaac5",
-        userBackground: "#fff",
-        pronsColor: "#faaac5",
-        iconBackground: "#9da0f5",
-        textColor: "#d55482",
-        borderColor: "#fff",
-        shadow: "#f57198",
-      };
-    } else {
-      colorObj = {
-        messageBackground: "#c4c8ff",
-        userColor: "#9da0f5",
-        userBackground: "#fff",
-        pronsColor: "#9da0f5",
-        iconBackground: "#9da0f5",
-        textColor: "#686bb7",
-        borderColor: "#fff",
-        shadow: "#686bb7",
-      };
-    }
+    let colorObj = {
+      messageBackground: "#ddb78a",
+      userColor: "#583e20",
+      userBackground: "#fff",
+      pronsColor: "#583e20",
+      iconBackground: "#9da0f5",
+      textColor: "#583e20",
+      borderColor: "#fff",
+      shadow: "#ddb78a",
+    };
     return colorObj;
   }
 

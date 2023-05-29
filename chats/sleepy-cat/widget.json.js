@@ -107,13 +107,13 @@ let fieldData = {
   specialCharsBlackList: {
     type: "text",
     label: "Special chars (separated by comma)",
-    value: "hola",
+    value: "",
     group: "Customization"
   },
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "true",
+    value: "false",
     group: "Customization",
     options: {
       true: "Yes",
