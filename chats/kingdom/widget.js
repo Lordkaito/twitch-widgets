@@ -1,5 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
+let currentMessageId = "";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
@@ -16,7 +17,7 @@ const colors = {
     // },
     user: {
       background: "#6a4b35",
-      text: "#fff",
+      text: "#262d41",
       border: "",
     },
     prons: {
@@ -33,7 +34,7 @@ const colors = {
     // },
     user: {
       background: "#76a34f",
-      text: "#9c706a",
+      text: "#262d41",
       border: "",
     },
     prons: {
@@ -50,7 +51,7 @@ const colors = {
     // },
     user: {
       background: "#ffa91a",
-      text: "#9c706a",
+      text: "#262d41",
       border: "",
     },
     prons: {
@@ -67,7 +68,7 @@ const colors = {
     // },
     user: {
       background: "#ffd56f",
-      text: "#9c706a",
+      text: "#262d41",
       border: "",
     },
     prons: {
@@ -84,7 +85,7 @@ const colors = {
     // },
     user: {
       background: "#a46437",
-      text: "#9c706a",
+      text: "#262d41",
       border: "",
     },
     prons: {
@@ -205,6 +206,10 @@ class mainEvent {
     return await this.createMainContainerElement();
   }
 
+  get id() {
+    return this.event.data.msgId;
+  }
+
   async createMainContainerElement() {
     let role = this.roles;
     const mainContainer = document.createElement("div");
@@ -214,6 +219,10 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    mainContainer.classList.add("initial");
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    mainContainer.appendChild(dot);
     // mainContainer.appendChild(this.flower);
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
@@ -343,7 +352,19 @@ class mainEvent {
       minPriorityRole.role = "viewer";
     }
 
-    roleImage.src = "https://i.postimg.cc/NG847Vd8/girasolll.png";
+    if (this.isSub || this.isStreamer) {
+      const rolesCont = document.createElement("div");
+      const shine = document.createElement("img");
+      shine.classList.add("brillos");
+      shine.src = "https://i.postimg.cc/LXsk8Thd/brillii.png";
+      rolesCont.classList.add("roles-images-container");
+      rolesCont.appendChild(roleImage);
+      roleImage.src = `https://i.postimg.cc/5Npr4QDd/llavenn.png`;
+      rolesCont.appendChild(shine);
+      return rolesCont;
+    }
+
+    roleImage.src = "https://i.postimg.cc/5Npr4QDd/llavenn.png";
     return roleImage;
   }
 
@@ -787,6 +808,8 @@ window.addEventListener("onEventReceived", async (obj) => {
   }
 
   if (listener === "message") {
+    swapColors(event.data.msgId);
+    // console.log(event.data);
     let isBlackListed = blacklisted(event.data.displayName);
     if (isBlackListed) return;
     let specialSymbols = ignoreMessagesStartingWith(event.data.text);
@@ -810,8 +833,11 @@ window.addEventListener("onEventReceived", async (obj) => {
     listener = "bulk";
   }
   events.init.then((mainContainer) => {
+    console.log(currentMessageId, listener);
+    currentMessageId = event.data.msgId;
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
+        mainContainer.classList.add("initial");
         if (fieldData.allowDeleteMessages === "true") {
           setTimeout(() => {
             removeMessage(mainContainer);
@@ -934,5 +960,14 @@ const holdedEvent = async (event) => {
         },
       })
     );
+  }
+};
+
+const swapColors = () => {
+  const message = document.getElementById(`${currentMessageId}`);
+  if (message && message.classList.contains("initial")) {
+    const dot = message.querySelector(".dot");
+    dot.style.display = "none";
+    message.classList.remove("initial");
   }
 };
