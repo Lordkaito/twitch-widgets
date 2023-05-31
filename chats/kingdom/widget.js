@@ -223,6 +223,11 @@ class mainEvent {
     const dot = document.createElement("div");
     dot.classList.add("dot");
     mainContainer.appendChild(dot);
+    const rectangle = document.createElement("div");
+    rectangle.classList.add("rectangle");
+    const triangle = document.createElement("div");
+    triangle.classList.add("triangle");
+
     // mainContainer.appendChild(this.flower);
     if (fieldData.chatBoxSize == "small") {
       mainContainer.style.maxWidth = "33.5rem";
@@ -231,6 +236,8 @@ class mainEvent {
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(mainContainer);
+    superMainContainer.appendChild(rectangle);
+    superMainContainer.appendChild(triangle);
 
     return superMainContainer;
   }

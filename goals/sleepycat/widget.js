@@ -26,7 +26,13 @@ window.addEventListener("onWidgetLoad", function (obj) {
   init(obj, initGoal, apiData);
 });
 
+/*
+  * This function initializes the data coming from the API.
+  * It also calls the proper function to initialize the goal
+  * depending on the goal type.
+*/
 const init = (obj, initGoalCallback, data) => {
+  console.log(goal.current, 'init')
   initialStart = false;
   mainObj.data = obj["detail"]["session"]["data"];
   mainObj.recents = obj["detail"]["recents"];
@@ -45,20 +51,26 @@ const init = (obj, initGoalCallback, data) => {
 };
 
 const progressFn = (data, listener) => {
+  console.log(goal.current, 'progressFn')
+  // If the data is a gift, then grow the bar by the amount of the gift.
   if (data.type === "subscriber" && data.gifted === true) {
     grow(data.type, data.amount);
   } else if (data.type === "subscriber" || data.type === "follower") {
+    // If the data is a subscriber or follower, then grow the bar by 1.
     grow(data.type);
   } else {
+    // If the data is not a gift, subscriber, or follower, then grow the bar by the amount of the data.
     grow(data.type, data.amount);
   }
 };
 
 const grow = (type, amount = 1, data) => {
+  console.log(goal.current, 'grow')
   if (type !== goalType) {
     if (type === "initial") {
+      console.log(goal.current);
       gained = data;
-      amount = data[goalType].amount;
+      amount = amount;
     } else {
       return;
     }
@@ -90,6 +102,11 @@ const grow = (type, amount = 1, data) => {
   let currentWidth = progressBar.offsetWidth;
   const progression = document.querySelector(".progression");
   total = goal.current + amount;
+  /*
+  If the total is greater than or equal to the goal objective quantity,
+  set the hidden progress bar to 100%, the visible progress bar to 100%,
+  and the progress image to the rightmost side of the visible progress bar.
+  */
   if (goal.current + amount >= goalObjectiveQuantity) {
     hidden.style.width = `100%`;
     progressBar.style.width = `100%`;
@@ -98,12 +115,19 @@ const grow = (type, amount = 1, data) => {
     if (mainObj.fieldData.goalText != "") {
       customGoalText = mainObj.fieldData.goalText;
     }
+    /*
+    If the goal text is not empty, use the user's custom text, otherwise
+    set the goal text to "Goal completed!".
+    */
     total >= goalObjectiveQuantity
       ? (progression.innerText =
           customGoalText != "" ? customGoalText : "Goal completed!")
       : (progression.innerText = total + "/" + goalObjectiveQuantity);
     return;
   }
+  /*
+  If the goal is not complete, then update the progress bar.
+  */
   if (goal.current < goalObjectiveQuantity) {
     goal.current += amount;
     hidden.style.width = `${currentWidth + goal.step * amount}px`;
@@ -114,8 +138,9 @@ const grow = (type, amount = 1, data) => {
 };
 
 window.addEventListener("onEventReceived", function (obj) {
+  console.log(goal.current, 'onEventReceived')
   let { listener, event } = obj.detail;
-  if (obj.detail.event.value === "reset") {
+  if (event.value === "reset") {
     let clear = {
       subscriber: { type: "subscriber", amount: 0 },
       follower: { type: "follower", amount: 0 },
@@ -126,10 +151,10 @@ window.addEventListener("onEventReceived", function (obj) {
     window.location.reload();
   }
 
-  if (obj.detail.listener === "grow") {
-    progressFn(obj.detail.event, listener);
+  if (listener === "grow") {
+    progressFn(event, listener);
   } else {
-    holdedEvent(obj.detail.event);
+    holdedEvent(event);
   }
 
   //if (mainObj.fieldData.resetGoalData === "true") {
@@ -145,35 +170,29 @@ window.addEventListener("onEventReceived", function (obj) {
   // progressFn(obj.detail.event);
 });
 
-const initGoal = (type, data) => {
+const initGoal = (goalType, data) => {
+  console.log(goal.current, 'initGoal')
   image.src = "https://i.postimg.cc/0NKkvZr6/nueva-patita.png";
-  // round.style.backgroundColor = "pink";
   const progression = document.querySelector(".progression");
-  let current = goalStartQuantity;
+  // let current = goalStartQuantity;
   let step;
   let progressBarWidth = document.querySelector(
     ".progress-bar-container"
   ).offsetWidth;
 
-  if (type === "tip" || type === "cheer") {
+  if (goalType === "tip" || goalType === "cheer") {
     step = progressBarWidth / goalObjectiveQuantity;
   } else {
-    step = progressBarWidth / (goalObjectiveQuantity - goalStartQuantity);
+    step = progressBarWidth / (goalObjectiveQuantity);
   }
 
-  let goalTitle = "";
   if (mainObj.fieldData.title != "") {
-    // goalTitle = mainObj.fieldData.title;
     const title = document.querySelector(".goal-title");
     const maxChars = 11;
-    // if (goalTitle.length > maxChars) {
-    //   goalTitle = goalTitle.substring(0, maxChars);
-    // }
-    // title.innerText = goalTitle;
   }
 
   goal = {
-    type: type,
+    type: goalType,
     current: current,
     step: step,
   };
@@ -182,7 +201,7 @@ const initGoal = (type, data) => {
     mainObj.fieldData.goalFullType === "allTime" &&
     mainObj.fieldData.startFromCero === "false"
   ) {
-    grow("initial", 1, data);
+    grow("initial", goalStartQuantity, data);
   }
 };
 
@@ -193,6 +212,7 @@ let firstEvent = true;
 let previousSender = "";
 
 const dispatchNewEvent = (event) => {
+  console.log(goal.current, 'dispatchNewEvent')
   if (
     previousSender === currentSender ||
     firstEvent === true ||
@@ -217,6 +237,7 @@ const dispatchNewEvent = (event) => {
   }
 
   eventTimer = setTimeout(() => {
+    // if there are more than 1 events, send the last one and dispatch the event
     if (storedEvents.length > 1) {
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
@@ -246,6 +267,7 @@ const dispatchNewEvent = (event) => {
       );
       previousSender = "";
     } else if (storedEvents.length === 1) {
+      // if there is only one event, send it
       console.log("heresdfadsf");
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
@@ -280,6 +302,7 @@ const dispatchNewEvent = (event) => {
 };
 
 const holdedEvent = (event) => {
+  console.log(goal.current, 'holdedEvent')
   if (event.gifted) {
     currentSender = event.sender;
     dispatchNewEvent(event);
