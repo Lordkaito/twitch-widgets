@@ -62,40 +62,39 @@ main {
 .super-main-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
+  margin-bottom: 1rem;
   /* transform-style: preserve-3d; */
 }
 
 .main-container {
   max-width: 37.5rem;
-  margin-bottom: 1.875rem;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
-  /* left: 1.875rem; */
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   width: 100%;
   border-radius: 40px;
-  background: linear-gradient(180deg, #85dbd5, #e0c58c);
-  z-index: 1 !important;
+  background: white;
+  position: relative;
 }
 
-.main-container::before {
-  content: "";
+.circle {
+  width: 1.25rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.625rem;
+  background: white;
   position: absolute;
-  top: 5px;
-  left: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  /* border: 5px solid transparent; */
-  background-color: pink;
-  z-index: -2;
-  transition: border;
-  border-radius: 40px;
+  bottom: -.6rem;
+  left: 2rem;
 }
 
 .red::before {
@@ -122,47 +121,23 @@ main {
   background-color: #bb9cdf;
 }
 
-/* .main-container::after {
-  content: "";
-  position: absolute;
-  top: -0.5rem;
-  left: -0.5rem;
-  width: 100%;
-  height: 100%;
-  border-radius: 40px;
-  border: double 7px transparent;
-  background-image: linear-gradient(white, white),
-    radial-gradient(at bottom, #97e1d8, #e3cd92);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  z-index: -1;
-} */
-
 .username-info-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 9fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: -1.7rem;
-  left: 2rem;
-  gap: 15px;
-  padding-left: 0.5rem;
+  align-self: flex-start;
+  margin-left: 3rem;
 }
 
 .username-info {
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
-  padding: 0.6rem 1.7rem;
+  padding: 0.2rem 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   /* box-shadow: var(--user-shadow); */
-  position: relative;
-  background-color: var(--user-background-color);
+  /* position: relative; */
+  /* background-color: var(--user-background-color); */
 }
 
 .flower {
@@ -172,6 +147,7 @@ main {
   height: 64px;
   width: 64px;
   transform: scale(0.8);
+  display: none;
 }
 
 .leafs-container {
@@ -231,17 +207,18 @@ main {
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
-  min-width: 20rem;
-  max-width: 31.25rem;
+  /* min-width: 20rem; */
+  width: 31.25rem;
   color: var(--message-color);
   white-space: normal;
   margin-right: 0.625rem;
+  text-align: center;
   /* margin-left: 5rem; */
-  padding-top: 1.25rem;
-  padding-right: 2rem;
-  padding-left: 4rem;
+  /* padding-top: 1.25rem; */
+  /* padding-right: 2rem; */
+  /* padding-left: 4rem; */
   animation: twinkleText 0.5 1 forwards;
-  text-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
 }
 
 .pronouns {
@@ -250,13 +227,10 @@ main {
   text-transform: uppercase;
   text-align: center;
   width: 6.25rem;
-  /* justify-self: right; */
-  /* margin-right: 2rem; */
-  /* position: absolute; */
   bottom: 0;
-  /* left: 14rem; */
   z-index: 1;
   font-weight: 700;
+  display: none;
 }
 
 .prons {
@@ -359,7 +333,8 @@ main {
 }
 
 .role-container {
-  display: flex;
+  display: none;
+  /* display: flex; */
   align-items: center;
   justify-content: center;
   width: 40px;

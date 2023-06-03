@@ -376,19 +376,19 @@ let events = {
           "first-msg": "0",
           flags: "",
           id: "726779f6-da00-4d26-8111-7a14f253c94b",
-          mod: "1",
+          mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
-          subscriber: "1",
+          subscriber: "0",
           "tmi-sent-ts": "1680558919103",
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "0"
+          vip: "1"
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitofd_",
+        displayName: "Lordkaitos_",
         displayColor: "#FF0000",
         badges: [
           {

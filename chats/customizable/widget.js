@@ -185,18 +185,27 @@ class mainEvent {
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
     const animation = fieldData.animation;
+    const circle = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = this.userColor;
-    
-    mainContainer.appendChild(this.flower);
-    
-    mainContainer.appendChild(await this.createUsernameInfoElement());
+    circle.classList.add("circle");
+    mainContainer.appendChild(circle);
+    if (
+      fieldData.backgroundColor !== "" &&
+      fieldData.backgroundColor !== null
+    ) {
+      mainContainer.style.backgroundColor = fieldData.backgroundColor;
+      circle.style.backgroundColor = fieldData.backgroundColor;
+    }
+
+    // mainContainer.appendChild(this.flower);
+
     mainContainer.appendChild(await this.createMessageContainerElement());
     mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
+    superMainContainer.appendChild(await this.createUsernameInfoElement());
 
     return superMainContainer;
   }
@@ -218,9 +227,25 @@ class mainEvent {
     const usernameInfoContainer = document.createElement("div");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
+    if (
+      fieldData.userAndPronsGradientStart !== "" &&
+      fieldData.userAndPronsGradientStart !== null
+    ) {
+      if (
+        fieldData.userAndPronsGradientFinish !== "" &&
+        fieldData.userAndPronsGradientFinish !== null
+      ) {
+        usernameInfo.style.background = `linear-gradient(90deg, ${fieldData.userAndPronsGradientStart} 0%, ${fieldData.userAndPronsGradientFinish} 100%)`;
+      } else {
+        usernameInfo.style.background = `linear-gradient(90deg, ${fieldData.userAndPronsGradientStart} 0%, black 100%)`;
+      }
+    } else {
+      usernameInfo.style.backgroundColor = `white`;
+    }
+    // usernameInfo.style.backgroundColor = `red`;
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(this.createRoleContainer());
+    // usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
     // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
@@ -252,21 +277,12 @@ class mainEvent {
   }
 
   createCapitalizeUserElement() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
-    };
-    let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    capitalizeUser.style.color = colors[startingColor];
+    if(fieldData.userAndPronsColor !== "" && fieldData.userAndPronsColor !== null){
+      capitalizeUser.style.color = fieldData.userAndPronsColor;
+    }
     capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
@@ -509,6 +525,9 @@ class mainEvent {
       textContainer.classList.add("white-text");
     }
     textContainer.innerHTML = words.join(" ");
+    if(fieldData.textColor != "" && fieldData.textColor != null){
+      textContainer.style.color = fieldData.textColor;
+    }
     return textContainer;
   }
 
@@ -788,7 +807,7 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  if(listener !== "subscriber-latest" && listener !== "message") {
+  if (listener !== "subscriber-latest" && listener !== "message") {
     return;
   }
 
@@ -797,7 +816,7 @@ window.addEventListener("onEventReceived", async (obj) => {
     return;
   }
 
-  if(listener === "message") {
+  if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);
     if (isBlackListed) return;
     let specialSymbols = ignoreMessagesStartingWith(event.data.text);

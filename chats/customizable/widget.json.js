@@ -61,5 +61,30 @@ let fieldData = {
     label: "Special chars (separated by comma)",
     value: "",
     group: "Customization"
-  }
+  },
+  backgroundColor: {
+    type: "colorpicker",
+    label: "Background color",
+    value: "#0000FF"
+  },
+  textColor: {
+    type: "colorpicker",
+    label: "Text color",
+    value: "#0000FF"
+  },
+  userAndPronsColor: {
+    type: "colorpicker",
+    label: "User and pronouns color",
+    value: "#ccc"
+  },
+  userAndPronsGradientStart: {
+    type: "colorpicker",
+    label: "Gradient start color (user and pronouns)",
+    value: "#0000FF"
+  },
+  userAndPronsGradientFinish: {
+    type: "colorpicker",
+    label: "Gradient finish color (user and pronouns)",
+    value: "#0000FF"
+  },
 };
