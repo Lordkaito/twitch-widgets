@@ -1,6 +1,9 @@
 // let fieldData = {};
 let currentEvent = null;
 let startingColor = "red";
+let maxMessages;
+let currentAmountOfMessages = 0;
+let currentMessagesIds = [];
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -180,6 +183,13 @@ class mainEvent {
     return this.event.data.displayColor;
   }
 
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "d";
+    return `${startingLetter}${randomString}`;
+  }
+
   async createMainContainerElement() {
     let role = this.roles;
     const mainContainer = document.createElement("div");
@@ -188,7 +198,7 @@ class mainEvent {
     const circle = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
-    mainContainer.setAttribute("id", `${this.id}`);
+    superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     circle.classList.add("circle");
     mainContainer.appendChild(circle);
@@ -717,6 +727,7 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
+  maxMessages = fieldData.maxMessages;
 
   // if (fieldData.transparency == "false") {
   //   main.style.maskImage = "none";
@@ -744,6 +755,7 @@ async function loadGlobalEmotes() {
 
 const removeMessage = (mainContainer) => {
   const elem = mainContainer;
+  console.log(elem);
   if (elem) {
     elem.style.animationName = "removeMessage";
     elem.style.animationDuration = "0.7s";
@@ -864,9 +876,17 @@ window.addEventListener("onEventReceived", async (obj) => {
     }
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
-        setTimeout(() => {
-          removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 1000);
+        if(currentAmountOfMessages >= maxMessages) {
+          let messageToRemove = currentMessagesIds.shift();
+          removeMessage(document.querySelector("#" + messageToRemove));
+          currentMessagesIds.push(mainContainer.id);
+        } else {
+          currentAmountOfMessages++;
+          currentMessagesIds.push(mainContainer.id);
+        }
+        // setTimeout(() => {
+        //   removeMessage(mainContainer);
+        // }, fieldData.deleteMessages * 1000);
       } else {
         setTimeout(() => {
           removeEvent(mainContainer, "event-name");

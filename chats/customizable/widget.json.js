@@ -15,7 +15,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
@@ -23,7 +23,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
@@ -65,7 +65,7 @@ let fieldData = {
   backgroundColor: {
     type: "colorpicker",
     label: "Background color",
-    value: "#0000FF"
+    value: "black"
   },
   textColor: {
     type: "colorpicker",
@@ -80,11 +80,20 @@ let fieldData = {
   userAndPronsGradientStart: {
     type: "colorpicker",
     label: "Gradient start color (user and pronouns)",
-    value: "#0000FF"
+    value: "blue"
   },
   userAndPronsGradientFinish: {
     type: "colorpicker",
     label: "Gradient finish color (user and pronouns)",
-    value: "#0000FF"
+    value: "red"
   },
+  maxMessages: {
+    type: "number",
+    label: "Max messages to show",
+    value: 3,
+    min: 1,
+    max: 10,
+    step: 1,
+    group: "Customization"
+  }
 };
