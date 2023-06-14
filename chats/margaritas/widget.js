@@ -450,7 +450,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found" ) {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });

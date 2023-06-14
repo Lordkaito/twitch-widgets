@@ -46,7 +46,6 @@
 }
 
 main {
-  overflow: hidden;
   max-height: 1080px;
   position: absolute;
   bottom: 0;
@@ -57,7 +56,6 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   padding-left: 5rem;
-  /* z-index: 1; */
 }
 
 .super-main-container {
@@ -66,9 +64,9 @@ main {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  width: 39rem;
+  width: 43rem;
   margin-bottom: 1rem;
-  overflow: hidden;
+  margin-top: 1rem;
 }
 
 .main-container {
@@ -80,7 +78,7 @@ main {
   width: 0;
   border-radius: 40px;
   z-index: 1 !important;
-  animation: growMainContainer .8s .9s forwards ease-in-out;
+  animation: growMainContainer 0.8s 0.9s forwards ease-in-out;
 }
 
 @keyframes growMessageContainer {
@@ -105,19 +103,6 @@ main {
   }
 }
 
-/* .main-container::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  background-color: pink;
-  z-index: -2;
-  transition: border;
-  border-radius: 40px;
-} */
-
 .origami {
   width: 10%;
   height: 100%;
@@ -138,29 +123,12 @@ main {
   border-radius: 50%;
 }
 
-/* .circle {
-  border: 3px solid #dad2f7;
-  height: 55px;
-  width: 55px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5px;
-} */
-
 .circle {
-  /* border: 3px solid #dad2f7;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5px; */
   height: 55px;
   width: 55px;
   position: relative;
   fill: transparent;
-  stroke: white;
+  stroke: #dad2f7;
   stroke-width: 5;
   stroke-dasharray: 0;
   stroke-dashoffset: 0;
@@ -173,12 +141,12 @@ main {
   height: 100%;
   position: absolute;
   top: 5px;
-  left: 5px;
+  left: 6px;
   width: 46px;
   opacity: 0;
   height: 44px;
   z-index: 2;
-  transform: scale(0.85);
+  transform: scale(0.8);
   animation: showOriFlower 1s 0.5s linear forwards;
 }
 
@@ -491,7 +459,7 @@ main {
   grid-template-rows: 1fr;
   align-items: center;
   width: 0;
-  animation: growUsernameInfo .8s .9s ease-in-out forwards;
+  animation: growUsernameInfo 0.8s 0.9s ease-in-out forwards;
 }
 
 @keyframes growUsernameInfo {
@@ -559,7 +527,8 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 0;
-  animation: growCapitalizeUser .8s .9s ease-in-out forwards;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
+  animation: growCapitalizeUser 0.8s 0.9s ease-in-out forwards;
 }
 
 @keyframes growCapitalizeUser {
@@ -574,13 +543,13 @@ main {
 .message-container {
   flex-grow: 1;
   /* padding: 2.3rem; */
-  padding-top: 2.3rem;
-  padding-bottom: 2.3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   /* padding-left: 2.3rem;
   padding-right: 2.3rem; */
   margin-top: 0.5rem;
   border-radius: 30px;
-  animation: growMessageContainer .8s .9s ease-in-out forwards;
+  animation: growMessageContainer 0.8s 0.9s ease-in-out forwards;
   overflow: hidden;
   background-color: var(--message-background-color);
 }
@@ -625,7 +594,8 @@ main {
   font-weight: 700;
   opacity: 0;
   align-self: flex-end;
-  padding-bottom: .2rem;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
+  padding-bottom: 0.2rem;
 }
 
 @keyframes showPronouns {
@@ -643,7 +613,7 @@ main {
   background: var(--pronouns-background-color);
   border-radius: 1.25rem;
   opacity: 0;
-  animation: showPronouns 1s .9s ease-in-out forwards;
+  animation: showPronouns 1s 0.9s ease-in-out forwards;
 }
 
 .separator {
@@ -672,25 +642,48 @@ main {
 
 .hyphen {
   height: 2px;
-  width: .4rem;
+  width: 0.4rem;
   background-color: var(--hyphen-color);
   opacity: 0;
   align-self: flex-end;
-  margin-bottom: .6rem;
+  margin-bottom: 0.6rem;
   animation: showPronouns 1s 1.5s ease-in-out forwards;
 }
 
 .event-container {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   max-width: 37rem;
-  padding: 1rem 1rem 0.6rem 1rem;
   animation-fill-mode: forwards;
   animation-duration: 0.8s;
   left: 1.875rem;
   width: 37.5rem;
+  padding: 3rem 1rem;
+  background-color: red;
+  border-radius: 30px; */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  padding: 0 0;
+  width: 0;
+  animation: growEventContainer .8s 0.9s ease-in-out forwards;
+  position: relative;
+  /* transform: translateX(600px); */
+}
+
+@keyframes growEventContainer {
+  0% {
+    /* transform: translateX(600px); */
+    width: 0;
+  }
+  100% {
+    width: 100%;
+    /* transform: translateX(0); */
+  }
 }
 
 .widget {
@@ -710,11 +703,21 @@ main {
   color: var(--event-color);
   letter-spacing: normal;
   font-size: 1.5rem;
-  animation: showNames 0.5s ease-in-out forwards;
-  background-color: var(--event-background-color);
+  min-width: 170px;
+  opacity: 0;
+  animation: showName 1s 1s ease-in-out forwards;
+  text-shadow: 0 2px 0.2em var(--event-shadow-color);
   padding: 3px 10px;
   border-radius: 40px;
-  text-shadow: 0 2px 0.2em var(--event-shadow-color);
+}
+
+@keyframes showName {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .event-leafs-container-1,
@@ -725,11 +728,29 @@ main {
   place-content: center;
 }
 
-.event-leafs-container-1 img,
-.event-leafs-container-2 img {
-  height: 37px;
-  width: 40px;
-  transform: scale(0.65);
+.event-leafs-container img {
+  height:  18px;
+  width: 20px;
+  padding-top: 4px;
+}
+
+.event-and-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+}
+
+.event-text {
+  color: var(--event-color);
+  letter-spacing: normal;
+  font-size: 1.5rem;
+  animation: showName 1s 1s ease-in-out forwards;
+  text-shadow: 0 2px 0.2em var(--event-shadow-color);
+  background-color: #ffc07f;
+  padding: .4rem;
+  opacity: 0;
+  border-radius: 5px;
 }
 
 .event-leafs-container-1 img {
@@ -761,11 +782,55 @@ main {
   /* transform: scale(0.65); */
 }
 
+.fungi {
+  opacity: 0;
+  animation: showNames 1s 1s ease-in-out forwards;
+}
+
 .fungi-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 0;
+  padding: 2.4rem 0;
+  background-color: #ffb2c1;
+  border-radius: 30px;
+  position: relative;
+  margin-left: 1.8rem;
+  animation: growFungiContainer .7s 0.9s ease-in-out forwards;
+}
+
+.moon {
+  position: absolute;
+  right: -1rem;
+  bottom: -1rem;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: showNames 1s 1s ease-in-out forwards;
+}
+
+.mascara {
+  width: 36px;
+  height: 44px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  opacity: 0;
+  z-index: 2;
+  transform: scale(0.7);
+  animation: showOriFlower 1s 0.5s linear forwards;
+}
+
+@keyframes growFungiContainer {
+  0% {
+    width: 0;
+    padding: 2.4rem 0;
+  }
+  100% {
+    width: 37.4rem;
+    padding: 2.4rem 2rem;
+  }
 }
 
 @keyframes showLeftFungi {
@@ -814,6 +879,10 @@ main {
 
 @keyframes showNames {
   0% {
+    opacity: 0;
+  }
+
+  30% {
     opacity: 0;
   }
 

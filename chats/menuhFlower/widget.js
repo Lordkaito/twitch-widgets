@@ -197,8 +197,15 @@ class mainEvent {
     const ori = document.createElement("img");
     const flower = document.createElement("img");
     origami.classList.add("origami");
-    flower.classList.add("ori-flower");
-    flower.src = "https://i.postimg.cc/yxcGcb0v/flor.png";
+    // flower.classList.add("ori-flower");
+    if(this.isStreamer || this.isSub) {
+      flower.src = "https://i.postimg.cc/QMjjtpG2/mascara.png";
+      flower.classList.add("mascara");
+      flower.classList.remove("ori-flower");
+    } else {
+      flower.classList.add("ori-flower");
+      flower.src = "https://i.postimg.cc/yxcGcb0v/flor.png";
+    }
     ori.src = "https://i.postimg.cc/WbSBnxQH/origami.png";
 
     const container = document.createElement("div");
@@ -373,7 +380,7 @@ class mainEvent {
     );
 
     // Asignar la imagen correspondiente
-    let roleImage = document.createElement("svg");
+    let roleImage = document.createElement("img");
     roleImage.classList.add("role");
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
@@ -521,7 +528,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found" ) {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -627,6 +634,18 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
+    console.log(this.event);
+
+    const eventDictionary = {
+      follower: "HI",
+      subscriber: "SUB",
+      cheer: "CHEER",
+      subscriber: "SUB",
+      tip: "TIP",
+      raid: "RAID",
+    };
+
+    console.log(this.event);
 
     const amount = this.amount;
     const sender = this.event.name;
@@ -670,22 +689,32 @@ class mainEvent {
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
+    const fungi = document.createElement("img");
 
-      fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
+    fungi.src = "https://i.postimg.cc/4Nn74Rb6/corazon.png";
 
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
+    fungi.classList.add("fungi");
+    const fungiDivContainer = document.createElement("div");
 
-      fungiDivContainer.classList.add(`event-leafs-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
+    fungiDivContainer.classList.add(`event-leafs-container`);
+    fungiDivContainer.appendChild(fungi);
+    fungiContainer.classList.add("fungi-container");
+    const moon = document.createElement("img");
+    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
+    moon.classList.add("moon");
+    fungiContainer.appendChild(moon);
+    fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
+
+    const eventAndNameContainer = document.createElement("div");
+    eventAndNameContainer.classList.add("event-and-name-container");
+    const eventDictionaryText = document.createElement("p");
+    eventDictionaryText.classList.add("event-text");
+    eventDictionaryText.innerText = eventDictionary[this.event.type];
+    eventAndNameContainer.appendChild(eventDictionaryText);
+    eventAndNameContainer.appendChild(nameContainer);
+    fungiContainer.appendChild(eventAndNameContainer);
 
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
@@ -836,9 +865,9 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  if (listener !== "subscriber-latest" && listener !== "message") {
-    return;
-  }
+  // if (listener !== "subscriber-latest" && listener !== "message") {
+  //   return;
+  // }
 
   if (listener === "subscriber-latest") {
     holdedEvent(event);
@@ -870,27 +899,6 @@ window.addEventListener("onEventReceived", async (obj) => {
     listener = "bulk";
   }
   events.init.then((mainContainer) => {
-    // mainContainer.querySelector(".main-container").classList.add(startingColor);
-    // switch (startingColor) {
-    //   case "red":
-    //     startingColor = "orange";
-    //     break;
-    //   case "orange":
-    //     startingColor = "yellow";
-    //     break;
-    //   case "yellow":
-    //     startingColor = "green";
-    //     break;
-    //   case "green":
-    //     startingColor = "blue";
-    //     break;
-    //   case "blue":
-    //     startingColor = "purple";
-    //     break;
-    //   case "purple":
-    //     startingColor = "red";
-    //     break;
-    // }
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
         setTimeout(() => {

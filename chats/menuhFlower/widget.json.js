@@ -54,12 +54,54 @@ let fieldData = {
     type: "text",
     label: "Users blacklist (separated by comma)",
     value: "",
-    group: "Customization"
+    group: "Customization",
   },
   specialCharsBlackList: {
     type: "text",
     label: "Special chars (separated by comma)",
     value: "",
-    group: "Customization"
-  }
+    group: "Customization",
+  },
+  subText: {
+    type: "text",
+    label: "Custom text for SUB (max 40)",
+    value: "(user) just suscribed!",
+    group: "Events",
+  },
+  followText: {
+    type: "text",
+    label: "Custom text for FOLLOW (max 40)",
+    value: "just followed!",
+    group: "Events",
+  },
+  cheerText: {
+    type: "text",
+    label: "Custom text for Cheers (max 40)",
+    value: "cheered x(amount)!",
+    group: "Events",
+  },
+  tipText: {
+    type: "text",
+    label: "Custom text for Tips (max 40)",
+    value: "Tipped $(amount)!",
+    group: "Events",
+  },
+  giftSubText: {
+    type: "text",
+    label: "Custom text for gifted SUB (max 40)",
+    value: "(sender) gifted a sub to (user)!",
+    group: "Events",
+  },
+  bulkGiftText: {
+    type: "text",
+    label: "Custom text for many gifts at once (max 40)",
+    value: "(sender) (amount) sub(s)!",
+    group: "Events",
+  },
+  raidText: {
+    type: "text",
+    label: "Custom text for raids (max 40)",
+    value: "(sender) sent (amount) raiders!",
+    group: "Events",
+  },
 };
