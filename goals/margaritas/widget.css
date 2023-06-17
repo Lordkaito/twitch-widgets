@@ -27,9 +27,10 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 37rem;
+  height: 41rem;
   /* width: 250px; */
   position: relative;
+  margin-bottom: 4rem;
 }
 
 #round {
@@ -46,7 +47,7 @@ main {
 .gifReg {
   position: absolute;
   left: -30rem;
-  top: -25rem;
+  top: -20rem;
   opacity: 0;
   transition: opacity 0.2s;
 }
@@ -74,12 +75,12 @@ main {
   line-height: 1.75;
   color: white;
   font-size: 1.2rem;
-  height: 100%;
+  height: 90%;
   z-index: 4;
-  top: 5rem;
-  left: 2.9rem;
-  text-shadow: -1px -1px 0 #6a6bae, 1px -1px 0 #6a6bae, -1px 1px 0 #6a6bae,
-    1px 1px 0 #6a6bae;
+  top: 8rem;
+  left: 2.8rem;
+  /* text-shadow: -1px -1px 0 #8ed6ff, 1px -1px 0 #8ed6ff, -1px 1px 0 #8ed6ff,
+    1px 1px 0 #8ed6ff; */
 }
 
 .progressNums {
@@ -87,11 +88,11 @@ main {
   text-align: center;
   vertical-align: middle;
   color: white;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   z-index: 4;
   top: -7rem;
-  text-shadow: -1px -1px 0 #6a6bae, 1px -1px 0 #6a6bae, -1px 1px 0 #6a6bae,
-    1px 1px 0 #6a6bae;
+  text-shadow: -1.5px -1px 0 #acc87d, 1.5px -1px 0 #acc87d, -1.5px 1px 0 #acc87d,
+    1.5px 1px 0 #acc87d;
 }
 
 .progress-bar {

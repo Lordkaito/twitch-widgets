@@ -5,10 +5,16 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
+  goalText: {
+    type: "text",
+    label: "Goal text (max 40):",
+    value: "GOAL COMPLETED!",
+    group: "Customization",
+  },
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 5,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -17,7 +23,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 0,
+    value: 5,
     group: "Customization",
     min: 1,
     max: 100000,

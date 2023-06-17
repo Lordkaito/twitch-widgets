@@ -71,7 +71,7 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "sname just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {

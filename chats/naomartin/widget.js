@@ -182,47 +182,45 @@ class mainEvent {
 
   get origami() {
     const origami = document.createElement("div");
-    const circle = document.createElement("div");
-    circle.innerHTML = `
-      <svg class="circulo" viewBox="0 0 100 100">
-        <circle class="circulo-animado" cx="50" cy="50" r="45">
-        </circle>
-      </svg>
-    `;
-    circle.classList.add("circle");
-    const dots = document.createElement("div");
-    dots.classList.add("ori-dots");
-    const oriContainer = document.createElement("div");
-    oriContainer.classList.add("ori-container");
-    const ori = document.createElement("img");
+    const circle = document.createElement("img");
     const flower = document.createElement("img");
+    circle.classList.add("circle");
     origami.classList.add("origami");
-    // flower.classList.add("ori-flower");
-    if(this.isStreamer || this.isSub) {
-      flower.src = "https://i.postimg.cc/QMjjtpG2/mascara.png";
-      flower.classList.add("mascara");
-      flower.classList.remove("ori-flower");
+    if (this.isSub) {
+      if (this.isMod) {
+        circle.src = "https://i.postimg.cc/W1fn3Tty/buba-morado.png";
+      } else {
+        circle.src = "https://i.postimg.cc/B62cMFNW/buba-azul.png";
+      }
+    } else if (this.isMod) {
+      circle.src = "https://i.postimg.cc/VLWZzxqy/huellita-morada.png";
     } else {
-      flower.classList.add("ori-flower");
-      flower.src = "https://i.postimg.cc/yxcGcb0v/flor.png";
+      circle.src = "https://i.postimg.cc/tTGFZTbB/huellita-azul.png";
     }
-    ori.src = "https://i.postimg.cc/WbSBnxQH/origami.png";
 
     const container = document.createElement("div");
     container.classList.add("container");
 
-    for (let i = 0; i < 3; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dots.appendChild(dot);
-    }
+    const bigLine = document.createElement("div");
+    bigLine.setAttribute("id", "big-line");
+    const smallLine = document.createElement("div");
+    smallLine.setAttribute("id", "small-line");
+    const lines = document.createElement("div");
+    lines.setAttribute("id", "lines");
 
-    circle.appendChild(flower);
-    oriContainer.appendChild(ori);
+    const moonSvg = document.createElement("svg");
+    moonSvg.setAttribute("id", "moon-svg");
+    moonSvg.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler icon-tabler-moon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" stroke-width="0" fill="#fff"></path></svg>`;
+
+    lines.appendChild(bigLine);
+    lines.appendChild(smallLine);
+    lines.appendChild(moonSvg);
+    // circle.appendChild(flower);
 
     container.appendChild(circle);
-    container.appendChild(dots);
-    container.appendChild(oriContainer);
+    container.appendChild(lines);
 
     origami.appendChild(container);
     return origami;
@@ -236,7 +234,7 @@ class mainEvent {
     const origami = this.origami;
 
     superMainContainer.classList.add("super-main-container");
-    superMainContainer.appendChild(this.origami);
+    superMainContainer.appendChild(origami);
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     // mainContainer.style.backgroundColor = this.userColor;
@@ -284,6 +282,16 @@ class mainEvent {
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    for (let i = 0; i < 2; i++) {
+      const brilloMsg = document.createElement("img");
+      const ears = document.createElement("img");
+      ears.classList.add(`ears-msg-${i + 1}`);
+      ears.src = "https://i.postimg.cc/NG4RFBzx/orejita-azul.png";
+      brilloMsg.classList.add(`brillo-msg-${i + 1}`);
+      brilloMsg.src = "https://i.postimg.cc/9XtY9GrZ/brilliiii.png";
+      messageContainer.appendChild(brilloMsg);
+      messageContainer.appendChild(ears);
+    }
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -294,6 +302,7 @@ class mainEvent {
     const usernameBadges = document.createElement("span");
     usernameBadges.classList.add("username-badges");
     this.badges.forEach((badge) => {
+      console.log(badge);
       let badgeImg = document.createElement("img");
       badgeImg.classList.add("badges-img");
       badgeImg.src = badge.url;
@@ -528,7 +537,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined && customEmotes.status != "Not Found" ) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found") {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -638,18 +647,17 @@ class mainEvent {
 
     const eventDictionary = {
       follower: "HI",
-      subscriber: this.event.gifted ? "GIFT" : "SUB",
+      subscriber: "SUB",
       cheer: "CHEER",
       subscriber: "SUB",
       tip: "TIP",
       raid: "RAID",
-      bulkgift: "GIFT"
     };
 
     console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender;
+    const sender = this.event.name;
     let eventText = dictionary[this.event.type];
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
@@ -665,7 +673,6 @@ class mainEvent {
     }
 
     if (this.event.bulkGifted) {
-      // sender = this.event.sender;
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -693,7 +700,7 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/4Nn74Rb6/corazon.png";
+    fungi.src = "https://i.postimg.cc/R0HcZtk3/bubelti.png";
 
     fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
@@ -701,11 +708,21 @@ class mainEvent {
     fungiDivContainer.classList.add(`event-leafs-container`);
     fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
-    const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
-    moon.classList.add("moon");
-    fungiContainer.appendChild(moon);
-    // fungiContainer.appendChild(fungiDivContainer);
+    for(let i = 0; i < 2; i++){
+      const brillo = document.createElement("img");
+      const ears = document.createElement("img");
+      ears.classList.add(`ears-${i + 1}`);
+      ears.src = "https://i.postimg.cc/50Qk1j3p/orejita-rosa.png";
+      brillo.src = "https://i.postimg.cc/9XtY9GrZ/brilliiii.png";
+      brillo.classList.add(`brillo-${i + 1}`);
+      fungiContainer.appendChild(brillo);
+      fungiContainer.appendChild(ears);
+    }
+    // const moon = document.createElement("img");
+    // moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
+    // moon.classList.add("moon");
+    // fungiContainer.appendChild(moon);
+    fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
@@ -714,7 +731,6 @@ class mainEvent {
     const eventDictionaryText = document.createElement("p");
     eventDictionaryText.classList.add("event-text");
     eventDictionaryText.innerText = eventDictionary[this.event.type];
-    eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
@@ -914,6 +930,16 @@ window.addEventListener("onEventReceived", async (obj) => {
       }
     }
     mainCont.appendChild(mainContainer);
+    setTimeout(() => {
+      const bigLine = mainContainer.querySelector("#big-line");
+      const messageContainer =
+        mainContainer.querySelector(".message-container");
+      console.log(bigLine, messageContainer);
+      bigLine.style.height = `${messageContainer.offsetHeight - 50}px`;
+      if(messageContainer.offsetHeight > 200) {
+        bigLine.style.height = `${messageContainer.offsetHeight - 100}px`;
+      }
+    }, 500);
   });
 });
 
