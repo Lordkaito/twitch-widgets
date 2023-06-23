@@ -23,7 +23,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 5,
+    value: 2,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -149,4 +149,10 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  resetGoalData: {
+    type: "button",
+    label: "Reset goal",
+    value: "reset",
+    group: "Customization",
+  }
 };

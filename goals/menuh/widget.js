@@ -9,37 +9,21 @@ let gained = {
   cheer: { type: "cheer", amount: 0 },
 };
 
-const goalCompletedText = () => {
-  const p = document.querySelector(".progression");
-  let text = "Goal completed!";
-  let completeGoalText = mainObj.fieldData.goalText;
-  if (completeGoalText != "") {
-    let mockText = "GOAL COMPLETADO!";
-    if (completeGoalText.length > mockText.length) {
-      completeGoalText = completeGoalText.substring(0, mockText.length);
-    }
-    text = completeGoalText;
-  }
-  let string = "";
-  let split = text.split("").forEach((letter) => {
-    string += letter + "\n";
-  });
-  p.innerText = string;
-};
+// all this is just for session goals, and the progress resets if you reload widget, change config or session resets
 
 const progress = document.querySelector(".progress-bar-container");
 progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
-  // SE_API.store.get("beniartsMargaritaGoalWidgetPreviousGained").then((data) => {
-  //   if (data === null) {
-  //   } else {
-  //     apiData = data;
-  //   }
-  // });
-  apiData = gained;
-  init(obj, initGoal, apiData);
+  SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
+    if (data === null) {
+      apiData = gained;
+    } else {
+      apiData = data;
+    }
+    init(obj, initGoal, apiData);
+  });
 });
 
 const init = (obj, initGoalCallback, data) => {
@@ -51,101 +35,22 @@ const init = (obj, initGoalCallback, data) => {
   mainObj.apiToken = obj["detail"]["channel"]["apiToken"];
   mainObj.fieldData = obj["detail"]["fieldData"];
 
-  if (mainObj.fieldData.resetGoalData === "true") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", clear);
-  }
-
-  if (mainObj.fieldData.wateringCanSide === "right") {
-    const reg = document.querySelector(".gifReg");
-    reg.style.transform = "scaleX(-1)";
-    reg.style.left = "-12rem";
-  }
-
   goalType = mainObj.fieldData.goalType;
   goalStartQuantity = mainObj.fieldData.goalStartQuantity;
+  if (mainObj.fieldData.goalStartQuantity === null) {
+    goalStartQuantity = 0;
+  }
   goalObjectiveQuantity = mainObj.fieldData.goalObjectiveQuantity;
   initGoalCallback(goalType, data);
 };
 
-window.addEventListener("onEventReceived", function (obj) {
-  if (obj.detail.event.value === "reset") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", clear);
-    window.location.reload();
-  }
-
-  if (obj.detail.listener === "grow") {
-    progressFn(obj.detail.event, obj.detail.listener, obj);
-  } else {
-    holdedEvent(obj.detail.event);
-  }
-});
-
-const progressFn = (data, listener, obj) => {
+const progressFn = (data, listener) => {
   if (data.type === "subscriber" && data.gifted === true) {
     grow(data.type, data.amount);
   } else if (data.type === "subscriber" || data.type === "follower") {
     grow(data.type);
   } else {
     grow(data.type, data.amount);
-  }
-  if (obj.detail.event.type === mainObj.fieldData.goalType) {
-    const reg = document.querySelector(".gifReg");
-    if (!reg.classList.contains("playing")) {
-      reg.classList.add("playing");
-      setTimeout(() => {
-        reg.classList.remove("playing");
-      }, 1500);
-    }
-  }
-};
-
-const initGoal = (type, data) => {
-  if (mainObj.fieldData.goalTheme === "pink") {
-    image.src = "https://i.postimg.cc/hvs4D0z6/patita.png ";
-    round.style.backgroundColor = "pink";
-    const goalText = document.querySelector(".goal-name");
-    const progressBar = document.querySelector(".progress-bar");
-    const progression = document.querySelector(".progressNums");
-    goalText.style.color = "#ea769b";
-    progressBar.style.backgroundColor = "#c9527a";
-    progression.style.textShadow = `-1px -1px 0 #c9527a, 1px -1px 0 #c9527a, -1px 1px 0 #c9527a,
-    1px 1px 0 #c9527a`;
-  }
-  // let current = goalStartQuantity;
-  let step;
-  const progression = document.querySelector(".progressNums");
-  let progressBarHeight = document.querySelector(
-    ".progress-bar-container"
-  ).offsetHeight;
-
-  if (type === "tip" || type === "cheer") {
-    step = progressBarHeight / goalObjectiveQuantity;
-  } else {
-    step = progressBarHeight / goalObjectiveQuantity;
-  }
-
-  goal = {
-    type: type,
-    current: current,
-    step: step,
-  };
-  progression.innerText = current + "/" + "\n" + goalObjectiveQuantity;
-  if (mainObj.fieldData.goalFullType === "allTime") {
-    grow("initial", data[goalType].amount, data);
-  } else {
-    grow("initial", goalStartQuantity, data);
   }
 };
 
@@ -162,19 +67,19 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     default:
       break;
@@ -182,24 +87,98 @@ const grow = (type, amount = 1, data) => {
 
   let progressBar = document.querySelector(".progress-bar");
   let progressImg = document.querySelector(".img-container");
-  const completeGoal = document.querySelector(".progression");
-  let currentHeight = progressBar.offsetHeight;
-  const progression = document.querySelector(".progressNums");
+  let currentWidth = progressBar.offsetWidth;
+  const progression = document.querySelector(".progression");
   total = goal.current + amount;
   if (goal.current + amount >= goalObjectiveQuantity) {
-    progressBar.style.height = `100%`;
-    progression.innerText =
-      goalObjectiveQuantity + "/" + "\n" + goalObjectiveQuantity;
-    goalCompletedText();
-    if (total >= goalObjectiveQuantity) {
-      goalCompletedText();
+    hidden.style.width = `100%`;
+    progressBar.style.width = `100%`;
+    progressImg.style.left = `${hidden.offsetWidth - 40}px`;
+    let customGoalText = "";
+    if (mainObj.fieldData.goalText != "") {
+      customGoalText = mainObj.fieldData.goalText;
     }
+    total >= goalObjectiveQuantity
+      ? (progression.innerText =
+          customGoalText != "" ? customGoalText : "Goal completed!")
+      : (progression.innerText = total + "/" + goalObjectiveQuantity);
     return;
   }
   if (goal.current < goalObjectiveQuantity) {
     goal.current += amount;
-    progressBar.style.height = `${currentHeight + goal.step * amount}px`;
-    progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
+    hidden.style.width = `${currentWidth + goal.step * amount}px`;
+    progressBar.style.width = `${currentWidth + goal.step * amount}px`;
+    progressImg.style.left = `${hidden.offsetWidth + 6}px`;
+    progression.innerText = goal.current + "/" + goalObjectiveQuantity;
+  }
+};
+
+window.addEventListener("onEventReceived", function (obj) {
+  if (obj.detail.event.value === "reset") {
+    let clear = {
+      subscriber: { type: "subscriber", amount: 0 },
+      follower: { type: "follower", amount: 0 },
+      tip: { type: "tip", amount: 0 },
+      cheer: { type: "cheer", amount: 0 },
+    };
+    SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
+    window.location.reload();
+  }
+
+  if (obj.detail.listener === "grow") {
+    progressFn(obj.detail.event);
+  } else {
+    holdedEvent(obj.detail.event);
+  }
+});
+
+const initGoal = (type, data) => {
+  if (mainObj.fieldData.goalTheme === "pink") {
+    image.src = "https://i.postimg.cc/hvs4D0z6/patita.png ";
+    round.style.backgroundColor = "pink";
+    const goalText = document.querySelector(".goal-name");
+    const progressBar = document.querySelector(".progress-bar");
+    const progression = document.querySelector(".progression");
+    goalText.style.color = "#ff9eb9";
+    progressBar.style.backgroundColor = "#ff9eb9";
+    progression.style.textShadow = `-1px -1px 0 #ff9eb9, 1px -1px 0 #ff9eb9, -1px 1px 0 #ff9eb9,
+    1px 1px 0 #ff9eb9`;
+  }
+  // let current = goalStartQuantity;
+  let step;
+  const progression = document.querySelector(".progression");
+  let progressBarWidth = document.querySelector(
+    ".progress-bar-container"
+  ).offsetWidth;
+
+  if (type === "tip" || type === "cheer") {
+    step = progressBarWidth / goalObjectiveQuantity;
+  } else {
+    step = progressBarWidth / goalObjectiveQuantity;
+  }
+
+  let goalTitle = "";
+  if (mainObj.fieldData.title != "") {
+    goalTitle = mainObj.fieldData.title;
+    const title = document.querySelector(".goal-title");
+    const titleP = document.querySelector("#title");
+    titleP.innerText = goalTitle;
+  }
+  // const maxChars = 11;
+  // if (goalTitle.length > maxChars) {
+  //   goalTitle = goalTitle.substring(0, maxChars);
+  // }
+
+  goal = {
+    type: type,
+    current: current,
+    step: step,
+  };
+  progression.innerText = current + "/" + goalObjectiveQuantity;
+  if (mainObj.fieldData.goalFullType === "allTime") {
+    grow("initial", goalStartQuantity, data);
+  } else {
+    grow("initial", goalStartQuantity, data);
   }
 };
 
@@ -258,12 +237,8 @@ const dispatchNewEvent = (event) => {
         })
       );
       eventCounter += storedEvents.length;
-      console.log(
-        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
-      );
       previousSender = "";
     } else if (storedEvents.length === 1) {
-      console.log("heresdfadsf");
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {

@@ -10,103 +10,78 @@
   letter-spacing: 0.125rem;
 }
 
-.playing {
-  opacity: 1 !important;
-}
-
 main {
   overflow: hidden;
-  width: 800px;
   max-height: 1080px;
-  height: 1080px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   display: grid;
   place-content: center;
+  margin-bottom: 4rem;
 }
 
 .container {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  height: 37rem;
-  /* width: 250px; */
+  height: 250px;
+  width: 37rem;
   position: relative;
 }
 
 #round {
-  width: 70px;
-  height: 42rem;
-  padding: 1.5rem 0.4rem 4rem 0.4rem;
-  background-color: #fff3eb;
+  width: 37rem;
+  height: 70px;
+  padding: 0.4rem 1.5rem;
+  /* background-color: #ddb78a; */
   border-radius: 50px;
-  border: 5px solid #acc87d;
+  /* border: 5px solid #ffeab6; */
   display: grid;
   place-content: center;
-}
-
-.gifReg {
-  position: absolute;
-  left: -31rem;
-  top: -16.5rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.reg {
-  width: 694px;
-  height: 432px;
-  transform: scale(0.85);
+  position: relative;
 }
 
 .progress-bar-container {
-  width: 50px;
-  height: 37rem;
-  border-radius: 15px;
-  background-color: #efd9ca;
+  width: 34rem;
+  height: 20px;
+  border-radius: 8px;
+  background-color: white;
   /* position: relative; */
   overflow: hidden;
-  top: -2rem;
 }
 
 .progression {
   position: absolute;
   text-align: center;
   vertical-align: middle;
-  line-height: 1.75;
-  color: white;
+  line-height: 25px;
+  color: #f3bdf9;
   font-size: 1.2rem;
-  height: 100%;
+  margin: auto;
+  bottom: -0.3rem;
+  right: 3.5rem;
   z-index: 4;
-  top: 6rem;
-  left: 2.8rem;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
 }
 
-.progressNums {
-  /* opacity: 0; */
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-  font-size: 1.2rem;
-  z-index: 4;
-  margin-bottom: 1rem;
-  top: -7rem;
-  text-shadow: -1px -1px 0 #acc87d, 1px -1px 0 #acc87d, -1px 1px 0 #acc87d,
-    1px 1px 0 #acc87d;
+.heart {
+  position: absolute;
+  bottom: 0rem;
+  right: 1.5rem;
 }
 
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: #8ed6ff;
-  height: 0;
-  width: 70px;
-  transition: height 1s ease-in-out;
+  background-color: pink;
+  height: 70px;
+  transition: width 0.2s;
   position: relative;
-  background-position: bottom;
 }
 
 .img-progress {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   height: 100%;
   position: relative;
@@ -118,18 +93,15 @@ main {
 }
 
 .img-container {
-  /* opacity: 0; */
   position: absolute;
   z-index: 2;
-  bottom: -15.7rem;
-  left: -1.3rem;
+  top: 7.4rem;
+  left: 1rem;
   transition: left 0.2s;
 }
 
 .img-container img {
-  height: 195px;
-  width: 126px;
-  transform: scale(0.85);
+  height: 40px;
 }
 .progression-img {
   position: absolute;
@@ -140,12 +112,10 @@ main {
 
 .goal-name {
   position: absolute;
-  top: 3.9rem;
-  left: 3rem;
-  width: 14rem;
+  top: 4.8rem;
+  left: 2rem;
   height: 3.5rem;
-  background-color: #fff4f4;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
   border-radius: 40px;
   text-align: center;
   display: flex;
@@ -153,8 +123,7 @@ main {
   justify-content: center;
   z-index: 1;
   text-transform: uppercase;
-  color: #9e9cef;
-  display: none;
+  color: #f3bdf9;
 }
 
 .goal-name p {
