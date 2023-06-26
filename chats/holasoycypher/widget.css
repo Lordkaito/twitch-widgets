@@ -62,12 +62,13 @@ main {
 .super-main-container {
   display: flex;
   align-items: center;
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
+  /* animation-duration: 1s; */
+  /* animation-fill-mode: forwards; */
   /* padding: 0 1rem; */
   /* width: 43rem; */
   margin-bottom: 1rem;
   margin-top: 1rem;
+  animation: slideMessage 0.8s forwards ease-in-out;
 }
 
 .main-container {
@@ -682,6 +683,7 @@ main {
   padding: 0 0;
   /* width: 43rem; */
   position: relative;
+  animation: slideMessage .8s ease-in-out forwards;
 }
 
 .vertical-container {
