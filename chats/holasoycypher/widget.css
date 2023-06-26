@@ -544,7 +544,7 @@ main {
 
 .message-container {
   flex-grow: 1;
-  padding-top: .7rem;
+  padding-top: 0.7rem;
   padding-bottom: 2rem;
   margin-top: 0.5rem;
   border-radius: 15px;
@@ -560,7 +560,8 @@ main {
   width: 100%;
 }
 
-.line1, .line2 {
+.line1,
+.line2 {
   width: 100%;
   height: 1px;
   background-color: var(--message-color);
@@ -568,11 +569,11 @@ main {
 }
 
 .line1 {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 .line2 {
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 }
 
 .message-icon-container {
@@ -581,7 +582,7 @@ main {
   align-items: center;
   gap: 0.625rem;
   min-width: 500px;
-  padding: .5rem 2rem 0 2rem;
+  padding: 0.5rem 2rem 0 2rem;
   /* margin-top: 0.625rem; */
 }
 
@@ -683,7 +684,7 @@ main {
   padding: 0 0;
   /* width: 43rem; */
   position: relative;
-  animation: slideMessage .8s ease-in-out forwards;
+  animation: slideMessage 0.8s ease-in-out forwards;
 }
 
 .vertical-container {
@@ -696,7 +697,8 @@ main {
   height: 100%;
 }
 
-.vertical-line-1, .vertical-line-2 {
+.vertical-line-1,
+.vertical-line-2 {
   height: 100%;
   width: 2px;
   background-color: var(--message-background-color);
@@ -843,7 +845,8 @@ main {
   overflow: hidden;
 }
 
-.blue-star, .little-star {
+.blue-star,
+.little-star {
   width: 15px;
   height: 15px;
 }
