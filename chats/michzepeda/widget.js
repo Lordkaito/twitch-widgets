@@ -1,5 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
+let startingColor = "pink";
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -115,7 +116,6 @@ class mainEvent {
   }
 
   get badges() {
-    console.log(this.event.data.badges);
     return this.event.data.badges;
   }
 
@@ -157,7 +157,18 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/W12nD9TL/arco-iris-4.png";
+    this.badges.forEach((badge) => {
+      if (badge.type !== "subscriber") return;
+      let badgeImg = document.createElement("img");
+      badgeImg.classList.add("badges-img");
+      badgeImg.src = badge.url;
+      // flower.src = badge.url;
+    });
+    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png"
+
+    if (flower.src === "") {
+      flower.style.display = "none";
+    }
     flower.classList.add("flower");
 
     return flower;
@@ -180,108 +191,55 @@ class mainEvent {
     return this.event.data.displayColor;
   }
 
-  get origami() {
-    const origami = document.createElement("div");
-    const circle = document.createElement("div");
-    circle.innerHTML = `
-      <svg class="circulo" viewBox="0 0 100 100">
-        <circle class="circulo-animado" cx="50" cy="50" r="45">
-        </circle>
-      </svg>
-    `;
-    circle.classList.add("circle");
-    const dots = document.createElement("div");
-    dots.classList.add("ori-dots");
-    const oriContainer = document.createElement("div");
-    oriContainer.classList.add("ori-container");
-    const ori = document.createElement("img");
-    const flower = document.createElement("img");
-    origami.classList.add("origami");
-    if (this.isStreamer || this.isSub) {
-      flower.src = "https://i.postimg.cc/QMjjtpG2/mascara.png";
-      flower.classList.add("mascara");
-      flower.classList.remove("ori-flower");
-    } else {
-      flower.classList.add("ori-flower");
-      flower.src = "https://i.postimg.cc/yxcGcb0v/flor.png";
-    }
-    ori.src = "https://i.postimg.cc/WbSBnxQH/origami.png";
-
-    const container = document.createElement("div");
-    container.classList.add("container");
-
-    for (let i = 0; i < 3; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dots.appendChild(dot);
-    }
-
-    circle.appendChild(flower);
-    oriContainer.appendChild(ori);
-
-    container.appendChild(circle);
-    container.appendChild(dots);
-    container.appendChild(oriContainer);
-
-    origami.appendChild(container);
-    return origami;
-  }
-
   async createMainContainerElement() {
+    let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
+    const animation = fieldData.animation;
 
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    // mainContainer.style.backgroundColor = this.userColor;
+
+    mainContainer.appendChild(this.flower);
+
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
+    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
   }
 
-  // get butterfly() {
-  //   const img = document.createElement("img");
-  //   const imgContainer = document.createElement("div");
-  //   img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-  //   img.classList.add("butterfly");
-  //   imgContainer.classList.add("butterfly-container");
-  //   // imgContainer.appendChild(img);
+  get butterfly() {
+    const img = document.createElement("img");
+    const imgContainer = document.createElement("div");
+    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
+    img.classList.add("butterfly");
+    imgContainer.classList.add("butterfly-container");
+    // imgContainer.appendChild(img);
 
-  //   return imgContainer;
-  // }
+    return imgContainer;
+  }
 
   async createUsernameInfoElement() {
     const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const hyphen = document.createElement("span");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-    usernameInfo.appendChild(this.roleImages);
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
+    // usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
+    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
-    const line1 = document.createElement("div");
-    line1.classList.add("line1");
-    const line2 = document.createElement("div");
-    line2.classList.add("line2");
-    const littleStar = document.createElement("img");
-    littleStar.classList.add("little-star");
-    littleStar.src = "https://i.postimg.cc/prPX40H3/brillofd.gif";
-    const container = document.createElement("div");
-    container.classList.add("lines-star-container");
     messageContainer.classList.add("message-container");
-    container.appendChild(line1);
-    container.appendChild(littleStar);
-    container.appendChild(line2);
-    messageContainer.appendChild(container);
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -292,6 +250,7 @@ class mainEvent {
     const usernameBadges = document.createElement("span");
     usernameBadges.classList.add("username-badges");
     this.badges.forEach((badge) => {
+      if (badge.type === "subscriber") return;
       let badgeImg = document.createElement("img");
       badgeImg.classList.add("badges-img");
       badgeImg.src = badge.url;
@@ -309,34 +268,28 @@ class mainEvent {
       red: "#fb6183",
       orange: "#ff8d4e",
       yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
     };
     let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
+    // capitalizeUser.style.color = colors[startingColor];
     capitalizeUser.innerText = this.user;
+    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
-  // createRoleContainer() {
-  //   const roleContainer = document.createElement("span");
-  //   roleContainer.classList.add("role-container");
-  //   // roleContainer.appendChild(this.roleImages);
-  //   return roleContainer;
-  // } may be used later
+  createRoleContainer() {
+    const roleContainer = document.createElement("span");
+    roleContainer.classList.add("role-container");
+    roleContainer.appendChild(this.roleImages);
+    return roleContainer;
+  }
 
   async createPronounsContainer() {
     let colors = {
       red: "#fb6183",
       orange: "#ff8d4e",
       yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
     };
     let role = this.roles;
     const pronounsContainer = document.createElement("div");
@@ -350,6 +303,9 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.opacity = "0";
     }
+    pronouns.style.color = colors[startingColor];
+
+    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -373,7 +329,7 @@ class mainEvent {
     );
 
     // Asignar la imagen correspondiente
-    let roleImage = document.createElement("img");
+    let roleImage = document.createElement("svg");
     roleImage.classList.add("role");
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
@@ -383,37 +339,32 @@ class mainEvent {
       red: "#fb6183",
       orange: "#ff8d4e",
       yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
     };
 
+    console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
-      case "mod":
-        roleImage.style.height = "35px";
-        roleImage.style.width = "44px";
-        roleImage.src = `https://i.postimg.cc/8CsvnzHL/camara.png`;
-        break;
       case "streamer":
-        roleImage.style.height = "22px";
-        roleImage.style.width = "58px";
-        roleImage.src = `https://i.postimg.cc/yYwyR9X2/sombrero.png`;
+        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>camcorder_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Media' transform='translate(-48.000000, -48.000000)' fill-rule='nonzero'><g id='camcorder_fill' transform='translate(48.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M4,4 C2.89543,4 2,4.89543 2,6 L2,18 C2,19.1046 2.89543,20 4,20 L16,20 C17.1046,20 18,19.1046 18,18 L18,15.7905 L20.0944,17.0807 C20.9272,17.5938 22,16.9946 22,16.0165 L22,7.98353 C22,7.00536 20.9272,6.40622 20.0944,6.91926 L18,8.20945 L18,6 C18,4.89543 17.1046,4 16,4 L4,4 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
+        break;
+      case "mod":
+        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>sword_fill</title><g id='Icon' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Sport' transform='translate(0.000000, -144.000000)'><g id='sword_fill' transform='translate(0.000000, 144.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5935,23.2578 L12.5819,23.2595 L12.5109,23.295 L12.4919,23.2987 L12.4767,23.295 L12.4057,23.2595 C12.3958,23.2564 12.387,23.259 12.3821,23.2649 L12.378,23.2758 L12.3609,23.7031 L12.3659,23.7235 L12.3769,23.7357 L12.4805,23.8097 L12.4953,23.8136 L12.5071,23.8097 L12.6107,23.7357 L12.6233,23.7197 L12.6267,23.7031 L12.6096,23.2758 C12.6076,23.2657 12.601,23.2593 12.5935,23.2578 Z M12.8584,23.1453 L12.8445,23.1473 L12.6598,23.2397 L12.6499,23.2499 L12.6472,23.2611 L12.6651,23.6906 L12.6699,23.7034 L12.6784,23.7105 L12.8793,23.8032 C12.8914,23.8069 12.9022,23.803 12.9078,23.7952 L12.9118,23.7812 L12.8777,23.1665 C12.8753,23.1546 12.8674,23.147 12.8584,23.1453 Z M12.143,23.1473 C12.1332,23.1424 12.1222,23.1453 12.1156,23.1526 L12.1099,23.1665 L12.0758,23.7812 C12.0751,23.7927 12.0828,23.8019 12.0926,23.8046 L12.1083,23.8032 L12.3092,23.7105 L12.3186,23.7024 L12.3225,23.6906 L12.3404,23.2611 L12.3372,23.2485 L12.3278,23.2397 L12.143,23.1473 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M19.0712,3.92875 C19.6235,3.92875 20.0712,4.37647 20.0712,4.92875 L20.0712,10.5856 C20.0712,10.9028 19.9207,11.2012 19.6656,11.3898 L12.4676,16.71 L13.4143,17.6567 C13.8048,18.0472 13.8048,18.6804 13.4143,19.0709 L12.0001,20.4851 C11.6958,20.7895 11.2308,20.8649 10.8458,20.6724 L8.66203,19.5805 L7.05036,21.1922 C6.65984,21.5827 6.02667,21.5827 5.63615,21.1922 L2.80772,18.3638 C2.4172,17.9733 2.4172,17.3401 2.80772,16.9496 L4.41939,15.3379 L3.32751,13.1541 C3.13502,12.7692 3.21047,12.3042 3.51483,11.9998 L4.92904,10.5856 C5.31957,10.1951 5.95273,10.1951 6.34326,10.5856 L7.28994,11.5323 L12.6101,4.33436 C12.7987,4.07926 13.0971,3.92875 13.4143,3.92875 L19.0712,3.92875 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
         break;
       case "vip":
-        roleImage.style.height = "31px";
-        roleImage.style.width = "48px";
-        roleImage.src = `https://i.postimg.cc/tC0zZWzw/ojo.png`;
+        roleImage.style.height = "36px";
+        roleImage.innerHTML = `<?xml version="1.0" encoding="utf-8"?>
+        <svg width="40px" height="40px" viewBox="0 0 22 28" xmlns="http://www.w3.org/2000/svg">
+            <g>
+                <path fill="none" d="M0 0h24v24H0z"/>
+                <path stroke="white" stroke-width="3" fill="${colors[startingColor]}" d="M4.873 3h14.254a1 1 0 0 1 .809.412l3.823 5.256a.5.5 0 0 1-.037.633L12.367 21.602a.5.5 0 0 1-.734 0L.278 9.302a.5.5 0 0 1-.037-.634l3.823-5.256A1 1 0 0 1 4.873 3z"/>
+            </g>
+        </svg>`;
         break;
       case "sub":
-        roleImage.style.height = "41px";
-        roleImage.style.width = "41px";
-        roleImage.src = `https://i.postimg.cc/Dwnd5hHc/circuloo.png`;
+        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>heart_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Shape' transform='translate(0.000000, -48.000000)' fill-rule='nonzero'><g id='heart_fill' transform='translate(0.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M18.4938,3.80125 C20.5893,5.02215 22.0628,7.50088 21.9979,10.3931 C21.861,16.5 13.5000003,21 12.0000003,21 C10.5000003,21 2.13902,16.5 2.00206,10.3931 C1.9372,7.50088 3.41065,5.02215 5.50615,3.80125 C7.46612,2.65932 9.92814,2.65319 12.0000003,4.33847 C14.0719,2.65319 16.5339,2.65932 18.4938,3.80125 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
         break;
       case "viewer":
-        roleImage.style.height = "22px";
-        roleImage.style.width = "54px";
-        roleImage.src = `https://i.postimg.cc/nhJT5BjB/ojoss.png`;
+        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?>
+        <svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>chat_3_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Contact' transform='translate(-768.000000, -48.000000)' fill-rule='nonzero'><g id='chat_3_fill' transform='translate(768.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path d='M2,11.5 C2,6.64261 6.65561,3 12,3 C17.3444,3 22,6.64261 22,11.5 C22,16.3574 17.3444,20 12,20 C11.3472,20 10.708,19.9469 10.0886,19.8452 C9.99597,19.918 9.83571,20.0501 9.63851,20.1891 C9.0713,20.5887 8.24917,21 7,21 C6.44772,21 6,20.5523 6,20 C6,19.4499 6.14332,18.7663 5.90624,18.2438 C3.57701,16.7225 2,14.2978 2,11.5 Z' id='路径' fill='${colors[startingColor]}' stroke='white' stroke-width='3'></path></g></g></g></svg>`;
         break;
     }
     return roleImage;
@@ -522,7 +473,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined && customEmotes.status != "Not Found") {
+    if (customEmotes != undefined) {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -628,23 +579,9 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
-    console.log(this.event);
-
-    const eventDictionary = {
-      follower: "HI",
-      subscriber: this.event.gifted ? "GIFT" : "SUB",
-      cheer: "CHEER",
-      subscriber: "SUB",
-      tip: "TIP",
-      raid: "RAID",
-      bulkgift: "GIFT",
-    };
-
-    console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender || this.event.name;
-    console.log(sender);
+    const sender = this.event.name || this.event.sender;
     let eventText = dictionary[this.event.type];
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
@@ -686,54 +623,34 @@ class mainEvent {
 
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
+    const dots = document.createElement('div')
+    dots.classList.add('dots')
+    const starContainer = document.createElement('div')
+    const star = document.createElement('img')
+    star.classList.add('star')
+    starContainer.classList.add('star-container')
+    star.src = "https://i.postimg.cc/3RQqCBxF/errwef.png";
+    starContainer.appendChild(star)
 
-    fungi.src = "https://i.postimg.cc/4Nn74Rb6/corazon.png";
+    // fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
 
-    fungi.classList.add("fungi");
+    // fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
+    for (let i = 0; i < 6; i++) {
+      const dot = document.createElement('div')
+      dot.classList.add(`dot-${i + 1}`)
+      dots.appendChild(dot)
+    }
 
-    fungiDivContainer.classList.add(`event-leafs-container`);
     // fungiDivContainer.appendChild(fungi);
+    fungiContainer.appendChild(dots);
+    fungiContainer.appendChild(starContainer);
     fungiContainer.classList.add("fungi-container");
-    const moon = document.createElement("img");
-    // moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
-    moon.classList.add("moon");
-    fungiContainer.appendChild(moon);
-    // fungiContainer.appendChild(fungiDivContainer);
+    fungiContainer.appendChild(nameContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
-    const eventAndNameContainer = document.createElement("div");
-    eventAndNameContainer.classList.add("event-and-name-container");
-    const eventDictionaryText = document.createElement("p");
-    eventDictionaryText.classList.add("event-text");
-    eventDictionaryText.innerText = eventDictionary[this.event.type];
-    // eventAndNameContainer.appendChild(fungiDivContainer);
-    eventAndNameContainer.appendChild(eventDictionaryText);
-    eventAndNameContainer.appendChild(nameContainer);
-
-    const verticalLine1 = document.createElement("div");
-    verticalLine1.classList.add("vertical-line-1");
-    const verticalLine2 = document.createElement("div");
-    verticalLine2.classList.add("vertical-line-2");
-    const blueStar = document.createElement("img");
-    blueStar.src = "https://i.postimg.cc/50CCbKD0/brriri.png";
-    blueStar.classList.add("blue-star");
-    const verticalContainer = document.createElement("div");
-    verticalContainer.classList.add("vertical-container");
-    verticalContainer.appendChild(verticalLine1);
-    verticalContainer.appendChild(blueStar);
-    verticalContainer.appendChild(verticalLine2);
-
-    const circuits = document.createElement("img");
-    circuits.classList.add("circuits");
-    circuits.src = "https://i.postimg.cc/x15G47SV/circuitos.png";
-
-    fungiContainer.appendChild(verticalContainer);
-    fungiContainer.appendChild(eventAndNameContainer);
-    fungiContainer.appendChild(circuits);
     mainContainer.classList.add("event-container");
-    // mainContainer.appendChild(verticalContainer);
     mainContainer.appendChild(fungiContainer);
 
     return mainContainer;
@@ -792,6 +709,11 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
+
+  // if (fieldData.transparency == "false") {
+  //   main.style.maskImage = "none";
+  //   main.style.webkitMaskImage = "none";
+  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -877,6 +799,10 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
+  // if(listener !== "subscriber-latest" && listener !== "message") {
+  //   return;
+  // }
+
   if (listener === "subscriber-latest") {
     holdedEvent(event);
     return;
@@ -907,6 +833,24 @@ window.addEventListener("onEventReceived", async (obj) => {
     listener = "bulk";
   }
   events.init.then((mainContainer) => {
+    if (listener === "message") {
+      mainContainer
+        .querySelector(".main-container")
+        .classList.add(startingColor);
+    } else {
+      mainContainer.querySelector(".main-container");
+    }
+    switch (startingColor) {
+      case "pink":
+        startingColor = "yellow";
+        break;
+      case "yellow":
+        startingColor = "purple";
+        break;
+      case "purple":
+        startingColor = "pink";
+        break;
+    }
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {
         setTimeout(() => {

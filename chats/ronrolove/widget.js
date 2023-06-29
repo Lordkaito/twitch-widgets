@@ -1230,6 +1230,9 @@ window.addEventListener("onEventReceived", async (obj) => {
               removeEvent(subContainer, "sub-name");
             }, fieldData.deleteMessages * 100000000);
           }
+          const body = document.querySelector("body");
+          body.style.webkitMaskImage = "webkit-gradient(linear, left 20%, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))";
+          body.style.maskImage = "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))";
           mainCont.appendChild(subContainer);
         })
         .finally(() => {

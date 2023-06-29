@@ -1,3 +1,15 @@
+/* body {
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left 50%,
+    left top,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0))
+  );
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  this will go for future chats
+} */
+
 :root {
   --message-color: #9c706a;
   --message-background-color: #fff3eb;
@@ -110,7 +122,7 @@ main {
   z-index: 1;
   -webkit-mask-image: -webkit-gradient(
     linear,
-    left 16%,
+    left 50%,
     left top,
     from(rgba(0, 0, 0, 1)),
     to(rgba(0, 0, 0, 0))

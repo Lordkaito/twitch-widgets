@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitdo_",
+        displayName: "Lordkaito_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -403,9 +403,15 @@ let events = {
             url: "https://static-cdn.jtvnw.net/badges/v1/bbbe0db0-a598-423e-86d0-f9fb98ca1933/3",
             description: "Prime Gaming",
           },
+          {
+            type: "subscriber",
+            version: "1",
+            url: "https://i.postimg.cc/vHBd3bdk/SAKURA.png",
+            description: "Subscriber",
+          }
         ],
         channel: "lordkaito_",
-        text: "Hola que tal asdfa sdf asd fads fads fasdf asdf asdf ",
+        text: "Hola que tal",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
