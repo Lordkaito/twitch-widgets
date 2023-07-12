@@ -1,0 +1,247 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+}
+
+#top-container {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  font-size: 1.325rem;
+  position: relative;
+}
+
+.top-tip-container,
+.top-cheer-container {
+  background-color: #e96e99;
+  border-radius: 30px;
+  width: 350px;
+  color: white;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  position: absolute;
+  max-height: 40px;
+  /* padding-left: 20px; */
+}
+
+.latest-tip-container,
+.latest-cheer-container {
+  background-color: white;
+  border-radius: 30px;
+  width: 350px;
+  color: #e96e99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding-left: 17px; */
+  position: absolute;
+  right: 4rem;
+  top: 4rem;
+  max-height: 40px;
+}
+
+.latest-tip-container::after,
+.latest-cheer-container::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  right: 1rem;
+  width: 20px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.top-tip-container::after,
+.top-cheer-container::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  left: 1rem;
+  width: 20px;
+  height: 25px;
+  background-color: #e96e99;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.cont {
+  /* overflow: hidden; */
+  display: flex;
+  align-items: center;
+  transform: translate(170px);
+  /* border: 1px solid red; */
+  position: relative;
+  height: 40px;
+  /* transition: transform 6s linear; */
+}
+
+.latest-tip-cheer-qnty,
+.top-tip-cheer-qnty {
+  /* overflow: hidden; */
+  width: 350px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 40px;
+  padding-right: 1rem;
+  /* transition: transform 6s linear; */
+}
+
+/* .top-tip-text {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+} */
+
+.top-tip-text,
+.top-cheer-text,
+.latest-cheer-text,
+.latest-tip-text {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  padding-left: 10px;
+}
+
+.top-cheer-text {
+  width: 180px;
+  /* padding-left: 20px;*/
+}
+
+.top-tip-text {
+  width: 120px;
+}
+
+.latest-tip-text {
+  width: 170px;
+}
+
+.latest-cheer-text {
+  width: 250px;
+}
+
+.top-tip-cheer-text-container,
+.latest-tip-cheer-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 10px;
+}
+
+.top-tip-cheer-text-container > p,
+.latest-tip-cheer-text-container > p {
+  min-width: 100%;
+  text-align: center;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.latest-tip-cheer-text-container > p {
+  color: #e96e99;
+}
+
+#first-copy-top {
+  display: flex;
+  transition: transform 10s linear;
+  position: absolute;
+  left: 0;
+}
+
+#second-copy-top {
+  display: flex;
+  transition: transform 10s linear;
+  position: absolute;
+  left: 0;
+}
+
+#first-copy-latest {
+  display: flex;
+}
+
+#second-copy-latest {
+  display: flex;
+}
+
+.widget {
+  margin: 10rem;
+}
+
+.m-scroll {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.m-scroll__title {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  white-space: nowrap;
+  /* transition: transform 1s ease; */
+}
+
+.m-scroll__title > div {
+  display: flex;
+  animation: scrollText 5s linear infinite;
+  transform: translate(100%);
+}
+
+/*
+.m-scroll__title h1 {
+  margin: 0;
+  color: rgba(255, 255, 255, 1);
+  transition: transform 2s ease;
+} */
+
+@keyframes scrollText {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  5% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+.active {
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+.inactive {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}

@@ -93,11 +93,11 @@ let session = {
         amount: 5000,
       },
       "cheer-latest": {
-        name: "Andrew",
+        name: "Andrewwanchev",
         amount: 200,
       },
       "tip-latest": {
-        name: "Test",
+        name: "pepsdas",
         amount: 5,
         message: "A fancy test message",
       },
@@ -114,8 +114,8 @@ let session = {
         amount: 200,
       },
       "tip-alltime-top-donator": {
-        name: "mr_tester",
-        amount: 200,
+        name: "pep",
+        amount: 2000,
       },
       "tip-week": {
         amount: 5,
@@ -181,8 +181,8 @@ let session = {
         amount: 0,
       },
       "cheer-alltime-top-donator": {
-        name: "",
-        amount: 0,
+        name: "pep",
+        amount: 100000,
       },
       "cheer-monthly-top-donation": {
         name: "",
@@ -237,15 +237,15 @@ let session = {
         amount: 200,
       },
       "tip-session-top-donator": {
-        name: "Test",
+        name: "lordkaito",
         amount: 5,
       },
       "tip-weekly-top-donation": {
-        name: "Test",
+        name: "lordkaito",
         amount: 5,
       },
       "tip-weekly-top-donator": {
-        name: "Test",
+        name: "lordkaito",
         amount: 5,
       },
       "merch-latest": {
@@ -379,12 +379,12 @@ let events = {
           mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
-          subscriber: "0",
+          subscriber: "1",
           "tmi-sent-ts": "1680558919103",
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "0"
+          vip: "0",
         },
         nick: "lordkaito_",
         userId: "675807879",
@@ -403,15 +403,15 @@ let events = {
             url: "https://static-cdn.jtvnw.net/badges/v1/bbbe0db0-a598-423e-86d0-f9fb98ca1933/3",
             description: "Prime Gaming",
           },
-          {
-            type: "subscriber",
-            version: "1",
-            url: "https://i.postimg.cc/vHBd3bdk/SAKURA.png",
-            description: "Subscriber",
-          }
+          // {
+          //   type: "subscriber",
+          //   version: "1",
+          //   url: "https://i.postimg.cc/vHBd3bdk/SAKURA.png",
+          //   description: "Subscriber",
+          // }
         ],
         channel: "lordkaito_",
-        text: "Hola que tal",
+        text: "jola que tal",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
