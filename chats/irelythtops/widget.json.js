@@ -14,7 +14,7 @@ let fieldData = {
   speed: {
     type: "number",
     label: "Speed:",
-    value: 2,
+    value: 5,
     group: "Customization",
     min: 0.1,
     step: 0.1,

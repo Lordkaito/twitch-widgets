@@ -111,12 +111,11 @@
   justify-content: center;
   text-align: center;
   z-index: 2;
-  padding-left: 10px;
+  padding-left: 13px;
 }
 
 .top-cheer-text {
-  width: 180px;
-  /* padding-left: 20px;*/
+  width: 190px;
 }
 
 .top-tip-text {
@@ -124,11 +123,13 @@
 }
 
 .latest-tip-text {
-  width: 170px;
+  width: 190px;
+  padding-left: 15px;
 }
 
 .latest-cheer-text {
-  width: 250px;
+  width: 285px;
+  padding-left: 15px;
 }
 
 .top-tip-cheer-text-container,
