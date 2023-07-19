@@ -1,6 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
-let startingColor = "pink";
+// let startingColor = "red";
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -144,7 +144,6 @@ class mainEvent {
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -182,59 +181,102 @@ class mainEvent {
 
   get origami() {
     const origami = document.createElement("div");
-    const circle = document.createElement("div");
-    circle.innerHTML = `
-      <svg class="circulo" viewBox="0 0 100 100">
-        <circle class="circulo-animado" cx="50" cy="50" r="45">
-        </circle>
-      </svg>
-    `;
-    circle.classList.add("circle");
-    const dots = document.createElement("div");
-    dots.classList.add("ori-dots");
-    const oriContainer = document.createElement("div");
-    oriContainer.classList.add("ori-container");
-    const ori = document.createElement("img");
-    const flower = document.createElement("img");
-    origami.classList.add("origami");
+    const line = document.createElement("div");
+    const dot = document.createElement("div");
+    const flowerContainer = document.createElement("div");
+    flowerContainer.classList.add("flower-container");
+    const flower1 = document.createElement("img");
+    const flower2 = document.createElement("img");
 
-    ori.src = "https://i.postimg.cc/bN28gsPn/luni.png";
-    ori.classList.add("luna");
+    const role = this.roles;
 
-    const container = document.createElement("div");
-    container.classList.add("container");
-
-    for (let i = 0; i < 3; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dots.appendChild(dot);
+    switch (role.role) {
+      case "streamer":
+        flower1.src = "https://i.postimg.cc/vBPRnFSF/hojaranja1.png";
+        flower2.src = "https://i.postimg.cc/fLWnkTCf/hojaranja2.png";
+        break;
+      case "mod":
+        flower1.src = "https://i.postimg.cc/nr56dKJ3/hojamod1.png";
+        flower2.src = "https://i.postimg.cc/cC6pM9VK/hojamod2.png";
+        break;
+      case "vip":
+        flower1.src = "https://i.postimg.cc/SNBBCGVs/hojalila1.png";
+        flower2.src = "https://i.postimg.cc/fTS4VPcp/hojalila2.png";
+        break;
+      case "subscriber":
+        flower1.src = "https://i.postimg.cc/pdJM2nfd/hojazul1.png";
+        flower2.src = "https://i.postimg.cc/N0cwqxrV/hojazul2.png";
+        break;
+      case "viewer":
+        flower1.src = "https://i.postimg.cc/52vMRrjL/hojita1.png";
+        flower2.src = "https://i.postimg.cc/TYB6Qx2T/hojita2.png";
+        break;
     }
 
-    circle.appendChild(this.roleImages);
-    oriContainer.appendChild(ori);
+    // flower1.src = "https://i.postimg.cc/52vMRrjL/hojita1.png";
+    // flower2.src = "https://i.postimg.cc/TYB6Qx2T/hojita2.png";
 
-    container.appendChild(circle);
-    container.appendChild(dots);
-    container.appendChild(oriContainer);
+    flower1.classList.add("flower1");
+    flower2.classList.add("flower2");
+    flowerContainer.appendChild(flower1);
+    flowerContainer.appendChild(flower2);
+    line.classList.add("big-line");
+    line.classList.add(`${role.role}-line`);
+    dot.classList.add("big-dot");
+    dot.classList.add(`${role.role}-dot`);
 
-    origami.appendChild(container);
+    origami.classList.add("origami");
+    origami.appendChild(flowerContainer);
+    origami.appendChild(line);
+    origami.appendChild(dot);
     return origami;
   }
 
   async createMainContainerElement() {
+    let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
+    const heart = document.createElement("img");
+    heart.classList.add("heart");
+
+    switch (role.role) {
+      case "streamer":
+        heart.src = "https://i.postimg.cc/QCBzWBT1/coranaranja.png";
+        break;
+      case "mod":
+        heart.src = "https://i.postimg.cc/BZykfCrg/coramarillo.png";
+        break;
+      case "vip":
+        heart.src = "https://i.postimg.cc/L61791RM/coralila.png";
+        break;
+      case "subscriber":
+        heart.src = "https://i.postimg.cc/Jzj9qBdQ/corazul.png";
+        break;
+      case "viewer":
+        heart.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png";
+        break;
+    }
+
+    for (let i = 0; i < 6; i++) {
+      const dot = document.createElement("div");
+      // dot.classList.add(`big-dot`);
+      dot.classList.add(`message-dot-${i + 1}`);
+      dot.classList.add(`${role.role}-dots`);
+      mainContainer.appendChild(dot);
+    }
+    mainContainer.appendChild(heart);
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.appendChild(this.origami);
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    if(fieldData.chatSize === "small") {
-      mainContainer.style.maxWidth = "25.5rem";
-    }
+    // mainContainer.style.backgroundColor = this.userColor;
+
+    // mainContainer.appendChild(this.flower);
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
+    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
@@ -252,56 +294,36 @@ class mainEvent {
   }
 
   async createUsernameInfoElement() {
+    const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
+    // const hyphen = document.createElement("span");
+    const line = document.createElement("div");
+    const dot = document.createElement("div");
+    line.classList.add("username-line");
+    line.classList.add(`${role.role}-line`);
+    dot.classList.add("username-dot");
+    dot.classList.add(`${role.role}-dot`);
+    // hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
+    usernameInfoContainer.appendChild(line);
+    usernameInfoContainer.appendChild(dot);
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    if (this.isSub || this.isStreamer) {
+      // usernameInfoContainer.appendChild(this.createRoleContainer());
+    }
+    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
     usernameInfoContainer.appendChild(usernameInfo);
+    // usernameInfoContainer.appendChild(hyphen);
+    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
-    const dots = document.createElement("div");
-    const dotsContainer = document.createElement("div");
-    const dotsImg = document.createElement("img");
-    dotsImg.src = "https://i.postimg.cc/431XcqgF/corachikito.png"
-    const circle = document.createElement("div");
-    circle.innerHTML = `
-      <svg class="circulo" viewBox="0 0 100 100">
-        <circle class="circulo-animado yellow" cx="50" cy="50" r="20">
-        </circle>
-      </svg>
-    `;
-    circle.classList.add("circless");
-    const dotsImgContainer = document.createElement("div");
-    dots.classList.add("dots");
-    for(let i = 0; i < 3; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add("dot");
-      dots.appendChild(dot);
-    }
-    circle.appendChild(dotsImg)
-    dotsImgContainer.appendChild(circle);
-    dotsImgContainer.classList.add("dots-img-container");
-    dotsContainer.classList.add("dots-container");
-    dotsContainer.appendChild(dots);
-    const container = document.createElement("div");
-    container.classList.add("bigcontainer");
-    container.appendChild(dotsContainer);
-    container.appendChild(circle);
-    messageContainer.appendChild(container);
     messageContainer.classList.add("message-container");
-    if(startingColor === "pink") {
-      messageContainer.classList.add("pink");
-      startingColor = "light";
-    } else {
-      messageContainer.classList.add("light");
-      startingColor = "pink";
-    }
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -325,28 +347,18 @@ class mainEvent {
   }
 
   createCapitalizeUserElement() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
-    };
     let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    // capitalizeUser.style.color = colors[startingColor];
+    capitalizeUser.classList.add(`${role.role}-user`);
     capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
   createRoleContainer() {
     const roleContainer = document.createElement("span");
     roleContainer.classList.add("role-container");
-    // roleContainer.appendChild(this.roleImages);
+    roleContainer.appendChild(this.roleImages);
     return roleContainer;
   }
 
@@ -364,21 +376,17 @@ class mainEvent {
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
     pronouns.classList.add("prons");
-    if(startingColor === "pink") {
-      pronouns.classList.add("prons-pink");
-      pronounsContainer.classList.add("prons-text");
-    } else {
-      pronouns.classList.add("prons-light");
-      pronounsContainer.classList.add("alt-prons");
-    }
     pronounsContainer.classList.add("pronouns");
     pronouns.innerText = await this.getUserPronoun();
     pronouns.innerText == ""
       ? (pronounsContainer.style.display = "none")
-      : (pronounsContainer.style.display = "flex");
+      : (pronounsContainer.style.display = "block");
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
+    // pronouns.style.color = colors[startingColor];
+
+    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -421,24 +429,20 @@ class mainEvent {
     // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/T112f9BN/alpaca.png`;
-        roleImage.classList.add("streamer");
+        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/7hj4Dy3b/escudo.png`;
-        roleImage.classList.add("mod");
+        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/rFbsyBV1/alas.png`;
-        roleImage.classList.add("vip");
+        // roleImage.style.height = "36px";
+        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/sDBfLTYv/arcolove.png`;
-        roleImage.classList.add("subscriber");
+        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/4yHCWFDG/rosaa.png`;
-        roleImage.classList.add("viewer");
+        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
     }
     return roleImage;
@@ -508,11 +512,6 @@ class mainEvent {
   async createRenderedTextElement() {
     const renderedText = document.createElement("div");
     renderedText.classList.add("rendered-text");
-    if(startingColor === "pink") {
-      renderedText.classList.add("alt-text")
-    } else {
-      renderedText.classList.add("text-color")
-    }
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
@@ -552,7 +551,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined && customEmotes.status != "Not Found" ) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found") {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -660,21 +659,22 @@ class mainEvent {
     };
     console.log(this.event);
 
-    const eventDictionary = {
-      follower: "HI",
-      subscriber: this.event.gifted ? "GIFT" : "SUB",
-      cheer: "CHEER",
-      subscriber: "SUB",
-      tip: "TIP",
-      raid: "RAID",
-      bulkgift: "GIFT"
-    };
+    // const eventDictionary = {
+    //   follower: "HI",
+    //   subscriber: this.event.gifted ? "GIFT" : "SUB",
+    //   cheer: "CHEER",
+    //   subscriber: "SUB",
+    //   tip: "TIP",
+    //   raid: "RAID",
+    //   bulkgift: "GIFT",
+    // };
 
     console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender || this.event.name;
+    let sender = this.event.sender;
     let eventText = dictionary[this.event.type];
+    console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -717,16 +717,16 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/4Nn74Rb6/corazon.png";
+    fungi.src = "https://i.postimg.cc/Kc65MynM/corazon-ire.png";
 
     fungi.classList.add("fungi");
-    // const fungiDivContainer = document.createElement("div");
+    const fungiDivContainer = document.createElement("div");
 
-    // fungiDivContainer.classList.add(`event-leafs-container`);
-    // fungiDivContainer.appendChild(fungi);
+    fungiDivContainer.classList.add(`event-leafs-container`);
+    fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
     const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/N0QcQDH8/lunnube.png";
+    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
     // fungiContainer.appendChild(fungiDivContainer);
@@ -735,11 +735,11 @@ class mainEvent {
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
-    const eventDictionaryText = document.createElement("p");
-    eventDictionaryText.classList.add("event-text");
-    eventDictionaryText.innerText = eventDictionary[this.event.type];
-    // eventAndNameContainer.appendChild(fungiDivContainer);
-    eventAndNameContainer.appendChild(eventDictionaryText);
+    // const eventDictionaryText = document.createElement("p");
+    // eventDictionaryText.classList.add("event-text");
+    // eventDictionaryText.innerText = eventDictionary[this.event.type];
+    eventAndNameContainer.appendChild(fungiDivContainer);
+    // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
 
@@ -937,6 +937,16 @@ window.addEventListener("onEventReceived", async (obj) => {
         }, fieldData.deleteMessages * 1000);
       }
     }
+    setTimeout(() => {
+      const bigLine = mainContainer.querySelector(".big-line");
+      const messageContainer =
+        mainContainer.querySelector(".message-container");
+      console.log(bigLine, messageContainer);
+      bigLine.style.height = `${messageContainer.offsetHeight - 50}px`;
+      if (messageContainer.offsetHeight > 200) {
+        bigLine.style.height = `${messageContainer.offsetHeight - 100}px`;
+      }
+    }, 500);
     mainCont.appendChild(mainContainer);
   });
 });

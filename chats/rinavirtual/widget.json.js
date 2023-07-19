@@ -50,16 +50,6 @@ let fieldData = {
       false: "No",
     },
   },
-  chatSize: {
-    type: "dropdown",
-    label: "Chat size:",
-    value: "small",
-    group: "Customization",
-    options: {
-      big: "Big",
-      small: "Small",
-    },
-  },
   usersBlackList: {
     type: "text",
     label: "Users blacklist (separated by comma)",
@@ -81,7 +71,7 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "s just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
