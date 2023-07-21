@@ -53,7 +53,7 @@ let fieldData = {
   chatSize: {
     type: "dropdown",
     label: "Chat size:",
-    value: "small",
+    value: "big",
     group: "Customization",
     options: {
       big: "Big",
@@ -81,7 +81,7 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "s just followed!",
+    value: "asdkjhas das das dasd asdfa sdfasd asdf afsd asd asd fas fajust followed!",
     group: "Events",
   },
   cheerText: {

@@ -224,11 +224,15 @@ class mainEvent {
   async createMainContainerElement() {
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
+    const brillo = document.createElement("img");
+    brillo.src = "https://i.postimg.cc/rpT8Kcvr/bribri.png";
+    brillo.classList.add("brillo");
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.appendChild(this.origami);
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    mainContainer.appendChild(brillo);
     if(fieldData.chatSize === "small") {
       mainContainer.style.maxWidth = "25.5rem";
     }
@@ -744,6 +748,9 @@ class mainEvent {
     fungiContainer.appendChild(eventAndNameContainer);
 
     mainContainer.classList.add("event-container");
+    if(fieldData.chatSize === "big") {
+      mainContainer.style.maxWidth = "36rem";
+    }
     mainContainer.appendChild(fungiContainer);
 
     return mainContainer;

@@ -1,6 +1,5 @@
 // let fieldData = {};
 let currentEvent = null;
-// let startingColor = "red";
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -8,69 +7,6 @@ const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
   user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
   pronouns: `${PRONOUNS_API_BASE}/pronouns`,
-};
-
-const colors = {
-  streamer: {
-    user: {
-      background: "#feedbe",
-      text: "#a28363",
-      border: "",
-    },
-    prons: {
-      background: "feedbe",
-      text: "#a28363",
-      border: "",
-    },
-  },
-  mod: {
-    user: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  vip: {
-    user: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  subscriber: {
-    user: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  viewer: {
-    user: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
 };
 
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
@@ -213,9 +149,6 @@ class mainEvent {
         break;
     }
 
-    // flower1.src = "https://i.postimg.cc/52vMRrjL/hojita1.png";
-    // flower2.src = "https://i.postimg.cc/TYB6Qx2T/hojita2.png";
-
     flower1.classList.add("flower1");
     flower2.classList.add("flower2");
     flowerContainer.appendChild(flower1);
@@ -236,75 +169,32 @@ class mainEvent {
     let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
-    const heart = document.createElement("img");
-    heart.classList.add("heart");
-
-    switch (role.role) {
-      case "streamer":
-        heart.src = "https://i.postimg.cc/QCBzWBT1/coranaranja.png";
-        break;
-      case "mod":
-        heart.src = "https://i.postimg.cc/BZykfCrg/coramarillo.png";
-        break;
-      case "vip":
-        heart.src = "https://i.postimg.cc/L61791RM/coralila.png";
-        break;
-      case "subscriber":
-        heart.src = "https://i.postimg.cc/Jzj9qBdQ/corazul.png";
-        break;
-      case "viewer":
-        heart.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png";
-        break;
+    if(fieldData.chatSize == "small") {
+      superMainContainer.style.maxWidth = "25rem";
     }
-
-    for (let i = 0; i < 6; i++) {
-      const dot = document.createElement("div");
-      // dot.classList.add(`big-dot`);
-      dot.classList.add(`message-dot-${i + 1}`);
-      dot.classList.add(`${role.role}-dots`);
-      mainContainer.appendChild(dot);
-    }
-    mainContainer.appendChild(heart);
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.appendChild(this.origami);
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = this.userColor;
-
-    // mainContainer.appendChild(this.flower);
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
-    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
-  }
-
-  get butterfly() {
-    const img = document.createElement("img");
-    const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-    img.classList.add("butterfly");
-    imgContainer.classList.add("butterfly-container");
-    // imgContainer.appendChild(img);
-
-    return imgContainer;
   }
 
   async createUsernameInfoElement() {
     const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    // const hyphen = document.createElement("span");
     const line = document.createElement("div");
     const dot = document.createElement("div");
     line.classList.add("username-line");
     line.classList.add(`${role.role}-line`);
     dot.classList.add("username-dot");
     dot.classList.add(`${role.role}-dot`);
-    // hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
     usernameInfoContainer.appendChild(line);
@@ -312,12 +202,8 @@ class mainEvent {
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     if (this.isSub || this.isStreamer) {
-      // usernameInfoContainer.appendChild(this.createRoleContainer());
     }
-    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
     usernameInfoContainer.appendChild(usernameInfo);
-    // usernameInfoContainer.appendChild(hyphen);
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -363,16 +249,6 @@ class mainEvent {
   }
 
   async createPronounsContainer() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
-    };
-    let role = this.roles;
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
     pronouns.classList.add("prons");
@@ -384,9 +260,6 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
-    // pronouns.style.color = colors[startingColor];
-
-    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -416,17 +289,6 @@ class mainEvent {
       minPriorityRole.role = "viewer";
     }
 
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
-    };
-
-    // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
         roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
@@ -435,7 +297,6 @@ class mainEvent {
         roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "vip":
-        // roleImage.style.height = "36px";
         roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
         break;
       case "sub":
@@ -459,7 +320,6 @@ class mainEvent {
     }
     pronoun = data[0].pronoun_id;
 
-    // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
         pronoun = "ae/aer";
@@ -510,10 +370,40 @@ class mainEvent {
   }
 
   async createRenderedTextElement() {
+    let role = this.roles;
     const renderedText = document.createElement("div");
     renderedText.classList.add("rendered-text");
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
+    const heart = document.createElement("img");
+    heart.classList.add("heart");
+
+    switch (role.role) {
+      case "streamer":
+        heart.src = "https://i.postimg.cc/QCBzWBT1/coranaranja.png";
+        break;
+      case "mod":
+        heart.src = "https://i.postimg.cc/BZykfCrg/coramarillo.png";
+        break;
+      case "vip":
+        heart.src = "https://i.postimg.cc/L61791RM/coralila.png";
+        break;
+      case "subscriber":
+        heart.src = "https://i.postimg.cc/Jzj9qBdQ/corazul.png";
+        break;
+      case "viewer":
+        heart.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png";
+        break;
+    }
+
+    renderedText.appendChild(heart);
+
+    for (let i = 0; i < 6; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add(`message-dot-${i + 1}`);
+      dot.classList.add(`${role.role}-dots`);
+      renderedText.appendChild(dot);
+    }
     return renderedText;
   }
 
@@ -657,19 +547,6 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
-    console.log(this.event);
-
-    // const eventDictionary = {
-    //   follower: "HI",
-    //   subscriber: this.event.gifted ? "GIFT" : "SUB",
-    //   cheer: "CHEER",
-    //   subscriber: "SUB",
-    //   tip: "TIP",
-    //   raid: "RAID",
-    //   bulkgift: "GIFT",
-    // };
-
-    console.log(this.event);
 
     const amount = this.amount;
     let sender = this.event.sender;
@@ -689,7 +566,6 @@ class mainEvent {
     }
 
     if (this.event.bulkGifted) {
-      // sender = this.event.sender;
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -713,33 +589,27 @@ class mainEvent {
 
     const nameAndText = `${text}`;
     const nameContainer = document.createElement("p");
-
     const fungiContainer = document.createElement("div");
-    const fungi = document.createElement("img");
-
-    fungi.src = "https://i.postimg.cc/Kc65MynM/corazon-ire.png";
-
-    fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
+    const topLine = document.createElement("div");
+    const bottomLine = document.createElement("div");
+    const middleDot = document.createElement("img");
+    middleDot.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png"
 
     fungiDivContainer.classList.add(`event-leafs-container`);
-    fungiDivContainer.appendChild(fungi);
+    topLine.classList.add("top-line");
+    bottomLine.classList.add("bottom-line");
+    middleDot.classList.add("middle-dot");
+    fungiDivContainer.appendChild(topLine);
+    fungiDivContainer.appendChild(middleDot);
+    fungiDivContainer.appendChild(bottomLine);
     fungiContainer.classList.add("fungi-container");
-    const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
-    moon.classList.add("moon");
-    fungiContainer.appendChild(moon);
-    // fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
-    // const eventDictionaryText = document.createElement("p");
-    // eventDictionaryText.classList.add("event-text");
-    // eventDictionaryText.innerText = eventDictionary[this.event.type];
     eventAndNameContainer.appendChild(fungiDivContainer);
-    // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
 
@@ -802,11 +672,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
-
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -892,10 +757,6 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  // if (listener !== "subscriber-latest" && listener !== "message") {
-  //   return;
-  // }
-
   if (listener === "subscriber-latest") {
     holdedEvent(event);
     return;
@@ -941,10 +802,9 @@ window.addEventListener("onEventReceived", async (obj) => {
       const bigLine = mainContainer.querySelector(".big-line");
       const messageContainer =
         mainContainer.querySelector(".message-container");
-      console.log(bigLine, messageContainer);
-      bigLine.style.height = `${messageContainer.offsetHeight - 50}px`;
+      bigLine.style.height = `${messageContainer.offsetHeight - 20}px`;
       if (messageContainer.offsetHeight > 200) {
-        bigLine.style.height = `${messageContainer.offsetHeight - 100}px`;
+        bigLine.style.height = `${messageContainer.offsetHeight - 50}px`;
       }
     }, 500);
     mainCont.appendChild(mainContainer);
