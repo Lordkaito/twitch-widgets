@@ -27,16 +27,6 @@
   letter-spacing: 0.125rem;
 }
 
-/* .scale-up {
-  transform: scale(1.1);
-  transition: transform 0.2s;
-}
-
-.scale-down {
-  transform: scale(0);
-  transition: transform 0.2s;
-} */
-
 .emotes {
   width: 4.375rem;
   vertical-align: middle;
@@ -61,6 +51,25 @@ main {
   animation-fill-mode: forwards;
   width: 43rem;
   margin-bottom: 2rem;
+  animation: showAll .8s ease-in-out forwards;
+  height: fit-content;
+}
+
+@keyframes showAll {
+  0% {
+    transform: scale(0);
+    transform-origin: bottom left;
+  }
+
+  50% {
+    transform: scale(1.1);
+    transform-origin: bottom left;
+  }
+
+  100% {
+    transform: scale(1);
+    transform-origin: bottom left;
+  }
 }
 
 .main-container {
@@ -82,6 +91,7 @@ main {
   gap: 10px;
   position: relative;
   top: 1.5rem;
+  min-height: 120px
 }
 
 .container {
@@ -184,14 +194,12 @@ main {
 }
 
 .username-line {
-  width: 0;
+  width: 2.5rem;
   height: 5px;
   border-radius: 20px;
   background-color: var(--user-background-color);
   top: 50%;
   left: 0;
-  animation: widtLine 0.5s .6s ease-in-out forwards;
-  transition: height 0.4s .1s ease-in-out;
 }
 
 @keyframes widtLine {
@@ -220,18 +228,18 @@ main {
   background-color: var(--user-background-color);
   top: 50%;
   left: 0;
-  transition: height 0.4s .1s ease-in-out;
+  transition: height 0.4s ease-in-out;
 }
 
 .big-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
   background-color: var(--user-background-color);
   top: 50%;
   left: 0;
   opacity: 0;
-  animation: showBigDot 0.6s .8s ease-in-out forwards;
+  animation: showBigDot 0.6s 1s linear forwards;
 }
 
 @keyframes showBigDot {
@@ -360,8 +368,6 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  transform: translateX(-200%);
-  animation: showUser 0.5s ease-out forwards;
 }
 
 .message-container {
@@ -384,8 +390,6 @@ main {
 .text {
   font-size: 1.5rem;
   font-weight: 700;
-  transform: translateX(-200%);
-  animation: showText 0.6s 1.1s ease-in-out forwards;
   padding-right: 2.5rem;
   padding-bottom: 1rem;
   padding-left: .5rem;
@@ -415,16 +419,11 @@ main {
   font-size: 12px;
   text-transform: uppercase;
   text-align: left;
-  transform: translateX(-7rem);
   bottom: 0;
   z-index: 1;
   font-weight: 700;
-  padding: 0.3rem 0.3rem;
-  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
-  background-color: var(--pronouns-background-color);
   text-align: center;
   border-radius: 30px;
-  animation: showPronouns 0.5s 0.5s ease-out forwards;
 }
 
 @keyframes showPronouns {
@@ -439,7 +438,7 @@ main {
 .prons {
   max-width: 100%;
   text-align: center;
-  background: var(--pronouns-background-color);
+  font-size: 1.5rem;
   border-radius: 1.25rem;
 }
 
@@ -757,27 +756,32 @@ main {
 }
 
 .streamer-user,
-.streamer-text {
+.streamer-text,
+.streamer-pronouns {
   color: #fbb288;
 }
 
 .subscriber-user,
-.subscriber-text {
+.subscriber-text,
+.subscriber-pronouns {
   color: #97d2e6;
 }
 
 .vip-user,
-.vip-text {
+.vip-text,
+.vip-pronouns {
   color: #e8a9e7;
 }
 
 .mod-user,
-.mod-text {
+.mod-text,
+.mod-pronouns {
   color: #dec669;
 }
 
 .viewer-user,
-.viewer-text {
+.viewer-text,
+.viewer-pronouns {
   color: #bfdf80;
 }
 

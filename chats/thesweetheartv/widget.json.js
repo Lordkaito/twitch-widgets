@@ -11,16 +11,6 @@ let fieldData = {
     group: "Customization",
     value: "1080",
   },
-  chatSize: {
-    type: "dropdown",
-    label: "Chat size:",
-    value: "big",
-    group: "Customization",
-    options: {
-      big: "Big",
-      small: "Small",
-    },
-  },
   deleteMessages: {
     label: "Time to delete messages (max 60):",
     type: "number",

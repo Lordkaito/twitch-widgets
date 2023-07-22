@@ -376,7 +376,7 @@ let events = {
           "first-msg": "0",
           flags: "",
           id: "726779f6-da00-4d26-8111-7a14f253c94b",
-          mod: "1",
+          mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
           subscriber: "0",
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "jkdsaf ajksd fadss",
+        text: "jkdsaf ajksd sdf asdf asd fasdfasdf asdf asd fasd a fads fasd fasd f fasdf adsf adsf asdf asdf adsf asdf ads fasd fasf as a as df as fasd fads fads f adsf asdf dasdf adsf adsf ads fads adsf adsf ads adf  ",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",

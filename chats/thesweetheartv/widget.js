@@ -1,5 +1,6 @@
 // let fieldData = {};
 let currentEvent = null;
+// let startingColor = "red";
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -7,6 +8,69 @@ const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
   user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
   pronouns: `${PRONOUNS_API_BASE}/pronouns`,
+};
+
+const colors = {
+  streamer: {
+    user: {
+      background: "#feedbe",
+      text: "#a28363",
+      border: "",
+    },
+    prons: {
+      background: "feedbe",
+      text: "#a28363",
+      border: "",
+    },
+  },
+  mod: {
+    user: {
+      background: "#fabad0",
+      text: "#fef9fd",
+      border: "",
+    },
+    prons: {
+      background: "#fabad0",
+      text: "#fef9fd",
+      border: "",
+    },
+  },
+  vip: {
+    user: {
+      background: "#fc93c0",
+      text: "#fef9fd",
+      border: "",
+    },
+    prons: {
+      background: "#fc93c0",
+      text: "#fef9fd",
+      border: "",
+    },
+  },
+  subscriber: {
+    user: {
+      background: "#fb9784",
+      text: "#fef9fd",
+      border: "",
+    },
+    prons: {
+      background: "#fb9784",
+      text: "#fef9fd",
+      border: "",
+    },
+  },
+  viewer: {
+    user: {
+      background: "#f6be93",
+      text: "#fef9fd",
+      border: "",
+    },
+    prons: {
+      background: "#f6be93",
+      text: "#fef9fd",
+      border: "",
+    },
+  },
 };
 
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
@@ -69,9 +133,8 @@ class mainEvent {
       }
     });
 
-    if (this.isStreamer) {
+    if (priorityRole.length === 0 && this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      priorityRole.sort((a, b) => a.priority - b.priority);
       return priorityRole[0];
     }
 
@@ -81,6 +144,7 @@ class mainEvent {
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
+    return priorityRole;
   }
 
   eventType() {
@@ -118,51 +182,57 @@ class mainEvent {
 
   get origami() {
     const origami = document.createElement("div");
-    const line = document.createElement("div");
-    const dot = document.createElement("div");
-    const flowerContainer = document.createElement("div");
-    flowerContainer.classList.add("flower-container");
-    const flower1 = document.createElement("img");
-    const flower2 = document.createElement("img");
+    const circle = document.createElement("div");
+    circle.innerHTML = `
+      <svg class="circulo" viewBox="0 0 100 100">
+        <circle class="circulo-animado" cx="50" cy="50" r="45">
+        </circle>
+      </svg>
+    `;
+    circle.classList.add("circle");
+    const dots = document.createElement("div");
+    dots.classList.add("ori-dots");
+    const oriContainer = document.createElement("div");
+    oriContainer.classList.add("ori-container");
+    const ori = document.createElement("img");
+    const flower = document.createElement("img");
+    origami.classList.add("origami");
+    // flower.classList.add("ori-flower");
+    if (this.isStreamer) {
+      flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png";
+      flower.classList.add("streamer");
+      flower.classList.remove("ori-flower");
+    } else if (this.isMod) {
+      flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png";
+      flower.classList.add("mod");
+      flower.classList.remove("ori-flower");
+    } else if (this.isVip) {
+      flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png";
+      flower.classList.add("vip");
+      flower.classList.remove("ori-flower");
+    } else {
+      flower.classList.add("subscriber");
+      flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png";
+    }
+    ori.src = "https://i.postimg.cc/WbSBnxQH/origami.png";
 
-    const role = this.roles;
+    const container = document.createElement("div");
+    container.classList.add("container");
 
-    switch (role.role) {
-      case "streamer":
-        flower1.src = "https://i.postimg.cc/vBPRnFSF/hojaranja1.png";
-        flower2.src = "https://i.postimg.cc/fLWnkTCf/hojaranja2.png";
-        break;
-      case "mod":
-        flower1.src = "https://i.postimg.cc/nr56dKJ3/hojamod1.png";
-        flower2.src = "https://i.postimg.cc/cC6pM9VK/hojamod2.png";
-        break;
-      case "vip":
-        flower1.src = "https://i.postimg.cc/SNBBCGVs/hojalila1.png";
-        flower2.src = "https://i.postimg.cc/fTS4VPcp/hojalila2.png";
-        break;
-      case "subscriber":
-        flower1.src = "https://i.postimg.cc/pdJM2nfd/hojazul1.png";
-        flower2.src = "https://i.postimg.cc/N0cwqxrV/hojazul2.png";
-        break;
-      case "viewer":
-        flower1.src = "https://i.postimg.cc/52vMRrjL/hojita1.png";
-        flower2.src = "https://i.postimg.cc/TYB6Qx2T/hojita2.png";
-        break;
+    for (let i = 0; i < 2; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add(`dot-${i + 1}`);
+      dots.appendChild(dot);
     }
 
-    flower1.classList.add("flower1");
-    flower2.classList.add("flower2");
-    flowerContainer.appendChild(flower1);
-    flowerContainer.appendChild(flower2);
-    line.classList.add("big-line");
-    line.classList.add(`${role.role}-line`);
-    dot.classList.add("big-dot");
-    dot.classList.add(`${role.role}-dot`);
+    circle.appendChild(flower);
+    // oriContainer.appendChild(ori);
 
-    origami.classList.add("origami");
-    origami.appendChild(flowerContainer);
-    origami.appendChild(line);
-    origami.appendChild(dot);
+    container.appendChild(circle);
+    container.appendChild(dots);
+    container.appendChild(oriContainer);
+
+    // origami.appendChild(container);
     return origami;
   }
 
@@ -170,42 +240,55 @@ class mainEvent {
     let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
-    if (fieldData.chatSize == "small") {
-      superMainContainer.style.maxWidth = "25rem";
-    }
+    const animation = fieldData.animation;
+    const origami = this.origami;
 
     superMainContainer.classList.add("super-main-container");
-    superMainContainer.appendChild(this.origami);
+    // superMainContainer.appendChild(this.origami);
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    mainContainer.appendChild(this.roleImages)
+    // mainContainer.style.backgroundColor = this.userColor;
+
+    // mainContainer.appendChild(this.flower);
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
+    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
+  }
+
+  get butterfly() {
+    const img = document.createElement("img");
+    const imgContainer = document.createElement("div");
+    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
+    img.classList.add("butterfly");
+    imgContainer.classList.add("butterfly-container");
+    // imgContainer.appendChild(img);
+
+    return imgContainer;
   }
 
   async createUsernameInfoElement() {
     const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const line = document.createElement("div");
-    const dot = document.createElement("div");
-    line.classList.add("username-line");
-    line.classList.add(`${role.role}-line`);
-    dot.classList.add("username-dot");
-    dot.classList.add(`${role.role}-dot`);
+    const hyphen = document.createElement("span");
+    hyphen.classList.add("hyphen");
+    // hyphen.innerHTML = " -- ";
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-    usernameInfoContainer.appendChild(line);
-    usernameInfoContainer.appendChild(dot);
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    if (this.isSub || this.isStreamer) {
-    }
+    // if(this.isSub || this.isStreamer) {
+    //   usernameInfoContainer.appendChild(this.createRoleContainer());
+    // }
+    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
     usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    // usernameInfoContainer.appendChild(hyphen);
+    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -235,23 +318,42 @@ class mainEvent {
   }
 
   createCapitalizeUserElement() {
+    let colors = {
+      red: "#fb6183",
+      orange: "#ff8d4e",
+      yellow: "#feca76",
+      green: "#68be5c",
+      blue: "#3fbeb5",
+      darkblue: "#587ec4",
+      purple: "#a679de",
+    };
     let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    capitalizeUser.classList.add(`${role.role}-user`);
+    // capitalizeUser.style.color = colors[startingColor];
     capitalizeUser.innerText = this.user;
+    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
   createRoleContainer() {
     const roleContainer = document.createElement("span");
     roleContainer.classList.add("role-container");
-    roleContainer.appendChild(this.roleImages);
+    // roleContainer.appendChild(this.roleImages);
     return roleContainer;
   }
 
   async createPronounsContainer() {
-    const role = this.roles;
+    let colors = {
+      red: "#fb6183",
+      orange: "#ff8d4e",
+      yellow: "#feca76",
+      green: "#68be5c",
+      blue: "#3fbeb5",
+      darkblue: "#587ec4",
+      purple: "#a679de",
+    };
+    let role = this.roles;
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
     pronouns.classList.add("prons");
@@ -263,8 +365,9 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
+    // pronouns.style.color = colors[startingColor];
 
-    pronouns.classList.add(`${role.role}-pronouns`);
+    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -294,21 +397,37 @@ class mainEvent {
       minPriorityRole.role = "viewer";
     }
 
+    let colors = {
+      red: "#fb6183",
+      orange: "#ff8d4e",
+      yellow: "#feca76",
+      green: "#68be5c",
+      blue: "#3fbeb5",
+      darkblue: "#587ec4",
+      purple: "#a679de",
+    };
+
+    // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.classList.add("sombrero")
+        roleImage.src = `https://i.postimg.cc/bwJVxM82/sombrero.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.classList.add("maquina")
+        roleImage.src = `https://i.postimg.cc/DzGg53Nm/maquina.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.classList.add("flores")
+        roleImage.src = `https://i.postimg.cc/6pmjY05b/ramo.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.classList.add("pulsera")
+        roleImage.src = `https://i.postimg.cc/ZRrwYzPX/pulsera.png`;
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.classList.add("tarta")
+        roleImage.src = `https://i.postimg.cc/nhg2vh06/pastel.png`;
         break;
     }
     return roleImage;
@@ -325,48 +444,49 @@ class mainEvent {
     }
     pronoun = data[0].pronoun_id;
 
+    // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
-        pronoun = "| ae/aer";
+        pronoun = "ae/aer";
         break;
       case "eem":
-        pronoun = "| e/em";
+        pronoun = "e/em";
         break;
       case "faefaer":
-        pronoun = "| fae/faer";
+        pronoun = "fae/faer";
         break;
       case "hehim":
-        pronoun = "| he/him";
+        pronoun = "he/him";
         break;
       case "heshe":
-        pronoun = "| he/she";
+        pronoun = "he/she";
         break;
       case "hethem":
-        pronoun = "| he/they";
+        pronoun = "he/they";
         break;
       case "itits":
-        pronoun = "| it/its";
+        pronoun = "it/its";
         break;
       case "perper":
-        pronoun = "| per/per";
+        pronoun = "per/per";
         break;
       case "sheher":
-        pronoun = "| she/her";
+        pronoun = "she/her";
         break;
       case "shethem":
-        pronoun = "| she/they";
+        pronoun = "she/they";
         break;
       case "theythem":
-        pronoun = "| they/them";
+        pronoun = "they/them";
         break;
       case "vever":
-        pronoun = "| ve/ver";
+        pronoun = "ve/ver";
         break;
       case "xexem":
-        pronoun = "| xe/xem";
+        pronoun = "xe/xem";
         break;
       case "ziehir":
-        pronoun = "| zie/hir";
+        pronoun = "zie/hir";
         break;
       default:
         break;
@@ -375,40 +495,10 @@ class mainEvent {
   }
 
   async createRenderedTextElement() {
-    let role = this.roles;
     const renderedText = document.createElement("div");
     renderedText.classList.add("rendered-text");
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
-    const heart = document.createElement("img");
-    heart.classList.add("heart");
-
-    switch (role.role) {
-      case "streamer":
-        heart.src = "https://i.postimg.cc/QCBzWBT1/coranaranja.png";
-        break;
-      case "mod":
-        heart.src = "https://i.postimg.cc/BZykfCrg/coramarillo.png";
-        break;
-      case "vip":
-        heart.src = "https://i.postimg.cc/L61791RM/coralila.png";
-        break;
-      case "subscriber":
-        heart.src = "https://i.postimg.cc/Jzj9qBdQ/corazul.png";
-        break;
-      case "viewer":
-        heart.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png";
-        break;
-    }
-
-    renderedText.appendChild(heart);
-
-    for (let i = 0; i < 6; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add(`message-dot-${i + 1}`);
-      dot.classList.add(`${role.role}-dots`);
-      renderedText.appendChild(dot);
-    }
     return renderedText;
   }
 
@@ -552,6 +642,19 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
+    console.log(this.event);
+
+    // const eventDictionary = {
+    //   follower: "HI",
+    //   subscriber: this.event.gifted ? "GIFT" : "SUB",
+    //   cheer: "CHEER",
+    //   subscriber: "SUB",
+    //   tip: "TIP",
+    //   raid: "RAID",
+    //   bulkgift: "GIFT",
+    // };
+
+    console.log(this.event);
 
     const amount = this.amount;
     let sender = this.event.sender;
@@ -571,6 +674,7 @@ class mainEvent {
     }
 
     if (this.event.bulkGifted) {
+      // sender = this.event.sender;
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -594,27 +698,41 @@ class mainEvent {
 
     const nameAndText = `${text}`;
     const nameContainer = document.createElement("p");
+
     const fungiContainer = document.createElement("div");
+    const fungi = document.createElement("img");
+
+    fungi.src = "https://i.postimg.cc/Kc65MynM/corazon-ire.png";
+
+    fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
-    const topLine = document.createElement("div");
-    const bottomLine = document.createElement("div");
-    const middleDot = document.createElement("img");
-    middleDot.src = "https://i.postimg.cc/0Nfhg1vM/cora-verde.png";
 
     fungiDivContainer.classList.add(`event-leafs-container`);
-    topLine.classList.add("top-line");
-    bottomLine.classList.add("bottom-line");
-    middleDot.classList.add("middle-dot");
-    fungiDivContainer.appendChild(topLine);
-    fungiDivContainer.appendChild(middleDot);
-    fungiDivContainer.appendChild(bottomLine);
+    // fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
+    const cesta = document.createElement("img");
+    const bunny = document.createElement("img");
+    cesta.src = "https://i.postimg.cc/6qMLTW8b/cesta.png"
+    bunny.src = "https://i.postimg.cc/bJHRcHph/conejo.png"
+    cesta.classList.add("cesta");
+    bunny.classList.add("bunny");
+    mainContainer.appendChild(cesta);
+    mainContainer.appendChild(bunny);
+    const moon = document.createElement("img");
+    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
+    moon.classList.add("moon");
+    // fungiContainer.appendChild(moon);
+    // fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
+    // const eventDictionaryText = document.createElement("p");
+    // eventDictionaryText.classList.add("event-text");
+    // eventDictionaryText.innerText = eventDictionary[this.event.type];
     eventAndNameContainer.appendChild(fungiDivContainer);
+    // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
 
@@ -677,6 +795,11 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
+
+  // if (fieldData.transparency == "false") {
+  //   main.style.maskImage = "none";
+  //   main.style.webkitMaskImage = "none";
+  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -762,6 +885,10 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
+  // if (listener !== "subscriber-latest" && listener !== "message") {
+  //   return;
+  // }
+
   if (listener === "subscriber-latest") {
     holdedEvent(event);
     return;
@@ -803,15 +930,6 @@ window.addEventListener("onEventReceived", async (obj) => {
         }, fieldData.deleteMessages * 1000);
       }
     }
-    setTimeout(() => {
-      const bigLine = mainContainer.querySelector(".big-line");
-      const messageContainer =
-        mainContainer.querySelector(".message-container");
-      bigLine.style.height = `${messageContainer.offsetHeight - 30}px`;
-      if (messageContainer.offsetHeight > 200) {
-        bigLine.style.height = `${messageContainer.offsetHeight - 70}px`;
-      }
-    }, 500);
     mainCont.appendChild(mainContainer);
   });
 });
