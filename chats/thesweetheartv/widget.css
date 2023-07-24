@@ -2,7 +2,7 @@
   --message-color: #7c3844;
   --message-background-color: #f4efec;
   --message-border-color: #7bb87e;
-  --user-color: white;
+  --user-color: #7c3844;
   --user-background-color: #ebded6;
   --user-border-color: #e6e6e6;
   --pronouns-color: #7c3844;
@@ -477,7 +477,7 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
 }
 
 @keyframes growCapitalizeUser {
@@ -607,7 +607,6 @@ main {
   border-radius: 30px;
   margin: 2rem 0;
   position: relative;
-  left: 1.5rem;
   transform-origin: bottom right;
   transform-style: preserve-3d;
   opacity: 0;
@@ -663,30 +662,76 @@ main {
   height: 1000px;
 }
 
-.event-name {
-  /* max-width: 300px;
-  width: 0;
-  height: 100%;
-  top: 0;
-  z-index: 1;
-  text-shadow: 0 2px 0.2em var(--event-shadow-color);
-  width: 0;
-  overflow: hidden;
-  white-space: nowrap; */
-  /* font-size: xx-large; */
+.event-name,
+.event-text-extra {
+  /* border: 1px solid red; */
+  max-width: fit-content;
   text-transform: uppercase;
   padding: 3px 0;
   text-align: center;
   font-family: "Roboto Slab", serif;
   color: var(--event-color);
   font-size: 1.25rem;
-  /* display: block; */
-  /* font-family: monospace; */
   border-right: 3px solid #ebded6;
-  white-space: nowrap; /* los espacios en blanco no rompen la línea */
-  width: 100%; /* el ancho será el número de caracteres que tiene nuestra línea */
-  animation: typing 2s steps(30) 1s 1 normal both, blink 1s steps(1) infinite;
+  white-space: nowrap;
+  animation: typing 2s steps(30) 1s 1 normal both, blink1 0.8s steps(1) infinite, hideBorder 0.8s 4s steps(1) infinite;
   overflow: hidden;
+  max-height: 45px;
+}
+
+@keyframes hideBorder {
+  0% {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: transparent;
+  }
+
+  100% {
+    border-color: transparent;
+  }
+}
+
+@keyframes blink1 {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.event-text-extra {
+  border-color: transparent;
+  animation: typing 2s steps(30) 4s 1 normal both, showBorder 0.8s 4s steps(1) infinite, blink1 0.8s steps(1) infinite;
+}
+
+@keyframes showBorder {
+
+  0% {
+    border-color: #ebded6;
+  }
+}
+
+/* .event-name::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  height: 40px;
+  padding: 3px 0;
+  font-size: 1.25rem;
+  animation: blink 0.8s steps(1) infinite, growWidth 2s steps(30) 2s 1 normal both;
+  border-right: 3px solid #ebded6;
+  white-space: nowrap;
+} */
+
+@keyframes growWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 @keyframes typing {
@@ -702,16 +747,6 @@ main {
     border-color: transparent;
   }
 }
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
 /* .event-name::after {
   content: "";
   position: absolute;
@@ -752,7 +787,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  flex-direction: column;
   gap: 10px;
 }
 
@@ -823,7 +858,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 27rem;
   border-radius: 30px;
   position: relative;
   padding: 0.4rem 0rem;
@@ -1032,66 +1067,54 @@ main {
 }
 
 .cesta {
-  position: absolute;
-  left: 25rem;
-  top: -2.5rem;
   width: 118px;
   height: 112px;
-  transform: scale(0.9);
+  transform: scale(0.9) translateY(-1.5rem);
 }
 
 .bunny {
-  opacity: 0;
   width: 73px;
+  /* opacity: 0; */
   height: 58px;
   position: absolute;
-  left: -1rem;
-  /* animation: bunnyHop 2s ease-in forwards; */
+  left: 0;
+  animation: bunnyHop 2s linear forwards;
   transform: scale(0.9);
 }
 
 @keyframes bunnyHop {
   0% {
-    transform: translateY(0) translateX(0) scale(0.9);
+    left: 0;
+    transform: scale(0.9);
   }
 
-  10% {
-    transform: translateY(-0.5rem) translateX(2.4rem) scale(0.9);
-  }
-
-  20% {
-    transform: translateY(0rem) translateX(4.8rem) scale(0.9);
+  15% {
+    left: 4.75rem;
+    transform: scale(0.9) translateY(-2rem);
   }
 
   30% {
-    transform: translateY(-0.5rem) translateX(6.2rem) scale(0.9);
+    left: 9.5rem;
+    transform: scale(0.9) translateY(0rem);
   }
 
-  40% {
-    transform: translateY(0rem) translateX(8.4rem) scale(0.9);
-  }
-
-  50% {
-    transform: translateY(-0.5rem) translateX(10.6rem) scale(0.9);
+  45% {
+    left: 14.25rem;
+    transform: scale(0.9) translateY(-2rem);
   }
 
   60% {
-    transform: translateY(0rem) translateX(13rem) scale(0.9);
+    left: 19rem;
+    transform: scale(0.9) translateY(0rem);
   }
 
-  70% {
-    transform: translateY(-0.5rem) translateX(15.4rem) scale(0.9);
-  }
-
-  80% {
-    transform: translateY(0rem) translateX(17.8rem) scale(0.9);
-  }
-
-  90% {
-    transform: translateY(-0.5rem) translateX(20.2rem) scale(0.9);
+  75% {
+    left: 23.75rem;
+    transform: scale(0.9) translateY(-4rem);
   }
 
   100% {
-    transform: translateY(-1rem) translateX(24rem) scale(0.9);
+    left: 28.7rem;
+    transform: scale(0.9) translateY(-2rem);
   }
 }

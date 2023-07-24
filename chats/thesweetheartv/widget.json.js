@@ -71,7 +71,7 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "(user) just followed!",
+    value: "just followed!",
     group: "Events",
   },
   cheerText: {
@@ -89,19 +89,19 @@ let fieldData = {
   giftSubText: {
     type: "text",
     label: "Custom text for gifted SUB (max 40)",
-    value: "(sender) gifted a sub to (user)!",
+    value: "gifted a sub to (user)!",
     group: "Events",
   },
   bulkGiftText: {
     type: "text",
     label: "Custom text for many gifts at once (max 40)",
-    value: "(sender) (amount) sub(s)!",
+    value: "gifted (amount) sub(s)!",
     group: "Events",
   },
   raidText: {
     type: "text",
     label: "Custom text for raids (max 40)",
-    value: "(sender) sent (amount) raiders!",
+    value: "sent (amount) raiders!",
     group: "Events",
   },
 };

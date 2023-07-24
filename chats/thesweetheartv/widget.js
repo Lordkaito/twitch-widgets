@@ -657,7 +657,7 @@ class mainEvent {
     console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender;
+    let sender = this.event.sender || this.event.name;
     let eventText = dictionary[this.event.type];
     console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
@@ -674,7 +674,7 @@ class mainEvent {
     }
 
     if (this.event.bulkGifted) {
-      // sender = this.event.sender;
+      sender = this.event.sender || this.event.name;
       eventText = dictionary["bulkgift"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
@@ -716,28 +716,33 @@ class mainEvent {
     bunny.src = "https://i.postimg.cc/bJHRcHph/conejo.png"
     cesta.classList.add("cesta");
     bunny.classList.add("bunny");
-    mainContainer.appendChild(cesta);
-    mainContainer.appendChild(bunny);
     const moon = document.createElement("img");
     moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
     moon.classList.add("moon");
     // fungiContainer.appendChild(moon);
     // fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
-    nameContainer.innerText = nameAndText;
+    nameContainer.innerText = name;
+    console.log(name)
+    const eventTextExtra = document.createElement("p");
+    eventTextExtra.classList.add("event-text-extra");
+    eventTextExtra.innerText = text;
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
     // const eventDictionaryText = document.createElement("p");
     // eventDictionaryText.classList.add("event-text");
     // eventDictionaryText.innerText = eventDictionary[this.event.type];
-    eventAndNameContainer.appendChild(fungiDivContainer);
+    // eventAndNameContainer.appendChild(fungiDivContainer);
     // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
+    eventAndNameContainer.appendChild(eventTextExtra);
     fungiContainer.appendChild(eventAndNameContainer);
 
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
+    mainContainer.appendChild(cesta);
+    mainContainer.appendChild(bunny);
 
     return mainContainer;
   }
