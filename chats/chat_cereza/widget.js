@@ -802,6 +802,7 @@ window.addEventListener("onEventReceived", async (obj) => {
   if(listener !== "message") {
     return;
   }
+  
   // if(listener !== "subscriber-latest" && listener !== "message") {
   //   return;
   // }
