@@ -706,9 +706,9 @@ const GLOBAL_EMOTES = {
 };
 
 window.addEventListener("onWidgetLoad", async (obj) => {
-  // Widget.channel = obj.detail.channel;
-  // fieldData = obj.detail.fieldData;
-  // let main = document.querySelector("main");
+  Widget.channel = obj.detail.channel;
+  fieldData = obj.detail.fieldData;
+  let main = document.querySelector("main");
 
   // if (fieldData.transparency == "false") {
   //   main.style.maskImage = "none";
@@ -799,9 +799,12 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  if(listener !== "subscriber-latest" && listener !== "message") {
+  if(listener !== "message") {
     return;
   }
+  // if(listener !== "subscriber-latest" && listener !== "message") {
+  //   return;
+  // }
 
   if (listener === "subscriber-latest") {
     holdedEvent(event);
