@@ -162,6 +162,14 @@ class mainEvent {
 
     return flower;
   }
+  
+  get cereza() {
+    const cereza = document.createElement("img");
+    cereza.src = "https://i.postimg.cc/HLDDxVzS/cereza.png";
+    cereza.classList.add("flower");
+
+    return cereza;
+  }
 
   get emotes() {
     return this.event.data.emotes;
@@ -191,7 +199,8 @@ class mainEvent {
     mainContainer.classList.add("main-container");
     // mainContainer.style.backgroundColor = this.userColor;
     
-    mainContainer.appendChild(this.flower);
+    // mainContainer.appendChild(this.flower);
+    mainContainer.appendChild(this.cereza);
     
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
@@ -280,6 +289,7 @@ class mainEvent {
   async createPronounsContainer() {
     let colors = {
       red: "#fb6183",
+      white: "#ffff",
       orange: "#ff8d4e",
       yellow: "#feca76",
       green: "#68be5c",
@@ -333,6 +343,7 @@ class mainEvent {
 
     let colors = {
       red: "#fb6183",
+      white: "#ffff",
       orange: "#ff8d4e",
       yellow: "#feca76",
       green: "#68be5c",
@@ -695,9 +706,9 @@ const GLOBAL_EMOTES = {
 };
 
 window.addEventListener("onWidgetLoad", async (obj) => {
-  Widget.channel = obj.detail.channel;
-  fieldData = obj.detail.fieldData;
-  let main = document.querySelector("main");
+  // Widget.channel = obj.detail.channel;
+  // fieldData = obj.detail.fieldData;
+  // let main = document.querySelector("main");
 
   // if (fieldData.transparency == "false") {
   //   main.style.maskImage = "none";
@@ -824,24 +835,10 @@ window.addEventListener("onEventReceived", async (obj) => {
   events.init.then((mainContainer) => {
     mainContainer.querySelector(".main-container").classList.add(startingColor);
     switch (startingColor) {
-      case "red":
-        startingColor = "orange";
+      case "white":
+        startingColor = "white";
         break;
-      case "orange":
-        startingColor = "yellow";
-        break;
-      case "yellow":
-        startingColor = "green";
-        break;
-      case "green":
-        startingColor = "blue";
-        break;
-      case "blue":
-        startingColor = "purple";
-        break;
-      case "purple":
-        startingColor = "red";
-        break;
+      
     }
     if (fieldData.allowDeleteMessages === "true") {
       if (listener === "message") {

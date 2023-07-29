@@ -1,11 +1,12 @@
 :root {
   --message-color: white;
+  --message-color-2: #eb6967;;
   --message-background-color: #fff5ed;
   --message-border-color: #7bb87e;
   --user-color: red;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
-  /* --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em; */
+  --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
@@ -80,7 +81,8 @@ main {
   /* left: 1.875rem; */
   width: 100%;
   border-radius: 40px;
-  background: linear-gradient(180deg, #85dbd5, #e0c58c);
+  /* background: linear-gradient(180deg, #85dbd5, #e0c58c); */
+  background: linear-gradient(180deg, #eb6967, #eb6967);
   z-index: 1 !important;
 }
 
@@ -92,14 +94,15 @@ main {
   width: calc(100% - 10px);
   height: calc(100% - 10px);
   /* border: 5px solid transparent; */
-  background-color: pink;
+  /* background-color: pink; */
+  background-color: whitesmoke;
   z-index: -2;
   transition: border;
   border-radius: 40px;
 }
 
 .red::before {
-  background-color: #ff879e;
+  /* background-color: #ff879e; */
 }
 
 .orange::before {
@@ -160,7 +163,7 @@ main {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  /* box-shadow: var(--user-shadow); */
+  box-shadow: var(--user-shadow);
   position: relative;
   background-color: var(--user-background-color);
 }
@@ -233,7 +236,7 @@ main {
   display: inline-block;
   min-width: 20rem;
   max-width: 31.25rem;
-  color: var(--message-color);
+  color: var(--message-color-2);
   white-space: normal;
   margin-right: 0.625rem;
   /* margin-left: 5rem; */
@@ -263,6 +266,7 @@ main {
   max-width: 100%;
   text-align: center;
   background: var(--pronouns-background-color);
+  box-shadow: var(--user-shadow);
   border-radius: 1.25rem;
   padding: 7px;
 }
