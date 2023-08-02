@@ -214,6 +214,14 @@ const grow = (type, amount = 1, data) => {
     progressBar.style.height = `${currentHeight + goal.step * amount}px`;
     progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
   }
+
+  // if (goal.current < goalObjectiveQuantity) {
+  //   goal.current += amount;
+  //   // hidden.style.width = `${currentWidth + goal.step * amount}px`;
+  //   progressBar.style.width = `${currentWidth + goal.step * amount}px`;
+  //   // progressImg.style.left = `${hidden.offsetWidth + 6}px`;
+  //   progression.innerText = goal.current + "/" + goalObjectiveQuantity;
+  // }
 };
 
 let storedEvents = [];

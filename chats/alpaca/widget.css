@@ -365,7 +365,7 @@ main {
   flex-grow: 1;
   align-items: center;
   gap: 0.625rem;
-  min-width: 500px;
+  /* min-width: 500px; */
 }
 
 .bigcontainer {

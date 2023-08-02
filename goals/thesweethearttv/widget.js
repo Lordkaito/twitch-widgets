@@ -11,36 +11,35 @@ let gained = {
 
 const goalCompletedText = () => {
   const p = document.querySelector(".progression");
-  let text = "GOAL COMPLETED!";
+  let text = "Goal completed!";
+  let completeGoalText = mainObj.fieldData.completeGoalText;
+  if (completeGoalText != "") {
+    let mockText = "GOAL COMPLETADO!";
+    if (completeGoalText.length > mockText.length) {
+      completeGoalText = completeGoalText.substring(0, mockText.length);
+    }
+    text = completeGoalText;
+  }
   let string = "";
   let split = text.split("").forEach((letter) => {
     string += letter + "\n";
-    console.log(string);
   });
   p.innerText = string;
 };
-
-// if(completeGoalText != "") {
-//   let mockText = "GOAL COMPLETED!"
-//   if(completeGoalText.length > mockText.length) {
-//     completeGoalText = completeGoalText.substring(0, mockText.length)
-//   }
-//   text = completeGoalText
-// }
 
 const progress = document.querySelector(".progress-bar-container");
 progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
-  // SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained").then((data) => {
-  //   if (data === null) {
-  //   } else {
-  //     apiData = data;
-  //   }
-  // });
-  apiData = gained;
-  init(obj, initGoal, apiData);
+  SE_API.store.get("beniartsRinaHorizontalGoalWidgetPreviousGained").then((data) => {
+    if (data === null) {
+      apiData = gained;
+    } else {
+      apiData = data;
+    }
+    init(obj, initGoal, apiData);
+  });
 });
 
 const init = (obj, initGoalCallback, data) => {
@@ -59,7 +58,13 @@ const init = (obj, initGoalCallback, data) => {
       tip: { type: "tip", amount: 0 },
       cheer: { type: "cheer", amount: 0 },
     };
-    // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", clear);
+    // SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", clear);
+  }
+
+  if (mainObj.fieldData.wateringCanSide === "right") {
+    const reg = document.querySelector(".gifReg");
+    reg.style.transform = "scaleX(-1)";
+    // reg.style.left = "-33rem";
   }
 
   goalType = mainObj.fieldData.goalType;
@@ -76,7 +81,7 @@ window.addEventListener("onEventReceived", function (obj) {
       tip: { type: "tip", amount: 0 },
       cheer: { type: "cheer", amount: 0 },
     };
-    // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", clear);
+    SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", clear);
     window.location.reload();
   }
 
@@ -101,12 +106,13 @@ const progressFn = (data, listener, obj) => {
       reg.classList.add("playing");
       setTimeout(() => {
         reg.classList.remove("playing");
-      }, 2000);
+      }, 1500);
     }
   }
 };
 
 const initGoal = (type, data) => {
+  console.log(type);
   if (mainObj.fieldData.goalTheme === "pink") {
     image.src = "https://i.postimg.cc/hvs4D0z6/patita.png ";
     round.style.backgroundColor = "pink";
@@ -118,7 +124,7 @@ const initGoal = (type, data) => {
     progression.style.textShadow = `-1px -1px 0 #c9527a, 1px -1px 0 #c9527a, -1px 1px 0 #c9527a,
     1px 1px 0 #c9527a`;
   }
-  let current = goalStartQuantity;
+  // let current = goalStartQuantity;
   let step;
   const progression = document.querySelector(".progressNums");
   let progressBarHeight = document.querySelector(
@@ -128,7 +134,7 @@ const initGoal = (type, data) => {
   if (type === "tip" || type === "cheer") {
     step = progressBarHeight / goalObjectiveQuantity;
   } else {
-    step = progressBarHeight / (goalObjectiveQuantity - goalStartQuantity);
+    step = progressBarHeight / goalObjectiveQuantity;
   }
 
   goal = {
@@ -136,22 +142,34 @@ const initGoal = (type, data) => {
     current: current,
     step: step,
   };
-  progression.innerText = current + "/" + "\n" + goalObjectiveQuantity;
+  console.log(goal.type);
+  if (type === "tip") {
+    console.log("here");
+    console.log(progression.innerText);
+    progression.innerText = current + "/" + "\n" + goalObjectiveQuantity + "$";
+  } else {
+    progression.innerText = current + "/" + "\n" + goalObjectiveQuantity;
+  }
   if (mainObj.fieldData.goalFullType === "allTime") {
-    grow("initial", 1, data);
+    console.log(goal.type)
+    const typeForGoal = goal.type;
+    grow("initial", 1, data, typeForGoal);
   } else {
     grow("initial", goalStartQuantity, data);
   }
 };
 
-const grow = (type, amount = 1, data) => {
+const grow = (type, amount = 1, data, typeForGoal) => {
   if (type !== goalType) {
     if (type === "initial") {
       gained = data;
-      if(mainObj.fieldData.goalStartQuantity !== 0 && mainObj.fieldData.goalFullType === "allTime") {
-      amount = data[goalType].amount + goalStartQuantity;
-      } else if(mainObj.fieldData.goalFullType === "session") {
-        amount = goalStartQuantity;
+      if (
+        mainObj.fieldData.goalStartQuantity !== 0 &&
+        mainObj.fieldData.goalFullType === "allTime"
+      ) {
+        amount = data[goalType].amount + goalStartQuantity;
+      } else if (mainObj.fieldData.goalFullType === "session") {
+        amount = 0;
       } else {
         amount = data[goalType].amount;
       }
@@ -163,19 +181,19 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      SE_API.store.set("beniartsRinaHorizontalGoalWidgetPreviousGained", gained);
       break;
     default:
       break;
@@ -189,17 +207,39 @@ const grow = (type, amount = 1, data) => {
   total = goal.current + amount;
   if (goal.current + amount >= goalObjectiveQuantity) {
     progressBar.style.height = `100%`;
-    progression.style.opacity = "0";
+    // progression.style.opacity = "0";
     goalCompletedText();
     if (total >= goalObjectiveQuantity) {
       goalCompletedText();
+      goal.current += amount;
+      if (typeForGoal === "tip") {
+        console.log("here");
+        console.log(progression.innerText);
+        progression.innerText = current + "/" + "\n" + goalObjectiveQuantity + "$";
+      } else {
+        progression.innerText = current + "/" + "\n" + goalObjectiveQuantity;
+      }
+      // if (type === "tip") {
+      //   console.log("here");
+      //   progression.innerText =
+      //     current + "/" + "\n" + goalObjectiveQuantity + "$";
+      // } else {
+      //   progression.innerText =
+      //     goal.current + "/" + "\n" + goalObjectiveQuantity;
+      // }
     }
     return;
   }
   if (goal.current < goalObjectiveQuantity) {
     goal.current += amount;
     progressBar.style.height = `${currentHeight + goal.step * amount}px`;
-    progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
+    if (typeForGoal === "tip") {
+      console.log("here");
+      progression.innerText =
+        current + "/" + "\n" + goalObjectiveQuantity + "$";
+    } else {
+      progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
+    }
   }
 };
 

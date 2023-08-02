@@ -835,6 +835,7 @@ async function loadGlobalEmotes() {
 }
 
 const removeMessage = (mainContainer) => {
+  console.log(mainContainer);
   const elem = mainContainer;
   if (elem) {
     elem.style.animationName = "removeMessage";
@@ -845,23 +846,11 @@ const removeMessage = (mainContainer) => {
   }
 };
 
-const removeEvent = (mainContainer, event) => {
+const removeEvent = (mainContainer) => {
+  console.log(mainContainer, event)
   const elem = mainContainer;
-  elem.querySelector(".event-leafs-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-2").style.animationFillMode =
-    "forwards";
 
-  elem.querySelector(".event-leafs-container-1").style.animationName =
-    "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-1").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(`.${event}`).style.animationName = "hideNames";
+  elem.style.animationName = "removeMessage";
   setTimeout(() => {
     elem.remove();
   }, 1000);
@@ -940,7 +929,7 @@ window.addEventListener("onEventReceived", async (obj) => {
         }, fieldData.deleteMessages * 1000);
       } else {
         setTimeout(() => {
-          removeEvent(mainContainer, "event-name");
+          removeEvent(mainContainer);
         }, fieldData.deleteMessages * 1000);
       }
     }

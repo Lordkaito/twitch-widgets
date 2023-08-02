@@ -24,7 +24,7 @@ main {
 .container {
   display: flex;
   align-items: center;
-  height: 250px;
+  /* height: 250px; */
   width: 37rem;
   position: relative;
 }
@@ -35,39 +35,55 @@ main {
   padding: 0.4rem 1.5rem;
   background-color: white;
   border-radius: 50px;
-  border: 5px solid #bfdf80;
+  border: 5px solid #b8dd4f;
   display: grid;
   place-content: center;
+}
+
+.progression-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .progress-bar-container {
   width: 34rem;
   height: 50px;
   border-radius: 15px;
-  background-color: #fcfbdf;
+  background-color: #fad45f;
   position: relative;
   overflow: hidden;
 }
 
 .progression {
-  position: absolute;
+  /* position: absolute; */
   text-align: center;
   vertical-align: middle;
-  line-height: 55px;
-  color: #ffee86;
+  line-height: 48px;
+  color: white;
   font-size: 1.5rem;
-  margin: auto;
-  width: 100%;
+  /* margin: auto; */
+  /* width: 100%; */
   height: 100%;
   z-index: 4;
-  bottom: 0.2rem;
+  bottom: 0rem;
   text-shadow: 1px 2px 5px rgba(88, 62, 32, .8);
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+}
+
+.bit {
+  transform: scale(.7);
 }
 
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: #bfdf80;
+  background-color: #b8dd4f;
   height: 70px;
   transition: width 0.2s;
   position: relative;
@@ -122,6 +138,20 @@ main {
   color: #ddb78a;
 }
 
+.goal-text {
+  /* border: 1px solid red; */
+  /* position: absolute; */
+  bottom: 3.5rem;
+  left: 11.5rem;
+  margin-top: .5rem;
+  margin-left: 2rem;
+  max-width: 34rem;
+  font-size: 1.5rem;
+  color: #b8dd4f;
+  text-shadow: 1px 2px 5px rgba(88, 62, 32, .8);
+  /* white-space: nowrap; */
+}
+
 .goal-name p {
   font-size: 1.5rem;
   font-weight: 700;
@@ -159,8 +189,8 @@ main {
 .pico-container {
   display: flex;
   position: absolute;
-  top: 5rem;
-  left: 2.3rem;
+  top: 5.1rem;
+  left: 2.15rem;
   z-index: -1;
 }
 
@@ -184,10 +214,12 @@ main {
 .colita {
   position: absolute;
   left: -6.5rem;
+  top: 1.3rem;
   z-index: -1;
   animation: none;
   transition: all 1s;
   transform-origin: bottom right;
+  /* transform: rotate(2deg); */
 }
 
 @keyframes wiggle {

@@ -17,7 +17,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 0,
+    value: 3,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -26,7 +26,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "subscriber",
+    value: "cheer",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -43,7 +43,7 @@ let fieldData = {
     options: {
       allTime: "All time",
       session: "Stream",
-    }
+    },
   },
   startFromCero: {
     type: "dropdown",
@@ -55,46 +55,58 @@ let fieldData = {
       false: "No",
     },
   },
+  completeGoalText: {
+    type: "text",
+    label: "Custom text for goal completed",
+    value: "Goal completed! PogChamp",
+    group: "Events",
+  },
+  goalText: {
+    type: "text",
+    label: "Custom text for goal",
+    value: "Sub goal",
+    group: "Events",
+  },
   subText: {
     type: "text",
-    label: "Custom text for SUB (max 40)",
+    label: "Custom text for SUB",
     value:
       "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
     group: "Events",
   },
   followText: {
     type: "text",
-    label: "Custom text for FOLLOW (max 40)",
+    label: "Custom text for FOLLOW",
     value: "just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
-    label: "Custom text for Cheers (max 40)",
+    label: "Custom text for Cheers",
     value: "cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
-    label: "Custom text for Tips (max 40)",
+    label: "Custom text for Tips",
     value: "Tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
     type: "text",
-    label: "Custom text for gifted SUB (max 40)",
+    label: "Custom text for gifted SUB",
     value: "(sender) gifted a sub to (user)!",
     group: "Events",
   },
   bulkGiftText: {
     type: "text",
-    label: "Custom text for many gifts at once (max 40)",
+    label: "Custom text for many gifts at once",
     value: "(sender) (amount) sub(s)!",
     group: "Events",
   },
   raidText: {
     type: "text",
-    label: "Custom text for raids (max 40)",
+    label: "Custom text for raids",
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },

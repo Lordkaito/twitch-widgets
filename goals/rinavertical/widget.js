@@ -11,39 +11,39 @@ let gained = {
 
 const goalCompletedText = () => {
   const p = document.querySelector(".progression");
-  let text = "GOAL COMPLETED!";
+  let text = "Goal completed!";
+  let completeGoalText = mainObj.fieldData.completeGoalText;
+  if (completeGoalText != "") {
+    let mockText = "GOAL COMPLETADO!";
+    if (completeGoalText.length > mockText.length) {
+      completeGoalText = completeGoalText.substring(0, mockText.length);
+    }
+    text = completeGoalText;
+  }
   let string = "";
   let split = text.split("").forEach((letter) => {
     string += letter + "\n";
-    console.log(string);
   });
   p.innerText = string;
 };
-
-// if(completeGoalText != "") {
-//   let mockText = "GOAL COMPLETED!"
-//   if(completeGoalText.length > mockText.length) {
-//     completeGoalText = completeGoalText.substring(0, mockText.length)
-//   }
-//   text = completeGoalText
-// }
 
 const progress = document.querySelector(".progress-bar-container");
 progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
-  // SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained").then((data) => {
+  // SE_API.store.get("beniartsRinaVerticalGoalWidgetPreviousGained").then((data) => {
   //   if (data === null) {
+  //     apiData = gained;
   //   } else {
   //     apiData = data;
   //   }
   // });
-  apiData = gained;
-  init(obj, initGoal, apiData);
+  init(obj, initGoal, gained);
 });
 
 const init = (obj, initGoalCallback, data) => {
+  console.log(data, "init");
   initialStart = false;
   mainObj.data = obj["detail"]["session"]["data"];
   mainObj.recents = obj["detail"]["recents"];
@@ -59,8 +59,13 @@ const init = (obj, initGoalCallback, data) => {
       tip: { type: "tip", amount: 0 },
       cheer: { type: "cheer", amount: 0 },
     };
-    // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", clear);
+    // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", clear);
   }
+
+  // if (mainObj.fieldData.wateringCanSide === "right") {
+  //   const reg = document.querySelector(".gifReg");
+  //   reg.style.transform = "scaleX(-1)";
+  // }
 
   goalType = mainObj.fieldData.goalType;
   goalStartQuantity = mainObj.fieldData.goalStartQuantity;
@@ -76,7 +81,7 @@ window.addEventListener("onEventReceived", function (obj) {
       tip: { type: "tip", amount: 0 },
       cheer: { type: "cheer", amount: 0 },
     };
-    // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", clear);
+    // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", clear);
     window.location.reload();
   }
 
@@ -95,15 +100,15 @@ const progressFn = (data, listener, obj) => {
   } else {
     grow(data.type, data.amount);
   }
-  if (obj.detail.event.type === mainObj.fieldData.goalType) {
-    const reg = document.querySelector(".gifReg");
-    // if (!reg.classList.contains("playing")) {
-    //   reg.classList.add("playing");
-    //   setTimeout(() => {
-    //     reg.classList.remove("playing");
-    //   }, 2000);
-    // }
-  }
+  // if (obj.detail.event.type === mainObj.fieldData.goalType) {
+  //   const reg = document.querySelector(".gifReg");
+  //   if (!reg.classList.contains("playing")) {
+  //     reg.classList.add("playing");
+  //     setTimeout(() => {
+  //       reg.classList.remove("playing");
+  //     }, 1500);
+  //   }
+  // }
 };
 
 const initGoal = (type, data) => {
@@ -118,7 +123,7 @@ const initGoal = (type, data) => {
     progression.style.textShadow = `-1px -1px 0 #c9527a, 1px -1px 0 #c9527a, -1px 1px 0 #c9527a,
     1px 1px 0 #c9527a`;
   }
-  let current = goalStartQuantity;
+  // let current = goalStartQuantity;
   let step;
   const progression = document.querySelector(".progressNums");
   let progressBarHeight = document.querySelector(
@@ -128,7 +133,7 @@ const initGoal = (type, data) => {
   if (type === "tip" || type === "cheer") {
     step = progressBarHeight / goalObjectiveQuantity;
   } else {
-    step = progressBarHeight / (goalObjectiveQuantity - goalStartQuantity);
+    step = progressBarHeight / goalObjectiveQuantity;
   }
 
   goal = {
@@ -142,16 +147,22 @@ const initGoal = (type, data) => {
   } else {
     grow("initial", goalStartQuantity, data);
   }
+
+  const goalText = document.querySelector(".goal-text");
+  goalText.innerText = mainObj.fieldData.goalText;
 };
 
 const grow = (type, amount = 1, data) => {
   if (type !== goalType) {
     if (type === "initial") {
       gained = data;
-      if(mainObj.fieldData.goalStartQuantity !== 0 && mainObj.fieldData.goalFullType === "allTime") {
-      amount = data[goalType].amount + goalStartQuantity;
-      } else if(mainObj.fieldData.goalFullType === "session") {
-        amount = goalStartQuantity;
+      if (
+        mainObj.fieldData.goalStartQuantity !== 0 &&
+        mainObj.fieldData.goalFullType === "allTime"
+      ) {
+        amount = data[goalType].amount + goalStartQuantity;
+      } else if (mainObj.fieldData.goalFullType === "session") {
+        amount = 0;
       } else {
         amount = data[goalType].amount;
       }
@@ -163,19 +174,19 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
-      // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsRinaVerticalGoalWidgetPreviousGained", gained);
       break;
     default:
       break;
@@ -188,18 +199,29 @@ const grow = (type, amount = 1, data) => {
   let currentHeight = progressBar.offsetHeight;
   const progression = document.querySelector(".progressNums");
   total = goal.current + amount;
-  colita.style.animationName = "wiggle"
-  colita.style.animationDuration = "2s"
-  colita.style.animationTimingFunction = "ease-in-out"
+  colita.style.animationName = "wiggle";
+  colita.style.animationDuration = "2s";
+  colita.style.animationTimingFunction = "ease-in-out";
   setTimeout(() => {
-    colita.style.animationName = "none"
+    colita.style.animationName = "none";
   }, 2000);
   if (goal.current + amount >= goalObjectiveQuantity) {
     progressBar.style.height = `100%`;
-    progression.style.opacity = "0";
+    // progression.style.opacity = "0";
     goalCompletedText();
     if (total >= goalObjectiveQuantity) {
       goalCompletedText();
+      goal.current += amount;
+      progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
+      if (fieldData.goalType.value === "tip") {
+        progression.innerText =
+          goal.current + "/" + "\n" + goalObjectiveQuantity + "$";
+      }
+      if (fieldData.goalType.value === "cheer") {
+        const img = document.querySelector(".bit");
+        console.log(img);
+        img.src = "https://i.postimg.cc/tCW6C07t/BITVAC2.png";
+      }
     }
     return;
   }
@@ -207,6 +229,15 @@ const grow = (type, amount = 1, data) => {
     goal.current += amount;
     progressBar.style.height = `${currentHeight + goal.step * amount}px`;
     progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
+    if (fieldData.goalType.value === "tip") {
+      progression.innerText =
+        goal.current + "/" + "\n" + goalObjectiveQuantity + "$";
+    }
+    if (fieldData.goalType.value === "cheer") {
+      const img = document.querySelector(".bit");
+      console.log(img);
+      img.src = "https://i.postimg.cc/tCW6C07t/BITVAC2.png";
+    }
   }
 };
 

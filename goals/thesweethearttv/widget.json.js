@@ -17,7 +17,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 4,
+    value: 1,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -26,7 +26,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "follower",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -43,7 +43,7 @@ let fieldData = {
     options: {
       allTime: "All time",
       session: "Stream",
-    }
+    },
   },
   startFromCero: {
     type: "dropdown",
@@ -148,5 +148,15 @@ let fieldData = {
     label: "Custom text for goal completed (max 40)",
     value: "Goal completed!",
     group: "Events",
-  }
+  },
+  wateringCanSide: {
+    type: "dropdown",
+    label: "Watering can side",
+    value: "right",
+    group: "Customization",
+    options: {
+      left: "Left",
+      right: "Right",
+    },
+  },
 };

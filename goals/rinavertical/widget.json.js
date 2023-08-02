@@ -8,7 +8,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 1000,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -17,16 +17,16 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 0,
+    value: 100,
     group: "Customization",
-    min: 1,
+    min: 0,
     max: 100000,
     step: 1,
   },
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "follower",
+    value: "cheer",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -44,6 +44,12 @@ let fieldData = {
       allTime: "All time",
       session: "Stream",
     }
+  },
+  goalText: {
+    type: "text",
+    label: "Custom text for goal",
+    value: "Sub goal",
+    group: "Events",
   },
   startFromCero: {
     type: "dropdown",
