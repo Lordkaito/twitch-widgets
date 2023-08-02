@@ -16,14 +16,14 @@ progress.style.setProperty("--progress-bar-left", "0");
 
 window.addEventListener("onWidgetLoad", function (obj) {
   let apiData;
-  SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
-    if (data === null) {
-      apiData = gained;
-    } else {
-      apiData = data;
-    }
-    init(obj, initGoal, apiData);
-  });
+  // SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
+  //   if (data === null) {
+  //     apiData = gained;
+  //   } else {
+  //     apiData = data;
+  //   }
+  // });
+  init(obj, initGoal, gained);
 });
 
 const init = (obj, initGoalCallback, data) => {
@@ -67,19 +67,19 @@ const grow = (type, amount = 1, data) => {
   switch (type) {
     case "subscriber":
       gained.subscriber.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "follower":
       gained.follower.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "tip":
       gained.tip.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     case "cheer":
       gained.cheer.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
+      // SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
       break;
     default:
       break;
@@ -121,7 +121,7 @@ window.addEventListener("onEventReceived", function (obj) {
       tip: { type: "tip", amount: 0 },
       cheer: { type: "cheer", amount: 0 },
     };
-    SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
+    // SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
     window.location.reload();
   }
 
