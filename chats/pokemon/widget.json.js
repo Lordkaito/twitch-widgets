@@ -33,7 +33,7 @@ let fieldData = {
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
-    value: "true",
+    value: "false",
     group: "Customization",
     options: {
       true: "Yes",

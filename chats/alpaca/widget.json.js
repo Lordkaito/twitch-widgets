@@ -15,7 +15,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 1,
     min: 1,
     max: 60,
     step: 1,
@@ -23,7 +23,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",

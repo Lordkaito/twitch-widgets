@@ -133,8 +133,9 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
+      priorityRole.sort((a, b) => a.priority - b.priority);
       return priorityRole[0];
     }
 
@@ -182,57 +183,10 @@ class mainEvent {
 
   get origami() {
     const origami = document.createElement("div");
-    const circle = document.createElement("div");
-    circle.innerHTML = `
-      <svg class="circulo" viewBox="0 0 100 100">
-        <circle class="circulo-animado" cx="50" cy="50" r="45">
-        </circle>
-      </svg>
-    `;
-    circle.classList.add("circle");
-    const dots = document.createElement("div");
-    dots.classList.add("ori-dots");
-    const oriContainer = document.createElement("div");
-    oriContainer.classList.add("ori-container");
-    const ori = document.createElement("img");
-    const flower = document.createElement("img");
     origami.classList.add("origami");
-    // flower.classList.add("ori-flower");
-    if (this.isStreamer) {
-      flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png";
-      flower.classList.add("streamer");
-      flower.classList.remove("ori-flower");
-    } else if (this.isMod) {
-      flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png";
-      flower.classList.add("mod");
-      flower.classList.remove("ori-flower");
-    } else if (this.isVip) {
-      flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png";
-      flower.classList.add("vip");
-      flower.classList.remove("ori-flower");
-    } else {
-      flower.classList.add("subscriber");
-      flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png";
-    }
-    ori.src = "https://i.postimg.cc/WbSBnxQH/origami.png";
+    origami.appendChild(this.roleImages);
 
-    const container = document.createElement("div");
-    container.classList.add("container");
-
-    for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add(`dot-${i + 1}`);
-      dots.appendChild(dot);
-    }
-
-    circle.appendChild(flower);
-    // oriContainer.appendChild(ori);
-
-    container.appendChild(circle);
-    container.appendChild(dots);
-    container.appendChild(oriContainer);
-
-    origami.appendChild(container);
+    // origami.appendChild(container);
     return origami;
   }
 
@@ -441,20 +395,20 @@ class mainEvent {
     // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/LXMNCn0h/char.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/TwqQZfZ0/bul.png`;
         break;
       case "vip":
         // roleImage.style.height = "36px";
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/02qPYffq/squi.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/SRk1sJWH/pika.png`;
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/132WFWGG/eev.png`;
         break;
     }
     return roleImage;
@@ -729,7 +683,7 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/Kc65MynM/corazon-ire.png";
+    fungi.src = "https://i.postimg.cc/t4TfWZLj/poke.png";
 
     fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
@@ -753,7 +707,9 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
+    eventAndNameContainer.appendChild(fungiDivContainer.cloneNode(true));
     fungiContainer.appendChild(eventAndNameContainer);
+
 
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);

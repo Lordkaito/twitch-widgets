@@ -30,6 +30,7 @@ main {
   height: 37rem;
   /* width: 250px; */
   position: relative;
+  padding-bottom: 5rem;
 }
 
 #round {
@@ -38,7 +39,7 @@ main {
   padding: 1.5rem 0.4rem 1.5rem 0.4rem;
   background-color: white;
   border-radius: 50px;
-  border: 5px solid #bfdf80;
+  border: 5px solid #b8dd4f;
   display: grid;
   place-content: center;
 }
@@ -62,7 +63,7 @@ main {
   width: 50px;
   height: 37rem;
   border-radius: 15px;
-  background-color: #fcfbdf;
+  background-color: #fad45f;
   overflow: hidden;
   top: -2rem;
 }
@@ -72,25 +73,25 @@ main {
   text-align: center;
   vertical-align: middle;
   line-height: 1.75;
-  color: #ffee86;
+  color: white;
   font-size: 1.2rem;
   height: 100%;
   z-index: 4;
-  top: 4rem;
+  top: 3.2rem;
   left: 2.8rem;
   text-shadow: 1px 2px 5px rgba(88, 62, 32, .8);
 }
 
 .progressNums-container {
   vertical-align: middle;
-  color: #ffee86;
+  color: #fad45f;
   z-index: 4;
   text-shadow: 1px 2px 5px #583e20;
   position: absolute;
-  bottom: 3rem;
-  left: -12rem;
+  bottom: 8rem;
+  left: -5rem;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
   width: 150px;
 }
@@ -101,10 +102,29 @@ main {
   margin-bottom: 0.5rem;
 }
 
+.bit {
+  transform: scale(.7);
+  padding-bottom: .6rem;
+}
+
+.goal-text {
+  bottom: 3.5rem;
+  left: 20rem;
+  margin-top: .5rem;
+  margin-right: 5rem;
+  width: 15rem;
+  font-size: 1.5rem;
+  color: #b8dd4f;
+  vertical-align: top;
+  height: 130px;
+  text-align: center;
+  text-shadow: 1px 2px 5px rgba(88, 62, 32, .8);
+}
+
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: #bfdf80;
+  background-color: #b8dd4f;
   height: 0;
   width: 70px;
   transition: height 1s ease-in-out;
@@ -208,8 +228,8 @@ main {
   transition: all 1s;
   transform-origin: bottom right;
   position: absolute;
-  left: -7rem;
-  bottom: -3rem;
+  left: -0rem;
+  bottom: 1.5rem;
   z-index: -1;
   opacity: 1;
 }

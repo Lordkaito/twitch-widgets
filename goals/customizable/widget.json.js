@@ -17,7 +17,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 3,
+    value: 0,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -26,7 +26,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "cheer",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -43,7 +43,13 @@ let fieldData = {
     options: {
       allTime: "All time",
       session: "Stream",
-    },
+    }
+  },
+  title: {
+    type: "text",
+    label: "Goal title (max 11):",
+    value: "",
+    group: "Customization",
   },
   startFromCero: {
     type: "dropdown",
@@ -55,58 +61,46 @@ let fieldData = {
       false: "No",
     },
   },
-  completeGoalText: {
-    type: "text",
-    label: "Custom text for goal completed",
-    value: "Goal completed! PogChamp",
-    group: "Events",
-  },
-  goalText: {
-    type: "text",
-    label: "Custom text for goal",
-    value: "Sub goal",
-    group: "Events",
-  },
   subText: {
     type: "text",
-    label: "Custom text for SUB",
+    label: "Custom text for SUB (max 40)",
     value:
       "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
     group: "Events",
   },
   followText: {
     type: "text",
-    label: "Custom text for FOLLOW",
+    label: "Custom text for FOLLOW (max 40)",
     value: "just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
-    label: "Custom text for Cheers",
+    label: "Custom text for Cheers (max 40)",
     value: "cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
-    label: "Custom text for Tips",
+    label: "Custom text for Tips (max 40)",
     value: "Tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
     type: "text",
-    label: "Custom text for gifted SUB",
+    label: "Custom text for gifted SUB (max 40)",
     value: "(sender) gifted a sub to (user)!",
     group: "Events",
   },
   bulkGiftText: {
     type: "text",
-    label: "Custom text for many gifts at once",
+    label: "Custom text for many gifts at once (max 40)",
     value: "(sender) (amount) sub(s)!",
     group: "Events",
   },
   raidText: {
     type: "text",
-    label: "Custom text for raids",
+    label: "Custom text for raids (max 40)",
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
@@ -155,4 +149,37 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  goalNameColor: {
+    type: "colorpicker",
+    label: "Goal text color",
+    value: "#123456"
+  },
+  numbersColor: {
+    type: "colorpicker",
+    label: "Progress color",
+    value: "#123456"
+  },
+  progressBarColor: {
+    type: "colorpicker",
+    label: "Progress Bar color",
+    value: "red"
+  },
+  progressBackColor: {
+    type: "colorpicker",
+    label: "Background color",
+    value: "#123456"
+  },
+  theme: {
+    type: "dropdown",
+    label: "Theme",
+    value: "moon",
+    group: "Customization",
+    options: {
+      heart: "Heart theme",
+      flower: "Flower theme",
+      leaf: "Leaf theme",
+      moon: "Moon theme",
+      custom: "Custom theme",
+    },
+  }
 };

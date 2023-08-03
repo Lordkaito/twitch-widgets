@@ -657,7 +657,7 @@ class mainEvent {
     console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender || this.event.name;
+    let sender = this.event.sender;
     let eventText = dictionary[this.event.type];
     console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
@@ -722,7 +722,7 @@ class mainEvent {
     // fungiContainer.appendChild(moon);
     // fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
-    nameContainer.innerText = name;
+    nameContainer.innerText = this.event.gifted ? name + " gifted" : name;
     console.log(name)
     const eventTextExtra = document.createElement("p");
     eventTextExtra.classList.add("event-text-extra");

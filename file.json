@@ -5,94 +5,85 @@
     "value": "",
     "group": "Customization"
   },
-  "widgetHeight": {
-    "label": "Widget height (recommended 1080)",
-    "type": "text",
+  "goalFullType": {
+    "type": "dropdown",
+    "label": "Goal duration:",
+    "value": "allTime",
     "group": "Customization",
-    "value": "1080"
+    "options": { "allTime": "All time", "session": "Stream" }
   },
-  "deleteMessages": {
-    "label": "Time to delete messages (max 60):",
-    "type": "number",
+  "goalType": {
+    "type": "dropdown",
+    "label": "Goal type:",
+    "value": "subscriber",
     "group": "Customization",
-    "value": 60,
+    "options": {
+      "subscriber": "Sub",
+      "follower": "Follow",
+      "cheer": "Cheer",
+      "tip": "Tip"
+    }
+  },
+  "goalObjectiveQuantity": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 10,
+    "group": "Customization",
     "min": 1,
-    "max": 60,
+    "max": 100000,
     "step": 1
   },
-  "allowDeleteMessages": {
-    "type": "dropdown",
-    "label": "Delete messages on/off:",
-    "value": "false",
+  "goalStartQuantity": {
+    "type": "number",
+    "label": "Goal start:",
+    "value": 0,
     "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
+    "min": 0,
+    "max": 100000,
+    "step": 1
   },
-  "displayBadges": {
-    "type": "dropdown",
-    "label": "Show badges:",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "allowPronouns": {
-    "type": "dropdown",
-    "label": "Show pronouns:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "usersBlackList": {
+  "title": {
     "type": "text",
-    "label": "Users blacklist (separated by comma)",
+    "label": "Goal title (max 11):",
     "value": "",
     "group": "Customization"
   },
-  "specialCharsBlackList": {
-    "type": "text",
-    "label": "Special chars (separated by comma)",
-    "value": "",
-    "group": "Customization"
+  "theme": {
+    "type": "dropdown",
+    "label": "Theme",
+    "value": "moon",
+    "group": "Customization",
+    "options": {
+      "heart": "Heart theme",
+      "flower": "Flower theme",
+      "leaf": "Leaf theme",
+      "moon": "Moon theme",
+      "custom": "Custom theme"
+    }
   },
-  "subText": {
-    "type": "text",
-    "label": "Custom text for SUB (max 40)",
-    "value": "(user) just suscribed!",
-    "group": "Events"
+  "goalNameColor": {
+    "type": "colorpicker",
+    "label": "Goal text color",
+    "value": "#123456"
   },
-  "followText": {
-    "type": "text",
-    "label": "Custom text for FOLLOW (max 40)",
-    "value": "just followed!",
-    "group": "Events"
+  "numbersColor": {
+    "type": "colorpicker",
+    "label": "Progress color",
+    "value": "#123456"
   },
-  "cheerText": {
-    "type": "text",
-    "label": "Custom text for Cheers (max 40)",
-    "value": "cheered x(amount)!",
-    "group": "Events"
+  "progressBarColor": {
+    "type": "colorpicker",
+    "label": "Progress Bar color",
+    "value": "red"
   },
-  "tipText": {
-    "type": "text",
-    "label": "Custom text for Tips (max 40)",
-    "value": "Tipped $(amount)!",
-    "group": "Events"
+  "progressBackColor": {
+    "type": "colorpicker",
+    "label": "Background color",
+    "value": "#123456"
   },
-  "giftSubText": {
+  "currency": {
     "type": "text",
-    "label": "Custom text for gifted SUB (max 40)",
-    "value": "gifted a sub to (user)!",
-    "group": "Events"
-  },
-  "bulkGiftText": {
-    "type": "text",
-    "label": "Custom text for many gifts at once (max 40)",
-    "value": "gifted (amount) sub(s)!",
-    "group": "Events"
-  },
-  "raidText": {
-    "type": "text",
-    "label": "Custom text for raids (max 40)",
-    "value": "sent (amount) raiders!",
-    "group": "Events"
+    "label": "Currency",
+    "value": "$"
   }
 }

@@ -65,7 +65,7 @@ let fieldData = {
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value: "(user) just suscribed!",
+    value: "just suscribed!",
     group: "Events",
   },
   followText: {
@@ -83,25 +83,25 @@ let fieldData = {
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
     type: "text",
     label: "Custom text for gifted SUB (max 40)",
-    value: "gifted a sub to (user)!",
+    value: "a sub to (user)!",
     group: "Events",
   },
   bulkGiftText: {
     type: "text",
     label: "Custom text for many gifts at once (max 40)",
-    value: "gifted (amount) sub(s)!",
+    value: "(amount) sub(s)!",
     group: "Events",
   },
   raidText: {
     type: "text",
     label: "Custom text for raids (max 40)",
-    value: "sent (amount) raiders!",
+    value: "(amount) raiders!",
     group: "Events",
   },
 };
