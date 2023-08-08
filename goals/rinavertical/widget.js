@@ -74,6 +74,7 @@ const init = (obj, initGoalCallback, data) => {
 };
 
 window.addEventListener("onEventReceived", function (obj) {
+  console.log(obj)
   if (obj.detail.event.value === "reset") {
     let clear = {
       subscriber: { type: "subscriber", amount: 0 },
@@ -93,21 +94,18 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const progressFn = (data, listener, obj) => {
-  if (data.type === "subscriber" && data.gifted === true) {
-    grow(data.type, data.amount);
-  } else if (data.type === "subscriber" || data.type === "follower") {
-    grow(data.type);
+  console.log(data)
+  if(data.type === 'follower') {
+    grow(data.type, 1);
   } else {
     grow(data.type, data.amount);
   }
-  // if (obj.detail.event.type === mainObj.fieldData.goalType) {
-  //   const reg = document.querySelector(".gifReg");
-  //   if (!reg.classList.contains("playing")) {
-  //     reg.classList.add("playing");
-  //     setTimeout(() => {
-  //       reg.classList.remove("playing");
-  //     }, 1500);
-  //   }
+  // if (data.type === "subscriber" && data.gifted === true) {
+  //   grow(data.type, data.amount);
+  // } else if (data.type === "subscriber" || data.type === "follower") {
+  //   grow(data.type);
+  // } else {
+  //   grow(data.type, data.amount);
   // }
 };
 

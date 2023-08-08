@@ -8,7 +8,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 1000,
+    value: 10,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -17,16 +17,16 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 100,
+    value: 0,
     group: "Customization",
-    min: 0,
+    min: 1,
     max: 100000,
     step: 1,
   },
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "subscriber",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -45,11 +45,11 @@ let fieldData = {
       session: "Stream",
     }
   },
-  goalText: {
+  title: {
     type: "text",
-    label: "Custom text for goal",
-    value: "Sub goal",
-    group: "Events",
+    label: "Goal title (max 11):",
+    value: "",
+    group: "Customization",
   },
   startFromCero: {
     type: "dropdown",
@@ -149,10 +149,46 @@ let fieldData = {
       pink: "Pink",
     },
   },
-  completeGoalText: {
-    type: "text",
-    label: "Custom text for goal completed (max 40)",
-    value: "Goal completado!",
-    group: "Events",
+  goalNameColor: {
+    type: "colorpicker",
+    label: "Goal text color",
+    value: "#123456"
+  },
+  numbersColor: {
+    type: "colorpicker",
+    label: "Progress color",
+    value: "#123456"
+  },
+  progressBarColor: {
+    type: "colorpicker",
+    label: "Progress Bar color",
+    value: "red"
+  },
+  progressBackColor: {
+    type: "colorpicker",
+    label: "Background color",
+    value: "#123456"
+  },
+  theme: {
+    type: "dropdown",
+    label: "Theme",
+    value: "moon",
+    group: "Customization",
+    options: {
+      heart: "Heart theme",
+      flower: "Flower theme",
+      leaf: "Leaf theme",
+      moon: "Moon theme",
+      custom: "Custom theme",
+    },
+  },
+  goalStartQuantity: {
+    type: "number",
+    label: "Goal start:",
+    value: 0,
+    group: "Customization",
+    min: 0,
+    max: 100000,
+    step: 1,
   }
 };

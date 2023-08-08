@@ -42,16 +42,27 @@ let firstEvent = true;
 let previousSender = "";
 let currentSender = "";
 let items, step, goalType;
-let animationActive = false;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
+  console.log("onWidgetLoad");
   let api = await getApiData(obj);
+  console.log(api, "aaa");
   init(obj, api, true);
 });
 
 let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
+  console.log(obj.detail.listener);
+  console.log(obj);
+  // if (firstCopy) {
+  //   console.log("first copy", firstCopy);
+  //   firstCopy = false;
+  //   console.log("first copy", firstCopy);
+  //   return;
+  // }
+  // if (obj.detail.listener === "kvstore:update") return;
+  // console.log("onEventReceived", obj);
   if (obj.detail.event.value === "reset") {
     clearApiData();
     return;
@@ -62,6 +73,7 @@ window.addEventListener("onEventReceived", function (obj) {
 
   if (event.type === goalType) {
     if (listener === "cheer-latest" || listener === "tip-latest") {
+      console.log("inside cheer-latest or tip-latest");
       handleGrow(event.amount, updateApiData, false);
       return;
     }
@@ -70,6 +82,7 @@ window.addEventListener("onEventReceived", function (obj) {
       if (event.bulkGifted) {
         return;
       }
+      console.log("inside subscriber-latest or follower-latest");
       handleGrow(1, updateApiData, false);
       return;
     }
@@ -77,29 +90,31 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get(
-    "beniartsRinaHorizontalGoalWidgetPreviousGained"
-  );
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  console.log("getApiData");
+  // let data = await SE_API.store.get(
+  //   "beniartsRinaHorizontalGoalWidgetPreviousGained"
+  // );
+  // console.log(data, "getApiData");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if(obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
 function init(obj, apiData, initial = false) {
+  console.log("init");
   mainObj = obj.detail;
   goalType = mainObj.fieldData.goalType;
+  console.log(apiData[goalType], "apiData goal type")
 
   let amount = apiData[goalType].amount;
-  if (mainObj.fieldData.goalStartQuantity !== 0) {
-    amount = amount + mainObj.fieldData.goalStartQuantity;
-  }
+  console.log(amount, apiData);
 
   items = {
     progressBar: document.querySelector(".progress-bar"),
@@ -114,12 +129,14 @@ function init(obj, apiData, initial = false) {
     items.progressBarContainer,
     mainObj.fieldData.goalObjectiveQuantity
   );
+  // goalType = fieldData.goalType.value;
   items.title.innerText = mainObj.fieldData.title;
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
     handleGrow(amount, null, true);
   } else if (initial === true) {
+    console.log(apiData[goalType], "apiData goal type initial")
     handleGrow(amount, null, true);
   } else {
     handleGrow(amount, updateApiData, false);
@@ -127,79 +144,61 @@ function init(obj, apiData, initial = false) {
 }
 
 function checkIfCompleted(widgetApiData, goalType) {
+  console.log("checkIfCompleted");
   let objective = mainObj.fieldData.goalObjectiveQuantity;
   let currentAmount = widgetApiData[goalType].amount;
   return currentAmount >= objective;
 }
 
 function getStep(container, objective) {
+  console.log("getStep");
   const containerWidth = container.offsetWidth;
   const step = containerWidth / objective;
   return step;
 }
 
 function handleGrow(amount, callback, initial = false) {
-  if (!animationActive) {
-    animationActive = true;
-    items.colita.style.animationName = "wiggle";
-    items.colita.style.animationDuration = "1s";
-    items.colita.style.animationTimingFunction = "ease-in-out";
-    setTimeout(() => {
-      items.colita.style.animationName = "";
-      items.colita.style.animationDuration = "";
-      items.colita.style.animationTimingFunction = "";
-      animationActive = false;
-    }, 1000);
-  }
-  let amountToUpdate =
-    widgetApiData[goalType].amount +
-    amount +
-    mainObj.fieldData.goalStartQuantity;
-  if (initial === true) {
+  console.log("handleGrow");
+  let amountToUpdate = widgetApiData[goalType].amount + amount;
+  if(initial === true) {
     amountToUpdate = amount;
   }
 
   let completedGoal = checkIfCompleted(widgetApiData, goalType);
-  let currency = mainObj.fieldData.currency;
 
   if (!completedGoal) {
     items.progressBar.style.width = `${amountToUpdate * step}px`;
-    if (goalType === "tip") {
-      items.progressionText.innerHTML = `${amountToUpdate} / ${mainObj.fieldData.goalObjectiveQuantity}`;
-      items.progressionText.innerHTML =
-        amountToUpdate +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
-    } else {
-      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
-    }
+    items.progressionText.innerHTML = `${amountToUpdate} / ${mainObj.fieldData.goalObjectiveQuantity}`;
   } else {
     items.progressBar.style.width = "100%";
     items.progressionText.innerHTML = `Goal completed!`;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
-    callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
+    callback(amountToUpdate);
   }
 }
 
 function updateApiData(amountToUpdate) {
+  console.log("updateApiData");
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set(
-    "beniartsRinaHorizontalGoalWidgetPreviousGained",
-    widgetApiData
-  );
+  console.log(widgetApiData[goalType].amount, amountToUpdate, widgetApiData);
+  // SE_API.store.set(
+  //   "beniartsRinaHorizontalGoalWidgetPreviousGained",
+  //   widgetApiData
+  // );
 }
 
 function clearApiData() {
-  SE_API.store.set(
-    "beniartsRinaHorizontalGoalWidgetPreviousGained",
-    defaultApiData
-  );
+  console.log("clearApiData");
+  // SE_API.store.set(
+  //   "beniartsRinaHorizontalGoalWidgetPreviousGained",
+  //   defaultApiData
+  // );
   window.location.reload();
 }
 
 function cancelExecution(detail) {
+  console.log("cancelExecution");
   if (!detail.event.gifted) {
     currentSender = detail.event.sender || detail.event.name;
     detail.event.amount = 1;

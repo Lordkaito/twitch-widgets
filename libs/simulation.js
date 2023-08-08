@@ -384,11 +384,11 @@ let events = {
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "1",
+          vip: "0",
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitod_",
+        displayName: "Lordkaitoa_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "hola que tal adsf adf w ff adsf asdf asdf asdf asdf asdf adf asd fasdf",
+        text: "hola que tal adsf adf w ff adsf asdf asxcvzxcxzc zx cz czxcz zxc xzc zx zx  zx czxc zx zxc zxc zxc zx czxc x ccxz zx xc zx  x xzc zx czxc zxc zxc df asdf asdf asdf adf asd fasdf",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",

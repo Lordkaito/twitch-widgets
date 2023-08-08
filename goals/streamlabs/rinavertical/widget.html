@@ -37,6 +37,7 @@
         rel="stylesheet"
       />
       <div class="main-container"></div> -->
+      <!-- All html objects will be wrapped in the #wrap div -->
       <link rel="stylesheet" href="css.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -50,17 +51,6 @@
         href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
         rel="stylesheet"
       />
-
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"
-        integrity="sha512-+aXA9mgbUvFe0ToTlbt8/3vT7+nOgUmFw29wfFCsGoh8AZMRSU0p4WtOvC1vkF2JBrndPN2TuNZsHPAKPPxe8Q=="
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/numbered/1.1.0/index.min.js"
-        integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
-        crossorigin="anonymous"
-      ></script>
       <main class="main">
         <div class="container">
           <div class="hidden-container" id="hidden"></div>
@@ -164,8 +154,12 @@
           <div id="round">
             <div class="progress-bar-container">
               <div class="progression-container">
-                <p class="progression"></p>
-                <img src="" alt="" class="bit">
+                <p class="progression">
+                  <span id="goal-current">0</span>/<span id="goal-total"
+                    >0</span
+                  >
+                </p>
+                <img src="" alt="" class="bit" />
               </div>
               <div class="img-progress">
                 <div class="progress-bar"></div>
