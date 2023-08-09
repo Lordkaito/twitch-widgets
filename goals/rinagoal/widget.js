@@ -108,6 +108,7 @@ function init(obj, apiData, initial = false) {
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progression"),
     title: document.querySelector("#title"),
+    bit: document.querySelector(".bit"),
   };
 
   step = getStep(
@@ -126,9 +127,9 @@ function init(obj, apiData, initial = false) {
   }
 }
 
-function checkIfCompleted(widgetApiData, goalType) {
+function checkIfCompleted(amountToUpdate) {
   let objective = mainObj.fieldData.goalObjectiveQuantity;
-  let currentAmount = widgetApiData[goalType].amount;
+  let currentAmount = amountToUpdate;
   return currentAmount >= objective;
 }
 
@@ -159,20 +160,27 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
-  let completedGoal = checkIfCompleted(widgetApiData, goalType);
+  let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
 
   if (!completedGoal) {
     items.progressBar.style.width = `${amountToUpdate * step}px`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = `${amountToUpdate} / ${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
       items.progressionText.innerHTML =
         amountToUpdate +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
+    } else if (goalType === "cheer") {
+      console.log(goalType);
+      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.bit.src = "https://i.postimg.cc/pddXGFCB/dddd.png";
     } else {
       items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.bit.src = "https://i.postimg.cc/pddXGFCB/dddd.png";
     }
   } else {
     items.progressBar.style.width = "100%";

@@ -45,16 +45,13 @@ let items, step, goalType;
 let animationActive = false;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
-  console.log("onWidgetLoad");
   let api = await getApiData(obj);
-  console.log(api, "aaa");
   init(obj, api, true);
 });
 
 let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
-  console.log(obj);
   if (obj.detail.event.value === "reset") {
     clearApiData();
     return;
@@ -65,7 +62,6 @@ window.addEventListener("onEventReceived", function (obj) {
 
   if (event.type === goalType) {
     if (listener === "cheer-latest" || listener === "tip-latest") {
-      console.log("inside cheer-latest or tip-latest");
       handleGrow(event.amount, updateApiData, false);
       return;
     }
@@ -74,7 +70,6 @@ window.addEventListener("onEventReceived", function (obj) {
       if (event.bulkGifted) {
         return;
       }
-      console.log("inside subscriber-latest or follower-latest");
       handleGrow(1, updateApiData, false);
       return;
     }
@@ -82,34 +77,29 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  console.log("getApiData");
-  let data = await SE_API.store.get(
-    "beniartsRinaVerticalGoalWidgetPreviousGained"
-  );
-  console.log(data, "getApiData");
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get(
+  //   "beniartsRinaVerticalGoalWidgetPreviousGained"
+  // );
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
 function init(obj, apiData, initial = false) {
-  console.log("init");
   mainObj = obj.detail;
   goalType = mainObj.fieldData.goalType;
-  console.log(apiData[goalType], "apiData goal type");
 
   let amount = apiData[goalType].amount;
   if (mainObj.fieldData.goalStartQuantity !== 0) {
     amount = amount + mainObj.fieldData.goalStartQuantity;
   }
-  console.log(amount, apiData);
 
   items = {
     progressBar: document.querySelector(".progress-bar"),
@@ -120,6 +110,7 @@ function init(obj, apiData, initial = false) {
     progressionTextCompleted: document.querySelector(".progression"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
+    bit: document.querySelector(".bit"),
   };
 
   step = getStep(
@@ -133,7 +124,6 @@ function init(obj, apiData, initial = false) {
     widgetApiData = defaultApiData;
     handleGrow(amount, null, true);
   } else if (initial === true) {
-    console.log(apiData[goalType], "apiData goal type initial");
     handleGrow(amount, null, true);
   } else {
     handleGrow(amount, updateApiData, false);
@@ -141,15 +131,12 @@ function init(obj, apiData, initial = false) {
 }
 
 function checkIfCompleted(amountToUpdate) {
-  console.log("checkIfCompleted");
   let objective = mainObj.fieldData.goalObjectiveQuantity;
   let currentAmount = amountToUpdate;
-  console.log(currentAmount, objective, "checkIfCompleted");
   return currentAmount >= objective;
 }
 
 function getStep(container, objective) {
-  console.log("getStep");
   const containerWidth = container.offsetHeight;
   const step = containerWidth / objective;
   return step;
@@ -174,7 +161,7 @@ const goalCompletedText = () => {
 };
 
 function handleGrow(amount, callback, initial = false) {
-  if(!animationActive) {
+  if (!animationActive) {
     animationActive = true;
     items.colita.style.animationName = "wiggle";
     items.colita.style.animationDuration = "1s";
@@ -200,23 +187,30 @@ function handleGrow(amount, callback, initial = false) {
   if (!completedGoal) {
     // image.style.left = `${amountToUpdate * step - 23}px`;
     items.progressBar.style.height = `${amountToUpdate * step}px`;
-
     if (goalType === "tip") {
       items.progressionText.innerHTML =
-        amountToUpdate +
-        "<br>" +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
+      amountToUpdate +
+      "<br>" +
+      "/" +
+      mainObj.fieldData.goalObjectiveQuantity +
+      currency;
+    } else if (goalType === "cheer") {
+      console.log(goalType)
+      items.progressionText.innerHTML =
+      amountToUpdate +
+      "<br>" +
+      "/" +
+      mainObj.fieldData.goalObjectiveQuantity
+      items.bit.src = "https://i.postimg.cc/kMRNYVh9/ssfsf.png"
     } else {
       items.progressionText.innerHTML =
         amountToUpdate + "<br>" + "/" + mainObj.fieldData.goalObjectiveQuantity;
-      console.log(mainObj.fieldData);
     }
   } else {
     // image.style.left = `32rem`;
     items.progressBar.style.height = "100%";
     items.progressionText.innerHTML = `${amountToUpdate} <br> /${mainObj.fieldData.goalObjectiveQuantity}`;
+    items.bit.src = "https://i.postimg.cc/kMRNYVh9/ssfsf.png"
     goalCompletedText();
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -225,26 +219,22 @@ function handleGrow(amount, callback, initial = false) {
 }
 
 function updateApiData(amountToUpdate) {
-  console.log("updateApiData");
   widgetApiData[goalType].amount = amountToUpdate;
-  console.log(widgetApiData[goalType].amount, amountToUpdate, widgetApiData);
-  SE_API.store.set(
-    "beniartsRinaVerticalGoalWidgetPreviousGained",
-    widgetApiData
-  );
+  // SE_API.store.set(
+  //   "beniartsRinaVerticalGoalWidgetPreviousGained",
+  //   widgetApiData
+  // );
 }
 
 function clearApiData() {
-  console.log("clearApiData");
-  SE_API.store.set(
-    "beniartsRinaVerticalGoalWidgetPreviousGained",
-    defaultApiData
-  );
+  // SE_API.store.set(
+  //   "beniartsRinaVerticalGoalWidgetPreviousGained",
+  //   defaultApiData
+  // );
   window.location.reload();
 }
 
 function cancelExecution(detail) {
-  console.log("cancelExecution");
   if (!detail.event.gifted) {
     currentSender = detail.event.sender || detail.event.name;
     detail.event.amount = 1;

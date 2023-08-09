@@ -45,8 +45,8 @@ main {
 
 .gifReg {
   position: absolute;
-  left: -31rem;
-  top: -16.5rem;
+  left: -32rem;
+  top: -18rem;
   opacity: 0;
   transition: opacity 0.2s;
 }

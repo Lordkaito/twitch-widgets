@@ -104,7 +104,8 @@ main {
 
 .bit {
   transform: scale(.7);
-  padding-bottom: .6rem;
+  padding-bottom: .2rem;
+  z-index: 10;
 }
 
 .goal-text {

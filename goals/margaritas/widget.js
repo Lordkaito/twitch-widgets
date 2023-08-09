@@ -1,313 +1,322 @@
 let mainObj = {};
-let goal = {};
-let goalType, goalObjectiveQuantity, goalStartQuantity;
-let current = 0;
-let gained = {
-  subscriber: { type: "subscriber", amount: 0 },
-  follower: { type: "follower", amount: 0 },
-  tip: { type: "tip", amount: 0 },
-  cheer: { type: "cheer", amount: 0 },
+let defaultApiData = {
+  subscriber: {
+    type: "subscriber",
+    amount: 0,
+  },
+  follower: {
+    type: "follower",
+    amount: 0,
+  },
+  cheer: {
+    type: "cheer",
+    amount: 0,
+  },
+  tip: {
+    type: "tip",
+    amount: 0,
+  },
 };
-
-const goalCompletedText = () => {
-  const p = document.querySelector(".progression");
-  let text = "Goal completed!";
-  let completeGoalText = mainObj.fieldData.goalText;
-  if (completeGoalText != "") {
-    let mockText = "GOAL COMPLETADO!";
-    if (completeGoalText.length > mockText.length) {
-      completeGoalText = completeGoalText.substring(0, mockText.length);
-    }
-    text = completeGoalText;
-  }
-  let string = "";
-  let split = text.split("").forEach((letter) => {
-    string += letter + "\n";
-  });
-  p.innerText = string;
+let widgetApiData = {
+  subscriber: {
+    type: "subscriber",
+    amount: 0,
+  },
+  follower: {
+    type: "follower",
+    amount: 0,
+  },
+  cheer: {
+    type: "cheer",
+    amount: 0,
+  },
+  tip: {
+    type: "tip",
+    amount: 0,
+  },
 };
+let storedEvents = [];
+let eventCounter = 0;
+let timeout = null;
+let firstEvent = true;
+let previousSender = "";
+let currentSender = "";
+let items, step, goalType;
+let animationActive = false;
 
-const progress = document.querySelector(".progress-bar-container");
-progress.style.setProperty("--progress-bar-left", "0");
-
-window.addEventListener("onWidgetLoad", function (obj) {
-  let apiData;
-  // SE_API.store.get("beniartsMargaritaGoalWidgetPreviousGained").then((data) => {
-  //   if (data === null) {
-  //   } else {
-  //     apiData = data;
-  //   }
-  // });
-  apiData = gained;
-  init(obj, initGoal, apiData);
+window.addEventListener("onWidgetLoad", async function (obj) {
+  let api = await getApiData(obj);
+  init(obj, api, true);
 });
 
-const init = (obj, initGoalCallback, data) => {
-  initialStart = false;
-  mainObj.data = obj["detail"]["session"]["data"];
-  mainObj.recents = obj["detail"]["recents"];
-  mainObj.currency = obj["detail"]["currency"];
-  mainObj.channelName = obj["detail"]["channel"]["username"];
-  mainObj.apiToken = obj["detail"]["channel"]["apiToken"];
-  mainObj.fieldData = obj["detail"]["fieldData"];
-
-  if (mainObj.fieldData.resetGoalData === "true") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", clear);
-  }
-
-  if (mainObj.fieldData.wateringCanSide === "right") {
-    const reg = document.querySelector(".gifReg");
-    reg.style.transform = "scaleX(-1)";
-    reg.style.left = "-12rem";
-  }
-
-  goalType = mainObj.fieldData.goalType;
-  goalStartQuantity = mainObj.fieldData.goalStartQuantity;
-  goalObjectiveQuantity = mainObj.fieldData.goalObjectiveQuantity;
-  initGoalCallback(goalType, data);
-};
+let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
   if (obj.detail.event.value === "reset") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", clear);
-    window.location.reload();
+    clearApiData();
+    return;
   }
 
-  if (obj.detail.listener === "grow") {
-    progressFn(obj.detail.event, obj.detail.listener, obj);
-  } else {
-    holdedEvent(obj.detail.event);
-  }
-});
+  let event = obj.detail.event;
+  let listener = obj.detail.listener;
 
-const progressFn = (data, listener, obj) => {
-  if (data.type === "subscriber" && data.gifted === true) {
-    grow(data.type, data.amount);
-  } else if (data.type === "subscriber" || data.type === "follower") {
-    grow(data.type);
-  } else {
-    grow(data.type, data.amount);
-  }
-  if (obj.detail.event.type === mainObj.fieldData.goalType) {
-    const reg = document.querySelector(".gifReg");
-    if (!reg.classList.contains("playing")) {
-      reg.classList.add("playing");
-      setTimeout(() => {
-        reg.classList.remove("playing");
-      }, 1500);
+  if (event.type === goalType) {
+    if (listener === "cheer-latest" || listener === "tip-latest") {
+      handleGrow(event.amount, updateApiData, false);
+      return;
     }
-  }
-};
 
-const initGoal = (type, data) => {
-  if (mainObj.fieldData.goalTheme === "pink") {
-    image.src = "https://i.postimg.cc/hvs4D0z6/patita.png ";
-    round.style.backgroundColor = "pink";
-    const goalText = document.querySelector(".goal-name");
-    const progressBar = document.querySelector(".progress-bar");
-    const progression = document.querySelector(".progressNums");
-    goalText.style.color = "#ea769b";
-    progressBar.style.backgroundColor = "#c9527a";
-    progression.style.textShadow = `-1px -1px 0 #c9527a, 1px -1px 0 #c9527a, -1px 1px 0 #c9527a,
-    1px 1px 0 #c9527a`;
-  }
-  // let current = goalStartQuantity;
-  let step;
-  const progression = document.querySelector(".progressNums");
-  let progressBarHeight = document.querySelector(
-    ".progress-bar-container"
-  ).offsetHeight;
-
-  if (type === "tip" || type === "cheer") {
-    step = progressBarHeight / goalObjectiveQuantity;
-  } else {
-    step = progressBarHeight / goalObjectiveQuantity;
-  }
-
-  goal = {
-    type: type,
-    current: current,
-    step: step,
-  };
-  progression.innerText = current + "/" + "\n" + goalObjectiveQuantity;
-  if (mainObj.fieldData.goalFullType === "allTime") {
-    grow("initial", data[goalType].amount, data);
-  } else {
-    grow("initial", goalStartQuantity, data);
-  }
-};
-
-const grow = (type, amount = 1, data) => {
-  if (type !== goalType) {
-    if (type === "initial") {
-      gained = data;
-      amount = amount;
-    } else {
+    if (listener === "subscriber-latest" || listener === "follower-latest") {
+      if (event.bulkGifted) {
+        return;
+      }
+      handleGrow(1, updateApiData, false);
       return;
     }
   }
+});
 
-  switch (type) {
-    case "subscriber":
-      gained.subscriber.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
-      break;
-    case "follower":
-      gained.follower.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
-      break;
-    case "tip":
-      gained.tip.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
-      break;
-    case "cheer":
-      gained.cheer.amount += amount;
-      // SE_API.store.set("beniartsMargaritaGoalWidgetPreviousGained", gained);
-      break;
-    default:
-      break;
-  }
-
-  let progressBar = document.querySelector(".progress-bar");
-  let progressImg = document.querySelector(".img-container");
-  const completeGoal = document.querySelector(".progression");
-  let currentHeight = progressBar.offsetHeight;
-  const progression = document.querySelector(".progressNums");
-  total = goal.current + amount;
-  if (goal.current + amount >= goalObjectiveQuantity) {
-    progressBar.style.height = `100%`;
-    progression.innerText =
-      goalObjectiveQuantity + "/" + "\n" + goalObjectiveQuantity;
-    goalCompletedText();
-    if (total >= goalObjectiveQuantity) {
-      goalCompletedText();
-    }
-    return;
-  }
-  if (goal.current < goalObjectiveQuantity) {
-    goal.current += amount;
-    progressBar.style.height = `${currentHeight + goal.step * amount}px`;
-    progression.innerText = goal.current + "/" + "\n" + goalObjectiveQuantity;
-  }
+const getApiData = async (obj) => {
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
+  return widgetApiData;
 };
 
-let storedEvents = [];
-let eventCounter = 0;
-let eventTimer = null;
-let firstEvent = true;
-let previousSender = "";
+function init(obj, apiData, initial = false) {
+  mainObj = obj.detail;
+  goalType = mainObj.fieldData.goalType;
 
-const dispatchNewEvent = (event) => {
-  if (
-    previousSender === currentSender ||
-    firstEvent === true ||
-    previousSender === ""
-  ) {
-    storedEvents.push(event);
+  let amount = apiData[goalType].amount;
+  if (mainObj.fieldData.goalStart !== 0) {
+    amount = amount + mainObj.fieldData.goalStartQuantity;
+  }
+
+  items = {
+    progressBar: document.querySelector(".progress-bar"),
+    goalText: document.querySelector(".goal-text"),
+    colita: document.querySelector(".colita"),
+    progressBarContainer: document.querySelector(".progress-bar-container"),
+    progressionText: document.querySelector(".progressNums"),
+    title: document.querySelector("#title"),
+    progressImg: document.querySelector(".img-container"),
+    completeText: document.querySelector(".progression"),
+    reg: document.querySelector(".gifReg"),
+    image: document.querySelector("#image"),
+  };
+
+  step = getStep(
+    items.progressBarContainer,
+    mainObj.fieldData.goalObjectiveQuantity
+  );
+
+  // items.title.innerText = mainObj.fieldData.title;
+  let side = mainObj.fieldData.wateringCanSide;
+  if (side === "right") {
+    items.reg.style.transform = "scaleX(-1)";
+    items.reg.style.left = "-11rem";
+  }
+
+  if (mainObj.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+    handleGrow(amount, null, true);
+  } else if (initial === true) {
+    handleGrow(amount, null, true);
   } else {
-    event.amount = 1;
+    handleGrow(amount, updateApiData, false);
+  }
+}
+
+function checkIfCompleted(amountToUpdate) {
+  let objective = mainObj.fieldData.goalObjectiveQuantity;
+  let currentAmount = amountToUpdate;
+  return currentAmount >= objective;
+}
+
+function getStep(container, objective) {
+  const containerWidth = container.offsetHeight;
+  const step = containerWidth / objective;
+  return step;
+}
+
+function handleGrow(amount, callback, initial = false) {
+  if (!animationActive) {
+    animationActive = true;
+    items.reg.style.opacity = "1";
+    setTimeout(() => {
+      animationActive = false;
+      items.reg.style.opacity = "0";
+    }, 1500);
+  }
+  let amountToUpdate =
+    widgetApiData[goalType].amount +
+    amount +
+    mainObj.fieldData.goalStartQuantity;
+  if (initial === true) {
+    amountToUpdate = amount;
+  }
+
+  let completedGoal = checkIfCompleted(amountToUpdate);
+  let currency = mainObj.fieldData.currency;
+  if (!completedGoal) {
+    // image.style.left = `${amountToUpdate * step - 23}px`;
+    items.progressBar.style.height = `${amountToUpdate * step}px`;
+
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
+    } else {
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
+  } else {
+    // image.style.left = `32rem`;
+    items.progressBar.style.height = "100%";
+    items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+    let text = mainObj.fieldData.completeGoalText;
+    let string = "";
+    if (text !== "") {
+      let split = text.split("").forEach((letter, index) => {
+        string += letter + "\n";
+      });
+    }
+    items.completeText.innerText = string;
+  }
+  if (callback !== null || mainObj.fieldData.goalFullType === "session") {
+    callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
+  }
+}
+
+function updateApiData(amountToUpdate) {
+  widgetApiData[goalType].amount = amountToUpdate;
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
+}
+
+function clearApiData() {
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
+  window.location.reload();
+}
+
+function cancelExecution(detail) {
+  if (!detail.event.gifted) {
+    currentSender = detail.event.sender || detail.event.name;
+    detail.event.amount = 1;
     window.dispatchEvent(
       new CustomEvent("onEventReceived", {
         detail: {
-          listener: "grow",
-          event: event,
+          listener: "custom",
+          event: {
+            amount: 1,
+            avatar: detail.event.avatar,
+            displayName: detail.event.displayName,
+            gifted: detail.event.gifted,
+            type: detail.event.type,
+            tier: detail.event.tier,
+            message: detail.event.message,
+            name: detail.event.name,
+            quantity: detail.event.quantity,
+            sessionTop: detail.event.sessionTop,
+            providerId: detail.event.providerId,
+            originalEventName: detail.event.originalEventName,
+          },
+        },
+      })
+    );
+    return;
+  }
+
+  if (firstEvent || currentSender === previousSender || previousSender === "") {
+    storedEvents.push(detail.event);
+  } else {
+    detail.event.amount = 1;
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "custom",
+          event: {
+            amount: 1,
+            avatar: detail.event.avatar,
+            displayName: detail.event.displayName,
+            gifted: detail.event.gifted,
+            sender: detail.event.sender,
+            type: detail.event.type,
+            tier: detail.event.tier,
+            message: detail.event.message,
+            name: detail.event.name,
+            quantity: detail.event.quantity,
+            sessionTop: detail.event.sessionTop,
+            providerId: detail.event.providerId,
+            originalEventName: detail.event.originalEventName,
+          },
         },
       })
     );
     previousSender = "";
   }
 
-  if (eventTimer) {
-    clearTimeout(eventTimer);
+  if (timeout) {
+    clearTimeout(timeout);
   }
 
-  eventTimer = setTimeout(() => {
+  timeout = setTimeout(() => {
     if (storedEvents.length > 1) {
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {
-            listener: "grow",
+            listener: "custom",
             event: {
               amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
+              avatar: detail.event.avatar,
+              displayName: detail.event.displayName,
+              gifted: detail.event.gifted,
               sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
+              type: detail.event.type,
+              tier: detail.event.tier,
+              message: detail.event.message,
+              name: detail.event.name,
+              quantity: detail.event.quantity,
+              sessionTop: detail.event.sessionTop,
+              providerId: detail.event.providerId,
+              originalEventName: detail.event.originalEventName,
             },
           },
         })
-      );
-      eventCounter += storedEvents.length;
-      console.log(
-        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
       );
       previousSender = "";
     } else if (storedEvents.length === 1) {
-      console.log("heresdfadsf");
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {
-            listener: "grow",
+            listener: "custom",
             event: {
               amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
+              avatar: detail.event.avatar,
+              displayName: detail.event.displayName,
+              gifted: detail.event.gifted,
               sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
+              type: "custom",
+              tier: detail.event.tier,
+              message: detail.event.message,
+              name: detail.event.name,
+              quantity: detail.event.quantity,
+              sessionTop: detail.event.sessionTop,
+              providerId: detail.event.providerId,
+              originalEventName: detail.event.originalEventName,
             },
           },
         })
       );
-      previousSender = "";
     }
     storedEvents = [];
-    eventTimer = null;
-    eventCounter = 0;
   }, 500);
-  firstEvent = false;
-  previousSender = event.sender;
-};
-
-const holdedEvent = (event) => {
-  if (event.gifted) {
-    currentSender = event.sender;
-    dispatchNewEvent(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "grow",
-          event: event,
-        },
-      })
-    );
-  }
-};
+}
