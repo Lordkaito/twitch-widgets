@@ -145,7 +145,6 @@ class mainEvent {
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -198,7 +197,7 @@ class mainEvent {
     const origami = this.origami;
 
     superMainContainer.classList.add("super-main-container");
-    superMainContainer.appendChild(this.origami);
+    // superMainContainer.appendChild(this.origami);
     // mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     // mainContainer.style.backgroundColor = this.userColor;
@@ -228,20 +227,31 @@ class mainEvent {
     const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const hyphen = document.createElement("span");
-    hyphen.classList.add("hyphen");
-    hyphen.innerText = " - ";
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
+
+    switch (role.role) {
+      case "streamer":
+        usernameInfo.classList.add("streamer");
+        break;
+      case "mod":
+        usernameInfo.classList.add("mod");
+        break;
+      case "vip":
+        usernameInfo.classList.add("vip");
+        break;
+      case "subscriber":
+        usernameInfo.classList.add("subscriber");
+        break;
+      case "viewer":
+        usernameInfo.classList.add("viewer");
+        break;
+    }
+
     usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createCapitalizeUserElement());
-    // if (this.isSub || this.isStreamer) {
-    //   usernameInfoContainer.appendChild(this.createRoleContainer());
-    // }
+    usernameInfo.appendChild(await this.createCapitalizeUserElement());
+    usernameInfoContainer.appendChild(this.roleImages);
     usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfoContainer.appendChild(hyphen);
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -265,18 +275,6 @@ class mainEvent {
         messageContainer.classList.add("vip-box");
         break;
       case "subscriber":
-        const spikeContainer = document.createElement("div");
-        const spikeContainer2 = document.createElement("div");
-        for (let i = 1; i <= 15; i++) {
-          const spike = document.createElement("span");
-          spike.classList.add(`spike`);
-          spikeContainer.appendChild(spike);
-          spikeContainer2.appendChild(spike.cloneNode(true));
-        }
-        spikeContainer.classList.add("spike-container");
-        spikeContainer2.classList.add("spike-container2");
-        messageContainer.appendChild(spikeContainer);
-        messageContainer.appendChild(spikeContainer2);
         messageContainer.classList.add("subscriber-box");
         break;
       case "viewer":
@@ -302,7 +300,7 @@ class mainEvent {
     return usernameBadges;
   }
 
-  createCapitalizeUserElement() {
+  async createCapitalizeUserElement() {
     let colors = {
       red: "#fb6183",
       orange: "#ff8d4e",
@@ -313,11 +311,12 @@ class mainEvent {
       purple: "#a679de",
     };
     let role = this.roles;
+    let prons = await this.createPronounsContainer();
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    // capitalizeUser.style.color = colors[startingColor];
-    capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
+    prons.innerText == ""
+      ? (capitalizeUser.innerText = this.user)
+      : (capitalizeUser.innerText = this.user + " - " + prons.innerText);
     return capitalizeUser;
   }
 
@@ -329,15 +328,6 @@ class mainEvent {
   }
 
   async createPronounsContainer() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-      green: "#68be5c",
-      blue: "#3fbeb5",
-      darkblue: "#587ec4",
-      purple: "#a679de",
-    };
     let role = this.roles;
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
@@ -378,6 +368,7 @@ class mainEvent {
     // Asignar la imagen correspondiente
     let roleImage = document.createElement("img");
     roleImage.classList.add("role");
+    roleImage.classList.add(`${minPriorityRole.role}-role`);
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
     }
@@ -603,6 +594,7 @@ class mainEvent {
     const mainContainer = document.createElement("div");
 
     const { name } = this;
+    let capitalizedName = name.slice(0, 1).toUpperCase() + name.slice(1);
 
     let {
       followText,
@@ -623,22 +615,13 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
-    console.log(this.event);
-
-    // const eventDictionary = {
-    //   follower: "HI",
-    //   subscriber: this.event.gifted ? "GIFT" : "SUB",
-    //   cheer: "CHEER",
-    //   subscriber: "SUB",
-    //   tip: "TIP",
-    //   raid: "RAID",
-    //   bulkgift: "GIFT",
-    // };
-
-    console.log(this.event);
 
     const amount = this.amount;
-    let sender = this.event.sender;
+    // texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+    let sender = this.event.sender || this.event.name;
+    let capitalizedSender = sender.slice(0, 1).toUpperCase() + sender.slice(1);
+    console.log(capitalizedSender, sender);
+
     let eventText = dictionary[this.event.type];
     console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
@@ -646,10 +629,10 @@ class mainEvent {
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
         eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        text = capitalizedName + eventText;
       } else {
         eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
+        eventText = eventText.replace("(sender)", capitalizedSender);
         text = eventText;
       }
     }
@@ -660,20 +643,20 @@ class mainEvent {
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
         eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        text = capitalizedName + eventText;
       } else {
         eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
+        eventText = eventText.replace("(sender)", capitalizedSender);
         text = eventText;
       }
     }
 
-    let text = eventText != "" ? eventText : `Gracias ${name}!`;
+    let text = eventText != "" ? eventText : `Gracias ${capitalizedName}!`;
     text = eventText != "" ? eventText : text;
     if (eventText != "") {
-      eventText = eventText.replace("(user)", name);
+      eventText = eventText.replace("(user)", capitalizedName);
       eventText = eventText.replace("(amount)", amount);
-      eventText = eventText.replace("(sender)", sender);
+      eventText = eventText.replace("(sender)", capitalizedSender);
       text = eventText;
     }
 
@@ -683,7 +666,7 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/t4TfWZLj/poke.png";
+    fungi.src = "https://i.postimg.cc/PfL984J8/pokee.png";
 
     fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
@@ -707,11 +690,14 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     // eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
-    eventAndNameContainer.appendChild(fungiDivContainer.cloneNode(true));
+    // eventAndNameContainer.appendChild(fungiDivContainer.cloneNode(true));
     fungiContainer.appendChild(eventAndNameContainer);
 
-
     mainContainer.classList.add("event-container");
+    let gif = document.createElement("img");
+    gif.classList.add("gif");
+    gif.src = "https://i.postimg.cc/mrWvyFcy/5FBP.gif";
+    mainContainer.appendChild(gif);
     mainContainer.appendChild(fungiContainer);
 
     return mainContainer;

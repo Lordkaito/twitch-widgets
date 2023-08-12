@@ -398,7 +398,3 @@ function cancelExecution(detail) {
     storedEvents = [];
   }, 500);
 }
-
-// function resetApiData() {
-//   handleGrow();
-// }

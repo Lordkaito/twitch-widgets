@@ -143,4 +143,16 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  title: {
+    type: "text",
+    label: "Title",
+    value: "Goal",
+    group: "Customization",
+  },
+  completeGoalText: {
+    type: "text",
+    label: "Complete goal text",
+    value: "Goal completed!",
+    group: "Customization",
+  }
 };

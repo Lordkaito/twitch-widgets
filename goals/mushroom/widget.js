@@ -42,6 +42,7 @@ let firstEvent = true;
 let previousSender = "";
 let currentSender = "";
 let items, step, goalType;
+let animationActive = false;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
@@ -76,18 +77,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get(
-    "beniartsRainbowGoalPreviousGained"
-  );
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get("beniartsMushromGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -96,7 +95,7 @@ function init(obj, apiData, initial = false) {
   goalType = mainObj.fieldData.goalType;
 
   let amount = apiData[goalType].amount;
-  if(mainObj.fieldData.goalStart !== 0){
+  if (mainObj.fieldData.goalStart !== 0) {
     amount = amount + mainObj.fieldData.goalStartQuantity;
   }
 
@@ -105,9 +104,12 @@ function init(obj, apiData, initial = false) {
     goalText: document.querySelector(".goal-text"),
     colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
-    progressionText: document.querySelector(".progression"),
+    progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
+    completeText: document.querySelector(".progression"),
+    reg: document.querySelector(".gifReg"),
+    image: document.querySelector("#image"),
   };
 
   step = getStep(
@@ -115,7 +117,12 @@ function init(obj, apiData, initial = false) {
     mainObj.fieldData.goalObjectiveQuantity
   );
 
-  items.title.innerText = mainObj.fieldData.title;
+  // items.title.innerText = mainObj.fieldData.title;
+  let side = mainObj.fieldData.wateringCanSide;
+  if (side === "right") {
+    items.reg.style.transform = "scaleX(-1)";
+    items.reg.style.left = "-11rem";
+  }
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -134,13 +141,24 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerWidth = container.offsetWidth;
+  const containerWidth = container.offsetHeight;
   const step = containerWidth / objective;
   return step;
 }
 
 function handleGrow(amount, callback, initial = false) {
-  let amountToUpdate = widgetApiData[goalType].amount + amount + mainObj.fieldData.goalStartQuantity;
+  if (!animationActive) {
+    animationActive = true;
+    items.reg.style.opacity = "1";
+    setTimeout(() => {
+      animationActive = false;
+      items.reg.style.opacity = "0";
+    }, 1500);
+  }
+  let amountToUpdate =
+    widgetApiData[goalType].amount +
+    amount +
+    mainObj.fieldData.goalStartQuantity;
   if (initial === true) {
     amountToUpdate = amount;
   }
@@ -148,8 +166,8 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    image.style.left = `${amountToUpdate * step - 17}px`;
-    items.progressBar.style.width = `${amountToUpdate * step}px`;
+    // image.style.left = `${amountToUpdate * step - 23}px`;
+    items.progressBar.style.height = `${amountToUpdate * step}px`;
 
     if (goalType === "tip") {
       items.progressionText.innerHTML =
@@ -162,9 +180,17 @@ function handleGrow(amount, callback, initial = false) {
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
-    image.style.left = `32rem`;
-    items.progressBar.style.width = "100%";
-    items.progressionText.innerText = mainObj.fieldData.completeGoalText;
+    // image.style.left = `32rem`;
+    items.progressBar.style.height = "100%";
+    items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+    let text = mainObj.fieldData.completeGoalText;
+    let string = "";
+    if (text !== "") {
+      let split = text.split("").forEach((letter, index) => {
+        string += letter + "\n";
+      });
+    }
+    items.completeText.innerText = string;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -173,17 +199,11 @@ function handleGrow(amount, callback, initial = false) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set(
-    "beniartsRainbowGoalPreviousGained",
-    widgetApiData
-  );
+  // SE_API.store.set("beniartsMushromGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  SE_API.store.set(
-    "beniartsRainbowGoalPreviousGained",
-    defaultApiData
-  );
+  // SE_API.store.set("beniartsMushromGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }
 
