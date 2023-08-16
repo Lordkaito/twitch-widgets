@@ -22,7 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
-    <script src="../../slibs/resize.js"></script>
+    <script src="../../libs/resize.js"></script>
   </head>
 
   <body>
@@ -31,14 +31,26 @@
       <!--
         PLACE YOUR WIDGET.HTML CODE BELOW
         -->
+
+      <!-- <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+        rel="stylesheet"
+      />
+      <div class="main-container"></div> -->
       <link rel="stylesheet" href="css.css" />
-      <link rel="stylesheet" href="index.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
         rel="stylesheet"
       />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
+        rel="stylesheet"
+      />
+
       <script
         src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.2/tinycolor.min.js"
         integrity="sha512-+aXA9mgbUvFe0ToTlbt8/3vT7+nOgUmFw29wfFCsGoh8AZMRSU0p4WtOvC1vkF2JBrndPN2TuNZsHPAKPPxe8Q=="
@@ -49,8 +61,36 @@
         integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
         crossorigin="anonymous"
       ></script>
-      <script src="main.js"></script>
-      <main class="main"></main>
+      <main class="main">
+        <div class="container">
+          <div class="hidden-container" id="hidden">
+            <div class="img-container">
+              <img
+                src="https://i.postimg.cc/zXv6vqjt/patitaazul.png"
+                alt=""
+                id="image"
+              />
+            </div>
+          </div>
+          <div class="goal-name">
+            <img src="https://i.postimg.cc/nczkYWrs/orejita-gato.png" class="left-ear">
+            <img src="https://i.postimg.cc/nczkYWrs/orejita-gato.png" class="right-ear">
+            <p id="title">Goal</p>
+          </div>
+          <div id="round">
+            <div class="progress-bar-container">
+              <p class="progression"></p>
+              <div class="img-progress">
+                <div class="progress-bar"></div>
+              </div>
+            </div>
+            <img src="https://i.postimg.cc/Qxyq6qKf/colita-gato.png" class="tail">
+          </div>
+        </div>
+      </main>
+
+
+      <button class="click">Click</button>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

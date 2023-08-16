@@ -1,7 +1,7 @@
 :root {
   --message-color: #fcfbdf;
   --alt-message-color: #fe709a;
-  --message-background-color: #95867e;
+  --message-background-color: rgba(149, 134, 126, .4);
   --alt-message-background-color: #fbebef;
   --message-border-color: #7bb87e;
   --user-color: #fcfbdf;
@@ -238,7 +238,7 @@ main {
 .username-info-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   z-index: 1;
 }
 
@@ -315,6 +315,7 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0.5rem 1rem;
+  text-transform: uppercase;
 }
 
 @keyframes growCapitalizeUser {
@@ -439,7 +440,8 @@ main {
   text-align: center;
   border-radius: 1.25rem;
   opacity: 0;
-  padding: 0.5rem 1rem;
+  text-transform: lowercase;
+  /* padding: 0.5rem 1rem; */
   animation: showPronouns 1s 0.9s ease-in-out forwards;
   color: var(--pronouns-color);
 }
@@ -554,7 +556,7 @@ main {
   display: flex;
   align-items: center;
   padding-left: 20px;
-  padding-right: 30px;
+  padding-right: 10px;
   gap: 20px;
 }
 
@@ -647,7 +649,7 @@ main {
 .fungi-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   max-width: 37.5rem;
   padding: 0.5rem 0rem;
   background-color: var(--event-background-color);

@@ -409,20 +409,19 @@ class mainEvent {
     // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
         break;
       case "vip":
-        // roleImage.style.height = "36px";
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/2jM07Wf3/hoja-ire.png`;
+        roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
         break;
     }
     return roleImage;
@@ -650,6 +649,7 @@ class mainEvent {
     // };
 
     console.log(this.event);
+    const eventType = this.event.type;
 
     const amount = this.amount;
     let sender = this.event.sender;
@@ -697,7 +697,29 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/Kc65MynM/corazon-ire.png";
+    switch (eventType) {
+      case "follower":
+        fungi.src = "https://i.postimg.cc/prpV89X5/crss.png";
+        fungi.classList.add("heart");
+        break;
+      case "subscriber":
+        fungi.src = "https://i.postimg.cc/5tVtGNpD/strll.png";
+        fungi.classList.add("star");
+        break;
+      case "cheer":
+        fungi.src = "https://i.postimg.cc/9FwFQqnv/bitt.png";
+        fungi.classList.add("bit");
+        break;
+      case "tip":
+        fungi.src = "https://i.postimg.cc/SNHR6G9S/monedd.png";
+        fungi.classList.add("coin");
+        break;
+      case "raid":
+        fungi.src = "https://i.postimg.cc/Jn7zr6fq/flrr.png";
+        fungi.classList.add("raid");
+        break;
+    }
+
 
     fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");

@@ -229,7 +229,7 @@ class mainEvent {
     const usernameInfoContainer = document.createElement("div");
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-
+    console.log(role.role)
     switch (role.role) {
       case "streamer":
         usernameInfo.classList.add("streamer");
@@ -262,7 +262,6 @@ class mainEvent {
       await this.createMessageIconContainerElement()
     );
     const role = this.roles;
-    // console.log(role)
 
     switch (role.role) {
       case "streamer":
@@ -314,9 +313,12 @@ class mainEvent {
     let prons = await this.createPronounsContainer();
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
+    // prons.innerText == ""
+    //   ? (capitalizeUser.innerText = this.user)
+    //   : (capitalizeUser.innerText = this.user + " - " + prons.innerText);
     prons.innerText == ""
-      ? (capitalizeUser.innerText = this.user)
-      : (capitalizeUser.innerText = this.user + " - " + prons.innerText);
+      ? (capitalizeUser.innerText = this.roles.role)
+      : (capitalizeUser.innerText = this.roles.role + " - " + prons.innerText);
     return capitalizeUser;
   }
 
@@ -384,6 +386,7 @@ class mainEvent {
     };
 
     // console.log(colors[startingColor]);
+    console.log(minPriorityRole.role);
     switch (minPriorityRole.role) {
       case "streamer":
         roleImage.src = `https://i.postimg.cc/LXMNCn0h/char.png`;

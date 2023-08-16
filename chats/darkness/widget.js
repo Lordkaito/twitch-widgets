@@ -211,7 +211,7 @@ class mainEvent {
     }
 
     circle.appendChild(this.roleImages);
-    oriContainer.appendChild(ori);
+    // oriContainer.appendChild(ori);
 
     container.appendChild(circle);
     container.appendChild(dots);
@@ -225,7 +225,7 @@ class mainEvent {
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
     const brillo = document.createElement("img");
-    brillo.src = "https://i.postimg.cc/rpT8Kcvr/bribri.png";
+    brillo.src = "https://i.postimg.cc/T2FdyS1b/adf.png";
     brillo.classList.add("brillo");
 
     superMainContainer.classList.add("super-main-container");
@@ -233,7 +233,7 @@ class mainEvent {
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     mainContainer.appendChild(brillo);
-    if(fieldData.chatSize === "small") {
+    if (fieldData.chatSize === "small") {
       mainContainer.style.maxWidth = "25.5rem";
     }
 
@@ -272,7 +272,7 @@ class mainEvent {
     const dots = document.createElement("div");
     const dotsContainer = document.createElement("div");
     const dotsImg = document.createElement("img");
-    dotsImg.src = "https://i.postimg.cc/431XcqgF/corachikito.png"
+    dotsImg.src = "https://i.postimg.cc/431XcqgF/corachikito.png";
     const circle = document.createElement("div");
     circle.innerHTML = `
       <svg class="circulo" viewBox="0 0 100 100">
@@ -283,12 +283,12 @@ class mainEvent {
     circle.classList.add("circless");
     const dotsImgContainer = document.createElement("div");
     dots.classList.add("dots");
-    for(let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       const dot = document.createElement("div");
       dot.classList.add("dot");
       dots.appendChild(dot);
     }
-    circle.appendChild(dotsImg)
+    circle.appendChild(dotsImg);
     dotsImgContainer.appendChild(circle);
     dotsImgContainer.classList.add("dots-img-container");
     dotsContainer.classList.add("dots-container");
@@ -297,9 +297,9 @@ class mainEvent {
     container.classList.add("bigcontainer");
     container.appendChild(dotsContainer);
     container.appendChild(circle);
-    messageContainer.appendChild(container);
+    // messageContainer.appendChild(container);
     messageContainer.classList.add("message-container");
-    if(startingColor === "pink") {
+    if (startingColor === "pink") {
       messageContainer.classList.add("pink");
       startingColor = "light";
     } else {
@@ -368,7 +368,7 @@ class mainEvent {
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
     pronouns.classList.add("prons");
-    if(startingColor === "pink") {
+    if (startingColor === "pink") {
       pronouns.classList.add("prons-pink");
       pronounsContainer.classList.add("prons-text");
     } else {
@@ -425,23 +425,23 @@ class mainEvent {
     // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/T112f9BN/alpaca.png`;
+        roleImage.src = `https://i.postimg.cc/x83VFsGf/zs.png`;
         roleImage.classList.add("streamer");
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/7hj4Dy3b/escudo.png`;
+        roleImage.src = `https://i.postimg.cc/hPnSbm84/qw.png`;
         roleImage.classList.add("mod");
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/rFbsyBV1/alas.png`;
+        roleImage.src = `https://i.postimg.cc/s2Ljp0mb/ghd.png`;
         roleImage.classList.add("vip");
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/sDBfLTYv/arcolove.png`;
+        roleImage.src = `https://i.postimg.cc/XNGZD9yw/bv.png`;
         roleImage.classList.add("subscriber");
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/4yHCWFDG/rosaa.png`;
+        roleImage.src = `https://i.postimg.cc/3RWhNCH9/awe.png`;
         roleImage.classList.add("viewer");
         break;
     }
@@ -462,46 +462,46 @@ class mainEvent {
     // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
-        pronoun = "ae/aer";
+        pronoun = "- ae/aer";
         break;
       case "eem":
-        pronoun = "e/em";
+        pronoun = "- e/em";
         break;
       case "faefaer":
-        pronoun = "fae/faer";
+        pronoun = "- fae/faer";
         break;
       case "hehim":
-        pronoun = "he/him";
+        pronoun = "- he/him";
         break;
       case "heshe":
-        pronoun = "he/she";
+        pronoun = "- he/she";
         break;
       case "hethem":
-        pronoun = "he/they";
+        pronoun = "- he/they";
         break;
       case "itits":
-        pronoun = "it/its";
+        pronoun = "- it/its";
         break;
       case "perper":
-        pronoun = "per/per";
+        pronoun = "- per/per";
         break;
       case "sheher":
-        pronoun = "she/her";
+        pronoun = "- she/her";
         break;
       case "shethem":
-        pronoun = "she/they";
+        pronoun = "- she/they";
         break;
       case "theythem":
-        pronoun = "they/them";
+        pronoun = "- they/them";
         break;
       case "vever":
-        pronoun = "ve/ver";
+        pronoun = "- ve/ver";
         break;
       case "xexem":
-        pronoun = "xe/xem";
+        pronoun = "- xe/xem";
         break;
       case "ziehir":
-        pronoun = "zie/hir";
+        pronoun = "- zie/hir";
         break;
       default:
         break;
@@ -512,10 +512,10 @@ class mainEvent {
   async createRenderedTextElement() {
     const renderedText = document.createElement("div");
     renderedText.classList.add("rendered-text");
-    if(startingColor === "pink") {
-      renderedText.classList.add("alt-text")
+    if (startingColor === "pink") {
+      renderedText.classList.add("alt-text");
     } else {
-      renderedText.classList.add("text-color")
+      renderedText.classList.add("text-color");
     }
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
@@ -556,7 +556,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined && customEmotes.status != "Not Found" ) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found") {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -642,6 +642,8 @@ class mainEvent {
     const mainContainer = document.createElement("div");
 
     const { name } = this;
+    let capitalizedName = name.slice(0, 1).toUpperCase() + name.slice(1);
+
 
     let {
       followText,
@@ -671,23 +673,24 @@ class mainEvent {
       subscriber: "SUB",
       tip: "TIP",
       raid: "RAID",
-      bulkgift: "GIFT"
+      bulkgift: "GIFT",
     };
 
     console.log(this.event);
 
     const amount = this.amount;
     let sender = this.event.sender || this.event.name;
+    let capitalizedSender = sender.slice(0, 1).toUpperCase() + sender.slice(1);
     let eventText = dictionary[this.event.type];
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
         eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        text = capitalizedName + eventText;
       } else {
         eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
+        eventText = eventText.replace("(sender)", capitalizedSender);
         text = eventText;
       }
     }
@@ -698,20 +701,20 @@ class mainEvent {
       let text = ` ha regalado ${amount} subs!`;
       if (eventText == "") {
         eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        text = capitalizedName + eventText;
       } else {
         eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
+        eventText = eventText.replace("(sender)", capitalizedSender);
         text = eventText;
       }
     }
 
-    let text = eventText != "" ? eventText : `Gracias ${name}!`;
+    let text = eventText != "" ? eventText : `Gracias ${capitalizedName}!`;
     text = eventText != "" ? eventText : text;
     if (eventText != "") {
-      eventText = eventText.replace("(user)", name);
+      eventText = eventText.replace("(user)", capitalizedName);
       eventText = eventText.replace("(amount)", amount);
-      eventText = eventText.replace("(sender)", sender);
+      eventText = eventText.replace("(sender)", capitalizedSender);
       text = eventText;
     }
 
@@ -730,10 +733,9 @@ class mainEvent {
     // fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
     const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/N0QcQDH8/lunnube.png";
+    moon.src = "https://i.postimg.cc/mrpDmrLX/cxd.png";
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
-    // fungiContainer.appendChild(fungiDivContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
@@ -742,14 +744,22 @@ class mainEvent {
     const eventDictionaryText = document.createElement("p");
     eventDictionaryText.classList.add("event-text");
     eventDictionaryText.innerText = eventDictionary[this.event.type];
-    // eventAndNameContainer.appendChild(fungiDivContainer);
-    eventAndNameContainer.appendChild(eventDictionaryText);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
 
     mainContainer.classList.add("event-container");
-    if(fieldData.chatSize === "big") {
-      mainContainer.style.maxWidth = "36rem";
+    const div = document.createElement("div");
+    div.classList.add("event-dot-img-container");
+    const divImg = document.createElement("img");
+    divImg.classList.add("event-img");
+    const divDot = document.createElement("div");
+    divDot.classList.add("dot");
+    divImg.src = "https://i.postimg.cc/FsbH2pFJ/dsa.png";
+    div.appendChild(divImg);
+    div.appendChild(divDot);
+    mainContainer.appendChild(div);
+    if (fieldData.chatSize === "big") {
+      // mainContainer.style.maxWidth = "36rem";
     }
     mainContainer.appendChild(fungiContainer);
 
@@ -847,7 +857,7 @@ const removeMessage = (mainContainer) => {
 };
 
 const removeEvent = (mainContainer) => {
-  console.log(mainContainer, event)
+  console.log(mainContainer, event);
   const elem = mainContainer;
 
   elem.style.animationName = "removeMessage";

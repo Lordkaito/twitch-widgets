@@ -76,9 +76,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get(
-    "beniartsMenuhGoalWidgetPreviousGained"
-  );
+  let data = await SE_API.store.get("beniartsGoalWidgetPreviousGained");
   if (data === null) {
     widgetApiData = defaultApiData;
   } else {
@@ -116,83 +114,6 @@ function init(obj, apiData, initial = false) {
   );
 
   items.title.innerText = mainObj.fieldData.title;
-  let { goalNameColor, numbersColor, progressBarColor, progressBackColor } =
-    mainObj.fieldData;
-  let theme = mainObj.fieldData.theme;
-  switch (theme) {
-    case "heart":
-      goalNameColor = "#ff5cab";
-      numbersColor = "#ff5cab";
-      progressBarColor = "#ffa4d1";
-      progressBackColor = "#fff";
-      image.src = "https://i.postimg.cc/rwTgVtNk/cora.png";
-      image.style.width = "64px";
-      image.style.height = "54px";
-      image.style.transform = "scale(.7)";
-      image.style.top = "-.6rem";
-      break;
-    case "flower":
-      goalNameColor = "#ffee6e";
-      numbersColor = "#ffee6e";
-      progressBarColor = "#feabb1";
-      progressBackColor = "#fff";
-      image.src = "https://i.postimg.cc/G9w8jGmh/flo.png";
-      image.style.width = "64px";
-      image.style.height = "64px";
-      image.style.transform = "scale(.7)";
-      image.style.top = "-.8rem";
-      break;
-    case "leaf":
-      goalNameColor = "#9dda57";
-      numbersColor = "#9dda57";
-      progressBarColor = "#b7f076";
-      progressBackColor = "#f99175";
-      image.src = "https://i.postimg.cc/9M07XckV/hojiiis.png";
-      image.style.width = "56px";
-      image.style.height = "58px";
-      image.style.transform = "scale(.6)";
-      image.style.top = "-.6rem";
-      break;
-    case "moon":
-      goalNameColor = "#a5baff";
-      numbersColor = "#a5baff";
-      progressBarColor = "#7693f0";
-      progressBackColor = "#373e54";
-      image.src = "https://i.postimg.cc/43BcTYBB/lunita.png";
-      image.style.width = "64px";
-      image.style.height = "64px";
-      image.style.transform = "scale(.7)";
-      image.style.top = "-1rem";
-      break;
-  }
-  if (mainObj.fieldData.goalNameColor === "#123456") {
-    goalNameColor = goalNameColor;
-  } else {
-    goalNameColor = mainObj.fieldData.goalNameColor;
-  }
-
-  if (mainObj.fieldData.numbersColor === "#123456") {
-    numbersColor = numbersColor;
-  } else {
-    numbersColor = mainObj.fieldData.numbersColor;
-  }
-
-  if (mainObj.fieldData.progressBarColor === "#123456") {
-    progressBarColor = progressBarColor;
-  } else {
-    progressBarColor = mainObj.fieldData.progressBarColor;
-  }
-
-  if (mainObj.fieldData.progressBackColor === "#123456") {
-    progressBackColor = progressBackColor;
-  } else {
-    progressBackColor = mainObj.fieldData.progressBackColor;
-  }
-  let progressBarBack = document.querySelector(".progress-bar-container");
-  progressBarBack.style.backgroundColor = progressBackColor;
-  items.progressBar.style.backgroundColor = progressBarColor;
-  items.progressionText.style.color = numbersColor;
-  items.title.style.color = goalNameColor;
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -228,7 +149,7 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    image.style.left = `${amountToUpdate * step - 23}px`;
+    image.style.left = `${amountToUpdate * step}px`;
     items.progressBar.style.width = `${amountToUpdate * step}px`;
 
     if (goalType === "tip") {
@@ -242,22 +163,9 @@ function handleGrow(amount, callback, initial = false) {
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
-    if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        amountToUpdate +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
-    } else {
-      items.progressionText.innerHTML =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
-    }
-    image.style.left = `32rem`;
+    image.style.left = `33rem`;
     items.progressBar.style.width = "100%";
-    const goalCompleted = document.querySelector(".goalCompleted");
-    if (mainObj.fieldData.goalCompletedText !== "") {
-      goalCompleted.style.opacity = "1";
-    }
+    items.progressionText.innerText = mainObj.fieldData.completeGoalText;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -266,17 +174,11 @@ function handleGrow(amount, callback, initial = false) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set(
-    "beniartsMenuhGoalWidgetPreviousGained",
-    widgetApiData
-  );
+  SE_API.store.set("beniartsGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  SE_API.store.set(
-    "beniartsMenuhGoalWidgetPreviousGained",
-    defaultApiData
-  );
+  SE_API.store.set("beniartsGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }
 

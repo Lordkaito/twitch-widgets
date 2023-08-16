@@ -23,7 +23,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "true",
+    value: "false",
     group: "Customization",
     options: {
       true: "Yes",
@@ -81,7 +81,7 @@ let fieldData = {
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "asdkjhas das das dasd asdfa sdfasd asdf afsd asd asd fas fajust followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {

@@ -17,7 +17,7 @@
 }
 
 * {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 700;
   overflow-wrap: break-word;
   margin: 0;
@@ -158,6 +158,7 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
 .message-container {
@@ -263,10 +264,10 @@ main {
 }
 
 .fungi {
-  padding-left: 1rem;
+  padding-left: 7px;
   height: 42px;
   width: 42px;
-  transform: scale(1.3);
+  transform: scale(1.5);
 }
 
 .gif {
@@ -313,6 +314,7 @@ main {
 
 .event-and-name-container {
   display: flex;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 }

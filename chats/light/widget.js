@@ -422,10 +422,9 @@ class mainEvent {
       purple: "#a679de",
     };
 
-    // console.log(colors[startingColor]);
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/y8kYyHn7/wr.png`;
+        roleImage.src = `https://i.postimg.cc/Y09fdZTQ/der.png`;
         roleImage.classList.add("streamer");
         break;
       case "mod":
@@ -433,7 +432,7 @@ class mainEvent {
         roleImage.classList.add("mod");
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/Y09fdZTQ/der.png`;
+        roleImage.src = `https://i.postimg.cc/4yLwZsp8/cz.png`;
         roleImage.classList.add("vip");
         break;
       case "sub":
@@ -441,7 +440,7 @@ class mainEvent {
         roleImage.classList.add("subscriber");
         break;
       case "viewer":
-        roleImage.src = `https://i.postimg.cc/4yLwZsp8/cz.png`;
+        roleImage.src = `https://i.postimg.cc/y8kYyHn7/wr.png`;
         roleImage.classList.add("viewer");
         break;
     }
@@ -462,46 +461,46 @@ class mainEvent {
     // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
-        pronoun = "ae/aer";
+        pronoun = "- ae/aer";
         break;
       case "eem":
-        pronoun = "e/em";
+        pronoun = "- e/em";
         break;
       case "faefaer":
-        pronoun = "fae/faer";
+        pronoun = "- fae/faer";
         break;
       case "hehim":
-        pronoun = "he/him";
+        pronoun = "- he/him";
         break;
       case "heshe":
-        pronoun = "he/she";
+        pronoun = "- he/she";
         break;
       case "hethem":
-        pronoun = "he/they";
+        pronoun = "- he/they";
         break;
       case "itits":
-        pronoun = "it/its";
+        pronoun = "- it/its";
         break;
       case "perper":
-        pronoun = "per/per";
+        pronoun = "- per/per";
         break;
       case "sheher":
-        pronoun = "she/her";
+        pronoun = "- she/her";
         break;
       case "shethem":
-        pronoun = "she/they";
+        pronoun = "- she/they";
         break;
       case "theythem":
-        pronoun = "they/them";
+        pronoun = "- they/them";
         break;
       case "vever":
-        pronoun = "ve/ver";
+        pronoun = "- ve/ver";
         break;
       case "xexem":
-        pronoun = "xe/xem";
+        pronoun = "- xe/xem";
         break;
       case "ziehir":
-        pronoun = "zie/hir";
+        pronoun = "- zie/hir";
         break;
       default:
         break;

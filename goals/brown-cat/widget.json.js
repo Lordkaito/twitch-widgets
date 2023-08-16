@@ -48,7 +48,7 @@ let fieldData = {
   title: {
     type: "text",
     label: "Goal title (max 11):",
-    value: "",
+    value: "Goal",
     group: "Customization",
   },
   startFromCero: {
@@ -149,16 +149,49 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  goalNameColor: {
+    type: "colorpicker",
+    label: "Goal text color",
+    value: "#123456"
+  },
+  numbersColor: {
+    type: "colorpicker",
+    label: "Progress color",
+    value: "#123456"
+  },
+  progressBarColor: {
+    type: "colorpicker",
+    label: "Progress Bar color",
+    value: "red"
+  },
+  progressBackColor: {
+    type: "colorpicker",
+    label: "Background color",
+    value: "#123456"
+  },
+  theme: {
+    type: "dropdown",
+    label: "Theme",
+    value: "moon",
+    group: "Customization",
+    options: {
+      heart: "Heart theme",
+      flower: "Flower theme",
+      leaf: "Leaf theme",
+      moon: "Moon theme",
+      custom: "Custom theme",
+    },
+  },
   currency: {
     type: "text",
-    label: "Currency name:",
-    value: "$",
+    label: "Currency:",
+    value: "€",
     group: "Customization",
   },
-  goalCompletedText: {
+  completeGoalText: {
     type: "text",
     label: "Custom text for goal completed (max 40)",
     value: "Goal completed!",
-    group: "Events",
+    group: "Customization",
   }
 };

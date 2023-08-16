@@ -49,7 +49,7 @@ let session = {
         count: 6,
       },
       "subscriber-latest": {
-        name: "test",
+        name: "Lordkaito_",
         amount: 1,
         tier: "1",
         message: "My test",
@@ -379,7 +379,7 @@ let events = {
           mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
-          subscriber: "0",
+          subscriber: "1",
           "tmi-sent-ts": "1680558919103",
           turbo: "0",
           "user-id": "675807879",
