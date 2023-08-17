@@ -1,12 +1,12 @@
 :root {
   --message-color: white;
-  --message-color-2: #eb6967;;
+  --message-color-2: #eb6967;
   --message-background-color: #fff5ed;
   --message-border-color: #7bb87e;
   --user-color: red;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
-  --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
+  --user-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
@@ -79,7 +79,7 @@ main {
   width: 100%;
   border-radius: 40px;
   border: 5px solid #eb6967;
-  background: whitesmoke;
+  background: rgba(255, 255, 255, .8);
   z-index: 1 !important;
 }
 
@@ -183,7 +183,7 @@ main {
   padding-right: 2rem;
   padding-left: 4rem;
   animation: twinkleText 0.5 1 forwards;
-  text-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
 }
 
 .pronouns {
