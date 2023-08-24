@@ -20,10 +20,8 @@
   color: #95867e;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   position: absolute;
   max-height: 40px;
-  /* padding-left: 20px; */
 }
 
 .latest-tip-container,
@@ -35,7 +33,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding-left: 17px; */
   position: absolute;
   right: 0rem;
   top: 3.2rem;
@@ -69,26 +66,21 @@
 }
 
 .cont {
-  /* overflow: hidden; */
   display: flex;
   align-items: center;
   transform: translate(170px);
-  /* border: 1px solid red; */
   position: relative;
   height: 40px;
-  /* transition: transform 6s linear; */
 }
 
 .latest-tip-cheer-qnty {
-  /* overflow: hidden; */
-  width: 158px;
+  width: 130px;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 40px;
   padding-right: 1rem;
-  /* transition: transform 6s linear; */
 }
 
 .top-tip-cheer-qnty {
@@ -101,27 +93,14 @@
   padding-right: 1rem;
 }
 
-/* .top-tip-text {
-  width: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
-} */
-
 .top-tip-text,
 .top-cheer-text,
 .latest-cheer-text,
 .latest-tip-text {
-  /* width: 120px; */
-  padding-left: 10px;
+  padding-left: 15px;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-  /* text-align: center; */
   z-index: 2;
-  /* padding-left: 13px; */
 }
 
 .top-cheer-text {
@@ -129,19 +108,15 @@
 }
 
 .top-tip-text {
-  width: 155px;
+  width: 215px;
 }
 
 .latest-tip-text {
-  width: 165px;
-  /* width: 190px !important; */
-  /* padding-left: 3px; */
+  width: 190px;
 }
 
 .latest-cheer-text {
   width: 142px;
-  /* width: 285px; */
-  /* padding-left: 3px; */
 }
 
 .top-tip-cheer-text-container,
@@ -210,7 +185,6 @@
   justify-content: flex-start;
   height: 100%;
   white-space: nowrap;
-  /* transition: transform 1s ease; */
 }
 
 .scroller-1,
@@ -235,43 +209,24 @@
   align-items: center;
 }
 
-/*
-.m-scroll__title h1 {
-  margin: 0;
-  color: rgba(255, 255, 255, 1);
-  transition: transform 2s ease;
-} */
 
 @keyframes scrollText {
   from {
-    /* opacity: 0; */
-    transform: translateX(120%);
+    transform: translateX(150%);
   }
 
-  5% {
-    /* opacity: 0; */
-  }
-  15% {
-    /* opacity: 1; */
-  }
 
-  90% {
-    /* opacity: 1; */
-  }
 
   to {
-    /* opacity: 0; */
-    transform: translateX(-120%);
+    transform: translateX(-150%);
   }
 }
 
 .active {
-  /* transition: opacity 0.5s ease; */
   opacity: 1;
 }
 
 .inactive {
-  /* transition: opacity 0.5s ease; */
   opacity: 0;
 }
 
@@ -319,8 +274,8 @@
 
 .darkhole {
   position: absolute;
-  top: 3rem;
-  left: 2.5rem;
+  top: 3.5rem;
+  left: 3rem;
 }
 
 .heart {

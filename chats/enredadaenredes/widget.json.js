@@ -65,7 +65,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "true",
+    value: "false",
     group: "Customization",
     options: {
       true: "Yes",

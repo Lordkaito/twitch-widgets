@@ -5,85 +5,34 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  goalObjectiveQuantity: {
-    type: "number",
-    label: "Goal objective:",
-    value: 10,
-    group: "Customization",
-    min: 1,
-    max: 100000,
-    step: 1,
-  },
-  goalStartQuantity: {
-    type: "number",
-    label: "Goal start:",
-    value: 0,
-    group: "Customization",
-    min: 1,
-    max: 100000,
-    step: 1,
-  },
-  goalType: {
-    type: "dropdown",
-    label: "Goal type:",
-    value: "subscriber",
-    group: "Customization",
-    options: {
-      subscriber: "Sub",
-      follower: "Follow",
-      cheer: "Cheer",
-      tip: "Tip",
-    },
-  },
-  goalFullType: {
-    type: "dropdown",
-    label: "Goal full type:",
-    value: "allTime",
-    group: "Customization",
-    options: {
-      allTime: "All time",
-      session: "Stream",
-    }
-  },
-  title: {
-    type: "text",
-    label: "Goal title (max 11):",
-    value: "Goal",
-    group: "Customization",
-  },
-  startFromCero: {
-    type: "dropdown",
-    label: "Start from 0:",
-    value: "false",
-    group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
-  },
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value:
-      "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
+    value: "(user) just suscribed!",
+    group: "Events",
+  },
+  resubText: {
+    type: "text",
+    label: "Custom text for RESUB (max 40)",
+    value: "(user) just resubscribed for (months) months!",
     group: "Events",
   },
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "just followed!",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
     type: "text",
     label: "Custom text for Cheers (max 40)",
-    value: "cheered x(amount)!",
+    value: "(user) cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "(user) tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
@@ -114,10 +63,20 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
+  },
+  allowDeleteMessages: {
+    type: "dropdown",
+    label: "Delete messages on/off:",
+    value: "false",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
   },
   displayBadges: {
     type: "dropdown",
@@ -142,11 +101,33 @@ let fieldData = {
   theme: {
     type: "dropdown",
     label: "Theme",
-    value: "blue",
+    value: "pink",
     group: "Customization",
     options: {
-      blue: "Blue",
-      pink: "Pink",
+      pink: "Light",
+      purple: "Dark",
     },
   },
+  chatBoxSize: {
+    type: "dropdown",
+    label: "Chat box size",
+    value: "small",
+    group: "Customization",
+    options: {
+      small: "Small",
+      regular: "Normal"
+    }
+  },
+  usersBlackList: {
+    type: "text",
+    label: "Users blacklist (separated by comma)",
+    value: "",
+    group: "Customization"
+  },
+  specialCharsBlackList: {
+    type: "text",
+    label: "Special chars (separated by comma)",
+    value: "",
+    group: "Customization"
+  }
 };

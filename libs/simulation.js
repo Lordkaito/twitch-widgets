@@ -379,7 +379,7 @@ let events = {
           mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
-          subscriber: "1",
+          subscriber: "0",
           "tmi-sent-ts": "1680558919103",
           turbo: "0",
           "user-id": "675807879",
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "holaa",
+        text: "holaaa",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",

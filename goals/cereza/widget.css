@@ -33,32 +33,20 @@ main {
   width: 37rem;
   height: 70px;
   padding: 0.4rem 1.5rem;
-  /* background-color: #ddb78a; */
   border-radius: 50px;
-  /* border: 5px solid #ffeab6; */
   display: grid;
   place-content: center;
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, .8);
   position: relative;
   border: 6px solid #eb6967;
 }
 
-/* #round::before {
-  content: "";
-  position: absolute;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  background-color: #ffa1b3;
-  border-radius: 50px;
-  top: 5px;
-  left: 5px;
-} */
 
 .progress-bar-container {
   width: 34rem;
   height: 50px;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #fff4f4;
   position: relative;
   overflow: hidden;
   border: inset 5px solid #ff8d4e;
@@ -70,19 +58,19 @@ main {
   vertical-align: middle;
   line-height: 55px;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin: auto;
   width: 100%;
   height: 100%;
   z-index: 4;
-  text-shadow: -1px -1px 0 #ffa1b3, 1px -1px 0 #ffa1b3, -1px 1px 0 #ffa1b3,
-    1px 1px 0 #ffa1b3;
+  text-shadow: -1px -1px 0 #f94865, 1px -1px 0 #f94865, -1px 1px 0 #f94865,
+    1px 1px 0 #f94865;
 }
 
 .progress-bar {
   display: flex;
   width: 0px;
-  background: #eb6967;
+  background: #f94865;
   height: 70px;
   transition: width 0.2s;
   position: relative;
@@ -133,7 +121,7 @@ main {
   left: 3rem;
   width: 14rem;
   height: 3.5rem;
-  background-color: #fff4f4;
+  background-color: #fff;
   box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
   border-radius: 40px;
   text-align: center;
@@ -142,8 +130,8 @@ main {
   justify-content: center;
   z-index: 1;
   text-transform: uppercase;
-  color: #78d5c3;
-  border: 5px solid #eb6967;
+  color: #f94865;
+  /* border: 5px solid #eb6967; */
 }
 
 .goal-name p {

@@ -76,18 +76,18 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get(
-  //   "beniartsRainbowGoalPreviousGained"
-  // );
-  // if (data === null) {
-  //   widgetApiData = defaultApiData;
-  // } else {
-  //   widgetApiData = data;
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  //   widgetApiData = defaultApiData;
-  // }
-  widgetApiData = defaultApiData;
+  let data = await SE_API.store.get(
+    "beniartsCerezaGoalPreviousGained"
+  );
+  if (data === null) {
+    widgetApiData = defaultApiData;
+  } else {
+    widgetApiData = data;
+  }
+  if (obj.detail.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+  }
+  // widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -173,17 +173,17 @@ function handleGrow(amount, callback, initial = false) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set(
-  //   "beniartsRainbowGoalPreviousGained",
-  //   widgetApiData
-  // );
+  SE_API.store.set(
+    "beniartsCerezaGoalPreviousGained",
+    widgetApiData
+  );
 }
 
 function clearApiData() {
-  // SE_API.store.set(
-  //   "beniartsRainbowGoalPreviousGained",
-  //   defaultApiData
-  // );
+  SE_API.store.set(
+    "beniartsCerezaGoalPreviousGained",
+    defaultApiData
+  );
   window.location.reload();
 }
 

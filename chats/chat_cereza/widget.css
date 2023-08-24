@@ -1,12 +1,12 @@
 :root {
   --message-color: white;
-  --message-color-2: #eb6967;
+  --message-color-2: #f94865;
   --message-background-color: #fff5ed;
   --message-border-color: #7bb87e;
-  --user-color: red;
+  --user-color: #f94865;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
-  --user-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
+  --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
@@ -77,7 +77,7 @@ main {
   align-items: center;
   margin-top: 40px;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 50px;
   border: 5px solid #eb6967;
   background: rgba(255, 255, 255, .8);
   z-index: 1 !important;
@@ -112,7 +112,7 @@ main {
 
 .flower {
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -1.3rem;
   left: -1.5rem;
   height: 64px;
   width: 64px;
@@ -179,20 +179,20 @@ main {
   color: var(--message-color-2);
   white-space: normal;
   margin-right: 0.625rem;
-  padding-top: 1.25rem;
+  padding-top: .9rem;
   padding-right: 2rem;
   padding-left: 4rem;
   animation: twinkleText 0.5 1 forwards;
-  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
 }
 
 .pronouns {
   color: var(--pronouns-color);
+  position: absolute;
   font-size: 12px;
   text-transform: uppercase;
   text-align: center;
   width: 6.25rem;
-  bottom: 0;
+  bottom: -.6rem;
   z-index: 1;
   font-weight: 700;
 }

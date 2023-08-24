@@ -98,8 +98,8 @@ window.addEventListener("onSessionUpdate", function (obj) {
     sessionData["cheer-latest"].amount !== latestCheer.amount ||
     sessionData["subscriber-latest"].name !== latestSubscriber.name
   ) {
-    updateWidgetData(sessionData);
   }
+  updateWidgetData(sessionData);
 });
 
 const updateWidgetData = (data) => {
@@ -122,6 +122,8 @@ const updateWidgetData = (data) => {
   let animationContainer3 = document.querySelector(`.latest-tip-container`);
   let animationContainer4 = document.querySelector(`.latest-cheer-container`);
 
+  const estiloAntes = window.getComputedStyle(animationContainer4, '::before');
+
   topText1.innerText = latestSubscriber.name + "\u00A0";
   topText2.innerText = latestSubscriber.name + "\u00A0";
 
@@ -130,7 +132,7 @@ const updateWidgetData = (data) => {
   latestText2.innerText =
     latestCheer.name + " - " + latestCheer.amount + bitsCurrency;
 
-  if (data["cheer-latest"] !== latestCheer) {
+  if (true) {
     animationContainer1.classList.add("animate");
     animationContainer2.classList.add("animate");
     setTimeout(() => {
