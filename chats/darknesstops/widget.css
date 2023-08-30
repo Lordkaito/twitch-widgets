@@ -82,23 +82,23 @@
 
 .latest-tip-cheer-qnty {
   /* overflow: hidden; */
-  width: 7.2rem;
+  width: 9rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 40px;
-  padding-right: 1rem;
+  /* padding-right: 1rem; */
 }
 
 .top-tip-cheer-qnty {
-  width: 16.5rem;
+  width: 18rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 40px;
-  padding-right: 1rem;
+  padding-right: .5rem;
 }
 
 .top-tip-text,
@@ -121,7 +121,7 @@
 
 .top-tip-text {
   width: 18rem;
-  padding-left: 15px;
+  padding-left: 10px;
 }
 
 .latest-cheer-text {

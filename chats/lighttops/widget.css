@@ -74,33 +74,35 @@
 }
 
 .latest-tip-cheer-qnty {
-  width: 7.2rem;
+  width: 8.7rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 40px;
-  padding-right: 1rem;
 }
 
 .top-tip-cheer-qnty {
-  width: 16.5rem;
+  width: 18rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   max-height: 40px;
-  padding-right: 1rem;
+  padding-right: .5rem;
 }
 
 .top-tip-text,
 .top-cheer-text,
 .latest-cheer-text,
 .latest-tip-text {
-  /* padding-left: 15px; */
   display: flex;
   align-items: center;
   z-index: 2;
+}
+
+.latest-tip-text {
+  padding-left: 0px;
 }
 
 .top-cheer-text {
@@ -109,7 +111,7 @@
 
 .top-tip-text {
   width: 19rem;
-  padding-left: 12px;
+  padding-left: 10px;
 }
 
 .latest-cheer-text {
