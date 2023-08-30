@@ -1,0 +1,319 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+.playing {
+  opacity: 1 !important;
+}
+
+main {
+  overflow: hidden;
+  width: 800px;
+  max-height: 1080px;
+  height: 1080px;
+  display: grid;
+  place-content: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 37rem;
+  /* width: 250px; */
+  position: relative;
+}
+
+#round {
+  width: 25px;
+  height: 42rem;
+  padding: 1.5rem 0.4rem 4rem 0.4rem;
+  background-color: #ffc79a;
+  border-radius: 50px;
+  border: 4px solid white;
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  /* position: relative; */
+}
+
+.gifReg {
+  position: absolute;
+  left: -31rem;
+  top: -16.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.reg {
+  width: 694px;
+  height: 432px;
+  transform: scale(0.85);
+}
+
+.progress-bar-container {
+  width: 12px;
+  height: 33rem;
+  border-radius: 15px;
+  /* background-color: #efd9ca; */
+  /* position: relative; */
+  overflow: hidden;
+  top: -2rem;
+}
+
+.progression {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.75;
+  color: white;
+  font-size: .8rem;
+  height: 100%;
+  z-index: 4;
+  top: 15rem;
+  left: 1.25rem;
+}
+
+.progressNums {
+  /* opacity: 0; */
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-size: 2rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  top: -4rem;
+  /* text-shadow: -1px -1px 0 #acc87d, 1px -1px 0 #acc87d, -1px 1px 0 #acc87d,
+    1px 1px 0 #acc87d; */
+}
+
+.progress-bar {
+  display: flex;
+  width: 0px;
+  background-color: #55341d;
+  height: 33rem;
+  width: 70px;
+  transition: height 0.2s ease-in-out;
+  position: relative;
+  background-position: bottom;
+}
+
+.img-progress {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: scaleY(-1);
+}
+
+.hidden-container {
+  position: absolute;
+  height: 100%;
+}
+
+.img-container {
+  /* opacity: 0; */
+  position: absolute;
+  z-index: 2;
+  bottom: -15.7rem;
+  left: -1.3rem;
+  transition: left 0.2s;
+}
+
+.img-container img {
+  height: 195px;
+  width: 126px;
+  transform: scale(0.85);
+}
+.progression-img {
+  position: absolute;
+  /* right: -2rem; */
+  top: 0.6rem;
+  z-index: 3;
+}
+
+.goal-name {
+  position: absolute;
+  top: 3.9rem;
+  left: 3rem;
+  width: 14rem;
+  height: 3.5rem;
+  background-color: #fff4f4;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-transform: uppercase;
+  color: #9e9cef;
+  display: none;
+}
+
+.goal-name p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
+}
+
+.widget {
+  border: 1px solid red;
+  width: 800px;
+  height: 1000px;
+}
+
+#image {
+  position: absolute;
+  top: -14rem;
+  left: -1.4rem;
+  transition: top 0.2s;
+}
+
+.gancho {
+  position: absolute;
+  top: 0rem;
+  left: -1.85rem;
+}
+
+.ganchos {
+  position: absolute;
+  transition: top 0.2s;
+  top: 0rem; /* this is the position for 100% */
+  left: 0.2rem; /* this is the position for 100% */
+  top: 33rem; /* this is the position for 0% */
+  /* opacity: 0; */
+}
+
+.gancho-detras {
+  position: absolute;
+  z-index: 1;
+}
+
+.gancho-delante {
+  position: absolute;
+  z-index: 2;
+}
+
+.nube1-container,
+.nube2-container {
+  position: absolute;
+  opacity: 0;
+}
+
+.soporte {
+  position: relative;
+  z-index: 2;
+  /* top: -2.5rem; */
+}
+
+.peluche {
+  position: absolute;
+  z-index: 1;
+  top: 3.5rem;
+  left: -0.5rem;
+}
+
+.nube1 {
+  top: 18rem;
+  left: 15rem;
+}
+
+.nube1 img {
+  transform: scaleX(-1);
+}
+
+.nube2 img {
+  transform: scale(.8) scaleX(-1);
+}
+
+.nube3 img {
+  transform: scale(.6) scaleX(-1);
+}
+
+.nube2 {
+  top: 27rem;
+  left: 15rem;
+}
+
+.nube3 {
+  top: 35rem;
+  left: 15rem;}
+
+.nube {
+  position: absolute;
+}
+
+.nube1 p {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 30%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.nube2 p {
+  position: absolute;
+  top: 45%;
+  left: 35%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.nube3 p {
+  position: absolute;
+  top: 45%;
+  left: 35%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.nube4 {
+  bottom: 15rem;
+  left: 32rem;
+}
+
+.nube4 p {
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}

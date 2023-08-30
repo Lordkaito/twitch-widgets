@@ -5,7 +5,6 @@
   --user-color: #0b4ea6;
   --user-background-color: #97e7ff;
   --user-border-color: #e6e6e6;
-  /* --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em; */
   --pronouns-color: #499ef1;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
@@ -40,7 +39,6 @@
 }
 
 .emotes {
-  /* width: 4.375rem; */
   vertical-align: middle;
 }
 
@@ -56,7 +54,6 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   padding-left: 5rem;
-  /* z-index: 1; */
 }
 
 .super-main-container {
@@ -67,7 +64,6 @@ main {
   animation-fill-mode: forwards;
   padding: 0 1rem;
   position: relative;
-  /* transform-style: preserve-3d; */
 }
 
 .main-container {
@@ -78,12 +74,8 @@ main {
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
-  /* left: 1.875rem; */
-  /* width: 100%; */
   border-radius: 50px;
-  /* background: linear-gradient(100deg, #97e2ff, #fff2a7); */
   background-color: var(--message-background-color);
-  /* border: 1px solid white; */
   z-index: 1 !important;
   overflow: hidden;
   padding: 1rem 0;
@@ -97,7 +89,6 @@ main {
   position: absolute;
   top: -25%;
   left: -25%;
-  /* animation: rotate 2s linear; */
 }
 
 .main-container::after {
@@ -121,46 +112,6 @@ main {
   }
 }
 
-.red::before {
-  background-color: #ff879e;
-}
-
-.orange::before {
-  background-color: #ffb891;
-}
-
-.yellow::before {
-  background-color: #ffd99d;
-}
-
-.green::before {
-  background-color: #8ee282;
-}
-
-.blue::before {
-  background-color: #70e7df;
-}
-
-.purple::before {
-  background-color: #bb9cdf;
-}
-
-/* .main-container::after {
-  content: "";
-  position: absolute;
-  top: -0.5rem;
-  left: -0.5rem;
-  width: 100%;
-  height: 100%;
-  border-radius: 40px;
-  border: double 7px transparent;
-  background-image: linear-gradient(white, white),
-    radial-gradient(at bottom, #97e1d8, #e3cd92);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  z-index: -1;
-} */
-
 .username-info-container {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -170,7 +121,7 @@ main {
   position: absolute;
   top: 1.2rem;
   z-index: 2;
-  left: 2rem;
+  left: 6rem;
   gap: 15px;
   padding-left: 0.5rem;
 }
@@ -191,13 +142,13 @@ main {
 
 .flower {
   position: absolute;
-  bottom: 0rem;
+  bottom: -.4rem;
   right: 9.5rem;
   height: 64px;
   width: 64px;
   transform: scale(0.5) rotate(20deg);
   z-index: 1;
-  animation: rotate .6s .8s linear forwards;
+  animation: rotate 1s .8s linear forwards;
 }
 
 @keyframes rotate {
@@ -256,7 +207,6 @@ main {
   flex-grow: 1;
   align-items: center;
   gap: 0.625rem;
-  /* margin-top: 0.625rem; */
 }
 
 .text {
@@ -282,7 +232,7 @@ main {
   font-size: 12px;
   text-transform: uppercase;
   text-align: right;
-  width: 18.25rem;
+  width: 14.25rem;
   bottom: 0;
   z-index: 1;
   font-weight: 700;
@@ -503,19 +453,16 @@ main {
   0% {
     transform: scale(0);
     transform-origin: bottom right;
-    /* transform-style: preserve-3d; */
   }
 
   50% {
     transform: scale(110%);
     transform-origin: bottom right;
-    /* transform-style: preserve-3d; */
   }
 
   100% {
     transform: scale(100%);
     transform-origin: bottom right;
-    /* transform-style: preserve-3d; */
   }
 }
 
@@ -523,19 +470,16 @@ main {
   0% {
     transform: scale(0);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 
   50% {
     transform: scale(110%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 
   100% {
     transform: scale(100%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 }
 
@@ -555,7 +499,6 @@ main {
 
 .role-img-cont {
   position: absolute;
-  /* border: 1px solid red; */
   z-index: 1;
   width: 60px;
   height: 60px;
@@ -563,6 +506,7 @@ main {
   align-items: center;
   justify-content: center;
   left: -2rem;
+  bottom: 0rem;
 }
 
 .dot {

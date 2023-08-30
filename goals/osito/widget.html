@@ -22,7 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
-    <script src="../../slibs/resize.js"></script>
+    <script src="../../libs/resize.js"></script>
   </head>
 
   <body>
@@ -31,12 +31,23 @@
       <!--
         PLACE YOUR WIDGET.HTML CODE BELOW
         -->
+
+      <!-- <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+        rel="stylesheet"
+      />
+      <div class="main-container"></div> -->
       <link rel="stylesheet" href="css.css" />
-      <link rel="stylesheet" href="index.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
         rel="stylesheet"
       />
 
@@ -50,68 +61,68 @@
         integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
         crossorigin="anonymous"
       ></script>
-      <script src="main.js"></script>
-      <main class="main">
-        <img class="darkhole" src="https://i.postimg.cc/wjfgpbC3/remo.png" alt="">
-        <div id="top-container">
-          <div class="top-tip-container">
-            <div class="top-tip-text active">Último sub&nbsp;&nbsp;&nbsp; <img width="20" height="20" src="https://i.postimg.cc/5tVtGNpD/strll.png" /> &nbsp;&nbsp;&nbsp;</div>
-            <div class="top-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-1">
-                  <p>
-                    <span class="top-text-1 active"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
+      <div class="general">
+        <main class="main">
+          <div class="nube nube1">
+            <img class="nube-img" src="https://i.postimg.cc/15Pk4pb3/nube1.png" alt="">
+            <p class="goal-obj-100">2000</p>
+          </div>
+          <div class="nube nube2">
+            <img class="nube-img" src="https://i.postimg.cc/15Pk4pb3/nube1.png" alt="">
+            <p class="goal-obj-70">1750</p>
+          </div>
+          <div class="nube nube3">
+            <img class="nube-img" src="https://i.postimg.cc/15Pk4pb3/nube1.png" alt="">
+            <p class="goal-obj-50">1500</p>
+          </div>
+          <div class="nube nube4">
+            <img class="nube-img" src="https://i.postimg.cc/15Pk4pb3/nube1.png" alt="">
+            <p class="goal-type-text">sub goal</p>
+          </div>
+          <div class="container">
+            <p class="progressNums"></p>
+            <p class="progression"></p>
+            <div class="gancho">
+              <img src="https://i.postimg.cc/SxQb1WGv/arriba.png" alt="" class="soporte">
+              
+              <div class="ganchos">
+                <img src="https://i.postimg.cc/QCZRQ5tS/gancho-detras.png" alt="" class="gancho-detras">
+                <img src="https://i.postimg.cc/3wVMwzQs/gancho-delante.png" alt="" class="gancho-delante">
+                <img src="https://i.postimg.cc/26htS6wW/peluche.png" alt="" class="peluche">
+
               </div>
             </div>
-          </div>
-          <div class="top-cheer-container">
-            <div class="top-cheer-text inactive">Último sub:&nbsp;&nbsp;&nbsp;</div>
-            <div class="top-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-2">
-                  <p>
-                    <span class="top-text-2 inactive"></span>
-                  </p>
+            <div class="nube1-container">
+              <img src="https://i.postimg.cc/15Pk4pb3/nube1.png" alt="" class="nube1">
+            </div>
+            <div class="nube2-container">
+              <img src="https://i.postimg.cc/8CF3xwft/nube2.png" alt="" class="nube2">
+            </div>
+            <!-- <div class="gifReg">
+              <img
+                src="https://i.postimg.cc/Kvjn7Crx/regadera-animada.gif"
+                alt=""
+                class="reg"
+              />
+            </div> -->
+            <div id="round">
+              <div class="progress-bar-container">
+                <div class="img-progress">
+                  <div class="progress-bar"></div>
                 </div>
-                <!-- </div> -->
               </div>
             </div>
+            <div class="img-container">
+              <!-- <img
+                src="https://i.postimg.cc/26htS6wW/peluche.png"
+                alt=""
+                id="image"
+              /> -->
           </div>
-          <div class="latest-tip-container active">
-            <div class="latest-tip-text active">Último cheer&nbsp;&nbsp;&nbsp;<img width="21.59" height="18" class="heart" src="https://i.postimg.cc/prpV89X5/crss.png" />&nbsp;&nbsp;&nbsp;</div>
-            <div class="latest-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-3">
-                  <p>
-                    <span class="latest-text-1 active"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
-          <div class="latest-cheer-container">
-            <div class="latest-cheer-text inactive">Último cheer &nbsp;&nbsp;&nbsp;</div>
-            <div class="latest-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-4">
-                  <p>
-                    <span class="latest-text-2 inactive"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
+
+      <button class="click">Click</button>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

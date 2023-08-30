@@ -82,7 +82,7 @@
 
 .latest-tip-cheer-qnty {
   /* overflow: hidden; */
-  width: 135px;
+  width: 7.2rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -92,7 +92,7 @@
 }
 
 .top-tip-cheer-qnty {
-  width: 200px;
+  width: 16.5rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -101,21 +101,12 @@
   padding-right: 1rem;
 }
 
-/* .top-tip-text {
-  width: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
-} */
-
 .top-tip-text,
 .top-cheer-text,
 .latest-cheer-text,
 .latest-tip-text {
   /* width: 120px; */
-  padding-left: 15px;
+  /* padding-left: 15px; */
   display: flex;
   align-items: center;
   /* justify-content: center; */
@@ -125,21 +116,16 @@
 }
 
 .top-cheer-text {
-  width: 122px;
+  width: 7.7rem;
 }
 
 .top-tip-text {
-  width: 210px;
-}
-
-.latest-tip-text {
-  width: 185px;
-  /* width: 190px !important; */
-  /* padding-left: 3px; */
+  width: 18rem;
+  padding-left: 15px;
 }
 
 .latest-cheer-text {
-  width: 142px;
+  width: 8.9rem;
   /* width: 285px; */
   /* padding-left: 3px; */
 }
@@ -308,4 +294,15 @@
   position: absolute;
   top: 3.5rem;
   left: 3rem;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

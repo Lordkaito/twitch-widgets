@@ -134,14 +134,9 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = this.userColor;
-
-    // mainContainer.appendChild(this.flower);
-    // mainContainer.appendChild(this.cereza);
 
     superMainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
-    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
@@ -153,7 +148,6 @@ class mainEvent {
     img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
     img.classList.add("butterfly");
     imgContainer.classList.add("butterfly-container");
-    // imgContainer.appendChild(img);
 
     return imgContainer;
   }
@@ -166,10 +160,10 @@ class mainEvent {
     usernameInfo.classList.add("username-info");
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
+    usernameInfoContainer.appendChild(this.cereza);
     usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -211,9 +205,7 @@ class mainEvent {
     let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    // capitalizeUser.style.color = colors[startingColor];
     capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
@@ -247,10 +239,7 @@ class mainEvent {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.opacity = "0";
     }
-    // pronouns.style.color = colors[startingColor];
 
-    // pronouns.style.color = this.userColor;
-    pronounsContainer.appendChild(this.cereza);
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
   }
@@ -658,11 +647,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
-
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -762,13 +746,6 @@ window.addEventListener("onEventReceived", async (obj) => {
   if (listener === "subscriber-latest") {
     holdedEvent(event);
     return;
-  }
-
-  if (listener === "message") {
-    let isBlackListed = blacklisted(event.data.displayName);
-    if (isBlackListed) return;
-    let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-    if (specialSymbols) return;
   }
 
   const mainCont = document.querySelector("main");

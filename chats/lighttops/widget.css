@@ -74,7 +74,7 @@
 }
 
 .latest-tip-cheer-qnty {
-  width: 130px;
+  width: 7.2rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -84,7 +84,7 @@
 }
 
 .top-tip-cheer-qnty {
-  width: 200px;
+  width: 16.5rem;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -97,26 +97,23 @@
 .top-cheer-text,
 .latest-cheer-text,
 .latest-tip-text {
-  padding-left: 15px;
+  /* padding-left: 15px; */
   display: flex;
   align-items: center;
   z-index: 2;
 }
 
 .top-cheer-text {
-  width: 122px;
+  width: 7.7rem;
 }
 
 .top-tip-text {
-  width: 215px;
-}
-
-.latest-tip-text {
-  width: 190px;
+  width: 19rem;
+  padding-left: 12px;
 }
 
 .latest-cheer-text {
-  width: 142px;
+  width: 8.9rem;
 }
 
 .top-tip-cheer-text-container,
@@ -276,6 +273,21 @@
   position: absolute;
   top: 3.5rem;
   left: 3rem;
+  animation: blink 5s linear infinite;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .heart {
