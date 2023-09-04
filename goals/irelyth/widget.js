@@ -101,11 +101,11 @@ function init(obj, apiData, initial = false) {
   }
 
   if (amount >= mainObj.fieldData.firstStep) {
-    peluche.src = "https://i.postimg.cc/RZ1Ykxsb/tannafurro.png";
+    // peluche.src = "https://i.postimg.cc/RZ1Ykxsb/tannafurro.png";
   }
 
   if (amount >= mainObj.fieldData.secondStep) {
-    peluche.src = "https://i.postimg.cc/N0gnYCZG/tannamaid.png";
+    // peluche.src = "https://i.postimg.cc/N0gnYCZG/tannamaid.png";
   }
 
   items = {
@@ -128,14 +128,23 @@ function init(obj, apiData, initial = false) {
     firstStep: document.querySelector(".goal-obj-50"),
     secondStep: document.querySelector(".goal-obj-70"),
     goalTypeText: document.querySelector(".goal-type-text"),
-    goalTypeAmount: document.querySelector(".goal-type-amount"),
+    flower1: document.querySelector(".flower-1"),
+    flower2: document.querySelector(".flower-2"),
+    flower3: document.querySelector(".flower-3"),
+    flower4: document.querySelector(".flower-4"),
+    flower5: document.querySelector(".flower-5"),
+    flower6: document.querySelector(".flower-6"),
+    flower7: document.querySelector(".flower-7"),
+    flower8: document.querySelector(".flower-8"),
+    flower9: document.querySelector(".flower-9"),
+    flower10: document.querySelector(".flower-10"),
+    flower11: document.querySelector(".crown-flower"),
   };
 
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
-  items.firstStep.innerText = mainObj.fieldData.firstStep;
-  items.secondStep.innerText = mainObj.fieldData.secondStep;
-  items.goalTypeText.innerText = mainObj.fieldData.goalTypeText;
-  items.goalTypeAmount.innerText = amount;
+  // items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  // items.firstStep.innerText = mainObj.fieldData.firstStep;
+  // items.secondStep.innerText = mainObj.fieldData.secondStep;
+  // items.goalTypeText.innerText = mainObj.fieldData.goalTypeText;
 
   step = getStep(
     items.progressBarContainer,
@@ -175,6 +184,22 @@ function getGachoStep(diff, objective) {
   return diff / objective;
 }
 
+function findAllPreviousPercentage(percentageObj, percen) {
+  let percent = percen.replace("%", "");
+  let previousPercents = [];
+  // console.log(percent);
+  let keys = Object.keys(percentageObj).map((key) => {
+    let numberKeys = parseInt(key.replace("%", ""));
+    if (numberKeys < percent) {
+      previousPercents.push(numberKeys);
+    }
+  });
+
+  previousPercents.forEach((percent) => {
+    percentageObj[percent + "%"].style.animation = "fadeIn 1s forwards";
+  });
+}
+
 function handleGrow(amount, callback, initial = false) {
   if (!animationActive) {
     animationActive = true;
@@ -192,49 +217,57 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
+  let percentageObj = {
+    "0%": items.flower1,
+    "10%": items.flower2,
+    "20%": items.flower3,
+    "30%": items.flower4,
+    "40%": items.flower5,
+    "50%": items.flower6,
+    "60%": items.flower7,
+    "70%": items.flower8,
+    "80%": items.flower9,
+    "90%": items.flower10,
+    "100%": items.flower11,
+  };
+
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    let ganchosHeight = 30;
-    console.log(amountToUpdate);
-    let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
-    let ganchoStep = getGachoStep(30, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${(amountToUpdate) * ganchoStep}rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${(amountToUpdate * step) - 15}px)`;
-    console.log(mainObj.fieldData.firstStep)
-    if (amountToUpdate >= mainObj.fieldData.firstStep) {
-      items.peluche.style.animation = "fadeOut 1s forwards";
-      items.peluche2.style.animation = "fadeIn 1s forwards";
-    }
-
-    if (amountToUpdate >= mainObj.fieldData.secondStep) {
-      items.peluche2.style.animation = "fadeOut 1s forwards";
-      items.peluche3.style.animation = "fadeIn 1s forwards";
-    }
-    if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) +
-        currency;
-    } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-    }
-    items.goalTypeAmount.innerText = amountToUpdate;
-  } else {
-    items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
-    items.progressionText.innerHTML = getPercentage(
+    items.progressBar.style.height = `${amountToUpdate * step}px`;
+    let percen = getPercentage(
       amountToUpdate,
       mainObj.fieldData.goalObjectiveQuantity
     );
+    if (percen === "0%") {
+      percentageObj[percen].style.animation = "fadeIn 1s forwards";
+    } else {
+      findAllPreviousPercentage(percentageObj, percen);
+      if (percentageObj[percen] !== undefined) {
+        percentageObj[percen].style.animation = "fadeIn 1s forwards";
+      }
+    }
+    if (goalType === "tip") {
+      items.progressionText.innerHTML = percen + currency;
+    } else {
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
+  } else {
+    let percen = getPercentage(
+      amountToUpdate,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
+    findAllPreviousPercentage(percentageObj, percen);
+    percentageObj[percen].style.animation = "fadeIn 1s forwards";
 
-    items.peluche3.style.animation = "fadeOut 1s forwards";
-    items.peluche4.style.animation = "fadeIn 1s forwards";
-    items.goalTypeAmount.innerText = amountToUpdate;
+    // items.ganchos.style.top = `0`;
+    items.progressBar.style.height = "100%";
+    items.progressionText.innerHTML =
+      amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+
+    // items.peluche3.style.animation = "fadeOut 1s forwards";
+    // items.peluche4.style.animation = "fadeIn 1s forwards";
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);

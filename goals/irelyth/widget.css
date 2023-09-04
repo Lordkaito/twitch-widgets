@@ -1,5 +1,5 @@
 * {
-  font-family: "Passion One", cursive;
+  font-family: "Quicksand", sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -8,7 +8,6 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   letter-spacing: 0.125rem;
-  font-style: italic;
 }
 
 .playing {
@@ -37,13 +36,13 @@ main {
   width: 1.25rem;
   height: 42rem;
   padding: 1.5rem 0.4rem 4rem 0.4rem;
-  background-color: #8ac995;
+  background-color: transparent;
   border-radius: 50px;
-  border: 4px solid white;
+  /* border: 4px solid white; */
   display: grid;
   place-content: center;
-  overflow: hidden;
-  background-image: url("https://i.postimg.cc/LshvDJ7R/peluches.png");
+  /* overflow: hidden; */
+  /* background-image: url("https://i.postimg.cc/LshvDJ7R/peluches.png"); */
   background-repeat: no-repeat;
   background-position: bottom -1.8rem right -3.9rem;
 }
@@ -62,16 +61,6 @@ main {
   transform: scale(0.85);
 }
 
-.progress-bar-container {
-  width: 12px;
-  height: 31rem;
-  border-radius: 15px;
-  /* background-color: #efd9ca; */
-  /* position: relative; */
-  overflow: hidden;
-  top: -2rem;
-}
-
 .progression {
   position: absolute;
   text-align: center;
@@ -86,29 +75,48 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
   text-align: center;
   vertical-align: middle;
-  color: white;
-  text-shadow: 3px 3px 2px #000000;
+  color: #8ac995;
   font-size: 2.3rem;
   z-index: 4;
   margin-bottom: 1rem;
-  top: -3rem;
-  /* text-shadow: -1px -1px 0 #acc87d, 1px -1px 0 #acc87d, -1px 1px 0 #acc87d,
-    1px 1px 0 #acc87d; */
+  bottom: -2rem;
+}
+
+.progress-bar-container {
+  width: 12px;
+  height: 31rem;
+  border-radius: 15px;
+  /* background-color: #efd9ca; */
+  position: relative;
+  /* overflow: hidden; */
+  top: -2rem;
 }
 
 .progress-bar {
   display: flex;
-  width: 0px;
-  background-color: #20483f;
-  height: 33rem;
-  width: 70px;
+  background-color: #43cc69;
+  width: 6px;
   transition: height 0.2s ease-in-out;
   position: relative;
+  bottom: 1rem;
+  border-radius: 15px 15px 0 0;
   background-position: bottom;
+  /* border: 1px solid white */
+}
+
+.fake-progress {
+  position: absolute;
+  width: 6px;
+  height: 3.1rem;
+  background-color: #43cc69;
+  /* background-color: red; */
+  border-radius: 0 0 15px 15px;
+  z-index: 2;
+  bottom: -2rem;
+  transition: height 0.2s ease-in-out;
 }
 
 .img-progress {
@@ -117,7 +125,7 @@ main {
   width: 100%;
   height: 100%;
   position: relative;
-  transform: scaleY(-1);
+  /* transform: scaleY(-1); */
 }
 
 .hidden-container {
@@ -295,14 +303,13 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 1.8rem;
+  top: 1.6rem;
   bottom: 50%;
-  left: 1rem;
+  left: 1.2rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: white;
-  text-shadow: 3px 3px 2px #000000;
   min-width: 4.6rem;
   text-align: center;
 }
@@ -310,12 +317,11 @@ main {
 .nube2 p {
   position: absolute;
   top: 1.8rem;
-  left: 1.5rem;
+  left: 1.7rem;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-  color: white;
-  text-shadow: 3px 3px 2px #000000;
+  color: #8ac995;
   min-width: 3.5rem;
   text-align: center;
 }
@@ -323,12 +329,11 @@ main {
 .nube3 p {
   position: absolute;
   top: 1.8rem;
-  left: 1.5rem;
+  left: 1.7rem;
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-  color: white;
-  text-shadow: 3px 3px 2px #000000;
+  color: #8ac995;
   min-width: 3.5rem;
   text-align: center;
 }
@@ -339,8 +344,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  flex-direction: column;
 }
 
 .nube4 p {
@@ -351,21 +354,8 @@ main {
   font-weight: 700;
   letter-spacing: 0.125rem;
   text-align: center;
-  color: white;
-  text-shadow: 3px 3px 2px #000000;
+  color: #8ac995;
   line-height: 0.9;
-}
-
-.goal-type-text {
-  left: 2.5rem;
-}
-
-.goal-type-amount {
-  position: absolute !important;
-  top: 4rem !important;
-  left: 0.6rem;
-  width: 100px;
-  height: 50px;
 }
 
 @keyframes fadeOut {
@@ -384,4 +374,73 @@ main {
   100% {
     opacity: 1;
   }
+}
+
+.flower {
+  position: absolute;
+  transform: scaleX(-1) scale(0.8);
+  left: -1.3rem;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+
+.flower-1 {
+  bottom: 0rem;
+  /* opacity: 1; */
+}
+
+.flower-2 {
+  bottom: 3.1rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+  /* opacity: 1; */
+}
+
+.flower-3 {
+  bottom: 6.2rem;
+}
+
+.flower-4 {
+  bottom: 9.3rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-5 {
+  bottom: 12.4rem;
+}
+
+.flower-6 {
+  bottom: 15.5rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-7 {
+  bottom: 18.6rem;
+}
+
+.flower-8 {
+  bottom: 21.7rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-9 {
+  bottom: 24.8rem;
+}
+
+.flower-10 {
+  bottom: 27.9rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+  /* opacity: 1; */
+}
+
+.crown-flower {
+  position: absolute;
+  top: -6rem;
+  left: -3.35rem;
+  opacity: 0;
 }

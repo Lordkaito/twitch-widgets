@@ -14,13 +14,13 @@ let fieldData = {
   goalTypeText: {
     type: "text",
     label: "Goal type:",
-    value: "SUBS",
+    value: "sub goal",
     group: "Customization",
   },
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 2000,
+    value: 10,
     group: "Customization",
     min: 1,
     step: 1,
@@ -28,7 +28,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 1749,
+    value: 0,
     group: "Customization",
     min: 1,
     step: 1,

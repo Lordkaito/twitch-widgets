@@ -22,7 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
-    <script src="../../slibs/resize.js"></script>
+    <script src="../../libs/resize.js"></script>
   </head>
 
   <body>
@@ -31,12 +31,23 @@
       <!--
         PLACE YOUR WIDGET.HTML CODE BELOW
         -->
+
+      <!-- <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+        rel="stylesheet"
+      />
+      <div class="main-container"></div> -->
+      <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+        rel="stylesheet"
+        /> -->
       <link rel="stylesheet" href="css.css" />
-      <link rel="stylesheet" href="index.css" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap"
         rel="stylesheet"
       />
 
@@ -50,85 +61,41 @@
         integrity="sha512-UQKbSOyUPIxk4a5/TIcqKUfl2JX0b1Rgq16BgvZbIWa7g5g3Rl/RXzFJFt2iu9LzDUpqDbcaak2ifjW887SxPw=="
         crossorigin="anonymous"
       ></script>
-      <script src="main.js"></script>
-      <main class="main">
-        <img
-          class="darkhole"
-          src="https://i.postimg.cc/hj37tj37/luuviaest.png"
-          alt=""
-        />
-        <div id="top-container">
-          <div class="top-tip-container">
-            <div class="top-tip-text active">
-              Último sub&nbsp;&nbsp;&nbsp;
-              <img src="https://i.postimg.cc/rpZ1YM2g/luzstar.png" />
-              &nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="top-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-1">
-                  <p>
-                    <span class="top-text-1 active"></span>
-                  </p>
+      <div class="general">
+        <main class="main">
+          <div class="container">
+            <p class="progressNums"></p>
+            <!-- <p class="progression"></p> -->
+            <div id="round">
+              <div class="progress-bar-container">
+                <div class="img-progress">
+                  <div class="progress-bar"></div>
+                  <img class="flower flower-1" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-2" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-3" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-4" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-5" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-6" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-7" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-8" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-9" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="flower flower-10" src="https://i.postimg.cc/6pRF6bjm/hojiii.png" alt=""/>
+                  <img class="crown-flower" src="https://i.postimg.cc/ZRYQcbTG/lirii.png" alt="">
+                  <div class="fake-progress"></div>
                 </div>
-                <!-- </div> -->
               </div>
             </div>
+            <div class="img-container">
+              <!-- <img
+                src="https://i.postimg.cc/26htS6wW/peluche.png"
+                alt=""
+                id="image"
+              /> -->
           </div>
-          <div class="top-cheer-container">
-            <div class="top-cheer-text inactive">
-              Último sub&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="top-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-2">
-                  <p>
-                    <span class="top-text-2 inactive"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
-          <div class="latest-tip-container active">
-            <div class="latest-tip-text active">
-              Último cheer&nbsp;&nbsp;&nbsp;<img
-                class="heart"
-                src="https://i.postimg.cc/mhWkPF3h/luzheart.png"
-              />&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="latest-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-3">
-                  <p>
-                    <span class="latest-text-1 active"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
-          <div class="latest-cheer-container">
-            <div class="latest-cheer-text inactive">
-              Último cheer&nbsp;&nbsp;&nbsp;
-            </div>
-            <div class="latest-tip-cheer-qnty">
-              <div class="m-scroll">
-                <!-- <div class="m-scroll__title"> -->
-                <div class="scroller-4">
-                  <p>
-                    <span class="latest-text-2 inactive"></span>
-                  </p>
-                </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
+      </div>
+
+      <button class="click">Click</button>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

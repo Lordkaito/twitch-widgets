@@ -111,31 +111,46 @@ function init(obj, apiData, initial = false) {
   items = {
     progressBar: document.querySelector(".progress-bar"),
     goalText: document.querySelector(".goal-text"),
-    colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
-    progressImg: document.querySelector(".img-container"),
-    completeText: document.querySelector(".progression"),
-    reg: document.querySelector(".gifReg"),
-    image: document.querySelector("#image"),
-    ganchos: document.querySelector(".ganchos"),
-    peluche: document.querySelector(".peluche"),
-    peluche2: document.querySelector(".peluche2"),
-    peluche3: document.querySelector(".peluche3"),
-    peluche4: document.querySelector(".peluche4"),
-    objective: document.querySelector(".goal-obj-100"),
-    firstStep: document.querySelector(".goal-obj-50"),
-    secondStep: document.querySelector(".goal-obj-70"),
-    goalTypeText: document.querySelector(".goal-type-text"),
-    goalTypeAmount: document.querySelector(".goal-type-amount"),
+    round: document.querySelector("#round"),
   };
 
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
-  items.firstStep.innerText = mainObj.fieldData.firstStep;
-  items.secondStep.innerText = mainObj.fieldData.secondStep;
-  items.goalTypeText.innerText = mainObj.fieldData.goalTypeText;
-  items.goalTypeAmount.innerText = amount;
+  let itemsColor = mainObj.fieldData.itemsColor;
+  let progressBarColor = mainObj.fieldData.progressBarColor;
+
+  items.progressBar.style.backgroundColor = progressBarColor;
+
+  if (mainObj.fieldData.theme === "circles") {
+    for (let i = 0; i < 5; i++) {
+      let circle = document.createElement("div");
+      circle.classList.add("circle");
+      circle.classList.add("circle-" + (i + 1));
+      circle.style.backgroundColor = itemsColor;
+      items.round.appendChild(circle);
+    }
+  }
+
+  if (mainObj.fieldData.theme === "hearts") {
+    for (let i = 0; i < 5; i++) {
+      let heart = document.createElement("div");
+      heart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 20 20"><path fill="${itemsColor}" d="m9.653 16.915l-.005-.003l-.019-.01a20.759 20.759 0 0 1-1.162-.682a22.045 22.045 0 0 1-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 0 1 8-2.828A4.5 4.5 0 0 1 18 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 0 1-3.744 2.582l-.019.01l-.005.003h-.002a.739.739 0 0 1-.69.001l-.002-.001Z"></path></svg>`;
+      heart.classList.add("heart");
+      heart.classList.add("heart-" + (i + 1));
+      items.round.appendChild(heart);
+    }
+  }
+
+  if (mainObj.fieldData.theme === "stars") {
+    for (let i = 0; i < 5; i++) {
+      let stars = document.createElement("div");
+      stars.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"><path fill="${itemsColor}" d="M9.153 5.408C10.42 3.136 11.053 2 12 2c.947 0 1.58 1.136 2.847 3.408l.328.588c.36.646.54.969.82 1.182c.28.213.63.292 1.33.45l.636.144c2.46.557 3.689.835 3.982 1.776c.292.94-.546 1.921-2.223 3.882l-.434.507c-.476.557-.715.836-.822 1.18c-.107.345-.071.717.001 1.46l.066.677c.253 2.617.38 3.925-.386 4.506c-.766.582-1.918.051-4.22-1.009l-.597-.274c-.654-.302-.981-.452-1.328-.452c-.347 0-.674.15-1.329.452l-.595.274c-2.303 1.06-3.455 1.59-4.22 1.01c-.767-.582-.64-1.89-.387-4.507l.066-.676c.072-.744.108-1.116 0-1.46c-.106-.345-.345-.624-.821-1.18l-.434-.508c-1.677-1.96-2.515-2.941-2.223-3.882c.293-.941 1.523-1.22 3.983-1.776l.636-.144c.699-.158 1.048-.237 1.329-.45c.28-.213.46-.536.82-1.182l.328-.588Z"></path></svg>`;
+      stars.classList.add("stars");
+      stars.classList.add("stars-" + (i + 1));
+      items.round.appendChild(stars);
+    }
+  }
 
   step = getStep(
     items.progressBarContainer,
@@ -195,24 +210,9 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    let ganchosHeight = 30;
-    console.log(amountToUpdate);
-    let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
-    let ganchoStep = getGachoStep(30, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${(amountToUpdate) * ganchoStep}rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${(amountToUpdate * step) - 15}px)`;
-    console.log(mainObj.fieldData.firstStep)
-    if (amountToUpdate >= mainObj.fieldData.firstStep) {
-      items.peluche.style.animation = "fadeOut 1s forwards";
-      items.peluche2.style.animation = "fadeIn 1s forwards";
-    }
+    console.log(items.progressBar);
+    items.progressBar.style.height = amountToUpdate * step + "px";
 
-    if (amountToUpdate >= mainObj.fieldData.secondStep) {
-      items.peluche2.style.animation = "fadeOut 1s forwards";
-      items.peluche3.style.animation = "fadeIn 1s forwards";
-    }
     if (goalType === "tip") {
       items.progressionText.innerHTML =
         getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) +
@@ -223,18 +223,12 @@ function handleGrow(amount, callback, initial = false) {
         mainObj.fieldData.goalObjectiveQuantity
       );
     }
-    items.goalTypeAmount.innerText = amountToUpdate;
   } else {
-    items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
+    items.progressBar.style.height = "100%";
     items.progressionText.innerHTML = getPercentage(
       amountToUpdate,
       mainObj.fieldData.goalObjectiveQuantity
     );
-
-    items.peluche3.style.animation = "fadeOut 1s forwards";
-    items.peluche4.style.animation = "fadeIn 1s forwards";
-    items.goalTypeAmount.innerText = amountToUpdate;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
