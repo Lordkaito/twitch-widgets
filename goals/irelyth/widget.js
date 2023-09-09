@@ -60,14 +60,22 @@ window.addEventListener("onEventReceived", function (obj) {
   let event = obj.detail.event;
   let listener = obj.detail.listener;
 
+  if(event.isCommunityGift) return;
+
   if (event.type === goalType) {
     if (listener === "cheer-latest" || listener === "tip-latest") {
       handleGrow(event.amount, updateApiData, false);
       return;
     }
 
-    if (listener === "subscriber-latest" || listener === "follower-latest") {
+    if (listener === "follower-latest") {
+      handleGrow(1, updateApiData, false);
+      return;
+    }
+
+    if (listener === "subscriber-latest") {
       if (event.bulkGifted) {
+        handleGrow(event.amount, updateApiData, false);
         return;
       }
       handleGrow(1, updateApiData, false);

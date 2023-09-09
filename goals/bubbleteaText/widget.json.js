@@ -158,7 +158,7 @@ let fieldData = {
   theme: {
     type: "dropdown",
     label: "Theme",
-    value: "circles",
+    value: "hearts",
     group: "Customization",
     options: {
       circles: "Circles",
@@ -169,7 +169,7 @@ let fieldData = {
   itemsColor: {
     type: "colorpicker",
     label: "Items color",
-    value: "red",
+    value: "#ffffff",
     group: "Customization",
   },
   progressBarColor: {

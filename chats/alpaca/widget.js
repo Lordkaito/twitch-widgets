@@ -783,6 +783,8 @@ const GLOBAL_EMOTES = {
       const { default_sets, sets } = response;
       const emoteNames = [];
       for (const set of default_sets) {
+        console.log(typeof response);
+        console.log(response);
         const { emoticons } = sets[set];
         for (const emote of emoticons) {
           emoteNames.push(emote.name);
@@ -824,6 +826,7 @@ function stringToArray(string = "", separator = ",") {
   }, []);
 }
 
+
 async function loadGlobalEmotes() {
   for (const [key, value] of Object.entries(GLOBAL_EMOTES)) {
     const { api, transformer } = value;
@@ -835,7 +838,7 @@ async function loadGlobalEmotes() {
 }
 
 const removeMessage = (mainContainer) => {
-  console.log(mainContainer);
+  console.log(typeof mainContainer);
   const elem = mainContainer;
   if (elem) {
     elem.style.animationName = "removeMessage";

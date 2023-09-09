@@ -120,10 +120,10 @@ function init(obj, apiData, initial = false) {
   };
 
   let itemsColor = mainObj.fieldData.itemsColor;
-  // let progressBarColor = mainObj.fieldData.progressBarColor;
+  let progressBarColor = mainObj.fieldData.progressBarColor;
 
   // items.goalText.innerText = mainObj.fieldData.goalText;
-  // items.progressBar.style.backgroundColor = progressBarColor;
+  items.progressBar.style.backgroundColor = progressBarColor;
   // items.goalAmount.innerText = `${mainObj.fieldData.goalStartQuantity} | ${mainObj.fieldData.goalObjectiveQuantity}`;
 
   if (mainObj.fieldData.theme === "circles") {

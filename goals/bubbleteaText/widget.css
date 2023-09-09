@@ -14,15 +14,6 @@
   opacity: 1 !important;
 }
 
-main {
-  overflow: hidden;
-  width: 800px;
-  max-height: 1080px;
-  height: 1080px;
-  display: grid;
-  place-content: center;
-}
-
 .container {
   display: flex;
   align-items: center;
@@ -89,6 +80,7 @@ main {
   position: absolute;
   top: 15rem;
   left: 10.5rem;
+  width: 150px;
   text-align: center;
   width: 150px;
 }
@@ -97,8 +89,7 @@ main {
   /* text-align: center; */
   font-size: 3rem;
   margin-bottom: 0.5rem;
-  position: relative;
-  /* text-shadow: 2px 2px 4px white, -2px -2px 4px white, -2px 2px 4px white, 2px -2px 4px white; */
+  text-shadow: 1px 1px 3px white, -1px -1px 3px white, -1px 1px 3px white, 1px -1px 3px white;
 }
 
 .bit {
@@ -107,10 +98,12 @@ main {
 }
 
 .goal-text {
-  bottom: 50%;
-  left: 90%;
-  margin-top: 0.5rem;
-  margin-right: 5rem;
+  /* bottom: 50%; */
+  /* left: 90%; */
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
   min-width: 12rem;
   width: max-content;
   color: #b8dd4f;
@@ -130,6 +123,7 @@ main {
 .goal-text-p {
   font-size: 1.5rem;
   font-weight: 700;
+  line-height: .7;
   letter-spacing: 0.125rem;
   max-width: 5rem;
   /* color: {{goalTextColor}}; */
@@ -149,7 +143,7 @@ main {
 .progress-bar {
   display: flex;
   width: 21rem;
-  /* background: linear-gradient(90deg, {{progressBarColor1}} 0%, {{progressBarColor2}} 100%); */
+  background-color: rgba(184, 221, 79, .6);
   /* background-color: {{progressBarColor}} */
   height: 0;
   transition: height 1s ease-in-out;
@@ -279,8 +273,8 @@ main {
 
 .circle {
   position: relative;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   /* background-color: {itemsColor}; */
   border-radius: 50%;
   z-index: -1;
@@ -288,27 +282,27 @@ main {
 
 .circle-1 {
   bottom: -13.5rem;
-  left: 2.4rem;
+  left: 3rem;
 }
 
 .circle-2 {
   bottom: -13.5rem;
-  left: 3.5rem;
+  left: 4rem;
 }
 
 .circle-3 {
   bottom: -13.5rem;
-  left: 4.5rem;
+  left: 5rem;
 }
 
 .circle-4 {
   bottom: -9rem;
-  left: -6rem;
+  left: -6.5rem;
 }
 
 .circle-5 {
   bottom: -9rem;
-  left: -4.6rem;
+  left: -5.5rem;
 }
 
 .heart {
@@ -326,22 +320,22 @@ main {
 
 .heart-2 {
   bottom: -13.5rem;
-  left: 3.85rem;
+  left: 4rem;
 }
 
 .heart-3 {
   bottom: -13.5rem;
-  left: 4.7rem;
+  left: 5rem;
 }
 
 .heart-4 {
-  bottom: -9.5rem;
+  bottom: -9rem;
   left: -6.5rem;
 }
 
 .heart-5 {
-  bottom: -9.5rem;
-  left: -5.8rem;
+  bottom: -9rem;
+  left: -5.5rem;
 }
 
 .stars {
@@ -353,18 +347,18 @@ main {
 }
 
 .stars-1 {
-  bottom: -13rem;
+  bottom: -13.5rem;
   left: 3rem;
 }
 
 .stars-2 {
-  bottom: -13rem;
-  left: 3.85rem;
+  bottom: -13.5rem;
+  left: 4rem;
 }
 
 .stars-3 {
-  bottom: -13rem;
-  left: 4.7rem;
+  bottom: -13.5rem;
+  left: 5rem;
 }
 
 .stars-4 {
@@ -374,5 +368,5 @@ main {
 
 .stars-5 {
   bottom: -9rem;
-  left: -5.8rem;
+  left: -5.5rem;
 }

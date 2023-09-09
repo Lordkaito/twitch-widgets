@@ -104,4 +104,14 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
+  theme: {
+    type: "dropdown",
+    label: "Theme:",
+    value: "pink",
+    group: "Customization",
+    options: {
+      pink: "Pink",
+      purple: "Purple",
+    },
+  },
 };

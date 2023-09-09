@@ -11,7 +11,7 @@ window.addEventListener("onWidgetLoad", function (obj) {
   sessionData = obj.detail.session.data;
   fieldData = obj.detail.fieldData;
   time = fieldData.speed * 1000;
-
+  let theme = obj.detail.fieldData.theme;
   latestCheer = sessionData["cheer-latest"];
   latestSubscriber = sessionData["subscriber-latest"];
 
@@ -32,13 +32,20 @@ window.addEventListener("onWidgetLoad", function (obj) {
     latestCheer.name + " - " + latestCheer.amount + bitsCurrency;
   latestText2.innerText =
     latestCheer.name + " - " + latestCheer.amount + bitsCurrency;
-  // setInterval(() => {
-  //   toggleTopText();
-  // }, time);
 
-  // setInterval(() => {
-  //   toggleLatestText();
-  // }, time);
+  if (theme === "purple") {
+    let topTipContainer = document.querySelector(".top-tip-container");
+    let topCheerContainer = document.querySelector(".top-cheer-container");
+    let latestTipContainer = document.querySelector(".latest-tip-container");
+    let latestCheerContainer = document.querySelector(
+      ".latest-cheer-container"
+    );
+    console.log(topTipContainer);
+    topTipContainer.classList.add("top-tip-container-purple");
+    topCheerContainer.classList.add("top-cheer-container-purple");
+    latestCheerContainer.classList.add("latest-cheer-container-purple");
+    latestTipContainer.classList.add("latest-tip-container-purple");
+  }
 });
 const topTipText = document.querySelector(`.top-tip-text`);
 const topCheerText = document.querySelector(`.top-cheer-text`);

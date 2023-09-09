@@ -1,4 +1,4 @@
-let fieldData = {};
+// let fieldData = {};
 let currentEvent = null;
 let initialBorder = "purple";
 

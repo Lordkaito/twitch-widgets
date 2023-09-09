@@ -1371,9 +1371,9 @@ window.addEventListener("onEventReceived", async (obj) => {
   switch (listener) {
     case "message":
       let isBlackListed = blacklisted(event.data.displayName);
-      if (isBlackListed) return;
+      // if (isBlackListed) return;
       let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-      if (specialSymbols) return;
+      // if (specialSymbols) return;
       const message = new Message(event);
       message
         .init()

@@ -316,3 +316,17 @@
     transform-origin: bottom right;
   }
 }
+
+.top-tip-container-purple,
+.top-cheer-container-purple,
+.top-tip-container-purple::after,
+.top-cheer-container-purple::after {
+  background-color: #bab1f0;
+}
+
+.latest-tip-container-purple,
+.latest-cheer-container-purple,
+.latest-tip-container-purple::after,
+.latest-cheer-container-purple::after {
+  background-color: #a185a9;
+}
