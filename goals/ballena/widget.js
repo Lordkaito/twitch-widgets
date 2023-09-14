@@ -248,3 +248,16 @@ function clearApiData() {
   // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }
+
+if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
+  items.objective.style.fontSize = "1.5rem";
+  items.objective.style.fontSize = "1.3rem";
+  items.objective.style.top = "2.5rem";
+  items.objective.style.left = ".9rem";
+}
+
+if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
+  items.objective.style.fontSize = "1.3rem";
+  items.objective.style.top = "2.5rem";
+  items.objective.style.left = ".8rem";
+}

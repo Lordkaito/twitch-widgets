@@ -1,13 +1,13 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #ffe3e8;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #89162a;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: #ff8ca0;
 }
 
 * {
@@ -53,9 +53,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/QdnpsmQH/conejos.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -1rem right -3.5rem;
 }
 
 .gifReg {
@@ -94,7 +94,6 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
   text-align: center;
   vertical-align: middle;
@@ -103,8 +102,6 @@ main {
   z-index: 4;
   margin-bottom: 1rem;
   top: -3rem;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
   text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
     0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
     2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
@@ -255,7 +252,7 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
+  top: 2.5rem;
   left: -0.5rem;
   opacity: 1;
 }
@@ -265,7 +262,6 @@ main {
 .peluche4 {
   opacity: 0;
 }
-
 .nube1 {
   top: 52.5%;
   left: 19rem;
@@ -299,10 +295,10 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 1.8rem;
+  top: 1.5rem;
   bottom: 50%;
   left: 1.2rem;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: var(--nube-p-color);

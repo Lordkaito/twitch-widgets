@@ -769,6 +769,7 @@ let isBulk = false;
 
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
+  if (event.isCommunityGift) return;
 
   const mainCont = document.querySelector("main");
 

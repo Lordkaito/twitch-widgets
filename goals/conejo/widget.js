@@ -130,12 +130,11 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
+  let currency = mainObj.fieldData.currency;
+
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
-  if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
-  }
+  if(mainObj.fieldData.goalType === "tip") items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity + currency;
 
   if (mainObj.fieldData.goalObjectiveQuantity > 999) {
     items.objective.style.fontSize = "1.5rem";
@@ -151,9 +150,10 @@ function init(obj, apiData, initial = false) {
   }
   if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
     items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
+    items.objective.style.top = "2.1rem";
     items.objective.style.left = "1.1rem";
   }
+
   items.goalTypeText.innerText = text[goalType];
 
   step = getStep(

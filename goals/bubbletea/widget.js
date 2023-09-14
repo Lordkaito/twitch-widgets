@@ -120,8 +120,9 @@ function init(obj, apiData, initial = false) {
   };
 
   let itemsColor = mainObj.fieldData.itemsColor;
+  let percentageColor = mainObj.fieldData.percentageColor;
   // let progressBarColor = mainObj.fieldData.progressBarColor;
-
+  items.progressBar.style.color = percentageColor;
   // items.goalText.innerText = mainObj.fieldData.goalText;
   // items.progressBar.style.backgroundColor = progressBarColor;
   // items.goalAmount.innerText = `${mainObj.fieldData.goalStartQuantity} | ${mainObj.fieldData.goalObjectiveQuantity}`;

@@ -20,14 +20,14 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 100,
+    value: 10,
     group: "Customization",
     step: 1,
   },
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 10,
+    value: 5,
     group: "Customization",
     step: 1,
   },

@@ -1,4 +1,4 @@
-// let fieldData = {};
+let fieldData = {};
 let currentEvent = null;
 let initialBorder = "purple";
 
@@ -1236,6 +1236,7 @@ let isBulk = false;
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
   if (event.bulkGifted) listener = "bulk";
+  if (event.isCommunityGift) return;
 
   const mainCont = document.querySelector("main");
 

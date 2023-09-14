@@ -27,14 +27,14 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 10,
+    value: 0,
     group: "Customization",
     step: 1,
   },
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "tip",
+    value: "cheer",
     group: "Customization",
     options: {
       subscriber: "Sub",

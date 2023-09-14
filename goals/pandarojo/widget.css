@@ -1,13 +1,13 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #ffc4b7;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #8b1c03;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: #eb7c63;
 }
 
 * {
@@ -53,9 +53,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/tJcjfMJj/pandassss.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -1rem right -6.5rem;
 }
 
 .gifReg {
@@ -94,7 +94,6 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
   text-align: center;
   vertical-align: middle;
@@ -255,7 +254,7 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
+  top: 3.3rem;
   left: -0.5rem;
   opacity: 1;
 }
@@ -265,7 +264,6 @@ main {
 .peluche4 {
   opacity: 0;
 }
-
 .nube1 {
   top: 52.5%;
   left: 19rem;

@@ -384,11 +384,11 @@ let events = {
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "0",
+          vip: "1",
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaito_",
+        displayName: "Lordkaitdo_",
         displayColor: "#FF0000",
         badges: [
           {

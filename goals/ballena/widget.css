@@ -1,13 +1,13 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #d6f4ff;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #014f6b;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: #59c2e7;
 }
 
 * {
@@ -40,6 +40,7 @@ main {
   align-items: center;
   flex-direction: column;
   height: 40rem;
+  /* width: 250px; */
   position: relative;
 }
 
@@ -53,9 +54,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/T329ThBH/ballenas.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -1rem right -7rem;
 }
 
 .gifReg {
@@ -94,7 +95,6 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
   text-align: center;
   vertical-align: middle;
@@ -247,7 +247,7 @@ main {
 .soporte {
   position: relative;
   z-index: 2;
-
+  /* opacity: 0; */
   top: -2.5rem;
   left: -0.1rem;
 }
@@ -255,7 +255,7 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
+  top: 2.5rem;
   left: -0.5rem;
   opacity: 1;
 }
@@ -265,7 +265,6 @@ main {
 .peluche4 {
   opacity: 0;
 }
-
 .nube1 {
   top: 52.5%;
   left: 19rem;
@@ -294,6 +293,7 @@ main {
 }
 
 .nube {
+  /* opacity: 0; */
   position: absolute;
 }
 
@@ -332,7 +332,7 @@ main {
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: var(--nube-p-color);
-
+  /* text-shadow: 3px 3px 2px #000000; */
   min-width: 3.5rem;
   text-align: center;
 }
