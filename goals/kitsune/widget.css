@@ -1,19 +1,20 @@
 :root {
-  --round-background-color: #ddffb3;
+  --round-background-color: #cacaff;
   --round-border-color: white;
   --progression-color: white;
-  --progressNums-color: white;
-  --progress-bar-background-color: #314617;
+  --progressNums-color: #fff2ce;
+  --progressNums-border-color: #9090ff;
+  --progress-bar-background-color: #5959c4;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #a0d067;
+  --nube-p-color: #9090ff;
 }
 
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 600;
   overflow-wrap: break-word;
   margin: 0;
   padding: 0;
@@ -53,9 +54,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/wxJRZH4y/ranas.png");
+  background-image: url("https://i.postimg.cc/sxsms7YC/kistunesitos.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -2.7rem;
+  background-position: bottom -3.5rem right -3.5rem;
 }
 
 .gifReg {
@@ -93,6 +94,7 @@ main {
 }
 
 .progressNums {
+  /* opacity: 0; */
   position: absolute;
   text-align: center;
   vertical-align: middle;
@@ -103,10 +105,10 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
-    0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
-    2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
-    2px -3px var(--nube-p-color), -2px 3px var(--nube-p-color);
+  text-shadow: 3px 0 var(--progressNums-border-color), -3px 0 var(--progressNums-border-color),
+    0 3px var(--progressNums-border-color), 0 -3px var(--progressNums-border-color),
+    2px 3px var(--progressNums-border-color), -2px -3px var(--progressNums-border-color),
+    2px -3px var(--progressNums-border-color), -2px 3px var(--progressNums-border-color);
 }
 
 .progress-bar {
@@ -252,7 +254,7 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.3rem;
+  top: 3rem;
   left: -1rem;
   opacity: 1;
 }
@@ -262,6 +264,7 @@ main {
 .peluche4 {
   opacity: 0;
 }
+
 .nube1 {
   top: 52.5%;
   left: 19rem;
@@ -295,14 +298,13 @@ main {
 
 .nube1 p {
   position: absolute;
-
-  bottom: 35%;
-  left: 1rem;
+  top: 1.8rem;
+  bottom: 50%;
+  left: 1.2rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-  color: white;
-
+  color: var(--nube-p-color);
   min-width: 4.6rem;
   text-align: center;
 }
@@ -314,7 +316,7 @@ main {
   font-size: 1.5rem;
   font-weight: 700;
 
-  color: white;
+  color: var(--nube-p-color);
 
   min-width: 3.5rem;
   text-align: center;
@@ -351,7 +353,7 @@ main {
   font-weight: 700;
 
   text-align: center;
-  color: white;
+  color: var(--nube-p-color);
 
   max-width: 6rem;
   line-height: 0.9;

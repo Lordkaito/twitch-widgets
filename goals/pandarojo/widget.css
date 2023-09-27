@@ -73,9 +73,8 @@ main {
 }
 
 .progress-bar-container {
-  width: 12px;
+  width: 10px;
   height: 33rem;
-  border-radius: 15px;
   overflow: hidden;
   top: -2rem;
 }
@@ -223,7 +222,7 @@ main {
   position: absolute;
   transition: top 0.2s;
   top: 0rem; /* this is the position for 100% */
-  left: 0.12rem; /* this is the position for 100% */
+  left: 0.15rem; /* this is the position for 100% */
   top: 30rem;
 }
 
@@ -246,9 +245,8 @@ main {
 .soporte {
   position: relative;
   z-index: 2;
-
   top: -2.5rem;
-  left: -0.1rem;
+  left: -0.05rem;
 }
 
 .peluche {
