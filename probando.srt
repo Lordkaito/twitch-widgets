@@ -1,0 +1,12 @@
+1
+00:00:00,000 --> 00:00:17,760
+So you're running a little late today, and you haven't had your fresh cup of coffee yet.
+
+2
+00:00:17,760 --> 00:00:25,960
+No matter the weather or traffic, we deliver fresh coffee and bagels.
+
+3
+00:00:25,960 --> 00:00:27,080
+The Java Cafe
+

@@ -85,16 +85,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("beniartsGirasolGoalWidgetPreviousGained");
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get("beniartsGirasolGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -129,7 +129,7 @@ function init(obj, apiData, initial = false) {
   let side = mainObj.fieldData.wateringCanSide;
   if (side === "right") {
     items.reg.style.transform = "scaleX(-1)";
-    items.reg.style.left = "-12.5rem";
+    items.reg.style.left = "-41.5rem";
   }
 
   if (mainObj.fieldData.goalFullType === "session") {
@@ -172,13 +172,14 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
+  let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
     // image.style.left = `${amountToUpdate * step - 23}px`;
     items.progressBar.style.height = `${amountToUpdate * step}px`;
 
     if (goalType === "tip") {
       items.progressionText.innerHTML =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+        amountToUpdate + currency + "/" + mainObj.fieldData.goalObjectiveQuantity + currency;
     } else {
       items.progressionText.innerHTML =
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
@@ -187,14 +188,7 @@ function handleGrow(amount, callback, initial = false) {
     // image.style.left = `32rem`;
     items.progressBar.style.height = "100%";
     items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
-    let text = mainObj.fieldData.completeGoalText;
-    let string = "";
-    if (text !== "") {
-      let split = text.split("").forEach((letter, index) => {
-        string += letter + "\n";
-      });
-    }
-    items.completeText.innerText = string;
+    // items.completeText.innerText = string;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -203,10 +197,15 @@ function handleGrow(amount, callback, initial = false) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
+}
+
+function getPercentage(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage) + "%";
 }

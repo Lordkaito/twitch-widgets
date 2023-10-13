@@ -1,6 +1,9 @@
 // let fieldData = {};
 let currentEvent = null;
 let flowerCount = 0;
+let currentMessagesIds = [];
+let currentAmountOfMessages = 0;
+let maxMessages;
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -68,17 +71,16 @@ class mainEvent {
         priorityRole.push({ role: key, priority: priorities[key] });
       }
     });
-
-    if (priorityRole.length === 0 && this.isStreamer) {
+    
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
+    console.log(priorityRole);
     return priorityRole[0];
     return priorityRole;
   }
@@ -211,13 +213,20 @@ class mainEvent {
   //   return flowersContainer;
   // }
 
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "f";
+    return `${startingLetter}${randomString}`;
+  }
+
   async createMainContainerElement() {
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
     // superMainContainer.appendChild(this.flowers);
-    mainContainer.setAttribute("id", `${this.id}`);
+    superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
@@ -697,7 +706,7 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
-
+    mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
 
@@ -756,6 +765,7 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
+  maxMessages = fieldData.maxMessages;
   let main = document.querySelector("main");
 });
 
@@ -786,28 +796,6 @@ const removeMessage = (mainContainer) => {
       elem.remove();
     }, 1000);
   }
-};
-
-const removeEvent = (mainContainer, event) => {
-  const elem = mainContainer;
-  elem.querySelector(".event-leafs-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-2").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(".event-leafs-container-1").style.animationName =
-    "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-1").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(`.${event}`).style.animationName = "hideNames";
-  setTimeout(() => {
-    elem.remove();
-  }, 1000);
 };
 
 let repeatedEvents = 0;
@@ -857,14 +845,20 @@ window.addEventListener("onEventReceived", async (obj) => {
   events.init
     .then((mainContainer) => {
       if (fieldData.allowDeleteMessages === "true") {
-        if (listener === "message") {
+        if (fieldData.deleteMessagesOption === "amount") {
+          if (currentAmountOfMessages >= maxMessages) {
+            let messageToRemove = currentMessagesIds.shift();
+            removeMessage(document.querySelector(`#${messageToRemove}`));
+            currentMessagesIds.push(mainContainer.id);
+          } else {
+            currentAmountOfMessages++;
+            currentMessagesIds.push(mainContainer.id);
+          }
+        }
+        if (fieldData.deleteMessagesOption === "timer") {
           setTimeout(() => {
             removeMessage(mainContainer);
-          }, fieldData.deleteMessages * 1000);
-        } else {
-          setTimeout(() => {
-            removeEvent(mainContainer, "event-name");
-          }, fieldData.deleteMessages * 1000);
+          }, fieldData.deleteMessagesTimer * 1000);
         }
       }
       mainCont.appendChild(mainContainer);
@@ -889,7 +883,7 @@ const addFlowers = (mainContainer, flowersContainer, listener) => {
 
   let possibleFlowers = Math.floor(conteinerHeight / flowerHeight);
   let minimumFlowers = 2;
-  if(listener !== "message") minimumFlowers = 1;
+  if (listener !== "message") minimumFlowers = 1;
   if (possibleFlowers < minimumFlowers) possibleFlowers = minimumFlowers;
   const flowers = {
     1: "https://i.postimg.cc/4xhNCGzF/hoja1.png",

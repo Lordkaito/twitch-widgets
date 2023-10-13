@@ -1,5 +1,5 @@
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -12,6 +12,11 @@
 
 .playing {
   opacity: 1 !important;
+}
+
+.general {
+  display: grid;
+  place-content: center;
 }
 
 main {
@@ -33,35 +38,35 @@ main {
 }
 
 #round {
-  width: 70px;
-  height: 42rem;
-  padding: 1.5rem 0.4rem 4rem 0.4rem;
+  width: 45px;
+  /* height: 42rem; */
+  /* padding: 1.5rem 0.4rem 4rem 0.4rem; */
   background-color: #8c3f0a;
   border-radius: 50px;
-  border: 5px solid #ffd56f;
+  border: 6px solid white;
   display: grid;
   place-content: center;
 }
 
 .gifReg {
   position: absolute;
-  left: -31rem;
+  left: -25rem;
   top: -20.5rem;
   opacity: 0;
   transition: opacity 0.2s;
 }
 
 .reg {
-  width: 694px;
-  height: 432px;
+  /* width: 694px; */
+  /* height: 432px; */
   transform: scale(0.85);
 }
 
 .progress-bar-container {
-  width: 50px;
-  height: 37rem;
-  border-radius: 15px;
-  background-color: #a46437;
+  /* width: 50px; */
+  height: 38rem;
+  border-radius: 50px;
+  background-color: #d6d4ff;
   /* position: relative; */
   overflow: hidden;
   top: -2rem;
@@ -76,8 +81,8 @@ main {
   font-size: 1.2rem;
   height: 100%;
   z-index: 4;
-  top: 6rem;
-  left: 2.8rem;
+  top: 2rem;
+  left: 2.5rem;
 }
 
 .progressNums {
@@ -86,23 +91,27 @@ main {
   text-align: center;
   vertical-align: middle;
   color: white;
-  font-size: 1.2rem;
+  font-size: 2rem;
   z-index: 4;
   margin-bottom: 1rem;
   top: -3rem;
-  text-shadow: -1px -1px 0 #a46437, 1px -1px 0 #a46437, -1px 1px 0 #a46437,
-    1px 1px 0 #a46437;
+  text-shadow: 3px 0 #687dd4, -3px 0 #687dd4,
+    0 3px #687dd4, 0 -3px #687dd4,
+    2px 3px #687dd4, -2px -3px #687dd4,
+    2px -3px #687dd4, -2px 3px #687dd4;
 }
 
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: #8ed6ff;
+  background-color: transparent;
+  background-image: url("https://i.postimg.cc/PxnGbvFr/cielo.png");
+  background-position: bottom left -20rem;
+  background-repeat: no-repeat;
   height: 0;
   width: 70px;
   transition: height 1s ease-in-out;
   position: relative;
-  background-position: bottom;
 }
 
 .img-progress {
@@ -122,15 +131,15 @@ main {
   /* opacity: 0; */
   position: absolute;
   z-index: 2;
-  bottom: -13rem;
-  left: -1.7rem;
+  bottom: -9rem;
+  left: -6.8rem;
   transition: left 0.2s;
 }
 
 .img-container img {
   height: 195px;
   width: 136spx;
-  transform: scale(0.85);
+  transform: scale(0.6);
 }
 
 .progression-img {

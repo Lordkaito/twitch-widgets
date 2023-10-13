@@ -15,7 +15,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
@@ -107,7 +107,7 @@ let fieldData = {
   theme: {
     type: "dropdown",
     label: "Theme:",
-    value: "purple",
+    value: "pink",
     group: "Customization",
     options: {
       pink: "Pink",
@@ -128,7 +128,7 @@ let fieldData = {
     label: "Max messages to show:",
     type: "number",
     group: "Customization",
-    value: 5,
+    value: 3,
     min: 1,
     max: 100,
     step: 1,

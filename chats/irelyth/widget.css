@@ -508,13 +508,13 @@ main {
 .text {
   font-size: 1.5rem;
   font-weight: 700;
-  transform: translateX(-20rem);
-  animation: showText 0.8s 0.5s ease-in-out forwards;
+  transform: translateX(-200%);
+  animation: showText 1s 0.5s ease-in-out forwards;
 }
 
 @keyframes showText {
   0% {
-    transform: translateX(-20rem);
+    transform: translateX(-200%);
   }
   100% {
     transform: translateX(0);

@@ -85,16 +85,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("beniartsGirasolGoalWidgetPreviousGained");
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -118,19 +118,48 @@ function init(obj, apiData, initial = false) {
     completeText: document.querySelector(".progression"),
     reg: document.querySelector(".gifReg"),
     image: document.querySelector("#image"),
+    ganchos: document.querySelector(".ganchos"),
+    objective: document.querySelector(".goal-obj-50"),
+    goalTypeText: document.querySelector(".goal-type-text"),
   };
+
+  let text = {
+    subscriber: "sub goal",
+    follower: "follow goal",
+    cheer: "cheer goal",
+    tip: "tip goal",
+  };
+
+  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+
+  if (mainObj.fieldData.goalType === "tip") {
+    items.objective.innerText =
+      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+  }
+
+  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
+    items.objective.style.fontSize = "1.5rem";
+    items.objective.style.fontSize = "1.3rem";
+    items.objective.style.top = "2rem";
+    items.objective.style.left = "1.1rem";
+  }
+
+  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
+    items.objective.style.fontSize = "1.3rem";
+    items.objective.style.top = "2rem";
+    items.objective.style.left = "1.1rem";
+  }
+  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
+    items.objective.style.fontSize = "1.1rem";
+    items.objective.style.top = "2rem";
+    items.objective.style.left = "1.1rem";
+  }
+  items.goalTypeText.innerText = text[goalType];
 
   step = getStep(
     items.progressBarContainer,
     mainObj.fieldData.goalObjectiveQuantity
   );
-
-  // items.title.innerText = mainObj.fieldData.title;
-  let side = mainObj.fieldData.wateringCanSide;
-  if (side === "right") {
-    items.reg.style.transform = "scaleX(-1)";
-    items.reg.style.left = "-12.5rem";
-  }
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -149,20 +178,16 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerWidth = container.offsetHeight;
-  const step = containerWidth / objective;
+  const containerHeight = container.offsetHeight;
+  const step = containerHeight / objective;
   return step;
 }
 
+function getGachoStep(diff, objective) {
+  return diff / objective;
+}
+
 function handleGrow(amount, callback, initial = false) {
-  if (!animationActive) {
-    animationActive = true;
-    items.reg.style.opacity = "1";
-    setTimeout(() => {
-      animationActive = false;
-      items.reg.style.opacity = "0";
-    }, 1500);
-  }
   let amountToUpdate =
     widgetApiData[goalType].amount +
     amount +
@@ -173,40 +198,53 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    // image.style.left = `${amountToUpdate * step - 23}px`;
-    items.progressBar.style.height = `${amountToUpdate * step}px`;
-
+    let ganchosHeight = 32;
+    console.log(amountToUpdate);
+    let barraHeight = items.progressBar.offsetHeight;
+    console.log(barraHeight);
+    let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
+    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
+      amountToUpdate * ganchoStep
+    }rem - 5px)`;
+    console.log(items.ganchos.style.top);
+    items.progressBar.style.height = `calc(100% - ${
+      amountToUpdate * step
+    }px)`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.progressionText.innerHTML = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
     } else {
-      items.progressionText.innerHTML =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.progressionText.innerHTML = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
     }
   } else {
-    // image.style.left = `32rem`;
-    items.progressBar.style.height = "100%";
-    items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
-    let text = mainObj.fieldData.completeGoalText;
-    let string = "";
-    if (text !== "") {
-      let split = text.split("").forEach((letter, index) => {
-        string += letter + "\n";
-      });
-    }
-    items.completeText.innerText = string;
+    items.ganchos.style.top = `0`;
+    items.progressBar.style.height = "0%";
+    items.progressionText.innerHTML = getPercentage(
+      amountToUpdate,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
   }
 }
 
+function getPercentage(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage) + "%";
+}
+
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

@@ -86,7 +86,7 @@ window.addEventListener("onEventReceived", function (obj) {
 
 const getApiData = async (obj) => {
   // let data = await SE_API.store.get(
-  //   "beniartsRinaHorizontalGoalWidgetPreviousGained"
+  //   "beniartsAutummGoalWidgetPreviousGained"
   // );
   // if (data === null) {
   //   widgetApiData = defaultApiData;
@@ -177,7 +177,7 @@ function handleGrow(amount, callback, initial = false) {
   if (!completedGoal) {
     items.progressBar.style.width = `${amountToUpdate * step}px`;
     if (goalType === "tip") {
-      items.goalText.innerHTML = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.goalText.innerHTML = `${goalTypeText} ${amountToUpdate}` + currency + ` | ${mainObj.fieldData.goalObjectiveQuantity}` + currency;
       items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
     } else if (goalType === "cheer") {
       console.log(goalType);
@@ -190,7 +190,7 @@ function handleGrow(amount, callback, initial = false) {
   } else {
     items.progressBar.style.width = "100%";
     items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
-    items.goalText.innerHTML = `Goal completed!`;
+    items.goalText.innerHTML = mainObj.fieldData.completeGoalText;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -198,16 +198,16 @@ function handleGrow(amount, callback, initial = false) {
 }
 
 function updateApiData(amountToUpdate) {
-  widgetApiData[goalType].amount = amountToUpdate;
+  // widgetApiData[goalType].amount = amountToUpdate;
   // SE_API.store.set(
-  //   "beniartsRinaHorizontalGoalWidgetPreviousGained",
+  //   "beniartsAutummGoalWidgetPreviousGained",
   //   widgetApiData
   // );
 }
 
 function clearApiData() {
   // SE_API.store.set(
-  //   "beniartsRinaHorizontalGoalWidgetPreviousGained",
+  //  "beniartsAutummGoalWidgetPreviousGained",
   //   defaultApiData
   // );
   window.location.reload();

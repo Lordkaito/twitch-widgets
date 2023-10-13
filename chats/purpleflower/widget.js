@@ -1,9 +1,9 @@
 // let fieldData = {};
 let currentEvent = null;
+let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -72,7 +72,7 @@ class mainEvent {
       }
     });
 
-    if (this.isStreamer) {
+    if (priorityRole.length === 0 && this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
       return priorityRole[0];
     }
@@ -115,6 +115,7 @@ class mainEvent {
   }
 
   get userColor() {
+    console.log(this.event.data.displayColor);
     return this.event.data.displayColor;
   }
 
@@ -182,7 +183,7 @@ class mainEvent {
 
     circle.appendChild(flower);
 
-    container.appendChild(circle);
+    // container.appendChild(circle);
     container.appendChild(dots);
     container.appendChild(oriContainer);
 
@@ -190,24 +191,19 @@ class mainEvent {
     return origami;
   }
 
-  get id() {
-    // generate random string
-    const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
-    return `${startingLetter}${randomString}`;
-  }
-
   async createMainContainerElement() {
-    let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
-    superMainContainer.appendChild(this.origami);
+    // superMainContainer.appendChild(this.flowers);
     superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    const leftTopFlower = document.createElement("img");
+    leftTopFlower.src = "https://i.postimg.cc/C5tP8bwM/flor-arriba-izq.png";
+    leftTopFlower.classList.add("left-top-flower");
+    mainContainer.appendChild(leftTopFlower);
 
-    mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(mainContainer);
 
@@ -228,27 +224,73 @@ class mainEvent {
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
     const hyphen = document.createElement("span");
-    let theme = fieldData.theme;
     hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
+    // const circle = document.createElement("div");
+    // circle.innerHTML = `
+    //   <svg class="circulo" viewBox="0 0 100 100">
+    //     <circle class="circulo-animado" cx="50" cy="50" r="45">
+    //     </circle>
+    //   </svg>
+    // `;
+
+    const role = this.roles.role;
+    const roleCont = document.createElement("div");
+    roleCont.classList.add("role-container");
+    const roleText = document.createElement("span");
+    roleText.classList.add("role-text");
+    switch (role) {
+      case "mod":
+        roleText.innerText = "mod";
+        break;
+      case "vip":
+        roleText.innerText = "vip";
+        break;
+      case "subscriber":
+        roleText.innerText = "sub";
+        break;
+      case "streamer":
+        roleText.innerText = "streamer";
+        break;
+      default:
+        roleText.innerText = "";
+        roleText.style.display = "none";
+        break;
+    }
+    roleCont.appendChild(roleText);
+    // heart.classList.add("heart");
+    // circle.classList.add("circle");
+    // circle.appendChild(heart);
+    // usernameInfoContainer.appendChild(circle);
     usernameInfo.classList.add("username-info");
-    theme === "purple" ? usernameInfo.classList.add("username-purple") : null;
+    // theme === "purple" ? usernameInfo.classList.add("username-purple") : null;
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    if (this.isSub || this.isStreamer) {
-      usernameInfoContainer.appendChild(this.createRoleContainer());
-    }
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    // if (this.isSub || this.isStreamer) {
+    //   usernameInfoContainer.appendChild(this.createRoleContainer());
+    // }
+    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
     usernameInfoContainer.appendChild(usernameInfo);
+    usernameInfoContainer.appendChild(dot);
+    usernameInfoContainer.appendChild(roleCont);
     return usernameInfoContainer;
   }
 
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    messageContainer.appendChild(await this.createUsernameInfoElement());
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
+    const rightTopFlower = document.createElement("img");
+    rightTopFlower.src = "https://i.postimg.cc/prycysb1/flor-derecha.png";
+    rightTopFlower.classList.add("right-top-flower");
+    if (this.isSub || this.isStreamer) {
+      messageContainer.appendChild(rightTopFlower);
+    }
     return messageContainer;
   }
 
@@ -522,6 +564,13 @@ class mainEvent {
     return trimmed;
   }
 
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "f";
+    return `${startingLetter}${randomString}`;
+  }
+
   async createMainEventContainer() {
     const mainContainer = document.createElement("div");
 
@@ -546,12 +595,15 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
+    console.log(this.event);
 
+    console.log(this.event, "asdfahjksdgfas");
     const eventType = this.event.type;
 
     const amount = this.amount;
     let sender = this.event.sender || this.event.name;
     let eventText = dictionary[this.event.type];
+    console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -593,28 +645,8 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    switch (eventType) {
-      case "follower":
-        fungi.src = "https://i.postimg.cc/prpV89X5/crss.png";
-        fungi.classList.add("heart");
-        break;
-      case "subscriber":
-        fungi.src = "https://i.postimg.cc/5tVtGNpD/strll.png";
-        fungi.classList.add("star");
-        break;
-      case "cheer":
-        fungi.src = "https://i.postimg.cc/9FwFQqnv/bitt.png";
-        fungi.classList.add("bit");
-        break;
-      case "tip":
-        fungi.src = "https://i.postimg.cc/SNHR6G9S/monedd.png";
-        fungi.classList.add("coin");
-        break;
-      case "raid":
-        fungi.src = "https://i.postimg.cc/Jn7zr6fq/flrr.png";
-        fungi.classList.add("raid");
-        break;
-    }
+    fungi.src = "https://i.postimg.cc/X7qY8dXW/bellotaaa.png";
+    fungi.classList.add("bellota");
 
     fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
@@ -635,10 +667,9 @@ class mainEvent {
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
-    eventAndNameContainer.appendChild(fungiDivContainer);
+    // eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
-
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
@@ -698,8 +729,8 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
-  let main = document.querySelector("main");
   maxMessages = fieldData.maxMessages;
+  let main = document.querySelector("main");
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -727,7 +758,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 700);
+    }, 1000);
   }
 };
 
@@ -816,5 +847,43 @@ window.addEventListener("onEventReceived", async (obj) => {
       }
     }
     mainCont.appendChild(mainContainer);
+    return mainContainer;
   });
+  // .then((mainContainer) => {
+  //   mainContainer.appendChild(flowers(mainContainer, listener));
+  // });
 });
+
+const flowers = (mainContainer, listener) => {
+  const flowersContainer = document.createElement("div");
+  flowersContainer.classList.add("flowers-container");
+  addFlowers(mainContainer, flowersContainer, listener);
+  const flowers = flowersContainer.querySelectorAll(".flower");
+  return flowersContainer;
+};
+
+const addFlowers = (mainContainer, flowersContainer, listener) => {
+  const flowerHeight = 64;
+  const conteinerHeight = mainContainer.offsetHeight;
+
+  let possibleFlowers = Math.floor(conteinerHeight / flowerHeight);
+  let minimumFlowers = 2;
+  if (listener !== "message") minimumFlowers = 1;
+  if (possibleFlowers < minimumFlowers) possibleFlowers = minimumFlowers;
+  const flowers = {
+    1: "https://i.postimg.cc/4xhNCGzF/hoja1.png",
+    2: "https://i.postimg.cc/rp1Vm9Z1/hoja2.png",
+    3: "https://i.postimg.cc/wB8xgr2x/hoja3.png",
+  };
+
+  for (let i = 0; i < possibleFlowers; i++) {
+    const flower = document.createElement("img");
+    if (flowerCount === 3) {
+      flowerCount = 0;
+    }
+    flower.src = flowers[flowerCount + 1];
+    flower.classList.add(`flower`);
+    flowersContainer.appendChild(flower);
+    flowerCount++;
+  }
+};

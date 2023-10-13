@@ -5,21 +5,6 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  widgetHeight: {
-    label: "Widget height (recommended 1080)",
-    type: "text",
-    group: "Customization",
-    value: "1080",
-  },
-  deleteMessages: {
-    label: "Time to delete messages (max 60):",
-    type: "number",
-    group: "Customization",
-    value: 60,
-    min: 1,
-    max: 60,
-    step: 1,
-  },
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
@@ -34,16 +19,6 @@ let fieldData = {
     type: "dropdown",
     label: "Show badges:",
     value: "false",
-    group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
-  },
-  allowPronouns: {
-    type: "dropdown",
-    label: "Show pronouns:",
-    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
@@ -104,16 +79,6 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
-  theme: {
-    type: "dropdown",
-    label: "Theme:",
-    value: "purple",
-    group: "Customization",
-    options: {
-      pink: "Pink",
-      purple: "Purple",
-    },
-  },
   deleteMessagesOption: {
     label: "How to delete messages:",
     type: "dropdown",
@@ -128,7 +93,7 @@ let fieldData = {
     label: "Max messages to show:",
     type: "number",
     group: "Customization",
-    value: 5,
+    value: 3,
     min: 1,
     max: 100,
     step: 1,
@@ -141,5 +106,45 @@ let fieldData = {
     min: 1,
     max: 60,
     step: 1,
-  }
+  },
+  showBorder: {
+    type: "dropdown",
+    label: "Show border:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  streamerText: {
+    type: "text",
+    label: "Streamer text",
+    value: "probando",
+    group: "Customization",
+  },
+  modText: {
+    type: "text",
+    label: "Mod text",
+    value: "Mod",
+    group: "Customization",
+  },
+  vipText: {
+    type: "text",
+    label: "VIP text",
+    value: "VIP",
+    group: "Customization",
+  },
+  subscriberText: {
+    type: "text",
+    label: "Sub text",
+    value: "Sub",
+    group: "Customization",
+  },
+  viewerText: {
+    type: "text",
+    label: "Founder text",
+    value: "Founder",
+    group: "Customization",
+  },
 };

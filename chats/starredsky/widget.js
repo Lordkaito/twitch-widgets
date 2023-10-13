@@ -1,9 +1,9 @@
 // let fieldData = {};
 let currentEvent = null;
+let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -74,16 +74,13 @@ class mainEvent {
 
     if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -115,6 +112,7 @@ class mainEvent {
   }
 
   get userColor() {
+    console.log(this.event.data.displayColor);
     return this.event.data.displayColor;
   }
 
@@ -182,7 +180,7 @@ class mainEvent {
 
     circle.appendChild(flower);
 
-    container.appendChild(circle);
+    // container.appendChild(circle);
     container.appendChild(dots);
     container.appendChild(oriContainer);
 
@@ -190,24 +188,19 @@ class mainEvent {
     return origami;
   }
 
-  get id() {
-    // generate random string
-    const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
-    return `${startingLetter}${randomString}`;
-  }
-
   async createMainContainerElement() {
-    let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
-    superMainContainer.appendChild(this.origami);
+    // superMainContainer.appendChild(this.flowers);
     superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
+    const leftTopFlower = document.createElement("img");
+    leftTopFlower.src = "https://i.postimg.cc/C5tP8bwM/flor-arriba-izq.png";
+    leftTopFlower.classList.add("left-top-flower");
+    // mainContainer.appendChild(leftTopFlower);
 
-    mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(mainContainer);
 
@@ -228,27 +221,108 @@ class mainEvent {
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
     const hyphen = document.createElement("span");
-    let theme = fieldData.theme;
     hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
+    // const circle = document.createElement("div");
+    // circle.innerHTML = `
+    //   <svg class="circulo" viewBox="0 0 100 100">
+    //     <circle class="circulo-animado" cx="50" cy="50" r="45">
+    //     </circle>
+    //   </svg>
+    // `;
+
+    const role = this.roles.role;
+    const roleCont = document.createElement("div");
+    roleCont.classList.add("role-container");
+    const contContainer = document.createElement("div");
+    contContainer.classList.add("cont-container");
+    contContainer.appendChild(roleCont)
+    const roleText = document.createElement("span");
+    roleText.classList.add("role-text");
+    switch (role) {
+      case "mod":
+        roleText.innerText = "mod";
+        break;
+      case "vip":
+        roleText.innerText = "vip";
+        break;
+      case "subscriber":
+        roleText.innerText = "sub";
+        break;
+      case "streamer":
+        roleText.innerText = "streamer";
+        break;
+      default:
+        roleText.innerText = "";
+        roleText.style.display = "none";
+        break;
+    }
+    roleCont.appendChild(roleText);
+    // heart.classList.add("heart");
+    // circle.classList.add("circle");
+    // circle.appendChild(heart);
+    // usernameInfoContainer.appendChild(circle);
     usernameInfo.classList.add("username-info");
-    theme === "purple" ? usernameInfo.classList.add("username-purple") : null;
+    // theme === "purple" ? usernameInfo.classList.add("username-purple") : null;
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    if (this.isSub || this.isStreamer) {
-      usernameInfoContainer.appendChild(this.createRoleContainer());
-    }
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    // if (this.isSub || this.isStreamer) {
+    //   usernameInfoContainer.appendChild(this.createRoleContainer());
+    // }
+    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
     usernameInfoContainer.appendChild(usernameInfo);
+    // usernameInfoContainer.appendChild(dot);
+    // usernameInfoContainer.appendChild(roleCont);
     return usernameInfoContainer;
   }
 
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+
+    if(fieldData.showBorder == "false") {
+      messageContainer.style.border = "none";
+    }
+
+    const role = this.roles.role;
+    const roleCont = document.createElement("div");
+    roleCont.classList.add("role-container");
+    const roleText = document.createElement("span");
+    roleText.classList.add("role-text");
+    const { streamerText, modText, vipText, subscriberText, viewerText } = fieldData;
+    switch (role) {
+      case "mod":
+        roleText.innerText = modText;
+        break;
+      case "vip":
+        roleText.innerText = vipText;
+        break;
+      case "subscriber":
+        roleText.innerText = subscriberText;
+        break;
+      case "streamer":
+        roleText.innerText = streamerText;
+        break;
+      default:
+        roleText.innerText = "";
+        roleText.style.display = "none";
+        roleCont.style.display = "none";
+        break;
+    }
+    roleCont.appendChild(roleText);
+    messageContainer.appendChild(roleCont);
+    messageContainer.appendChild(await this.createUsernameInfoElement());
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
+    const rightTopFlower = document.createElement("img");
+    rightTopFlower.src = "https://i.postimg.cc/5tCdFSgR/pluma.png";
+    rightTopFlower.classList.add("right-top-flower");
+    // if (this.isSub || this.isStreamer) {
+    // }
+    messageContainer.appendChild(rightTopFlower);
     return messageContainer;
   }
 
@@ -454,6 +528,19 @@ class mainEvent {
     }
 
     const rawMessage = this.text;
+
+    let textContainer = document.createElement("p");
+    textContainer.classList.add("text");
+
+    // Utiliza expresiones regulares o funciones de búsqueda de texto
+    // para determinar si el texto contiene caracteres en inglés o japonés.
+
+    if (
+      /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]/u.test(rawMessage)
+    ) {
+      textContainer.style.fontFamily = "Noto Sans JP";
+    }
+
     const words = rawMessage.split(" ");
 
     words.map((word, index) => {
@@ -473,8 +560,7 @@ class mainEvent {
         words[index] = `<img src="${url}" class="emotes"/>`;
       }
     });
-    let textContainer = document.createElement("p");
-    textContainer.classList.add("text");
+
     textContainer.innerHTML = words.join(" ");
     return textContainer;
   }
@@ -522,6 +608,13 @@ class mainEvent {
     return trimmed;
   }
 
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "f";
+    return `${startingLetter}${randomString}`;
+  }
+
   async createMainEventContainer() {
     const mainContainer = document.createElement("div");
 
@@ -546,12 +639,15 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
+    console.log(this.event);
 
+    console.log(this.event, "asdfahjksdgfas");
     const eventType = this.event.type;
 
     const amount = this.amount;
     let sender = this.event.sender || this.event.name;
     let eventText = dictionary[this.event.type];
+    console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -591,54 +687,46 @@ class mainEvent {
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
-    const fungi = document.createElement("img");
-
-    switch (eventType) {
-      case "follower":
-        fungi.src = "https://i.postimg.cc/prpV89X5/crss.png";
-        fungi.classList.add("heart");
-        break;
-      case "subscriber":
-        fungi.src = "https://i.postimg.cc/5tVtGNpD/strll.png";
-        fungi.classList.add("star");
-        break;
-      case "cheer":
-        fungi.src = "https://i.postimg.cc/9FwFQqnv/bitt.png";
-        fungi.classList.add("bit");
-        break;
-      case "tip":
-        fungi.src = "https://i.postimg.cc/SNHR6G9S/monedd.png";
-        fungi.classList.add("coin");
-        break;
-      case "raid":
-        fungi.src = "https://i.postimg.cc/Jn7zr6fq/flrr.png";
-        fungi.classList.add("raid");
-        break;
-    }
-
-    fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
 
-    let theme = fieldData.theme;
     fungiDivContainer.classList.add(`event-leafs-container`);
-    fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
-    theme === "purple"
-      ? fungiContainer.classList.add("fungi-container-purple")
-      : null;
-    const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
-    moon.classList.add("moon");
-    fungiContainer.appendChild(moon);
+    const brilli = document.createElement("img");
+    brilli.src = "https://i.postimg.cc/rm5k7Ntr/brillito.png";
+    brilli.classList.add("brillito");
+    fungiContainer.appendChild(brilli);
+
+    const events = {
+      follower: "hi",
+      subscriber: "sub",
+      cheer: "cheer",
+      tip: "tip",
+      raid: "raid",
+    };
+
+    const roleCont = document.createElement("div");
+    const roleText = document.createElement("span");
+    const contCont = document.createElement("div");
+    contCont.classList.add("cont-container");
+    roleText.classList.add("role-text");
+    roleText.innerText = events[eventType];
+    roleCont.appendChild(roleText);
+    roleCont.classList.add("role-container");
+    roleCont.classList.add(`role-container-no-absolute`);
+    contCont.appendChild(roleCont);
+    fungiContainer.appendChild(contCont);
+    const flower = document.createElement("img");
+    flower.src = "https://i.postimg.cc/jqQTXvTV/florr.png";
+    flower.classList.add("flower");
+    fungiContainer.appendChild(flower);
+
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
-    eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
-
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
@@ -698,8 +786,8 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
-  let main = document.querySelector("main");
   maxMessages = fieldData.maxMessages;
+  let main = document.querySelector("main");
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -727,7 +815,7 @@ const removeMessage = (mainContainer) => {
     elem.style.animationDuration = "0.7s";
     setTimeout(() => {
       elem.remove();
-    }, 700);
+    }, 1000);
   }
 };
 
@@ -797,24 +885,129 @@ window.addEventListener("onEventReceived", async (obj) => {
 
   const events = new mainEvent(event, listener);
 
-  events.init.then((mainContainer) => {
-    if (fieldData.allowDeleteMessages === "true") {
-      if(fieldData.deleteMessagesOption === "amount") {
-        if(currentAmountOfMessages >= maxMessages) {
-          let messageToRemove = currentMessagesIds.shift();
-          removeMessage(document.querySelector(`#${messageToRemove}`));
-          currentMessagesIds.push(mainContainer.id);
-        } else {
-          currentAmountOfMessages++;
-          currentMessagesIds.push(mainContainer.id);
+  events.init
+    .then((mainContainer) => {
+      if (fieldData.allowDeleteMessages === "true") {
+        if (fieldData.deleteMessagesOption === "amount") {
+          if (currentAmountOfMessages >= maxMessages) {
+            let messageToRemove = currentMessagesIds.shift();
+            removeMessage(document.querySelector(`#${messageToRemove}`));
+            currentMessagesIds.push(mainContainer.id);
+          } else {
+            currentAmountOfMessages++;
+            currentMessagesIds.push(mainContainer.id);
+          }
+        }
+        if (fieldData.deleteMessagesOption === "timer") {
+          setTimeout(() => {
+            removeMessage(mainContainer);
+          }, fieldData.deleteMessagesTimer * 1000);
         }
       }
-      if(fieldData.deleteMessagesOption === "timer") {
-        setTimeout(() => {
-          removeMessage(mainContainer);
-        }, fieldData.deleteMessagesTimer * 1000);
-      }
-    }
-    mainCont.appendChild(mainContainer);
-  });
+      mainCont.appendChild(mainContainer);
+      return mainContainer;
+    })
+    .then((mainContainer) => {
+      mainContainer.appendChild(flowers(mainContainer, listener, event));
+    });
 });
+
+const flowers = (mainContainer, listener, event) => {
+  const flowersContainer = document.createElement("div");
+  flowersContainer.classList.add("flowers-container");
+  addDots(flowersContainer, listener, event, mainContainer);
+  const flowers = flowersContainer.querySelectorAll(".flower");
+  return flowersContainer;
+};
+
+const addDots = (flowersContainer, listener, event, mainContainer) => {
+  const dotsHeight = 11;
+  const conteinerHeight = mainContainer.offsetHeight;
+
+  let possibleDots = Math.floor(conteinerHeight / dotsHeight) - 2;
+  let minimumFlowers = 5;
+  // if (possibleDots < minimumFlowers) possibleDots = minimumFlowers;
+
+  if (listener === "message") {
+    console.log(event);
+    const role = getRoles(event);
+    let circle = document.createElement("div");
+    circle.classList.add("circle");
+    const roleImg = document.createElement("img");
+    roleImg.classList.add("role");
+    switch (role.role) {
+      case "mod":
+        roleImg.src = "https://i.postimg.cc/Fzm4vkjn/escudooo.png";
+        break;
+      case "vip":
+        roleImg.src = "https://i.postimg.cc/GhXC029q/gatito2.png";
+        break;
+      case "subscriber":
+        roleImg.src = "https://i.postimg.cc/J4rLdJ7s/flor2.png";
+        break;
+      case "streamer":
+        roleImg.src = "https://i.postimg.cc/L8hMmp1R/gatito1.png";
+        break;
+      default:
+        roleImg.src = "https://i.postimg.cc/Hn2CkWzW/flor1.png";
+        break;
+    }
+    circle.innerHTML = `
+      <svg class="circulo" viewBox="0 0 100 100">
+        <circle class="circulo-animado" cx="50" cy="50" r="45">
+        </circle>
+      </svg>
+    `;
+    circle.appendChild(roleImg);
+    flowersContainer.appendChild(circle);
+    for (let i = 0; i < possibleDots; i++) {
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+      flowersContainer.appendChild(dot);
+    }
+  } else {
+    let structure = ["dot", "dot", "dot", "circle", "dot", "dot", "dot"];
+    for (let i = 0; i < structure.length; i++) {
+      const element = document.createElement("div");
+      element.classList.add(structure[i]);
+      if (structure[i] === "circle") {
+        element.innerHTML = `
+        <svg class="circulo" viewBox="0 0 100 100">
+          <circle class="circulo-animado" cx="50" cy="50" r="45">
+          </circle>
+        </svg>
+      `;
+        const shiny = document.createElement("img");
+        shiny.src = "https://i.postimg.cc/rm5k7Ntr/brillito.png";
+        shiny.classList.add("shiny");
+        element.appendChild(shiny);
+      }
+      flowersContainer.appendChild(element);
+    }
+    flowersContainer.classList.add("fix-height");
+  }
+};
+
+function getRoles(event) {
+  const priorityRole = [];
+  const tags = event.data.tags;
+  let keys = Object.keys(tags);
+  keys.forEach((key) => {
+    if (roles.includes(key) && tags[key] === "1") {
+      priorityRole.push({ role: key, priority: priorities[key] });
+    }
+  });
+
+  const isStreamer =
+    event.data.displayName.toLowerCase() == event.data.channel.toLowerCase();
+
+  if (isStreamer) {
+    priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
+  }
+
+  if (priorityRole.length === 0) {
+    priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
+  }
+  priorityRole.sort((a, b) => a.priority - b.priority);
+  return priorityRole[0];
+}
