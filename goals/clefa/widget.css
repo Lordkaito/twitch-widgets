@@ -1,13 +1,13 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #f6b2af;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #75221f;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: #ff7d7e;
 }
 
 * {
@@ -53,9 +53,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/d0dZH96c/clefas.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -6rem right -5.3rem;
 }
 
 .gifReg {
@@ -223,7 +223,7 @@ main {
   position: absolute;
   transition: top 0.2s;
   top: 0rem; /* this is the position for 100% */
-  left: 0.15rem; /* this is the position for 100% */
+  left: 0.1rem; /* this is the position for 100% */
   top: 30rem;
 }
 
@@ -254,9 +254,8 @@ main {
   position: absolute;
   z-index: 1;
   top: 3.7rem;
-  left: -0.5rem;
+  left: -2rem;
   opacity: 1;
-  /* transform: translate(.8); */
 }
 
 .peluche2,
@@ -298,14 +297,13 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 1.8rem;
+  top: 1.5rem;
   bottom: 50%;
-  left: 1.2rem;
+  left: .6rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-  color: var(--nube-p-color);
-
+  color: white;
   min-width: 4.6rem;
   text-align: center;
 }
@@ -337,8 +335,8 @@ main {
 }
 
 .nube4 {
-  top: 42.5%;
-  left: 29rem;
+  top: 27rem;
+  left: 31rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,17 +346,14 @@ main {
 
 .nube4 p {
   position: absolute;
-
-  top: 35%;
+  top: 6rem;
   font-size: 1.6rem;
   font-weight: 700;
-
   text-align: center;
   color: var(--nube-p-color);
-
   max-width: 6rem;
   line-height: 0.9;
-  left: 1.7rem;
+  left: 0rem;
 }
 
 .goal-type-amount {

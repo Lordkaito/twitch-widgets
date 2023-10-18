@@ -1,13 +1,13 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #c0e4d4;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #025744;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: white;
 }
 
 * {
@@ -53,9 +53,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/FsvjsVRY/koalillas.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -5.5rem right -5rem;
 }
 
 .gifReg {
@@ -104,10 +104,10 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
-    0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
-    2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
-    2px -3px var(--nube-p-color), -2px 3px var(--nube-p-color);
+  text-shadow: 3px 0 #77ccb9, -3px 0 #77ccb9,
+    0 3px #77ccb9, 0 -3px #77ccb9,
+    2px 3px #77ccb9, -2px -3px #77ccb9,
+    2px -3px #77ccb9, -2px 3px #77ccb9;
 }
 
 .progress-bar {
@@ -253,10 +253,10 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
-  left: -0.5rem;
+  top: 2.4rem;
+  left: -2.5rem;
   opacity: 1;
-  /* transform: translate(.8); */
+  transform: scale(.85);
 }
 
 .peluche2,
@@ -266,7 +266,7 @@ main {
 }
 
 .nube1 {
-  top: 52.5%;
+  top: 49%;
   left: 19rem;
 }
 
@@ -298,14 +298,12 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 1.8rem;
-  bottom: 50%;
-  left: 1.2rem;
+  top: 2.3rem;
+  left: 1.5rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: var(--nube-p-color);
-
   min-width: 4.6rem;
   text-align: center;
 }
@@ -337,8 +335,8 @@ main {
 }
 
 .nube4 {
-  top: 42.5%;
-  left: 29rem;
+  top: 39%;
+  left: 30.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,17 +346,14 @@ main {
 
 .nube4 p {
   position: absolute;
-
-  top: 35%;
+  top: 3rem;
   font-size: 1.6rem;
   font-weight: 700;
-
   text-align: center;
   color: var(--nube-p-color);
-
   max-width: 6rem;
   line-height: 0.9;
-  left: 1.7rem;
+  left: .5rem;
 }
 
 .goal-type-amount {

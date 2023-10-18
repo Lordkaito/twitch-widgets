@@ -1,10 +1,10 @@
 :root {
-  --message-color: white;
-  --message-background-color: rgba(104, 125, 212, .5);
-  --message-border-color: white;
-  --user-color: #687dd4;
-  --user-role-color: #343855;
-  --user-background-color: #d6d4ff;
+  --message-color: #fdf9fa;
+  --message-background-color: #252247;
+  --message-border-color: #e1daff;
+  --user-color: #9a83ff;
+  --user-role-color: #ffaf66;
+  --user-background-color: #252247;
   --user-border-color: #e6e6e6;
   --pronouns-color: #7c3844;
   --pronouns-background-color: #ffd7ea;
@@ -12,8 +12,8 @@
   /* --pronouns-shadow-color: rgba(120, 120, 120, 0.38); */
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
-  --event-background-color: rgba(104, 125, 212, .5);
-  --event-color: white;
+  --event-background-color: #252247;
+  --event-color: #fdf9fa;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
 }
@@ -55,16 +55,14 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   margin-left: 4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 }
 
 .super-main-container {
   display: flex;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  width: calc(35rem + 10px);
-  gap: 10px;
-  margin-top: 1rem;
+  width: 28rem;
 }
 
 .main-container {
@@ -75,8 +73,61 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 40px;
-  margin: 1rem 0;
-  z-index: 1 !important;
+  margin: .9rem 0 1rem 0;
+  z-index: 2 !important;
+}
+
+.line {
+  width: 3px;
+  height: 2.5rem;
+  background-color: #e1daff;
+  position: absolute;
+  bottom: 0;
+  left: 3rem;
+  z-index: -10;
+  animation: growLine 0.5s ease-in-out forwards;
+}
+
+.line2 {
+  width: 3px;
+  height: 2.5rem;
+  background-color: #e1daff;
+  position: absolute;
+  bottom: 1rem;
+  left: 3rem;
+  z-index: -2;
+  animation: growLine2 0.5s ease-in-out forwards;
+}
+
+.web {
+  position: absolute;
+  bottom: -6.3rem;
+  left: .83rem;
+  border-radius: 40px;
+  z-index: -2;
+  opacity: 0;
+  transform: scale(.8);
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+}
+
+@keyframes growLine {
+  0% {
+    bottom: 0;
+  }
+
+  100% {
+    bottom: -2.5rem;
+  }
+}
+
+@keyframes growLine2 {
+  0% {
+    bottom: 1rem;
+  }
+
+  100% {
+    bottom: -1.5rem;
+  }
 }
 
 .flowers-container {
@@ -87,8 +138,7 @@ main {
   flex-direction: column;
   width: 10%;
   min-width: 64px;
-  gap: 8px;
-  /* height: 80%; */
+  height: 80%;
 }
 
 .container {
@@ -98,17 +148,13 @@ main {
 }
 
 .circle {
-  width: 35px;
-  position: relative;
+  width: 45px;
   fill: transparent;
   stroke: white;
   stroke-width: 5;
   stroke-dasharray: 0;
   stroke-dashoffset: 0;
   animation: dibujarCirculo 0.8s linear forwards;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .circulo {
@@ -146,27 +192,19 @@ main {
   align-items: center;
   justify-content: flex-start;
   overflow: hidden;
-  padding: .5rem 1rem;
-  position: absolute;
-  z-index: 2;
-  background-color: white;
-  top: -1.3rem;
-  left: 2rem;
-  border-radius: 30px;
-  /* background-color: var(--user-background-color); */
+  order: -1;
+  width: 100%;
+  padding: .75rem 1rem .5rem 1.5rem;
+  background-color: var(--user-background-color);
 }
 
 .dot {
-  background-color: var(--message-border-color);
-  height: 3px;
-  width: 3px;
+  background-color: #e1daff;
+  height: 5px;
+  width: 5px;
   border-radius: 50%;
   opacity: 0;
   animation: fadeIn 0.5s .5s linear forwards;
-}
-
-.fix-height {
-  height: 100px;
 }
 
 .username-info {
@@ -177,7 +215,6 @@ main {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  position: relative;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
 }
@@ -191,18 +228,18 @@ main {
 }
 
 .flower {
-  top: -1.2rem;
-  left: -1rem;
-  transform: scale(0.9);
-  /* opacity: 0; */
-  position: absolute;
+  bottom: -0.5rem;
+  left: -1.5rem;
+  height: 64px;
+  width: 64px;
+  transform: scale(0.5);
+  opacity: 0;
 }
 
 .leafs-container {
   position: absolute;
   right: 0.6rem;
   bottom: 0.3rem;
-  z-index: 2;
   width: 25px;
   height: 25px;
   display: grid;
@@ -222,9 +259,10 @@ main {
 
 .capitalize-user {
   color: var(--user-color);
-  font-weight: 500;
-  font-size: 1.25rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   display: inline-block;
+  max-width: 13ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -234,42 +272,39 @@ main {
 .message-container {
   flex-grow: 1;
   border: 4px solid var(--message-border-color);
-  background-color: var(--message-background-color);
-  background-image: url("https://i.postimg.cc/JzQRwmPJ/pruebacielo.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   border-radius: 20px;
   overflow: hidden;
 }
 
-.message-container .role-container .role-text {
-  background-color: transparent;
-  padding: 0;
+.purple-cont {
+  background-color: #9a83ff;
+  width: 100%;
+  height: 20px;
 }
 
 .left-top-flower {
   position: absolute;
-  left: -2.5rem;
-  top: -2rem;
-  z-index: -5 !important;
-  transform: scale(.8);
+  left: -1.8rem;
+  top: -1.5rem;
+  z-index: 1 !important;
+  transform: scale(.9);
 }
 
 .right-top-flower {
   position: absolute;
-  right: -2rem;
-  top: 1rem;
+  right: -1.5rem;
+  bottom: 2rem;
   transform: scale(0.8);
 }
 
 .message-icon-container {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   align-items: center;
-  gap: 0.625rem;
-  /* background-color: var(--message-background-color); */
-  padding: 2.3rem 2rem 1rem 1.5rem;
+  /* gap: 0.625rem; */
+  background-color: var(--message-background-color);
+  padding: 0rem 1rem 1rem 2rem;
 }
 
 .text {
@@ -281,7 +316,8 @@ main {
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
-  max-width: 27rem;
+  max-width: 24rem;
+  width: 100%;
   color: var(--message-color);
   white-space: normal;
   opacity: 0;
@@ -298,7 +334,6 @@ main {
   text-transform: uppercase;
   text-align: left;
   bottom: 0;
-  z-index: 1;
   padding: 0.3rem 0.3rem;
   background-color: var(--pronouns-background-color);
   text-align: center;
@@ -349,12 +384,32 @@ main {
 .event-container {
   display: flex;
   align-items: center;
-  width: 25.4rem;
-  gap: 10px;
-  border-radius: 15px;
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
-  margin-top: .5rem;
+  justify-content: center;
+  width: 26.5rem;
+  border-radius: 20px;
+  border: 4px solid var(--user-color);
+  margin: .9rem 0 .9rem 0;
+  padding: 1.5rem 0;
+  padding-left: 1rem;
+  opacity: 1;
+  background-color: var(--event-background-color);
+  position: relative;
+  z-index: 2 !important;
+}
+
+.band {
+  position: absolute;
+  top: -.5rem;
+  right: 1.5rem;
+  transform: scale(0.8);
+}
+
+.event-container .web {
+  left: .53rem;
+}
+
+.new-container {
+  position: relative;
 }
 
 @keyframes showEvent {
@@ -385,6 +440,7 @@ main {
 .event-name {
   height: 100%;
   top: 0;
+  font-weight: 500;
   text-align: center;
   display: flex;
   align-items: center;
@@ -393,12 +449,19 @@ main {
   color: var(--event-color);
   letter-spacing: normal;
   font-size: 1.5rem;
-  font-weight: 500;
-  /* text-shadow: 2px 0 var(--event-shadow-color), -2px 0 var(--event-shadow-color),
-  0 2px var(--event-shadow-color), 0 -2px var(--event-shadow-color),
-  1px 2px var(--event-shadow-color), -1px -2px var(--event-shadow-color),
-  1px -2px var(--event-shadow-color), -1px 2px var(--event-shadow-color); */
+  opacity: 0;
+  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
   text-transform: lowercase;
+}
+
+.spider {
+  position: absolute;
+  top: -.4rem;
+  left: 1.02rem;
+  transform: scale(.9);
+  z-index: 0;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
 }
 
 .event-leafs-container-1,
@@ -414,7 +477,6 @@ main {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 21.8rem;
 }
 
 .event-text {
@@ -440,69 +502,34 @@ main {
   display: flex;
   align-items: center;
   color: white;
-  font-weight: 400;
-  right: .8rem;
-  top: .8rem;
-  background-color: #d6d4ff;
-  padding: .3rem .5rem;
-  border-radius: 30px;
-  position: absolute;
+  left: -1rem;
+  top: 0.3rem;
 }
 
-.role-container-no-absolute {
-  position: initial;
-  background-color: transparent !important;
-}
-
-.cont-container {
-  width: 5rem;
-}
-
-.role, .shiny {
+.role {
   width: 20px;
   height: 20px;
   transform: scale(0.8);
-  position: absolute;
 }
 
 .role-text {
-  font-size: .8rem;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   color: var(--user-role-color);
-  border-radius: 10px;
+  border-radius: 20px;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-out forwards;
-  background-color: rgba(81, 96, 204, .5);
-  padding: .5rem;
 }
 
 .fungi-container {
   order: 2;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  border-radius: 15px;
-  position: relative;
-  padding: 1rem 1rem 1rem 4rem;
-  background-color: var(--event-background-color);
-  /* padding: 0.3rem 1.5rem; */
-  gap: 10px;
-}
-
-.fungi-container .role-container {
-  padding: 1rem;
-  border-radius: 10px;
-  padding: 0.2rem;
-  background-color: rgba(81, 96, 204, .5);
-}
-
-.fungi-container .role-container .role-text {
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.5rem;
+  justify-content: center;
+  width: 17rem;
+  max-width: 17rem;
 }
 
 .bellota {
@@ -514,68 +541,6 @@ main {
 .fungi-container-purple,
 .fungi-container-purple::after {
   background-color: #a185a9;
-}
-
-.moon {
-  position: absolute;
-  right: -1rem;
-  bottom: -1rem;
-  z-index: 2;
-  display: none;
-  transform: scale(0.9);
-}
-
-.streamer {
-  width: 49px;
-  height: 28px;
-  position: absolute;
-  top: 16px;
-  left: 7px;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
-  transform: scale(0.9);
-}
-
-.subscriber {
-  width: 44px;
-  height: 42px;
-  position: absolute;
-  top: 11px;
-  left: 10px;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
-}
-
-.vip {
-  width: 44px;
-  height: 40px;
-  position: absolute;
-  top: 13px;
-  left: 10px;
-  z-index: 2;
-  opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
-  transform: scale(0.9);
-}
-
-.mod {
-  width: 22px;
-  height: 42px;
-  position: absolute;
-  top: 0.9rem;
-  left: 1.6rem;
-  z-index: 2;
-  opacity: 0;
-  opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
-}
-
-.brillito {
-  position: absolute;
-  top: -1.4rem;
-  left: 2.7rem;
 }
 
 @keyframes removeMessage {

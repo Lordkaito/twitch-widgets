@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "Lorem ipslsad fasdh fasdh fjkas djkak sdfasd fasdg fasd fasdf asdfga sdfajs fadjsfjasf agds fhj afsjdh ajhkdsfgkjad sfjgfasjdhf jsdf g",
+        text: "Hello i am hyped blablabla asdfa sdfad fasdfas df asdf asdf asdf asdf asdf asd fads f adf asd fasdf ads fasd fasdf asdf ",
         isAction: false,
         emotes: [],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
