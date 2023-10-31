@@ -85,7 +85,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsKittenGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -130,7 +130,7 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
-  // items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
     items.objective.innerText =
@@ -210,53 +210,24 @@ function handleGrow(amount, callback, initial = false) {
     items.progressBar.style.height = `calc(100% - ${
       amountToUpdate * step - 5
     }px)`;
-    let currency = mainObj.fieldData.currency;
     if (goalType === "tip") {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );
-      items.objective.innerText =
-        amountToUpdate +
-        currency +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
     } else {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );
-      items.objective.innerText =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
     items.ganchos.style.top = `0`;
     items.progressBar.style.height = "0%";
-    // items.progressionText.innerHTML = getPercentage(
-    //   amountToUpdate,
-    //   mainObj.fieldData.goalObjectiveQuantity
-    // );
-    let currency = mainObj.fieldData.currency;
-    if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
-        amountToUpdate +
-        currency +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
-    } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
-    }
+    items.progressionText.innerHTML = getPercentage(
+      amountToUpdate,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -270,10 +241,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

@@ -300,12 +300,13 @@ main {
   position: absolute;
   top: 3.5rem;
   bottom: 50%;
-  left: 1rem;
+  left: -1rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: var(--nube-p-color);
   min-width: 4.6rem;
+  width: 13rem;
   text-align: center;
 }
 

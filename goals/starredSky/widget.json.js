@@ -164,5 +164,19 @@ let fieldData = {
     label: "Currency:",
     value: "bits",
     group: "Customization",
+  },
+  animationDelay: {
+    type: "number",
+    label: "Animation delay (s):",
+    value: 5,
+    group: "Customization",
+    step: 1,
+  },
+  animationTime: {
+    type: "number",
+    label: "Animation time (s):",
+    value: 1,
+    group: "Customization",
+    step: 1,
   }
 };

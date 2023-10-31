@@ -43,6 +43,7 @@ let previousSender = "";
 let currentSender = "";
 let items, step, goalType;
 let animationActive = false;
+// you can touch anything, but will probably no longer work after that
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
@@ -85,16 +86,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsKittenGoalWidgetPreviousGained");
-  // if (data === null) {
-  //   widgetApiData = defaultApiData;
-  // } else {
-  //   widgetApiData = data;
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  //   widgetApiData = defaultApiData;
-  // }
-  widgetApiData = defaultApiData;
+  let data = await SE_API.store.get("beniartsMiaowGoalWidgetPreviousGained");
+  if (data === null) {
+    widgetApiData = defaultApiData;
+  } else {
+    widgetApiData = data;
+  }
+  if (obj.detail.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+  }
+  // widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -130,7 +131,7 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
-  // items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
     items.objective.innerText =
@@ -139,22 +140,21 @@ function init(obj, apiData, initial = false) {
 
   if (mainObj.fieldData.goalObjectiveQuantity > 999) {
     items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
     items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
   }
+  
+  // if you see this, it means you are not supposed to be here, step back
 
   if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
     items.objective.style.fontSize = "1.3rem";
     items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
   }
   if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
     items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
+    items.objective.style.top = "2.1rem";
   }
-  items.goalTypeText.innerText = text[goalType];
+  items.goalTypeText.innerText =
+    mainObj.fieldData.goalTypeText || text[goalType];
 
   step = getStep(
     items.progressBarContainer,
@@ -197,65 +197,43 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
+  let currency = mainObj.fieldData.currency;
+  // this is the goal logic to grow, if you read this and don't understand, it means you should not be reading this
   if (!completedGoal) {
     let ganchosHeight = 32;
-    console.log(amountToUpdate);
     let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
     let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
     items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
       amountToUpdate * ganchoStep
-    }rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${
-      amountToUpdate * step - 5
-    }px)`;
-    let currency = mainObj.fieldData.currency;
+    }rem - 5px)`;
+    items.progressBar.style.height = `calc(100% - ${amountToUpdate * step}px)`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate +
         currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
     } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
     items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
-    // items.progressionText.innerHTML = getPercentage(
-    //   amountToUpdate,
-    //   mainObj.fieldData.goalObjectiveQuantity
-    // );
-    let currency = mainObj.fieldData.currency;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate +
         currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
     } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity;
     }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -270,10 +248,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", widgetApiData);
+  SE_API.store.set("beniartsMiaowGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", defaultApiData);
+  SE_API.store.set("beniartsMiaowGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

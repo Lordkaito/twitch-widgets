@@ -5,94 +5,88 @@
     "value": "",
     "group": "Customization"
   },
+  "completeGoalText": {
+    "type": "text",
+    "label": "Goal text (max 40):",
+    "value": "GOAL COMPLETED!",
+    "group": "Customization"
+  },
+  "goalTypeText": {
+    "type": "text",
+    "label": "Goal type:",
+    "value": "sub goal",
+    "group": "Customization"
+  },
+  "goalObjectiveQuantity": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 100,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalStartQuantity": {
+    "type": "number",
+    "label": "Goal start:",
+    "value": 0,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalType": {
+    "type": "dropdown",
+    "label": "Goal type:",
+    "value": "tip",
+    "group": "Customization",
+    "options": {
+      "subscriber": "Sub",
+      "follower": "Follow",
+      "cheer": "Cheer",
+      "tip": "Tip"
+    }
+  },
+  "goalFullType": {
+    "type": "dropdown",
+    "label": "Goal full type:",
+    "value": "allTime",
+    "group": "Customization",
+    "options": { "allTime": "All time", "session": "Stream" }
+  },
+  "startFromCero": {
+    "type": "dropdown",
+    "label": "Start from 0:",
+    "value": "false",
+    "group": "Customization",
+    "options": { "true": "Yes", "false": "No" }
+  },
   "widgetHeight": {
     "label": "Widget height (recommended 1080)",
     "type": "text",
     "group": "Customization",
     "value": "1080"
   },
-  "deleteMessages": {
-    "label": "Time to delete messages (max 60):",
+  "firstStep": {
     "type": "number",
+    "label": "First step:",
+    "value": 1500,
     "group": "Customization",
-    "value": 60,
-    "min": 1,
-    "max": 60,
-    "step": 1
+    "min": 1
   },
-  "allowDeleteMessages": {
-    "type": "dropdown",
-    "label": "Delete messages on/off:",
-    "value": "false",
+  "secondStep": {
+    "type": "number",
+    "label": "First step:",
+    "value": 1750,
     "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
+    "min": 1
   },
-  "displayBadges": {
-    "type": "dropdown",
-    "label": "Show badges:",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "allowPronouns": {
-    "type": "dropdown",
-    "label": "Show pronouns:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "usersBlackList": {
-    "type": "text",
-    "label": "Users blacklist (separated by comma)",
-    "value": "",
+  "resetGoalData": {
+    "type": "button",
+    "label": "Reset goal",
+    "value": "reset",
     "group": "Customization"
   },
-  "specialCharsBlackList": {
+  "currency": {
     "type": "text",
-    "label": "Special chars (separated by comma)",
-    "value": "",
+    "label": "Currency:",
+    "value": "$",
     "group": "Customization"
-  },
-  "subText": {
-    "type": "text",
-    "label": "Custom text for SUB (max 40)",
-    "value": "yooooooooasdfasdfasfd just suscribed!",
-    "group": "Events"
-  },
-  "followText": {
-    "type": "text",
-    "label": "Custom text for FOLLOW (max 40)",
-    "value": "(user) just followed!",
-    "group": "Events"
-  },
-  "cheerText": {
-    "type": "text",
-    "label": "Custom text for Cheers (max 40)",
-    "value": "cheered x(amount)!",
-    "group": "Events"
-  },
-  "tipText": {
-    "type": "text",
-    "label": "Custom text for Tips (max 40)",
-    "value": "Tipped $(amount)!",
-    "group": "Events"
-  },
-  "giftSubText": {
-    "type": "text",
-    "label": "Custom text for gifted SUB (max 40)",
-    "value": "(sender) gifted a sub to (user)!",
-    "group": "Events"
-  },
-  "bulkGiftText": {
-    "type": "text",
-    "label": "Custom text for many gifts at once (max 40)",
-    "value": "(sender) (amount) sub(s)!",
-    "group": "Events"
-  },
-  "raidText": {
-    "type": "text",
-    "label": "Custom text for raids (max 40)",
-    "value": "(sender) sent (amount) raiders!",
-    "group": "Events"
   }
 }

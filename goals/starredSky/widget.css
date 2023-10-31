@@ -50,15 +50,16 @@ main {
 
 .gifReg {
   position: absolute;
-  left: -25rem;
-  top: -20.5rem;
-  opacity: 0;
+  left: -12.5rem;
+  top: -17.5rem;
+  opacity: 1;
   transition: opacity 0.2s;
 }
 
 .reg {
   /* width: 694px; */
   /* height: 432px; */
+  opacity: 1;
   transform: scale(0.85);
 }
 
@@ -95,10 +96,8 @@ main {
   z-index: 4;
   margin-bottom: 1rem;
   top: -3rem;
-  text-shadow: 3px 0 #687dd4, -3px 0 #687dd4,
-    0 3px #687dd4, 0 -3px #687dd4,
-    2px 3px #687dd4, -2px -3px #687dd4,
-    2px -3px #687dd4, -2px 3px #687dd4;
+  text-shadow: 3px 0 #687dd4, -3px 0 #687dd4, 0 3px #687dd4, 0 -3px #687dd4,
+    2px 3px #687dd4, -2px -3px #687dd4, 2px -3px #687dd4, -2px 3px #687dd4;
 }
 
 .progress-bar {
@@ -200,4 +199,41 @@ main {
   border: 1px solid red;
   width: 800px;
   height: 1000px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(20deg);
+  }
+}
+
+@keyframes rotateBack {
+  0% {
+    transform: rotateZ(20deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes rotateLeft {
+  0% {
+    transform: scaleX(-1) rotateZ(0deg);
+  }
+
+  100% {
+    transform: scaleX(-1) rotateZ(20deg);
+  }
+}
+
+@keyframes rotateBackLeft {
+  0% {
+    transform: scaleX(-1) rotateZ(20deg);
+  }
+  100% {
+    transform: scaleX(-1) rotateZ(0deg);
+  }
 }

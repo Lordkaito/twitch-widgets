@@ -1,13 +1,14 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #917b4f;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
   --progress-bar-background-color: #6f2c01;
   --goal-name-background-color: #fff4f4;
-  --goal-name-color: #9e9cef;
+  --goal-name-color: white;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: white;
+  --nube-border-color: #fcbd68;
 }
 
 * {
@@ -53,9 +54,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/mD0q63tF/hojillas.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -2.4rem right -3.1rem;
 }
 
 .gifReg {
@@ -104,10 +105,10 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
-    0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
-    2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
-    2px -3px var(--nube-p-color), -2px 3px var(--nube-p-color);
+  text-shadow: 3px 0 var(--nube-border-color), -3px 0 var(--nube-border-color),
+    0 3px var(--nube-border-color), 0 -3px var(--nube-border-color),
+    2px 3px var(--nube-border-color), -2px -3px var(--nube-border-color),
+    2px -3px var(--nube-border-color), -2px 3px var(--nube-border-color);
 }
 
 .progress-bar {
@@ -209,7 +210,7 @@ main {
   position: absolute;
   top: -14rem;
   left: -1.4rem;
-  transition: top 0.2s ease-in-out;
+  transition: top 0.2s;
 }
 
 .gancho {
@@ -223,7 +224,7 @@ main {
   position: absolute;
   transition: top 0.2s ease-in-out;
   top: 0rem; /* this is the position for 100% */
-  left: 0.15rem; /* this is the position for 100% */
+  left: 1.05rem; /* this is the position for 100% */
   top: 30rem;
 }
 
@@ -253,10 +254,10 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
-  left: -0.5rem;
+  top: -1.5rem;
+  left: -7.5rem;
   opacity: 1;
-  /* transform: translate(.8); */
+  transform: scale(.8);
 }
 
 .peluche2,
@@ -266,8 +267,8 @@ main {
 }
 
 .nube1 {
-  top: 52.5%;
-  left: 19rem;
+  top: 56%;
+  left: 33.5rem;
 }
 
 .nube1 img {
@@ -298,9 +299,9 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 1.8rem;
+  top: 2rem;
   bottom: 50%;
-  left: 1.2rem;
+  left: .4rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
@@ -358,7 +359,7 @@ main {
 
   max-width: 6rem;
   line-height: 0.9;
-  left: 1.7rem;
+  left: 1.5rem;
 }
 
 .goal-type-amount {

@@ -85,7 +85,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsKittenGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -121,6 +121,10 @@ function init(obj, apiData, initial = false) {
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
+    mario: document.querySelector(".mario"),
+    banderaRoja: document.querySelector(".bandera-roja"),
+    banderaAmarilla: document.querySelector(".bandera-amarilla"),
+    estrella: document.querySelector(".estrella"),
   };
 
   let text = {
@@ -133,28 +137,28 @@ function init(obj, apiData, initial = false) {
   // items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+    // items.objective.innerText =
+    //   mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
 
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
+  // if (mainObj.fieldData.goalObjectiveQuantity > 999) {
+  //   items.objective.style.fontSize = "1.5rem";
+  //   items.objective.style.fontSize = "1.3rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
 
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  items.goalTypeText.innerText = text[goalType];
+  // if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
+  //   items.objective.style.fontSize = "1.3rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
+  // if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
+  //   items.objective.style.fontSize = "1.1rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
+  // items.goalTypeText.innerText = text[goalType];
 
   step = getStep(
     items.progressBarContainer,
@@ -199,62 +203,61 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
     let ganchosHeight = 32;
-    console.log(amountToUpdate);
     let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
     let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-      amountToUpdate * ganchoStep
-    }rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${
-      amountToUpdate * step - 5
+    let banderaAmarillaStep = getGachoStep(
+      321,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
+    let banderaRojaStep = getGachoStep(
+      321,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
+    // items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
+    //   amountToUpdate * ganchoStep
+    // }rem)`;
+    items.progressBar.style.height = `calc(${amountToUpdate * step - 15}px)`;
+    items.mario.style.top = `calc(${amountToUpdate * step - 110}px)`;
+    // items.banderaAmarilla.style.top = `calc(${
+    //   -(amountToUpdate * banderaAmarillaStep) - 27
+    // }px)`;
+    items.banderaRoja.style.top = `calc(${
+      -amountToUpdate * banderaRojaStep + 301
     }px)`;
     let currency = mainObj.fieldData.currency;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate +
         currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
     } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
-    items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
-    // items.progressionText.innerHTML = getPercentage(
-    //   amountToUpdate,
-    //   mainObj.fieldData.goalObjectiveQuantity
-    // );
+    // items.ganchos.style.top = `0`;
+    items.mario.style.top = `calc(${19}rem)`;
+    // items.banderaAmarilla.style.top = `calc(-2rem)`;
+    items.banderaAmarilla.style.opacity = `1`;
+    // items.banderaRoja.style.top = `calc(${amountToUpdate * banderaRojaStep - 27}px)`;
+    items.banderaRoja.style.top = `calc(-2rem)`;
+    items.banderaRoja.style.opacity = `0`;
+    items.estrella.style.opacity = `1`;
+    items.estrella.style.top = "-13.5rem"
+
+    items.progressBar.style.height = "100%";
     let currency = mainObj.fieldData.currency;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate +
         currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
     } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-      items.objective.innerText =
+      items.progressionText.innerHTML =
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   }
@@ -270,10 +273,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsKittenGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

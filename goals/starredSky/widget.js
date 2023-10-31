@@ -85,7 +85,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsGirasolGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsStarredSkyGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -129,7 +129,7 @@ function init(obj, apiData, initial = false) {
   let side = mainObj.fieldData.wateringCanSide;
   if (side === "right") {
     items.reg.style.transform = "scaleX(-1)";
-    items.reg.style.left = "-41.5rem";
+    items.reg.style.left = "1.5rem";
   }
 
   if (mainObj.fieldData.goalFullType === "session") {
@@ -155,13 +155,32 @@ function getStep(container, objective) {
 }
 
 function handleGrow(amount, callback, initial = false) {
+  let time = mainObj.fieldData.animationDelay;
+  let animationTime = mainObj.fieldData.animationTime;
+  items.reg.style.opacity = "1";
   if (!animationActive) {
     animationActive = true;
-    items.reg.style.opacity = "1";
+    items.reg.style.animation =
+      "rotate" + " " + animationTime + "s forwards ease-in-out";
+    setTimeout(() => {
+      items.reg.style.animation =
+        "rotateBack" + " " + animationTime + "s forwards ease-in-out";
+    }, time * 1000);
+    let side = mainObj.fieldData.wateringCanSide;
+    if (side === "right") {
+      // items.reg.classList.add("invert");
+      items.reg.style.animation =
+        "rotateLeft" + " " + animationTime + "s forwards ease-in-out";
+      items.reg.style.left = "1.5rem";
+      setTimeout(() => {
+        items.reg.style.animation =
+          "rotateBackLeft" + " " + animationTime + "s forwards ease-in-out";
+      }, time * 1000);
+    }
     setTimeout(() => {
       animationActive = false;
       items.reg.style.opacity = "0";
-    }, 1500);
+    }, animationTime * 1000 + time * 1000);
   }
   let amountToUpdate =
     widgetApiData[goalType].amount +
@@ -179,15 +198,28 @@ function handleGrow(amount, callback, initial = false) {
 
     if (goalType === "tip") {
       items.progressionText.innerHTML =
-        amountToUpdate + currency + "/" + mainObj.fieldData.goalObjectiveQuantity + currency;
+        amountToUpdate +
+        currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
     } else {
       items.progressionText.innerHTML =
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
     // image.style.left = `32rem`;
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
+    } else {
+      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+    }
     items.progressBar.style.height = "100%";
-    items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
     // items.completeText.innerText = string;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -197,11 +229,11 @@ function handleGrow(amount, callback, initial = false) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsStarredSkyGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsGirasolGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsStarredSkyGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }
 

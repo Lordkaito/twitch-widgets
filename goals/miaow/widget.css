@@ -1,13 +1,14 @@
 :root {
-  --round-background-color: #fcc9a0;
+  --round-background-color: #fb9fce;
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: #6f2c01;
+  --progress-bar-background-color: #52266e;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #f59b61;
+  --nube-p-color: white;
+  --percentage-border-color: #a77bc3;
 }
 
 * {
@@ -53,9 +54,9 @@ main {
   display: grid;
   place-content: center;
   overflow: hidden;
-  background-image: url("https://i.postimg.cc/85dZNChy/ositos.png");
+  background-image: url("https://i.postimg.cc/B6n7MnbM/macetas.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -3.9rem;
+  background-position: bottom -.5rem right -2.3rem;
 }
 
 .gifReg {
@@ -104,10 +105,10 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
-    0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
-    2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
-    2px -3px var(--nube-p-color), -2px 3px var(--nube-p-color);
+  text-shadow: 3px 0 var(--percentage-border-color), -3px 0 var(--percentage-border-color),
+    0 3px var(--percentage-border-color), 0 -3px var(--percentage-border-color),
+    2px 3px var(--percentage-border-color), -2px -3px var(--percentage-border-color),
+    2px -3px var(--percentage-border-color), -2px 3px var(--percentage-border-color);
 }
 
 .progress-bar {
@@ -223,8 +224,8 @@ main {
   position: absolute;
   transition: top 0.2s ease-in-out;
   top: 0rem; /* this is the position for 100% */
-  left: 0.15rem; /* this is the position for 100% */
-  top: 30rem;
+  left: 1rem; /* this is the position for 100% */
+  top: 32rem;
 }
 
 .gancho-detras {
@@ -253,10 +254,10 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
-  left: -0.5rem;
+  top: -1rem;
+  left: -8rem;
   opacity: 1;
-  /* transform: translate(.8); */
+  transform: scale(.8);
 }
 
 .peluche2,
@@ -267,7 +268,7 @@ main {
 
 .nube1 {
   top: 52.5%;
-  left: 19rem;
+  left: 14rem;
 }
 
 .nube1 img {
@@ -299,14 +300,12 @@ main {
 .nube1 p {
   position: absolute;
   top: 1.8rem;
-  bottom: 50%;
-  left: 1.2rem;
+  left: 1.4rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
   color: var(--nube-p-color);
-
-  min-width: 4.6rem;
+  width: 7rem;
   text-align: center;
 }
 
@@ -338,7 +337,7 @@ main {
 
 .nube4 {
   top: 42.5%;
-  left: 29rem;
+  left: 32rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,17 +347,17 @@ main {
 
 .nube4 p {
   position: absolute;
-
-  top: 35%;
+  display: grid;
+  place-content: center;
+  top: 1rem;
   font-size: 1.6rem;
   font-weight: 700;
-
   text-align: center;
   color: var(--nube-p-color);
-
-  max-width: 6rem;
+  width: 7rem;
+  height: 6rem;
   line-height: 0.9;
-  left: 1.7rem;
+  left: .8rem;
 }
 
 .goal-type-amount {
