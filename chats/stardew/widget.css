@@ -104,10 +104,10 @@ main {
 }
 
 .username-info {
-  width: fit-content;
+  width: 12rem;
   /* border-radius: 5px; */
   text-align: center;
-  padding: 0.7rem 2rem;
+  padding: 0.7rem 1.8rem 0.7rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,6 +166,7 @@ main {
   text-overflow: ellipsis;
   text-transform: capitalize;
   width: 12ch;
+  text-align: left;
 }
 
 .message-container {
@@ -247,15 +248,13 @@ main {
 }
 
 .prons {
-  max-width: 100%;
+  position: relative;
+  left: 1.5rem;
+  width: 7rem;
   text-align: center;
-  display: inline-block;
-  min-width: 6.6rem;
-  border-radius: 1.25rem;
   color: var(--pronouns-color);
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: .4rem;
 }
 

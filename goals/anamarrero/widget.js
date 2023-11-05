@@ -43,14 +43,11 @@ let previousSender = "";
 let currentSender = "";
 let items, step, goalType;
 let animationActive = false;
-// you can touch anything, but will probably no longer work after that
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
   init(obj, api, true);
 });
-
-let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
   if (obj.detail.event.value === "reset") {
@@ -86,16 +83,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("beniartsMiaowGoalWidgetPreviousGained");
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -109,52 +106,21 @@ function init(obj, apiData, initial = false) {
   }
 
   items = {
+    progression: document.querySelector("#title"),
+    // goalNameText: document.querySelector("#title"),
     progressBar: document.querySelector(".progress-bar"),
-    goalText: document.querySelector(".goal-text"),
-    colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
-    progressionText: document.querySelector(".progressNums"),
-    title: document.querySelector("#title"),
-    progressImg: document.querySelector(".img-container"),
-    completeText: document.querySelector(".progression"),
-    reg: document.querySelector(".gifReg"),
-    image: document.querySelector("#image"),
-    ganchos: document.querySelector(".ganchos"),
-    objective: document.querySelector(".goal-obj-50"),
-    goalTypeText: document.querySelector(".goal-type-text"),
+    percentage: document.querySelector(".percentage"),
+    imgOff: document.querySelector(".img-off"),
+    imgOn: document.querySelector(".img-on"),
   };
 
-  let text = {
-    subscriber: "sub goal",
-    follower: "follow goal",
-    cheer: "cheer goal",
-    tip: "tip goal",
-  };
-
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  items.progression.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
+    items.progression.innerText =
       mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.top = "2rem";
-  }
-  
-  // if you see this, it means you are not supposed to be here, step back
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2.1rem";
-  }
-  items.goalTypeText.innerText =
-    mainObj.fieldData.goalTypeText || text[goalType];
 
   step = getStep(
     items.progressBarContainer,
@@ -174,11 +140,12 @@ function init(obj, apiData, initial = false) {
 function checkIfCompleted(amountToUpdate) {
   let objective = mainObj.fieldData.goalObjectiveQuantity;
   let currentAmount = amountToUpdate;
+  console.log(currentAmount, objective);
   return currentAmount >= objective;
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
+  const containerHeight = container.offsetWidth;
   const step = containerHeight / objective;
   return step;
 }
@@ -186,6 +153,8 @@ function getStep(container, objective) {
 function getGachoStep(diff, objective) {
   return diff / objective;
 }
+
+let isAnimationPlaying = false;
 
 function handleGrow(amount, callback, initial = false) {
   let amountToUpdate =
@@ -195,35 +164,34 @@ function handleGrow(amount, callback, initial = false) {
   if (initial === true) {
     amountToUpdate = amount;
   }
-
-  let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
-  // this is the goal logic to grow, if you read this and don't understand, it means you should not be reading this
+  let completedGoal = checkIfCompleted(amountToUpdate);
+  let title = mainObj.fieldData.title || "Goal name"
+  let objective = mainObj.fieldData.goalObjectiveQuantity
+  items.progression.innertText = title + amountToUpdate + " | " + objective
+  items.percentage.innerText = getPercentage(
+    amountToUpdate,
+    mainObj.fieldData.goalObjectiveQuantity
+  );
+  if(!isAnimationPlaying) {
+    isAnimationPlaying = true;
+    items.imgOff.style.animation = "imgOff .8s ease-in-out forwards"
+    items.imgOn.style.animation = "imgOn 1.2s .5s ease-in-out forwards"
+    setTimeout(() => {
+      isAnimationPlaying = false;
+      items.imgOff.style.animation = "none"
+      items.imgOn.style.animation = "none"
+    }, 2000);
+  }
   if (!completedGoal) {
-    let ganchosHeight = 32;
-    let barraHeight = items.progressBar.offsetHeight;
-    let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-      amountToUpdate * ganchoStep
-    }rem - 5px)`;
-    items.progressBar.style.height = `calc(100% - ${amountToUpdate * step}px)`;
+    items.progressBar.style.width = `${amountToUpdate * step}px`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        amountToUpdate +
-        currency
-    } else {
-      items.progressionText.innerHTML =
-        amountToUpdate
+      items.progression.innerText = title + " " + amountToUpdate + currency +" | " + objective + currency;
     }
   } else {
-    items.ganchos.style.top = `0`;
+    items.progressBar.style.width = "100%";
     if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        amountToUpdate +
-        currency
-    } else {
-      items.progressionText.innerHTML =
-        amountToUpdate
+      items.progression.innerText = title + " " + amountToUpdate + currency +" | " + objective + currency;
     }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -238,10 +206,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  SE_API.store.set("beniartsMiaowGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  SE_API.store.set("beniartsMiaowGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

@@ -15,7 +15,7 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 60,
+    value: 2,
     min: 1,
     max: 60,
     step: 1,
@@ -23,7 +23,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
@@ -65,13 +65,13 @@ let fieldData = {
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value: "yooooooooasdfasdfasfd just suscribed!",
+    value: "(user) just suscribed!",
     group: "Events",
   },
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",
-    value: "(user) just followed fas dflkjahs dlhajkchjklasd hcagsdc adshj khsdgchja dskjchajkdcg jahgsd cjhagsdjhc ajdscgja scgasdjc !",
+    value: "(user) just followed!",
     group: "Events",
   },
   cheerText: {
@@ -104,4 +104,42 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
+  theme: {
+    type: "dropdown",
+    label: "Theme:",
+    value: "pink",
+    group: "Customization",
+    options: {
+      pink: "Pink",
+      purple: "Purple",
+    },
+  },
+  deleteMessagesOption: {
+    label: "How to delete messages:",
+    type: "dropdown",
+    group: "Customization",
+    value: "timer",
+    options: {
+      timer: "Timer",
+      amount: "Messages amount",
+    },
+  },
+  maxMessages: {
+    label: "Max messages to show:",
+    type: "number",
+    group: "Customization",
+    value: 3,
+    min: 1,
+    max: 100,
+    step: 1,
+  },
+  deleteMessagesTimer: {
+    label: "Delete messages timer (in seconds):",
+    type: "number",
+    group: "Customization",
+    value: 10,
+    min: 1,
+    max: 60,
+    step: 1,
+  }
 };
