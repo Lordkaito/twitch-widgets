@@ -1,5 +1,5 @@
 :root {
-  --message-color: #b8bcff;
+  --message-color: #9fa4ff;
   --message-background-color: #ffefdb;
   --message-border-color: #6053de;
   --user-color: #ffefdb;
@@ -15,7 +15,7 @@
   --event-background-color: #6d4842;
   --event-color: #ffefdb;
   --hyphen-color: #f3bdf9;
-  --event-shadow-color: #b8bcff;
+  --event-shadow-color: #9fa4ff;
 }
 
 * {
@@ -60,13 +60,17 @@ main {
 
 .super-main-container {
   display: flex;
+  /* align-items: center; */
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  width: 28rem;
+  width: 30rem;
+  /* margin-bottom: 1rem; */
+  /* margin-top: 1rem; */
 }
 
 .main-container {
   order: 2;
+  /* max-width: 30rem; */
   width: 100%;
   position: relative;
   display: flex;
@@ -77,15 +81,27 @@ main {
   z-index: 1 !important;
 }
 
+@keyframes growMainContainer {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
 .flowers-container {
   order: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  /* border: 1px solid red; */
   width: 10%;
   min-width: 64px;
   height: 80%;
+  /* margin-right: 15px; */
 }
 
 .container {
@@ -94,7 +110,40 @@ main {
   margin-top: 0.5rem;
 }
 
+.dot-1 {
+  background-color: #e96e99;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fadeIn 0.6s linear forwards;
+}
+
+.dot-2 {
+  background-color: #e96e99;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fadeIn 0.6s linear forwards;
+}
+
+.dot-purple {
+  background-color: #bab1f0;
+}
+
+@keyframes showDot {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .circle {
+  /* height: 45; */
   width: 45px;
   position: relative;
   fill: transparent;
@@ -105,8 +154,161 @@ main {
   animation: dibujarCirculo 0.8s linear forwards;
 }
 
+@keyframes oscilate {
+  0% {
+    opacity: 0;
+    transform: translateX(15px) translateY(-4px);
+  }
+
+  10% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  20% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  30% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  40% {
+    transform: translateX(-15px) translateY(-4px);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  60% {
+    transform: translateY(0) translateX(0);
+  }
+
+  70% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  80% {
+    transform: translateX(15px) translateY(-4px);
+  }
+
+  90% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes oscilate2 {
+  0% {
+    opacity: 0;
+    transform: translateX(18px) translateY(-6px);
+  }
+
+  10% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  20% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  30% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  40% {
+    transform: translateX(-15px) translateY(-4px);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  60% {
+    transform: translateY(0) translateX(0);
+  }
+
+  70% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  80% {
+    transform: translateX(15px) translateY(-4px);
+  }
+
+  90% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes oscilate3 {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) translateY(-8px);
+  }
+
+  10% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  20% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  30% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  40% {
+    transform: translateX(-15px) translateY(-4px);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  60% {
+    transform: translateY(0) translateX(0);
+  }
+
+  70% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  80% {
+    transform: translateX(15px) translateY(-4px);
+  }
+
+  90% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  100% {
+    transform: translateX(0px) translateY(0px);
+    opacity: 1;
+  }
+}
+
 .circulo {
   transform: rotate(-90deg);
+}
+
+@keyframes showOriFlower {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes dibujarCirculo {
@@ -132,6 +334,55 @@ main {
   place-content: center;
   opacity: 0;
   animation: fadeIn 0.6s forwards ease-out;
+  /* transform: translateX(22px) translateY(-10px); */
+}
+
+@keyframes oscilate4 {
+  0% {
+    opacity: 0;
+    transform: translateX(22px) translateY(-10px);
+  }
+
+  10% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  20% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  30% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  40% {
+    transform: translateX(-15px) translateY(-4px);
+  }
+
+  50% {
+    transform: translateX(-10px) translateY(-2px);
+  }
+
+  60% {
+    transform: translateY(0) translateX(0);
+  }
+
+  70% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  80% {
+    transform: translateX(15px) translateY(-4px);
+  }
+
+  90% {
+    transform: translateX(10px) translateY(-2px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0px) translateY(0px);
+  }
 }
 
 .username-info-container {
@@ -139,8 +390,9 @@ main {
   gap: 10px;
   align-items: center;
   justify-content: flex-start;
+  /* width: 100%; */
   overflow: hidden;
-  padding: .75rem 1rem;
+  padding: 1rem;
   background-color: var(--user-background-color);
 }
 
@@ -150,20 +402,29 @@ main {
   width: 5px;
   border-radius: 50%;
   opacity: 0;
-  animation: fadeIn 0.5s .5s linear forwards;
+  animation: fadeIn 0.5s .125s linear forwards;
 }
 
+@keyframes growUsernameInfo {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
 .username-info {
   width: fit-content;
   border-radius: 30px;
   text-align: center;
+  /* padding: 0.5rem 0.7rem; */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   position: relative;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+  animation: fadeIn 0.5s 0.125s ease-in-out forwards;
 }
 
 .username-purple {
@@ -172,6 +433,15 @@ main {
 
 .circle-purple {
   stroke: #dcbee1;
+}
+
+@keyframes showUser {
+  0% {
+    transform: translateX(-20rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .flower {
@@ -215,8 +485,17 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
 }
 
+@keyframes growCapitalizeUser {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .message-container {
   flex-grow: 1;
   border: 4px solid var(--message-border-color);
@@ -228,15 +507,16 @@ main {
   position: absolute;
   left: -2.5rem;
   top: -2rem;
-  z-index: -5 !important;
+  z-index: -1;
   transform: scale(.8);
 }
 
 .right-top-flower {
   position: absolute;
   right: -2rem;
-  top: 1rem;
+  top: 1.5rem;
   transform: scale(0.8);
+  /* z-index: -1; */
 }
 
 .message-icon-container {
@@ -246,22 +526,35 @@ main {
   gap: 0.625rem;
   background-color: var(--message-background-color);
   padding: 1rem;
+  /* min-width: 500px; */
 }
 
 .text {
   font-size: 1.5rem;
-  font-weight: 600;
+  /* font-weight: 700; */
+  /* transform: translateX(-20rem); */
   animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes showText {
+  0% {
+    transform: translateX(-20rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
+  /* min-width: 20rem; */
   max-width: 22rem;
   color: var(--message-color);
   white-space: normal;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s forwards;
+  animation: fadeIn 0.5s 0.125s forwards;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
 }
 
 .rendered-text-purple {
@@ -273,9 +566,12 @@ main {
   font-size: 12px;
   text-transform: uppercase;
   text-align: left;
+  /* transform: translateX(-7rem); */
   bottom: 0;
   z-index: 1;
+  /* font-weight: 700; */
   padding: 0.3rem 0.3rem;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
   background-color: var(--pronouns-background-color);
   text-align: center;
   border-radius: 30px;
@@ -283,9 +579,24 @@ main {
   animation: fadeIn 0.5s 0.5s ease-out forwards;
 }
 
+.pronouns-purple {
+  background-color: #fbe3ff;
+  color: #a185a9;
+}
+
+@keyframes showPronouns {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .prons {
   max-width: 100%;
   text-align: center;
+  /* background: var(--pronouns-background-color); */
   border-radius: 1.25rem;
 }
 
@@ -325,10 +636,14 @@ main {
 .event-container {
   display: flex;
   align-items: center;
+  /* justify-content: space-between; */
   gap: 4.3rem;
+  /* max-width: 43rem; */
   width: 30rem;
   border-radius: 30px;
   margin: 1rem 0;
+  /* position: relative; */
+  /* left: 1.5rem; */
   opacity: 0;
   animation: fadeIn 0.5s ease-in-out forwards;
 }
@@ -353,13 +668,25 @@ main {
   }
 }
 
+@keyframes growEventContainer {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .widget {
   width: 800px;
   height: 1000px;
+  /* background-color: whitesmoke; */
 }
 
 .event-name {
+  /* max-width: 300px; */
   height: 100%;
+  /* width: 200px; */
   top: 0;
   text-align: center;
   display: flex;
@@ -373,7 +700,18 @@ main {
   0 2px var(--event-shadow-color), 0 -2px var(--event-shadow-color),
   1px 2px var(--event-shadow-color), -1px -2px var(--event-shadow-color),
   1px -2px var(--event-shadow-color), -1px 2px var(--event-shadow-color);
+  /* text-shadow: 0px 0 10px var(--event-shadow-color); */
   text-transform: lowercase;
+}
+
+@keyframes showName {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .event-leafs-container-1,
@@ -384,10 +722,17 @@ main {
   place-content: center;
 }
 
+/* .event-leafs-container img {
+  height: 18px;
+  width: 20px;
+  padding-top: 4px;
+} */
+
 .event-and-name-container {
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 10px;
 }
 
@@ -399,6 +744,7 @@ main {
   text-shadow: 0 2px 0.2em var(--event-shadow-color);
   background-color: #ffc07f;
   padding: 0.4rem;
+
   border-radius: 5px;
 }
 
@@ -413,7 +759,12 @@ main {
 .role-container {
   display: flex;
   align-items: center;
+  /* justify-content: center; */
+  /* width: 16px; */
+  /* height: 17px; */
+  /* position: absolute; */
   color: white;
+  /* background-color: red; */
   left: -1rem;
   top: 0.3rem;
 }
@@ -426,10 +777,15 @@ main {
 
 .role-text {
   font-size: 1rem;
-  font-weight: 600;
+  /* font-weight: 700; */
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
+  /* margin-left: 0.5rem; */
   color: var(--user-role-color);
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
+  /* background-color: var(--event-background-color); */
+  /* padding: 0.4rem 0.6rem; */
   border-radius: 20px;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-out forwards;
@@ -441,6 +797,8 @@ main {
   align-items: center;
   justify-content: center;
   width: 100%;
+  /* max-width: 18rem; */
+  /* background-color: var(--event-background-color); */
   border-radius: 15px;
   position: relative;
   padding: 0.3rem 1.5rem;
@@ -462,6 +820,7 @@ main {
   right: -1rem;
   bottom: -1rem;
   z-index: 2;
+  /* opacity: 0; */
   display: none;
   transform: scale(0.9);
 }
@@ -473,6 +832,7 @@ main {
   top: 16px;
   left: 7px;
   z-index: 2;
+  opacity: 0;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
   transform: scale(0.9);
@@ -486,9 +846,9 @@ main {
   left: 10px;
   z-index: 2;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.125s ease-in-out forwards;
 }
-
 .vip {
   width: 44px;
   height: 40px;
@@ -497,7 +857,8 @@ main {
   left: 10px;
   z-index: 2;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.125s ease-in-out forwards;
   transform: scale(0.9);
 }
 
@@ -510,17 +871,110 @@ main {
   z-index: 2;
   opacity: 0;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+  animation: fadeIn 0.5s 0.125s ease-in-out forwards;
+}
+
+@keyframes showRol {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showNames {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hideNames {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes removeMessage {
   from {
-    opacity: 1;
+  	opacity: 1;
+  }
+  
+  to {
+  	opacity: 0;
+  }
+}
+
+@keyframes glowHearts {
+  from {
+    opacity: 0;
   }
 
   to {
-    opacity: 0;
+    opacity: 1;
   }
+}
+
+@keyframes slideMessage {
+  0% {
+    transform: scale(0);
+    transform-origin: bottom center;
+  }
+
+  50% {
+    transform: scale(110%);
+    transform-origin: bottom center;
+  }
+
+  100% {
+    transform: scale(100%);
+    transform-origin: bottom center;
+  }
+}
+
+.heart {
+  position: absolute;
+  opacity: 1;
+  transform: scale(0.6);
+  left: 8%;
+  top: 15%;
+}
+
+.star {
+  animation: rotateOver 0.5s 1s ease-in-out;
+}
+
+.coin {
+  animation: rotateAround 0.5s 1s ease-in-out;
+}
+
+.bit {
+  animation: rotateAroundNoJump 0.5s 1s ease-in-out;
+}
+
+.raid {
+  animation: rotateOverReverse 0.5s 1s ease-in-out;
+}
+
+.flowers-container img:nth-child(3n + 1) {
+  animation: fadeIn 0.5s 1s ease-in-out forwards;
+}
+
+.flowers-container img:nth-child(3n + 2) {
+  animation: fadeIn 0.5s 1.2s ease-in-out forwards;
+}
+
+.flowers-container img:nth-child(3n + 3) {
+  animation: fadeIn 0.5s 1.4s ease-in-out forwards;
 }
 
 @keyframes fadeIn {

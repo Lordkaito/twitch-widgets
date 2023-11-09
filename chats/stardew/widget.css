@@ -59,7 +59,7 @@ main {
   align-items: center;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  margin-bottom: 2rem;
+  margin-bottom: .5rem;
   margin-top: 2rem;
   animation: slideMessage 0.5s ease-in-out forwards;
   transform: scale(0);
@@ -225,7 +225,7 @@ main {
   word-wrap: break-word;
   display: inline-block;
   min-width: 16rem;
-  max-width: 31.25rem;
+  max-width: 24.25rem;
   white-space: normal;
   animation: twinkleText 0.5 1 forwards;
 }
@@ -268,8 +268,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
-  margin-top: 1rem;
+  margin-bottom: .5rem;
+  margin-top: 2rem;
   border-radius: 5px;
   background-color: transparent;
   background: url("https://i.postimg.cc/wTkj5hkR/hierba-eventos.png");

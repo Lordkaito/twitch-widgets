@@ -72,18 +72,15 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -115,7 +112,6 @@ class mainEvent {
   }
 
   get userColor() {
-    console.log(this.event.data.displayColor);
     return this.event.data.displayColor;
   }
 
@@ -183,7 +179,6 @@ class mainEvent {
 
     circle.appendChild(flower);
 
-    // container.appendChild(circle);
     container.appendChild(dots);
     container.appendChild(oriContainer);
 
@@ -196,7 +191,6 @@ class mainEvent {
     const superMainContainer = document.createElement("div");
 
     superMainContainer.classList.add("super-main-container");
-    // superMainContainer.appendChild(this.flowers);
     superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
     const leftTopFlower = document.createElement("img");
@@ -226,19 +220,14 @@ class mainEvent {
     const hyphen = document.createElement("span");
     hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
-    // const circle = document.createElement("div");
-    // circle.innerHTML = `
-    //   <svg class="circulo" viewBox="0 0 100 100">
-    //     <circle class="circulo-animado" cx="50" cy="50" r="45">
-    //     </circle>
-    //   </svg>
-    // `;
 
     const role = this.roles.role;
     const roleCont = document.createElement("div");
     roleCont.classList.add("role-container");
     const roleText = document.createElement("span");
     roleText.classList.add("role-text");
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
     switch (role) {
       case "mod":
         roleText.innerText = "mod";
@@ -255,23 +244,13 @@ class mainEvent {
       default:
         roleText.innerText = "";
         roleText.style.display = "none";
+        dot.style.display = "none";
         break;
     }
     roleCont.appendChild(roleText);
-    // heart.classList.add("heart");
-    // circle.classList.add("circle");
-    // circle.appendChild(heart);
-    // usernameInfoContainer.appendChild(circle);
     usernameInfo.classList.add("username-info");
-    // theme === "purple" ? usernameInfo.classList.add("username-purple") : null;
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    // if (this.isSub || this.isStreamer) {
-    //   usernameInfoContainer.appendChild(this.createRoleContainer());
-    // }
-    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
     usernameInfoContainer.appendChild(usernameInfo);
     usernameInfoContainer.appendChild(dot);
     usernameInfoContainer.appendChild(roleCont);
@@ -595,15 +574,11 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
-    console.log(this.event);
-
-    console.log(this.event, "asdfahjksdgfas");
     const eventType = this.event.type;
 
     const amount = this.amount;
     let sender = this.event.sender || this.event.name;
     let eventText = dictionary[this.event.type];
-    console.log(dictionary[this.event.type]);
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
       let text = ` ha regalado ${amount} subs!`;
@@ -667,7 +642,6 @@ class mainEvent {
 
     const eventAndNameContainer = document.createElement("div");
     eventAndNameContainer.classList.add("event-and-name-container");
-    // eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
     mainContainer.setAttribute("id", `${this.id}`);
@@ -849,9 +823,6 @@ window.addEventListener("onEventReceived", async (obj) => {
     mainCont.appendChild(mainContainer);
     return mainContainer;
   });
-  // .then((mainContainer) => {
-  //   mainContainer.appendChild(flowers(mainContainer, listener));
-  // });
 });
 
 const flowers = (mainContainer, listener) => {
