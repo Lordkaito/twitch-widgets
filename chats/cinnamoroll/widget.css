@@ -55,7 +55,8 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-left: 5rem;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
 }
 
 .super-main-container {
@@ -63,11 +64,11 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  animation-name: slideMessage;
+  /* animation-name: slideMessage; */
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: .5rem;
 }
 
 .main-container {
@@ -476,8 +477,8 @@ main {
 
 .colita {
   position: absolute;
-  left: -.7rem;
-  bottom: -1rem;
+  left: -.8rem;
+  bottom: -1.5rem;
   transform: scale(.8);
 }
 
