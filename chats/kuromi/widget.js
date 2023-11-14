@@ -130,12 +130,12 @@ class mainEvent {
     const animation = fieldData.animation;
     const circle = document.createElement("div");
     const img = document.createElement("img");
-    const star = document.createElement("img");
-    img.classList.add("colita");
-    star.classList.add("star");
+    const skull = document.createElement("img");
+    img.classList.add("ears");
+    skull.classList.add("skull");
 
-    img.src = "https://i.postimg.cc/QtsZzLV6/colita.png";
-    star.src = "https://i.postimg.cc/mZjCbDPT/estrellita.png";
+    img.src = "https://i.postimg.cc/J4drRr15/orejaskuromi.png";
+    skull.src = "https://i.postimg.cc/Hx4Wmbxr/calaverita.png";
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
@@ -143,7 +143,7 @@ class mainEvent {
     mainContainer.classList.add("main-container");
 
     mainContainer.appendChild(img);
-    mainContainer.appendChild(star);
+    mainContainer.appendChild(skull);
     mainContainer.appendChild(circle);
     mainContainer.appendChild(this.roleImages);
     mainContainer.appendChild(await this.createMessageContainerElement());
@@ -154,6 +154,7 @@ class mainEvent {
   }
 
   async createUsernameInfoElement() {
+    const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
 
@@ -263,16 +264,16 @@ class mainEvent {
 
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/XqYSVwfd/corona-streamer.png`;
+        roleImage.src = `https://i.postimg.cc/XNLNDKmh/kurocorona.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/2y9p3VGJ/espada-mod.png`;
+        roleImage.src = `https://i.postimg.cc/vTYYZDg3/kuroespada.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/L4xFxbST/estrella-vip.png`;
+        roleImage.src = `https://i.postimg.cc/gk0c9XP0/kuroestrella.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/C1NpTvqw/corazon-sub.png`;
+        roleImage.src = `https://i.postimg.cc/fy8wtZYZ/kurocorazon.png`;
         break;
       case "viewer":
         roleImage.style.display = "none";

@@ -22,6 +22,7 @@
     <script src="../../libs/websocket.js"></script>
     <script src="../../libs/simulation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs@1.3.4/dist/interact.min.js"></script>
+    <script src="../../libs/resize.js"></script>
   </head>
 
   <body>
@@ -30,13 +31,86 @@
       <!--
         PLACE YOUR WIDGET.HTML CODE BELOW
         -->
+
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
-        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap"
         rel="stylesheet"
       />
-      <main class="main"></main>
+      <div class="general">
+        <main class="main">
+          <div class="nube nube1">
+            <img
+              class="nube-img"
+              src="https://i.postimg.cc/3JjqZ9q4/constelacionizq.png"
+              alt=""
+            />
+            <p class="goal-obj-50"></p>
+          </div>
+          <div class="nube nube4">
+            <img
+              class="nube-img"
+              src="https://i.postimg.cc/8Pg3WxZg/constelacionder.png"
+              alt=""
+            />
+            <p class="goal-type-text"></p>
+            <p class="goal-type-amount"></p>
+          </div>
+          <p class="progressNums"></p>
+          <img src="https://i.postimg.cc/CMkrFmSP/lunaelure.png" alt="luna" class="luna">
+          <div class="container">
+            <div class="gancho">
+              <img
+                src="https://i.postimg.cc/Kvbq4BYZ/maquinaelure.png"
+                alt=""
+                class="soporte"
+              />
+              <div class="ganchos">
+                <img
+                  src="https://i.postimg.cc/8z10XM8y/ganchoelure1.png"
+                  alt=""
+                  class="gancho-detras"
+                />
+                <img
+                  src="https://i.postimg.cc/yxmLvYL4/ganchoelure2.png"
+                  alt=""
+                  class="gancho-delante"
+                />
+                <img
+                  src="https://i.postimg.cc/XYQDRq4n/elure1.png"
+                  alt=""
+                  class="peluche"
+                />
+              </div>
+            </div>
+            <div class="nube1-container">
+              <img
+                src="https://i.postimg.cc/8Pg3WxZg/constelacionder.png"
+                alt=""
+                class="nube1"
+              />
+            </div>
+            <div class="nube2-container">
+              <img
+                src="https://i.postimg.cc/3JjqZ9q4/constelacionizq.png"
+                alt=""
+                class="nube2"
+              />
+            </div>
+            <div id="round">
+              <div class="progress-bar-container">
+                <div class="img-progress">
+                  <div class="progress-bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="img-container"></div>
+          </div>
+        </main>
+      </div>
+
+      <button class="click">Click</button>
 
       <!--
         PLACE YOUR WIDGET.HTML CODE ABOVE

@@ -131,11 +131,11 @@ class mainEvent {
     const circle = document.createElement("div");
     const img = document.createElement("img");
     const star = document.createElement("img");
-    img.classList.add("colita");
+    img.classList.add("ears");
     star.classList.add("star");
 
-    img.src = "https://i.postimg.cc/QtsZzLV6/colita.png";
-    star.src = "https://i.postimg.cc/mZjCbDPT/estrellita.png";
+    img.src = "https://i.postimg.cc/8k7Dt8dF/orejasmelody.png";
+    star.src = "https://i.postimg.cc/1XkvKVGK/brillitomelody.png";
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
@@ -154,6 +154,7 @@ class mainEvent {
   }
 
   async createUsernameInfoElement() {
+    const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
 
@@ -263,16 +264,16 @@ class mainEvent {
 
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/XqYSVwfd/corona-streamer.png`;
+        roleImage.src = `https://i.postimg.cc/28vYN4Kr/melocorona.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/2y9p3VGJ/espada-mod.png`;
+        roleImage.src = `https://i.postimg.cc/kG6j8vb4/meloespada.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/L4xFxbST/estrella-vip.png`;
+        roleImage.src = `https://i.postimg.cc/v8CyKPX0/meloestrella.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/C1NpTvqw/corazon-sub.png`;
+        roleImage.src = `https://i.postimg.cc/Cxgghz3D/melocorazon.png`;
         break;
       case "viewer":
         roleImage.style.display = "none";

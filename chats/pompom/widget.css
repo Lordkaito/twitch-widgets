@@ -1,20 +1,8 @@
 :root {
-  --message-color: #fc95b3;
-  --message-background-color: #fff5ed;
-  --message-border-color: #7bb87e;
-  --user-color: white;
-  --user-background-color: #7ccef4;
-  --user-border-color: #e6e6e6;
-  /* --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em; */
-  --pronouns-color: blue;
-  --pronouns-background-color: #ffffff;
-  --pronouns-border-color: #e6e6e6;
-  --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
-  --mods-background-color: #d1cfb4;
-  --mods-message-border: #fff3eb;
-  --event-background-color: rgba(155, 179, 142, 0.5);
-  --event-shadow-color: #a38c79;
-  --event-color: #fef9fd;
+  --message-color: #81282c;
+  --message-background-color: #fff9b0;
+  --user-color: #fff9b0;
+  --user-background-color: #41210f;
 }
 
 * {
@@ -81,7 +69,7 @@ main {
   margin-top: .5rem;
   width: 100%;
   border-radius: 20px;
-  background: white;
+  background: var(--message-background-color);
   position: relative;
 }
 
@@ -91,7 +79,7 @@ main {
   border-radius: 0 0 50% 50%;
   display: inline-block;
   margin-right: 0.625rem;
-  background: white;
+  background: var(--message-background-color);
   position: absolute;
   bottom: -.6rem;
   right: 1.5rem;
@@ -128,7 +116,6 @@ main {
   display: flex;
   align-items: baseline;
   gap: 5px;
-  /* justify-content: center; */
 }
 
 .username-info {
@@ -204,7 +191,7 @@ main {
 
 .text {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .rendered-text {
@@ -224,20 +211,14 @@ main {
 .pronouns {
   color: white;
   font-size: 12px;
-  /* text-transform: uppercase; */
   text-align: center;
-  bottom: 0;
   z-index: 1;
   font-weight: 700;
-  /* display: none; */
 }
 
 .prons {
   max-width: 100%;
   text-align: center;
-  /* background: var(--pronouns-background-color); */
-  border-radius: 1.25rem;
-  /* padding: 7px; */
 }
 
 .separator {
@@ -479,10 +460,10 @@ main {
   }
 }
 
-.colita {
+.boina {
   position: absolute;
-  left: -.8rem;
-  bottom: -1.5rem;
+  left: -.5rem;
+  top: -2rem;
   transform: scale(.8);
 }
 
