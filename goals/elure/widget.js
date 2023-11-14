@@ -35,14 +35,14 @@ let widgetApiData = {
     amount: 0,
   },
 };
-let storedEvents = [];
-let eventCounter = 0;
-let timeout = null;
-let firstEvent = true;
-let previousSender = "";
-let currentSender = "";
-let items, step, goalType;
-let animationActive = false;
+// let storedEvents = [];
+// let eventCounter = 0;
+// let timeout = null;
+// let firstEvent = true;
+// let previousSender = "";
+// let currentSender = "";
+// let items, step, goalType;
+// let animationActive = false;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
@@ -110,50 +110,33 @@ function init(obj, apiData, initial = false) {
   items = {
     progressBar: document.querySelector(".progress-bar"),
     goalText: document.querySelector(".goal-text"),
-    colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progressNums"),
-    title: document.querySelector("#title"),
-    progressImg: document.querySelector(".img-container"),
-    completeText: document.querySelector(".progression"),
-    reg: document.querySelector(".gifReg"),
-    image: document.querySelector("#image"),
+    // title: document.querySelector("#title"),
+    // progressImg: document.querySelector(".img-container"),
+    // completeText: document.querySelector(".progression"),
+    // reg: document.querySelector(".gifReg"),
+    // image: document.querySelector("#image"),
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
     peluche: document.querySelector(".peluche"),
+    progressNums2: document.querySelector(".progressNums2"),
+    nube4: document.querySelector(".nube4"),
+    nube1: document.querySelector(".nube1"),
+    luna: document.querySelector(".luna"),
+    textVersion2: document.querySelector(".version-2"),
   };
 
-  let text = {
-    subscriber: "sub goal",
-    follower: "follow goal",
-    cheer: "cheer goal",
-    tip: "tip goal",
-  };
-
-  // if (mainObj.fieldData.goalType === "tip") {
-  //   items.objective.innerText =
-  //     mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
-  // }
-
-  // if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-  //   items.objective.style.fontSize = "1.5rem";
-  //   items.objective.style.fontSize = "1.3rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
-
-  // if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-  //   items.objective.style.fontSize = "1.3rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
-  // if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-  //   items.objective.style.fontSize = "1.1rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
-  items.goalTypeText.innerText = text[goalType];
+  items.goalTypeText.innerText = mainObj.fieldData.goalText;
+  if (mainObj.fieldData.version === 2) {
+    items.nube4.style.display = "none";
+    items.nube1.style.display = "none";
+    items.luna.style.top = "3.5rem";
+    items.textVersion2.style =
+      "width: 35rem; display: grid; place-content: center; position:absolute; top: 11.3rem; left: 11.2rem; font-size: 2rem; text-align: center;";
+    items.textVersion2.innerText = mainObj.fieldData.goalText;
+  }
 
   step = getStep(
     items.progressBarContainer,
@@ -217,7 +200,7 @@ function handleGrow(amount, callback, initial = false) {
     }
     if (
       getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
-      "50%"
+      "75%"
     ) {
       items.peluche.src = "https://i.postimg.cc/tTVSnzPg/elure4.png";
     }
@@ -231,21 +214,32 @@ function handleGrow(amount, callback, initial = false) {
       amountToUpdate * step - 5
     }px)`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = `${amountToUpdate}${currency} | ${mainObj.fieldData.goalObjectiveQuantity}${currency}`;
+      items.progressionText.innerHTML = `${amountToUpdate}${currency}`;
+      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}${currency}`;
       // items.progressionText.innerHTML = getPercentage(
       //   amountToUpdate,
       //   mainObj.fieldData.goalObjectiveQuantity
       // );
     } else {
-      items.progressionText.innerHTML = `${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.progressionText.innerHTML = `${amountToUpdate}`;
+      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}`;
     }
   } else {
     items.ganchos.style.top = `0`;
     items.progressBar.style.height = "0%";
-    items.progressionText.innerHTML = `${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+    items.progressionText.innerHTML = `${amountToUpdate}`;
+    items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}`;
 
     // 100% completed
     items.peluche.src = "https://i.postimg.cc/tTVSnzPg/elure4.png";
+    if (goalType === "tip") {
+      items.progressionText.innerHTML = `${amountToUpdate}${currency}`;
+      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}${currency}`;
+      // items.progressionText.innerHTML = getPercentage(
+      //   amountToUpdate,
+      //   mainObj.fieldData.goalObjectiveQuantity
+      // );
+    }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);

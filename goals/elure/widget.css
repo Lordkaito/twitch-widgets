@@ -3,7 +3,7 @@
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: white;
-  --progress-bar-background-color: grey;
+  --progress-bar-background-color: #bcbcbc;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
@@ -55,7 +55,7 @@ main {
   overflow: hidden;
   background-image: url("https://i.postimg.cc/Zntf8yFx/fondogoalelure.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem right -7.7rem;
+  background-position: bottom -5rem right -7.7rem;
 }
 
 .gifReg {
@@ -92,18 +92,68 @@ main {
   left: 1.25rem;
 }
 
-.progressNums {
-  /* opacity: 0; */
+.progressNums-container {
+  display: flex;
+  min-width: 5rem;
+  /* align-items: center; */
   position: absolute;
-  text-align: center;
+  top: 15rem;
+  left: 25.3rem;
+  /* left: 0; */
+  /* right: 0; */
+  margin: auto;
+  gap: 10px;
+  /* width: 8rem; */
+}
+
+.progressNums {
+  min-width: 2rem;
+  /* opacity: 0; */
+  /* position: absolute; */
+  text-align: left;
   vertical-align: middle;
   color: var(--progressNums-color);
-  font-size: 2.3rem;
+  font-size: 2rem;
   z-index: 4;
   margin-bottom: 1rem;
   top: 15rem;
-  left: 16rem;
-  width: 25rem;
+  left: 14rem;
+  /* width: 25rem; */
+  text-shadow: 3px 0 #6d76d6, -3px 0 #6d76d6,
+    0 3px #6d76d6, 0 -3px #6d76d6,
+    2px 3px #6d76d6, -2px -3px #6d76d6,
+    2px -3px #6d76d6, -2px 3px #6d76d6;
+}
+
+.separator {
+  /* position: absolute; */
+  text-align: center;
+  vertical-align: middle;
+  color: var(--progressNums-color);
+  font-size: 2rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  top: 15rem;
+  left: 16.1rem;
+  /* width: 25rem; */
+  text-shadow: 3px 0 #6d76d6, -3px 0 #6d76d6,
+    0 3px #6d76d6, 0 -3px #6d76d6,
+    2px 3px #6d76d6, -2px -3px #6d76d6,
+    2px -3px #6d76d6, -2px 3px #6d76d6;
+}
+
+.progressNums2 {
+  min-width: 2rem;
+  /* position: absolute; */
+  text-align: center;
+  vertical-align: middle;
+  color: var(--progressNums-color);
+  font-size: 2rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  top: 15rem;
+  left: 18.5rem;
+  /* width: 25rem; */
   text-shadow: 3px 0 #6d76d6, -3px 0 #6d76d6,
     0 3px #6d76d6, 0 -3px #6d76d6,
     2px 3px #6d76d6, -2px -3px #6d76d6,
@@ -223,7 +273,7 @@ main {
   position: absolute;
   transition: top 0.2s ease-in-out;
   top: 0rem; /* this is the position for 100% */
-  left: 0.1rem; /* this is the position for 100% */
+  left: 0.15rem; /* this is the position for 100% */
   top: 30rem;
 }
 
@@ -247,7 +297,7 @@ main {
   position: relative;
   z-index: 2;
   top: -2.5rem;
-  left: -0.1rem;
+  left: -0.05rem;
 }
 
 .peluche {
@@ -336,7 +386,7 @@ main {
 
 .nube4 {
   top: 43%;
-  left: 31rem;
+  left: 32.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -385,6 +435,18 @@ main {
 .luna {
   position: absolute;
   top: 7rem;
-  left: 22.3rem;
-  transform: scale(.8);
+  left: 22.5rem;
+  transform: scale(.7);
+}
+
+.version-2 {
+  /* position: absolute; */
+  /* top: -2rem;
+  left: 0rem; */
+  /* font-size: 1.6rem; */
+  font-weight: 700;
+  text-align: center;
+  color: var(--nube-p-color);
+  /* max-width: 6rem; */
+  /* line-height: 0.9; */
 }

@@ -11,9 +11,9 @@ let fieldData = {
     value: "GOAL COMPLETED!",
     group: "Customization",
   },
-  goalTypeText: {
+  goalText: {
     type: "text",
-    label: "Goal type:",
+    label: "Custom text:",
     value: "sub goal",
     group: "Customization",
   },
@@ -94,5 +94,15 @@ let fieldData = {
     label: "Currency:",
     value: "$",
     group: "Customization",
+  },
+  version: {
+    type: "dropdown",
+    label: "Version:",
+    value: 2,
+    group: "Customization",
+    options: {
+      1: "1",
+      2: "2",
+    },
   }
 };
