@@ -13,8 +13,14 @@ let fieldData = {
   },
   goalText: {
     type: "text",
-    label: "Custom text:",
-    value: "sub goal",
+    label: "First line:",
+    value: "Comisión Arte",
+    group: "Customization",
+  },
+  goalText2: {
+    type: "text",
+    label: "Second line:",
+    value: "Arte",
     group: "Customization",
   },
   goalObjectiveQuantity: {

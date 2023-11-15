@@ -34,15 +34,7 @@ let widgetApiData = {
     type: "tip",
     amount: 0,
   },
-};
-// let storedEvents = [];
-// let eventCounter = 0;
-// let timeout = null;
-// let firstEvent = true;
-// let previousSender = "";
-// let currentSender = "";
-// let items, step, goalType;
-// let animationActive = false;
+}
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
@@ -85,7 +77,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsElureGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -112,29 +104,24 @@ function init(obj, apiData, initial = false) {
     goalText: document.querySelector(".goal-text"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progressNums"),
-    // title: document.querySelector("#title"),
-    // progressImg: document.querySelector(".img-container"),
-    // completeText: document.querySelector(".progression"),
-    // reg: document.querySelector(".gifReg"),
-    // image: document.querySelector("#image"),
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
+    goalTypeText2: document.querySelector(".goal-type-text-2"),
     peluche: document.querySelector(".peluche"),
     progressNums2: document.querySelector(".progressNums2"),
     nube4: document.querySelector(".nube4"),
     nube1: document.querySelector(".nube1"),
     luna: document.querySelector(".luna"),
-    textVersion2: document.querySelector(".version-2"),
+    textVersion2: document.querySelector(".version-2-text"),
   };
 
   items.goalTypeText.innerText = mainObj.fieldData.goalText;
-  if (mainObj.fieldData.version === 2) {
+  items.goalTypeText2.innerText = mainObj.fieldData.goalText2;
+  if (mainObj.fieldData.version === "2") {
     items.nube4.style.display = "none";
     items.nube1.style.display = "none";
-    items.luna.style.top = "3.5rem";
-    items.textVersion2.style =
-      "width: 35rem; display: grid; place-content: center; position:absolute; top: 11.3rem; left: 11.2rem; font-size: 2rem; text-align: center;";
+    items.luna.style.top = "6.5rem";
     items.textVersion2.innerText = mainObj.fieldData.goalText;
   }
 
@@ -214,12 +201,8 @@ function handleGrow(amount, callback, initial = false) {
       amountToUpdate * step - 5
     }px)`;
     if (goalType === "tip") {
-      items.progressionText.innerHTML = `${amountToUpdate}${currency}`;
-      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}${currency}`;
-      // items.progressionText.innerHTML = getPercentage(
-      //   amountToUpdate,
-      //   mainObj.fieldData.goalObjectiveQuantity
-      // );
+      items.progressionText.innerHTML = `${amountToUpdate}` + currency;
+      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}` + currency;
     } else {
       items.progressionText.innerHTML = `${amountToUpdate}`;
       items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}`;
@@ -233,12 +216,8 @@ function handleGrow(amount, callback, initial = false) {
     // 100% completed
     items.peluche.src = "https://i.postimg.cc/tTVSnzPg/elure4.png";
     if (goalType === "tip") {
-      items.progressionText.innerHTML = `${amountToUpdate}${currency}`;
-      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}${currency}`;
-      // items.progressionText.innerHTML = getPercentage(
-      //   amountToUpdate,
-      //   mainObj.fieldData.goalObjectiveQuantity
-      // );
+      items.progressionText.innerHTML = `${amountToUpdate}` + currency;
+      items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}` + currency;
     }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -253,10 +232,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsElureGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsElureGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }
