@@ -173,21 +173,21 @@ function handleGrow(amount, callback, initial = false) {
     mainObj.fieldData.goalObjectiveQuantity
   );
   if (!completedGoal) {
+    console.log(getPercentageInNums(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >= 25)
     if (
-      getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
-      "25%"
+      getPercentageInNums(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >= 25
     ) {
       items.peluche.src = "https://i.postimg.cc/5trKtrXG/elure2.png";
     }
     if (
-      getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
-      "50%"
+      getPercentageInNums(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
+      50
     ) {
       items.peluche.src = "https://i.postimg.cc/0NjHPvyD/elure3.png";
     }
     if (
-      getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
-      "75%"
+      getPercentageInNums(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity) >=
+      75
     ) {
       items.peluche.src = "https://i.postimg.cc/tTVSnzPg/elure4.png";
     }
@@ -228,6 +228,11 @@ function handleGrow(amount, callback, initial = false) {
 function getPercentage(amount, objective) {
   let percentage = (amount / objective) * 100;
   return Math.round(percentage) + "%";
+}
+
+function getPercentageInNums(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage);
 }
 
 function updateApiData(amountToUpdate) {

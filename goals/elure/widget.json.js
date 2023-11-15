@@ -26,7 +26,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 100,
     group: "Customization",
     step: 1,
   },
