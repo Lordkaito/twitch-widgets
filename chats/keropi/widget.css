@@ -478,4 +478,5 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
+  transform: scale(.8);
 }
