@@ -64,11 +64,11 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* animation-name: slideMessage; */
+  animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .main-container {
@@ -78,7 +78,7 @@ main {
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   width: 100%;
   border-radius: 20px;
   background: white;
@@ -93,7 +93,7 @@ main {
   margin-right: 0.625rem;
   background: white;
   position: absolute;
-  bottom: -.6rem;
+  bottom: -0.6rem;
   right: 1.5rem;
   z-index: -1;
 }
@@ -128,7 +128,19 @@ main {
   display: flex;
   align-items: baseline;
   gap: 5px;
+  opacity: 0;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   /* justify-content: center; */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .username-info {
@@ -180,7 +192,7 @@ main {
   font-weight: bold;
   font-size: 1.35rem;
   display: inline-block;
-  max-width: 12ch;
+  max-width: 11ch;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -205,6 +217,8 @@ main {
 .text {
   font-size: 1.5rem;
   font-weight: 500;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
+  opacity: 0;
 }
 
 .rendered-text {
@@ -224,20 +238,14 @@ main {
 .pronouns {
   color: white;
   font-size: 12px;
-  /* text-transform: uppercase; */
   text-align: center;
-  bottom: 0;
   z-index: 1;
   font-weight: 700;
-  /* display: none; */
 }
 
 .prons {
   max-width: 100%;
   text-align: center;
-  /* background: var(--pronouns-background-color); */
-  border-radius: 1.25rem;
-  /* padding: 7px; */
 }
 
 .separator {
@@ -345,6 +353,8 @@ main {
   position: absolute;
   right: 0;
   top: -1rem;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
+  opacity: 0;
 }
 
 .fungi-container {
@@ -481,9 +491,9 @@ main {
 
 .colita {
   position: absolute;
-  left: -.8rem;
+  left: -0.8rem;
   bottom: -1.5rem;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 
 .star {
@@ -492,4 +502,6 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
+  opacity: 0;
 }
