@@ -1,11 +1,10 @@
 :root {
-  --message-color: #fc95b3;
-  --message-background-color: #fff5ed;
+  --message-color: white;
+  --message-background-color: #817972;
   --message-border-color: #7bb87e;
-  --user-color: white;
-  --user-background-color: #7ccef4;
+  --user-color: #41556a;
+  --user-background-color: white;
   --user-border-color: #e6e6e6;
-  /* --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em; */
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
   --pronouns-border-color: #e6e6e6;
@@ -81,8 +80,9 @@ main {
   margin-top: 0.5rem;
   width: 100%;
   border-radius: 20px;
-  background: white;
+  background: var(--message-background-color);
   position: relative;
+  overflow: hidden;
 }
 
 .circle {
@@ -91,10 +91,10 @@ main {
   border-radius: 0 0 50% 50%;
   display: inline-block;
   margin-right: 0.625rem;
-  background: white;
+  background: var(--message-background-color);
   position: absolute;
-  bottom: -0.6rem;
-  right: 1.5rem;
+  bottom: .3rem;
+  right: 1.7rem;
   z-index: -1;
 }
 
@@ -124,10 +124,9 @@ main {
 
 .username-info-container {
   align-self: flex-start;
-  margin-left: 3rem;
   display: flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 15px;
   opacity: 0;
   animation: fadeIn 0.5s .7s ease-in-out forwards;
   /* justify-content: center; */
@@ -153,6 +152,7 @@ main {
   align-items: center;
   justify-content: center;
   gap: 5px;
+  position: relative;
 }
 
 .flower {
@@ -189,7 +189,7 @@ main {
 
 .capitalize-user {
   color: var(--user-color);
-  font-weight: bold;
+  font-weight: 500;
   font-size: 1.35rem;
   display: inline-block;
   max-width: 11ch;
@@ -352,8 +352,8 @@ main {
   width: 30px;
   height: 30px;
   position: absolute;
-  right: 0;
-  top: -1rem;
+  right: -1rem;
+  top: -.5rem;
   animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
 }
@@ -485,9 +485,10 @@ main {
 
 .colita {
   position: absolute;
-  left: -0.8rem;
-  bottom: -1.5rem;
+  left: 6rem;
+  bottom: -10rem;
   transform: scale(0.8);
+  z-index: 1;
 }
 
 .star {
@@ -498,4 +499,11 @@ main {
   margin: auto;
   animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
+}
+
+.leaf {
+  position: absolute;
+  right: 3rem;
+  top: .8rem;
+  transform: scale(.8);
 }
