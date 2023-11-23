@@ -129,26 +129,26 @@ class mainEvent {
     const superMainContainer = document.createElement("div");
     const animation = fieldData.animation;
     const circle = document.createElement("div");
-    const img = document.createElement("img");
+    const img = document.createElement("span");
     const star = document.createElement("img");
-    const leaf = document.createElement("img");
-    img.classList.add("colita");
+    const flowers = document.createElement("img");
+    img.classList.add("franja");
     star.classList.add("star");
-    leaf.classList.add("leaf");
+    flowers.classList.add("flowers");
 
-    img.src = "https://i.postimg.cc/fLkM72py/panzatotoro.png";
-    star.src = "https://i.postimg.cc/Dwdf7b1v/brillototoro.png";
-    leaf.src = "https://i.postimg.cc/J4X4dFnB/hojatotoro.png";
+    // img.src = "https://i.postimg.cc/fLkM72py/panzatotoro.png";
+    star.src = "https://i.postimg.cc/mr0bYzNc/chibrillo.png";
+    flowers.src = "https://i.postimg.cc/SsCmDSDg/chiflores.png";
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
     circle.classList.add("circle");
     mainContainer.classList.add("main-container");
 
-    // mainContainer.appendChild(img);
+    mainContainer.appendChild(img);
     mainContainer.appendChild(star);
     mainContainer.appendChild(circle);
-    mainContainer.appendChild(leaf);
+    mainContainer.appendChild(flowers);
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(await this.createUsernameInfoElement());
     superMainContainer.appendChild(mainContainer);
@@ -268,16 +268,16 @@ class mainEvent {
 
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/W452kL9x/toto4.png`;
+        roleImage.src = `https://i.postimg.cc/GtRdfWfd/chi4.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/MG66HKYy/toto2.png`;
+        roleImage.src = `https://i.postimg.cc/P5VfqFCQ/chi2.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/SxpN0G21/chi2.png`;
+        roleImage.src = `https://i.postimg.cc/fb3zSjXn/chi3.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/FRqNTbXZ/toto1.png`;
+        roleImage.src = `https://i.postimg.cc/rwwFMLwp/chi1.png`;
         break;
       case "viewer":
         roleImage.style.display = "none";

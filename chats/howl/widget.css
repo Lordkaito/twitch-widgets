@@ -1,8 +1,8 @@
 :root {
   --message-color: white;
-  --message-background-color: #817972;
+  --message-background-color: #74acc3;
   --message-border-color: #7bb87e;
-  --user-color: #41556a;
+  --user-color: #618bb5;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
   --pronouns-color: blue;
@@ -54,7 +54,7 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-left: 2rem;
+  padding-left: 5rem;
   margin-bottom: 2rem;
 }
 
@@ -81,6 +81,10 @@ main {
   width: 100%;
   border-radius: 20px;
   background: var(--message-background-color);
+  /* background-image: url("https://i.postimg.cc/jjy11DYn/fueguito.png"); */
+  background-repeat: no-repeat;
+  background-position: bottom -1rem left 6.8rem;
+  background-size: contain;
   position: relative;
   /* overflow: hidden; */
 }
@@ -88,14 +92,27 @@ main {
 .main-container::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  /* bottom: -0.5rem; */
+  left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("https://i.postimg.cc/fLkM72py/panzatotoro.png");
-  background-size: 50%;
+  background-image: url("https://i.postimg.cc/1ttzBhbT/campanitas.png");
   background-repeat: no-repeat;
-  background-position: bottom -10.5rem left 6rem;
-  z-index: 1;
+  background-size: 15%;
+  background-position: bottom -0.2rem right -0.3rem;
+}
+
+.main-container::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  background-image: url("https://i.postimg.cc/T2KV2ZhC/campo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0 0 20px 20px;
 }
 
 .circle {
@@ -106,9 +123,11 @@ main {
   margin-right: 0.625rem;
   background: var(--message-background-color);
   position: absolute;
-  bottom: -.7rem;
+  bottom: -0.7rem;
   right: 1.7rem;
   z-index: -1;
+  background-image: url("https://i.postimg.cc/T2KV2ZhC/campo.png");
+  background-size: cover;
 }
 
 .red::before {
@@ -496,13 +515,15 @@ main {
   }
 }
 
-.colita {
+/* .franja {
+  background-color: #282828;
+  border: none;
+  margin: none;
+  width: 100%;
+  height: 1rem;
   position: absolute;
-  left: 6rem;
-  bottom: -10.5rem;
-  transform: scale(0.8);
-  z-index: 1;
-}
+  bottom: 0;
+} */
 
 .star {
   position: absolute;
@@ -514,10 +535,9 @@ main {
   opacity: 0;
 }
 
-.leaf {
+/* .flowers {
   position: absolute;
-  right: 2rem;
-  top: -2.2rem;
-  transform: scale(0.8);
-  z-index: -1;
-}
+  right: -1rem;
+  bottom: -1rem;
+  transform: scale(.8);
+} */

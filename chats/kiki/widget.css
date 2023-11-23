@@ -1,9 +1,9 @@
 :root {
   --message-color: white;
-  --message-background-color: #817972;
+  --message-background-color: #1f2124;
   --message-border-color: #7bb87e;
-  --user-color: #41556a;
-  --user-background-color: white;
+  --user-color: white;
+  --user-background-color: #826b97;
   --user-border-color: #e6e6e6;
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
@@ -83,19 +83,6 @@ main {
   background: var(--message-background-color);
   position: relative;
   /* overflow: hidden; */
-}
-
-.main-container::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://i.postimg.cc/fLkM72py/panzatotoro.png");
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: bottom -10.5rem left 6rem;
-  z-index: 1;
 }
 
 .circle {
@@ -504,7 +491,7 @@ main {
   z-index: 1;
 }
 
-.star {
+.thingy {
   position: absolute;
   left: 1.2rem;
   top: 0;
@@ -512,12 +499,21 @@ main {
   margin: auto;
   animation: fadeIn 0.5s 0.7s ease-in-out forwards;
   opacity: 0;
+  transform: scale(.8);
 }
 
-.leaf {
+.ear {
   position: absolute;
-  right: 2rem;
-  top: -2.2rem;
+  right: 0rem;
+  top: -1.2rem;
+  transform: scale(0.8) scaleX(-1);
+  z-index: -1;
+}
+
+.ear2 {
+  position: absolute;
+  left: 0rem;
+  top: -1.2rem;
   transform: scale(0.8);
   z-index: -1;
 }

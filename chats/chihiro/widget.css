@@ -1,8 +1,8 @@
 :root {
-  --message-color: white;
-  --message-background-color: #817972;
+  --message-color: #a44155;
+  --message-background-color: #ffc8d3;
   --message-border-color: #7bb87e;
-  --user-color: #41556a;
+  --user-color: #50caba;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
   --pronouns-color: blue;
@@ -54,7 +54,7 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-left: 2rem;
+  padding-left: 5rem;
   margin-bottom: 2rem;
 }
 
@@ -81,21 +81,12 @@ main {
   width: 100%;
   border-radius: 20px;
   background: var(--message-background-color);
+  /* background-image: url("https://i.postimg.cc/jjy11DYn/fueguito.png"); */
+  background-repeat: no-repeat;
+  background-position: bottom -1rem left 6.8rem;
+  background-size: contain;
   position: relative;
   /* overflow: hidden; */
-}
-
-.main-container::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://i.postimg.cc/fLkM72py/panzatotoro.png");
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: bottom -10.5rem left 6rem;
-  z-index: 1;
 }
 
 .circle {
@@ -141,7 +132,7 @@ main {
   align-items: baseline;
   gap: 15px;
   opacity: 0;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   margin-left: 1rem;
   /* justify-content: center; */
 }
@@ -231,7 +222,7 @@ main {
 .text {
   font-size: 1.5rem;
   font-weight: 500;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
   max-width: 26rem;
 }
@@ -366,9 +357,9 @@ main {
   position: absolute;
   right: -1rem;
   top: -1rem;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
-  transform: scale(0.7);
+  transform: scale(.7);
 }
 
 .fungi-container {
@@ -444,9 +435,9 @@ main {
 
 @keyframes removeMessage {
   from {
-    opacity: 1;
+  	opacity: 1;
   }
-
+  
   to {
     opacity: 0;
   }
@@ -496,13 +487,15 @@ main {
   }
 }
 
-.colita {
+/* .franja {
+  background-color: #282828;
+  border: none;
+  margin: none;
+  width: 100%;
+  height: 1rem;
   position: absolute;
-  left: 6rem;
-  bottom: -10.5rem;
-  transform: scale(0.8);
-  z-index: 1;
-}
+  bottom: 0;
+} */
 
 .star {
   position: absolute;
@@ -510,14 +503,13 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
 }
 
-.leaf {
+.flowers {
   position: absolute;
-  right: 2rem;
-  top: -2.2rem;
-  transform: scale(0.8);
-  z-index: -1;
+  left: -2rem;
+  bottom: -1rem;
+  transform: scale(.8);
 }

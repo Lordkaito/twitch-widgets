@@ -1,9 +1,9 @@
 :root {
   --message-color: white;
-  --message-background-color: #817972;
+  --message-background-color: #ef6b4b;
   --message-border-color: #7bb87e;
-  --user-color: #41556a;
-  --user-background-color: white;
+  --user-color: #7d5b50;
+  --user-background-color: #ffefcb;
   --user-border-color: #e6e6e6;
   --pronouns-color: blue;
   --pronouns-background-color: #ffffff;
@@ -54,7 +54,7 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-left: 2rem;
+  padding-left: 5rem;
   margin-bottom: 2rem;
 }
 
@@ -81,6 +81,10 @@ main {
   width: 100%;
   border-radius: 20px;
   background: var(--message-background-color);
+  background-image: url("https://i.postimg.cc/jjy11DYn/fueguito.png");
+  background-repeat: no-repeat;
+  background-position: bottom -1rem left 6.8rem;
+  background-size: contain;
   position: relative;
   /* overflow: hidden; */
 }
@@ -90,12 +94,10 @@ main {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 100%;
-  background-image: url("https://i.postimg.cc/fLkM72py/panzatotoro.png");
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: bottom -10.5rem left 6rem;
+  height: 1.5rem;
+  background-color: #282828;
   z-index: 1;
+  border-radius: 0 0 20px 20px;
 }
 
 .circle {
@@ -104,7 +106,7 @@ main {
   border-radius: 0 0 50% 50%;
   display: inline-block;
   margin-right: 0.625rem;
-  background: var(--message-background-color);
+  background: #282828;
   position: absolute;
   bottom: -.7rem;
   right: 1.7rem;
@@ -141,7 +143,7 @@ main {
   align-items: baseline;
   gap: 15px;
   opacity: 0;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   margin-left: 1rem;
   /* justify-content: center; */
 }
@@ -231,7 +233,7 @@ main {
 .text {
   font-size: 1.5rem;
   font-weight: 500;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
   max-width: 26rem;
 }
@@ -303,6 +305,7 @@ main {
 .widget {
   width: 800px;
   height: 1000px;
+  background-color: white;
 }
 
 .event-name {
@@ -366,9 +369,9 @@ main {
   position: absolute;
   right: -1rem;
   top: -1rem;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
-  transform: scale(0.7);
+  transform: scale(.7);
 }
 
 .fungi-container {
@@ -444,9 +447,9 @@ main {
 
 @keyframes removeMessage {
   from {
-    opacity: 1;
+  	opacity: 1;
   }
-
+  
   to {
     opacity: 0;
   }
@@ -496,13 +499,15 @@ main {
   }
 }
 
-.colita {
+/* .franja {
+  background-color: #282828;
+  border: none;
+  margin: none;
+  width: 100%;
+  height: 1rem;
   position: absolute;
-  left: 6rem;
-  bottom: -10.5rem;
-  transform: scale(0.8);
-  z-index: 1;
-}
+  bottom: 0;
+} */
 
 .star {
   position: absolute;
@@ -510,14 +515,13 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
 }
 
-.leaf {
+.handle {
   position: absolute;
-  right: 2rem;
-  top: -2.2rem;
-  transform: scale(0.8);
-  z-index: -1;
+  left: -3rem;
+  bottom: 1rem;
+  transform: scale(.8);
 }
