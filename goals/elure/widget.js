@@ -209,7 +209,7 @@ function handleGrow(amount, callback, initial = false) {
     }
   } else {
     items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
+    items.progressBar.style.height = "1%";
     items.progressionText.innerHTML = `${amountToUpdate}`;
     items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}`;
 
