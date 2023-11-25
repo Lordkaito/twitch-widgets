@@ -493,19 +493,19 @@ main {
 
 .thingy {
   position: absolute;
-  left: 1.2rem;
+  left: 0.9rem;
   top: 0;
   bottom: 0;
   margin: auto;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
-  opacity: 0;
   transform: scale(.8);
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
+  opacity: 0;
 }
 
 .ear {
   position: absolute;
   right: 0rem;
-  top: -1.2rem;
+  top: -1rem;
   transform: scale(0.8) scaleX(-1);
   z-index: -1;
 }
@@ -513,7 +513,7 @@ main {
 .ear2 {
   position: absolute;
   left: 0rem;
-  top: -1.2rem;
+  top: -1rem;
   transform: scale(0.8);
   z-index: -1;
 }
