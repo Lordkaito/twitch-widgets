@@ -72,7 +72,7 @@ main {
 
 .main-container {
   min-width: 20rem;
-  max-width: 30.5rem;
+  max-width: 36rem;
   display: flex;
   flex-direction: column;
   align-items: center;
