@@ -83,8 +83,8 @@ main {
   background: var(--message-background-color);
   background-image: url("https://i.postimg.cc/jjy11DYn/fueguito.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem left 6.8rem;
-  background-size: contain;
+  background-position: bottom -1rem left 8rem;
+  background-size: 125px;
   position: relative;
   /* overflow: hidden; */
 }
