@@ -145,15 +145,15 @@ main {
 
 .moon {
   position: absolute;
-  bottom: .4rem;
+  bottom: .2rem;
   left: -.5rem;
-  transform: scale(.8);
+  transform: scale(.7);
 }
 
 .astronaut {
   position: absolute;
-  bottom: -2rem;
-  right: -2rem;
+  bottom: -1.5rem;
+  right: -1.7rem;
   z-index: 2;
   transform: scale(.8);
 }

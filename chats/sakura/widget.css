@@ -755,10 +755,9 @@ main {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   margin-left: 0.5rem;
-  color: var(--user-role-color);
-  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
-  background-color: var(--event-background-color);
-  padding: 0.4rem 0.6rem;
+  color: #fea8b4;
+  background-color: #ffefdb;
+  padding: 0.4rem;
   border-radius: 20px;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-out forwards;

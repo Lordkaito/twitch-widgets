@@ -504,7 +504,7 @@ main {
 
 .ear {
   position: absolute;
-  right: 0rem;
+  right: -.3rem;
   top: -1rem;
   transform: scale(0.8) scaleX(-1);
   z-index: -1;
@@ -512,7 +512,7 @@ main {
 
 .ear2 {
   position: absolute;
-  left: 0rem;
+  left: -.3rem;
   top: -1rem;
   transform: scale(0.8);
   z-index: -1;

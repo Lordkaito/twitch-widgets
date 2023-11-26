@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitod_",
+        displayName: "Lordkait_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "This is a test message asdf asdf asdfasd fas fasd fasdf ads af  asdfa sdf asdf asd fasd fasd fasd fasd fads asdf asdf sad asdf sad fasd fasdfasd f",
+        text: "This is a test",
         isAction: false,
         emotes: ["HypeShock"],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",

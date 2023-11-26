@@ -757,7 +757,6 @@ main {
   letter-spacing: 0.1rem;
   margin-left: 0.5rem;
   color: var(--user-role-color);
-  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
   background-color: #ffefdb;
   padding: 0.4rem 0.6rem;
   border-radius: 20px;
@@ -1013,6 +1012,7 @@ main {
   position: relative;
   top: -3rem;
   left: -2rem;
+  transform: scale(.8);
 }
 
 .constelation-sub {
@@ -1079,6 +1079,7 @@ main {
   position: relative;
   top: -3rem;
   left: -2rem;
+  transform: scale(.8);
 }
 
 .no-sub-point1 {
