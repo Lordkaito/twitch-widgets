@@ -855,61 +855,106 @@ const flowers = (mainContainer, listener, event) => {
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const constelation = document.createElement("img");
   constelation.src = "https://i.postimg.cc/2S1MdwYW/estrellitalado.png";
-  if (listener !== "message") {
-    return;
-  }
-  const isStreamer =
-    event.data.displayName.toLowerCase() === event.data.channel.toLowerCase();
-  const isSub = event.data.tags.subscriber === "1";
-  const isVip = event.data.tags.vip === "1";
-  const isMod = event.data.tags.mod === "1";
+
+  const isStreamer = () => {
+    if (listener !== "message") return false;
+    return (
+      event.data.displayName.toLowerCase() === event.data.channel.toLowerCase()
+    );
+  };
+  const isSub = () => {
+    if (listener !== "message") return false;
+    return event.data.tags.subscriber === "1";
+  };
+  const isVip = () => {
+    if (listener !== "message") return false;
+    return event.data.tags.vip === "1";
+  };
+  const isMod = () => {
+    if (listener !== "message") return false;
+    return event.data.tags.mod === "1";
+  };
+
   const isViewer = !isStreamer && !isSub && !isVip && !isMod;
 
   const subConstelationContainer = document.createElement("div");
   subConstelationContainer.classList.add("sub-constelation-container");
   const subLine1 = document.createElement("div");
+  const subLine1Container = document.createElement("div");
+  subLine1Container.classList.add("sub-line1-container");
   subLine1.classList.add("sub-line1");
+  subLine1Container.appendChild(subLine1);
   const subPoint2 = document.createElement("div");
   subPoint2.classList.add("sub-point2");
   const subLine3 = document.createElement("div");
+  const subLine3Container = document.createElement("div");
+  subLine3Container.classList.add("sub-line3-container");
   subLine3.classList.add("sub-line3");
+  subLine3Container.appendChild(subLine3);
   const subPoint4 = document.createElement("div");
   subPoint4.classList.add("sub-point4");
   const subLine5 = document.createElement("div");
+  const subLine5Container = document.createElement("div");
+  subLine5Container.classList.add("sub-line5-container");
   subLine5.classList.add("sub-line5");
+  subLine5Container.appendChild(subLine5);
 
   const noSubConstelationContainer = document.createElement("div");
   noSubConstelationContainer.classList.add("no-sub-constelation-container");
+
   const noSubPoint1 = document.createElement("div");
   noSubPoint1.classList.add("no-sub-point1");
+
   const noSubLine2 = document.createElement("div");
+  const noSubLine2Container = document.createElement("div");
+  noSubLine2Container.classList.add("no-sub-line2-container");
   noSubLine2.classList.add("no-sub-line2");
+  noSubLine2Container.appendChild(noSubLine2);
+
   const noSubLine4 = document.createElement("div");
+  const noSubLine4Container = document.createElement("div");
+  noSubLine4Container.classList.add("no-sub-line4-container");
   noSubLine4.classList.add("no-sub-line4");
+  noSubLine4Container.appendChild(noSubLine4);
+
   const noSubPoint5 = document.createElement("div");
   noSubPoint5.classList.add("no-sub-point5");
+
   const noSubLine6 = document.createElement("div");
+  const noSubLine6Container = document.createElement("div");
+  noSubLine6Container.classList.add("no-sub-line6-container");
   noSubLine6.classList.add("no-sub-line6");
+  noSubLine6Container.appendChild(noSubLine6);
+
   const noSubPoint7 = document.createElement("div");
   noSubPoint7.classList.add("no-sub-point7");
+
+  if (listener !== "message") {
+    constelation.classList.add("constelation-event");
+    subConstelationContainer.appendChild(subLine1Container);
+    subConstelationContainer.appendChild(constelation);
+    subConstelationContainer.appendChild(subLine3Container);
+    flowersContainer.appendChild(subConstelationContainer);
+    return;
+  }
   if (isViewer) {
     constelation.classList.add("constelation-viewer");
     noSubConstelationContainer.appendChild(noSubPoint1);
-    noSubConstelationContainer.appendChild(noSubLine2);
+    noSubConstelationContainer.appendChild(noSubLine2Container);
     noSubConstelationContainer.appendChild(constelation);
-    noSubConstelationContainer.appendChild(noSubLine4);
+    noSubConstelationContainer.appendChild(noSubLine4Container);
     noSubConstelationContainer.appendChild(noSubPoint5);
-    noSubConstelationContainer.appendChild(noSubLine6);
+    noSubConstelationContainer.appendChild(noSubLine6Container);
     noSubConstelationContainer.appendChild(noSubPoint7);
     flowersContainer.appendChild(noSubConstelationContainer);
   } else {
     constelation.classList.add("constelation-sub");
     subConstelationContainer.appendChild(constelation);
-    subConstelationContainer.appendChild(subLine1);
+    subConstelationContainer.appendChild(subLine1Container);
     subConstelationContainer.appendChild(subPoint2);
-    subConstelationContainer.appendChild(subLine3);
+    subConstelationContainer.appendChild(subLine3Container);
     subConstelationContainer.appendChild(subPoint4);
-    subConstelationContainer.appendChild(subLine5);
+    subConstelationContainer.appendChild(subLine5Container);
     flowersContainer.appendChild(subConstelationContainer);
   }
 };
