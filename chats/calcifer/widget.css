@@ -511,8 +511,8 @@ main {
 
 .handle {
   position: absolute;
-  left: -2.8rem;
-  bottom: 1.1rem;
+  left: -3.8rem;
+  bottom: .3rem;
   transform: scale(.8);
   z-index: 1;
 }

@@ -148,7 +148,7 @@ class mainEvent {
     mainContainer.appendChild(img);
     mainContainer.appendChild(star);
     mainContainer.appendChild(circle);
-    superMainContainer.appendChild(handle);
+    mainContainer.appendChild(handle);
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(await this.createUsernameInfoElement());
     superMainContainer.appendChild(mainContainer);
