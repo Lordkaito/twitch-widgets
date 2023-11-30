@@ -678,6 +678,7 @@ main {
   text-shadow: 0 2px 0.2em var(--event-shadow-color);
   padding: 3px 0;
   text-transform: lowercase;
+  font-weight: 500;
 }
 
 @keyframes showName {
@@ -1011,8 +1012,8 @@ main {
 
 .sub-constelation-container {
   position: relative;
-  top: -4rem;
-  left: -2rem;
+  top: -5rem;
+  left: -1rem;
   transform: scale(.8);
 }
 
@@ -1098,8 +1099,8 @@ main {
 
 .no-sub-constelation-container {
   position: relative;
-  top: -3rem;
-  left: -2rem;
+  top: -5rem;
+  left: -1rem;
   transform: scale(.8);
 }
 
@@ -1211,8 +1212,8 @@ main {
 }
 
 .event-container .flowers-container .sub-constelation-container {
-  top: -3.5rem;
-  left: -2rem;
+  top: -3rem;
+  left: 0rem;
 }
 
 .constelation-event {

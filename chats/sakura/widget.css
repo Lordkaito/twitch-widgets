@@ -676,6 +676,7 @@ main {
   text-shadow: 0 2px 0.2em var(--event-shadow-color);
   padding: 3px 0;
   text-transform: lowercase;
+  font-weight: 500;
 }
 
 @keyframes showName {

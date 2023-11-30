@@ -875,7 +875,7 @@ const addFlowers = (mainContainer, flowersContainer, listener, event) => {
     return event.data.tags.mod === "1";
   };
 
-  const isViewer = !isStreamer && !isSub && !isVip && !isMod;
+  const isViewer = !isStreamer() && !isSub() && !isVip() && !isMod();
 
   const subConstelationContainer = document.createElement("div");
   subConstelationContainer.classList.add("sub-constelation-container");
@@ -937,6 +937,7 @@ const addFlowers = (mainContainer, flowersContainer, listener, event) => {
     flowersContainer.appendChild(subConstelationContainer);
     return;
   }
+
   if (isViewer) {
     constelation.classList.add("constelation-viewer");
     noSubConstelationContainer.appendChild(noSubPoint1);
