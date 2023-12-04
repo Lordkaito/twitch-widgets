@@ -264,11 +264,11 @@ class mainEvent {
         break;
     }
 
-    if(fieldData.showPronouns === "true") {
+    if (fieldData.showPronouns === "true") {
       roleText.innerText = await this.getUserPronoun();
     }
 
-    if(fieldData.showPronouns === "none") {
+    if (fieldData.showPronouns === "none") {
       roleText.innerText = "";
       roleText.style.display = "none";
     }
@@ -819,22 +819,20 @@ window.addEventListener("onEventReceived", async (obj) => {
 
   events.init
     .then((mainContainer) => {
-      if (fieldData.allowDeleteMessages === "true") {
-        if (fieldData.deleteMessagesOption === "amount") {
-          if (currentAmountOfMessages >= maxMessages) {
-            let messageToRemove = currentMessagesIds.shift();
-            removeMessage(document.querySelector(`#${messageToRemove}`));
-            currentMessagesIds.push(mainContainer.id);
-          } else {
-            currentAmountOfMessages++;
-            currentMessagesIds.push(mainContainer.id);
-          }
+      if (fieldData.deleteMessagesOption === "amount") {
+        if (currentAmountOfMessages >= maxMessages) {
+          let messageToRemove = currentMessagesIds.shift();
+          removeMessage(document.querySelector(`#${messageToRemove}`));
+          currentMessagesIds.push(mainContainer.id);
+        } else {
+          currentAmountOfMessages++;
+          currentMessagesIds.push(mainContainer.id);
         }
-        if (fieldData.deleteMessagesOption === "timer") {
-          setTimeout(() => {
-            removeMessage(mainContainer);
-          }, fieldData.deleteMessagesTimer * 1000);
-        }
+      }
+      if (fieldData.deleteMessagesOption === "timer") {
+        setTimeout(() => {
+          removeMessage(mainContainer);
+        }, fieldData.deleteMessagesTimer * 1000);
       }
       mainCont.appendChild(mainContainer);
       return mainContainer;

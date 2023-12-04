@@ -58,7 +58,7 @@ let fieldData = {
   completeGoalText: {
     type: "text",
     label: "Custom text for goal completed",
-    value: "Goal completed! PogChamp",
+    value: "Goal completed!",
     group: "Events",
   },
   goalText: {

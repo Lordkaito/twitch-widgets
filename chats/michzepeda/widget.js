@@ -164,7 +164,7 @@ class mainEvent {
       badgeImg.src = badge.url;
       // flower.src = badge.url;
     });
-    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png"
+    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png";
 
     if (flower.src === "") {
       flower.style.display = "none";
@@ -623,23 +623,23 @@ class mainEvent {
 
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
-    const dots = document.createElement('div')
-    dots.classList.add('dots')
-    const starContainer = document.createElement('div')
-    const star = document.createElement('img')
-    star.classList.add('star')
-    starContainer.classList.add('star-container')
+    const dots = document.createElement("div");
+    dots.classList.add("dots");
+    const starContainer = document.createElement("div");
+    const star = document.createElement("img");
+    star.classList.add("star");
+    starContainer.classList.add("star-container");
     star.src = "https://i.postimg.cc/3RQqCBxF/errwef.png";
-    starContainer.appendChild(star)
+    starContainer.appendChild(star);
 
     // fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
 
     // fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
     for (let i = 0; i < 6; i++) {
-      const dot = document.createElement('div')
-      dot.classList.add(`dot-${i + 1}`)
-      dots.appendChild(dot)
+      const dot = document.createElement("div");
+      dot.classList.add(`dot-${i + 1}`);
+      dots.appendChild(dot);
     }
 
     // fungiDivContainer.appendChild(fungi);
@@ -803,10 +803,12 @@ window.addEventListener("onEventReceived", async (obj) => {
   //   return;
   // }
 
-  if (listener === "subscriber-latest") {
-    holdedEvent(event);
-    return;
-  }
+  if (event.isCommunityGift) return;
+
+  // if (listener === "subscriber-latest") {
+  //   holdedEvent(event);
+  //   return;
+  // }
 
   if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);

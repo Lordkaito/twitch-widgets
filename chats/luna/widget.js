@@ -819,22 +819,20 @@ window.addEventListener("onEventReceived", async (obj) => {
 
   events.init
     .then((mainContainer) => {
-      if (fieldData.allowDeleteMessages === "true") {
-        if (fieldData.deleteMessagesOption === "amount") {
-          if (currentAmountOfMessages >= maxMessages) {
-            let messageToRemove = currentMessagesIds.shift();
-            removeMessage(document.querySelector(`#${messageToRemove}`));
-            currentMessagesIds.push(mainContainer.id);
-          } else {
-            currentAmountOfMessages++;
-            currentMessagesIds.push(mainContainer.id);
-          }
+      if (fieldData.deleteMessagesOption === "amount") {
+        if (currentAmountOfMessages >= maxMessages) {
+          let messageToRemove = currentMessagesIds.shift();
+          removeMessage(document.querySelector(`#${messageToRemove}`));
+          currentMessagesIds.push(mainContainer.id);
+        } else {
+          currentAmountOfMessages++;
+          currentMessagesIds.push(mainContainer.id);
         }
-        if (fieldData.deleteMessagesOption === "timer") {
-          setTimeout(() => {
-            removeMessage(mainContainer);
-          }, fieldData.deleteMessagesTimer * 1000);
-        }
+      }
+      if (fieldData.deleteMessagesOption === "timer") {
+        setTimeout(() => {
+          removeMessage(mainContainer);
+        }, fieldData.deleteMessagesTimer * 1000);
       }
       mainCont.appendChild(mainContainer);
       return mainContainer;
@@ -875,7 +873,7 @@ const addFlowers = (mainContainer, flowersContainer, listener, event) => {
     return event.data.tags.mod === "1";
   };
 
-  const isViewer = !isStreamer() && !isSub() && !isVip() && !isMod();
+  const isViewer = !isStreamer() && !isSub();
 
   const subConstelationContainer = document.createElement("div");
   subConstelationContainer.classList.add("sub-constelation-container");
@@ -934,6 +932,7 @@ const addFlowers = (mainContainer, flowersContainer, listener, event) => {
     subConstelationContainer.appendChild(subLine1Container);
     subConstelationContainer.appendChild(constelation);
     subConstelationContainer.appendChild(subLine3Container);
+    subConstelationContainer.appendChild(subPoint4);
     flowersContainer.appendChild(subConstelationContainer);
     return;
   }

@@ -754,7 +754,7 @@ main {
 
 .role-text {
   font-size: 0.8rem;
-  /* font-weight: 700; */
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   margin-left: 0.5rem;
@@ -1012,9 +1012,9 @@ main {
 
 .sub-constelation-container {
   position: relative;
-  top: -5rem;
-  left: -1rem;
-  transform: scale(.8);
+  top: calc(-3.5rem - 20px);
+  left: -2rem;
+  /* transform: scale(.8); */
 }
 
 .constelation-sub {
@@ -1033,7 +1033,7 @@ main {
 }
 
 .sub-line1 {
-  width: 0.2rem;
+  width: 0.3rem;
   height: 0;
   border-radius: 5px;
   background-color: var(--constelation-color);
@@ -1043,10 +1043,10 @@ main {
 
 .sub-point2 {
   position: absolute;
-  top: 3.1rem;
-  left: 2.9rem;
-  width: 0.4rem;
-  height: 0.4rem;
+  top: 3.4rem;
+  left: 3.3rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: var(--constelation-color);
   opacity: 0;
@@ -1056,13 +1056,13 @@ main {
 .sub-line3-container {
   transform: rotate(40deg);
   position: absolute;
-  top: 3.5rem;
-  left: 2rem;
+  top: 3.9rem;
+  left: 2.3rem;
   height: 2rem;
 }
 
 .sub-line3 {
-  width: 0.2rem;
+  width: 0.3rem;
   height: 0;
   border-radius: 5px;
   background-color: var(--constelation-color);
@@ -1071,10 +1071,10 @@ main {
 
 .sub-point4 {
   position: absolute;
-  top: 5.5rem;
-  left: 0.9rem;
-  width: 0.4rem;
-  height: 0.4rem;
+  top: 6.3rem;
+  left: 0.7rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: var(--constelation-color);
   animation: fadeIn 0.5s 1s ease-in-out forwards;
@@ -1084,13 +1084,13 @@ main {
 .sub-line5-container {
   transform: rotate(-40deg);
   position: absolute;
-  top: 5.9rem;
-  left: 2rem;
+  top: 6.7rem;
+  left: 1.8rem;
   height: 2rem;
 }
 
 .sub-line5 {
-  width: 0.2rem;
+  width: 0.3rem;
   height: 0;
   border-radius: 5px;
   background-color: var(--constelation-color);
@@ -1099,17 +1099,17 @@ main {
 
 .no-sub-constelation-container {
   position: relative;
-  top: -5rem;
-  left: -1rem;
-  transform: scale(.8);
+  top: calc(-3.5rem);
+  left: -2rem;
+  /* transform: scale(.8); */
 }
 
 .no-sub-point1 {
   position: absolute;
-  top: -0.2rem;
-  left: 2.5rem;
-  width: 0.4rem;
-  height: 0.4rem;
+  top: -0.9rem;
+  left: 3rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: var(--constelation-color);
   /* background-color: red; */
@@ -1121,13 +1121,13 @@ main {
 .no-sub-line2-container {
   transform: rotate(40deg);
   position: absolute;
-  top: 0.2rem;
-  left: 1.5rem;
+  top: -.4rem;
+  left: 2rem;
   height: 2rem;
 }
 
 .no-sub-line2 {
-  width: 0.2rem;
+  width: 0.3rem;
   height: 0;
   border-radius: 5px;
   background-color: var(--constelation-color);
@@ -1140,7 +1140,7 @@ main {
   }
 
   100% {
-    height: 2rem;
+    height: 2.5rem;
   }
 }
 
@@ -1156,13 +1156,13 @@ main {
   transform: rotate(-40deg);
   position: absolute;
   position: absolute;
-  top: 2.7rem;
-  left: 1.5rem;
+  top: 2.9rem;
+  left: 1.7rem;
   height: 2rem;
 }
 
 .no-sub-line4 {
-  width: 0.2rem;
+  width: 0.3rem;
   height: 0;
   border-radius: 5px;
   background-color: var(--constelation-color);
@@ -1172,10 +1172,10 @@ main {
 
 .no-sub-point5 {
   position: absolute;
-  top: 4.7rem;
-  left: 2.5rem;
-  width: 0.4rem;
-  height: 0.4rem;
+  top: 5.3rem;
+  left: 3rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: var(--constelation-color);
   /* transform: rotate(-40deg); */
@@ -1186,13 +1186,13 @@ main {
 .no-sub-line6-container {
   transform: rotate(40deg);
   position: absolute;
-  top: 5.1rem;
-  left: 1.5rem;
+  top: 5.7rem;
+  left: 2rem;
   height: 2rem;
 }
 
 .no-sub-line6 {
-  width: 0.2rem;
+  width: 0.3rem;
   border-radius: 5px;
   background-color: var(--constelation-color);
   height: 0;
@@ -1201,10 +1201,10 @@ main {
 
 .no-sub-point7 {
   position: absolute;
-  top: 7.1rem;
-  left: 0.4rem;
-  width: 0.4rem;
-  height: 0.4rem;
+  top: 8.1rem;
+  left: 0.6rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
   background-color: var(--constelation-color);
   opacity: 0;
@@ -1212,14 +1212,14 @@ main {
 }
 
 .event-container .flowers-container .sub-constelation-container {
-  top: -3rem;
-  left: 0rem;
+  top: -3.5rem;
+  left: 1rem;
 }
 
 .constelation-event {
   animation: fadeIn 1.2s 0.4s ease-in-out forwards;
   opacity: 0;
   position: absolute;
-  top: 2.4rem;
-  left: 2.5rem;
+  top: 2.8rem;
+  left: 3rem;
 }

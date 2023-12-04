@@ -752,7 +752,7 @@ main {
 
 .role-text {
   font-size: 0.8rem;
-  /* font-weight: 700; */
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   margin-left: 0.5rem;
@@ -989,7 +989,8 @@ main {
 
 .petalo2-event {
   position: absolute;
-  top: .5rem;
+  top: .7rem;
+  left: 1.7rem;
   animation: fadeIn 0.5s .5s ease-in-out forwards;
 }
 

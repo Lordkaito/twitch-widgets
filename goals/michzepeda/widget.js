@@ -158,7 +158,7 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
-  let goalTypeText
+  let goalTypeText;
   switch (goalType) {
     case "tip":
       goalTypeText = "Tip goal";
@@ -177,20 +177,38 @@ function handleGrow(amount, callback, initial = false) {
   if (!completedGoal) {
     items.progressBar.style.width = `${amountToUpdate * step}px`;
     if (goalType === "tip") {
-      items.goalText.innerHTML = `${goalTypeText} ${getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)}`;
-      items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
+      items.goalText.innerText = `${goalTypeText} ${getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      )}`;
+      items.progressionText.innerText = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
     } else if (goalType === "cheer") {
       console.log(goalType);
-      items.goalText.innerHTML = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
-      items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
+      items.goalText.innerText = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.progressionText.innerText = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
     } else {
-      items.goalText.innerHTML = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
-      items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
+      items.goalText.innerText = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+      items.progressionText.innerText = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
     }
   } else {
     items.progressBar.style.width = "100%";
-    items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity);
-    items.goalText.innerHTML = mainObj.fieldData.completeGoalText;
+    items.progressionText.innerText = getPercentage(
+      amountToUpdate,
+      mainObj.fieldData.goalObjectiveQuantity
+    );
+    console.log(
+      getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
+    );
+    items.goalText.innerText = mainObj.fieldData.completeGoalText;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
@@ -333,5 +351,9 @@ function cancelExecution(detail) {
 
 function getPercentage(amount, objective) {
   let percentage = (amount / objective) * 100;
+  console.log(percentage);
+  if (isNaN(percentage) || isNaN(amount) || isNaN(objective)) {
+    return "0%";
+  }
   return Math.round(percentage) + "%";
 }
