@@ -1,7 +1,9 @@
 // let fieldData = {};
 let currentEvent = null;
-let startingColor = "pink";
-
+let flowerCount = 0;
+let currentMessagesIds = [];
+let currentAmountOfMessages = 0;
+let maxMessages;
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -70,15 +72,18 @@ class mainEvent {
       }
     });
 
-    if (this.isStreamer) {
+    if (priorityRole.length === 0 && this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
+      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
+      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
+    return priorityRole;
   }
 
   eventType() {
@@ -87,25 +92,6 @@ class mainEvent {
     } else {
       return this.buildEvent();
     }
-  }
-
-  get flower() {
-    const flower = document.createElement("img");
-    this.badges.forEach((badge) => {
-      if (badge.type !== "subscriber") return;
-      let badgeImg = document.createElement("img");
-      badgeImg.classList.add("badges-img");
-      badgeImg.src = badge.url;
-      // flower.src = badge.url;
-    });
-    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png";
-
-    if (flower.src === "") {
-      flower.style.display = "none";
-    }
-    flower.classList.add("flower");
-
-    return flower;
   }
 
   get emotes() {
@@ -121,46 +107,159 @@ class mainEvent {
   }
 
   get userColor() {
-    console.log(this.event.data.displayColor);
     return this.event.data.displayColor;
   }
 
   async createMainContainerElement() {
-    let role = this.roles;
-    const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
+    const message = await this.buildMessage();
+    const role = this.roles.role;
+    let roleImageURL = "";
+    let roleText = "";
+    switch (role) {
+      case "mod":
+        roleText = "mod";
+        roleImageURL = "https://i.postimg.cc/qqzNspM6/espada-mod.png";
+        break;
+      case "vip":
+        roleText = "vip";
+        roleImageURL = "https://i.postimg.cc/qM6tgB59/luna-vip.png";
+        break;
+      case "subscriber":
+        roleText = "sub";
+        roleImageURL = "https://i.postimg.cc/zBdLHy51/cora-sub.png";
+        break;
+      case "streamer":
+        roleText = "streamer";
+        roleImageURL = "https://i.postimg.cc/T3mWN2jr/cam-streamer.png";
+        break;
+      default:
+        roleText = "";
+        roleImageURL = "https://i.postimg.cc/1RC6fj5N/bocadillo-viewer.png";
+        roleText.style.display = "none";
+        dot.style.display = "none";
+        break;
+    }
 
-    superMainContainer.classList.add("super-main-container");
-    mainContainer.setAttribute("id", `${this.id}`);
-    mainContainer.classList.add("main-container");
+    superMainContainer.innerHTML = `<div class="super-main-container" id=${
+      this.id
+    }>
+      <div class="main-container">
+        <div class="message-container">
+          <div class="username-info-container">
+            <div class="username-info">
+              <span class="username-badges">
+                ${this.badges
+                  .map((badge) => {
+                    return `<img src="${badge.url}" class="badges-img"/>`;
+                  })
+                  .join("")}
+              </span>
+              <span class="capitalize-user">${this.user}</span>
+              <span class="dot"></span>
+              <span class="role-container">
+                ${roleText === "" ? "" : roleText}
+              </span>
+              <img src="${roleImageURL}" class="role"/>
+              <img src="https://i.postimg.cc/1zQVkxMb/enredadera.png" class="enredadera"/>
+            </div>
+            <div class="message-icon-container">
+              <div class="rendered-text">
+                <p class="text">${message.innerText}</p>
+              </div>
+              <div class="dots-container">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img src="https://i.postimg.cc/257LmHKy/campanitas-flores.png" class="campanas" />
+      </div>
+    </div>`;
+    // <div class="enredadera-container"></div>
 
-    mainContainer.appendChild(this.flower);
+    // const line = document.createElement("div");
+    // line.classList.add("line");
+    // const web = document.createElement("img");
+    // web.classList.add("web");
+    // web.src = "https://i.postimg.cc/KzDdK1PZ/telara.png";
 
-    mainContainer.appendChild(await this.createUsernameInfoElement());
-    mainContainer.appendChild(await this.createMessageContainerElement());
-    superMainContainer.appendChild(mainContainer);
+    // superMainContainer.classList.add("super-main-container");
+    // superMainContainer.setAttribute("id", `${this.id}`);
+    // mainContainer.classList.add("main-container");
+    // const leftTopFlower = document.createElement("img");
+    // leftTopFlower.src = "https://i.postimg.cc/1tQk5GNC/murci.png";
+    // leftTopFlower.classList.add("left-top-flower");
+    // mainContainer.appendChild(leftTopFlower);
+
+    // mainContainer.appendChild(await this.createMessageContainerElement());
+    // mainContainer.appendChild(line);
+    // mainContainer.appendChild(web);
+    // superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
   }
 
   async createUsernameInfoElement() {
-    const role = this.roles;
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
+    const hyphen = document.createElement("span");
+    hyphen.classList.add("hyphen");
     usernameInfoContainer.classList.add("username-info-container");
+
+    const role = this.roles.role;
+    const roleCont = document.createElement("div");
+    roleCont.classList.add("role-container");
+    const roleText = document.createElement("span");
+    roleText.classList.add("role-text");
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    switch (role) {
+      case "mod":
+        roleText.innerText = "mod";
+        break;
+      case "vip":
+        roleText.innerText = "vip";
+        break;
+      case "subscriber":
+        roleText.innerText = "sub";
+        break;
+      case "streamer":
+        roleText.innerText = "streamer";
+        break;
+      default:
+        roleText.innerText = "";
+        roleText.style.display = "none";
+        dot.style.display = "none";
+        break;
+    }
+    roleCont.appendChild(roleText);
     usernameInfo.classList.add("username-info");
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
+    usernameInfoContainer.appendChild(dot);
+    usernameInfoContainer.appendChild(roleCont);
     return usernameInfoContainer;
   }
 
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    const purpleCont = document.createElement("div");
+    purpleCont.classList.add("purple-cont");
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
+    const rightTopFlower = document.createElement("img");
+    rightTopFlower.src = "https://i.postimg.cc/q7yfTbg6/fanta.png";
+    rightTopFlower.classList.add("right-top-flower");
+    if (this.isSub || this.isStreamer) {
+      messageContainer.appendChild(rightTopFlower);
+    }
+    // messageContainer.appendChild(purpleCont);
     return messageContainer;
   }
 
@@ -168,7 +267,6 @@ class mainEvent {
     const usernameBadges = document.createElement("span");
     usernameBadges.classList.add("username-badges");
     this.badges.forEach((badge) => {
-      if (badge.type === "subscriber") return;
       let badgeImg = document.createElement("img");
       badgeImg.classList.add("badges-img");
       badgeImg.src = badge.url;
@@ -182,7 +280,6 @@ class mainEvent {
   }
 
   createCapitalizeUserElement() {
-    let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
@@ -197,19 +294,21 @@ class mainEvent {
   }
 
   async createPronounsContainer() {
-    let role = this.roles;
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
+    let theme = fieldData.theme;
     pronouns.classList.add("prons");
     pronounsContainer.classList.add("pronouns");
+    theme === "purple"
+      ? pronounsContainer.classList.add("pronouns-purple")
+      : null;
     pronouns.innerText = await this.getUserPronoun();
     pronouns.innerText == ""
-      ? (pronounsContainer.style.opacity = "0")
-      : (pronounsContainer.style.opacity = "1");
+      ? (pronounsContainer.style.display = "none")
+      : (pronounsContainer.style.display = "block");
     if (fieldData.allowPronouns == "false") {
-      pronounsContainer.style.opacity = "0";
+      pronounsContainer.style.display = "none";
     }
-    pronouns.style.color = colors[startingColor];
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -219,6 +318,7 @@ class mainEvent {
     const messageIconContainer = document.createElement("div");
     messageIconContainer.classList.add("message-icon-container");
     messageIconContainer.appendChild(await this.createRenderedTextElement());
+    messageIconContainer.appendChild(await this.createUsernameInfoElement());
     return messageIconContainer;
   }
 
@@ -233,43 +333,10 @@ class mainEvent {
     );
 
     // Asignar la imagen correspondiente
-    let roleImage = document.createElement("svg");
+    let roleImage = document.createElement("img");
     roleImage.classList.add("role");
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
-    }
-
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-    };
-
-    console.log(colors[startingColor]);
-    switch (minPriorityRole.role) {
-      case "streamer":
-        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>camcorder_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Media' transform='translate(-48.000000, -48.000000)' fill-rule='nonzero'><g id='camcorder_fill' transform='translate(48.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M4,4 C2.89543,4 2,4.89543 2,6 L2,18 C2,19.1046 2.89543,20 4,20 L16,20 C17.1046,20 18,19.1046 18,18 L18,15.7905 L20.0944,17.0807 C20.9272,17.5938 22,16.9946 22,16.0165 L22,7.98353 C22,7.00536 20.9272,6.40622 20.0944,6.91926 L18,8.20945 L18,6 C18,4.89543 17.1046,4 16,4 L4,4 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
-        break;
-      case "mod":
-        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>sword_fill</title><g id='Icon' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Sport' transform='translate(0.000000, -144.000000)'><g id='sword_fill' transform='translate(0.000000, 144.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5935,23.2578 L12.5819,23.2595 L12.5109,23.295 L12.4919,23.2987 L12.4767,23.295 L12.4057,23.2595 C12.3958,23.2564 12.387,23.259 12.3821,23.2649 L12.378,23.2758 L12.3609,23.7031 L12.3659,23.7235 L12.3769,23.7357 L12.4805,23.8097 L12.4953,23.8136 L12.5071,23.8097 L12.6107,23.7357 L12.6233,23.7197 L12.6267,23.7031 L12.6096,23.2758 C12.6076,23.2657 12.601,23.2593 12.5935,23.2578 Z M12.8584,23.1453 L12.8445,23.1473 L12.6598,23.2397 L12.6499,23.2499 L12.6472,23.2611 L12.6651,23.6906 L12.6699,23.7034 L12.6784,23.7105 L12.8793,23.8032 C12.8914,23.8069 12.9022,23.803 12.9078,23.7952 L12.9118,23.7812 L12.8777,23.1665 C12.8753,23.1546 12.8674,23.147 12.8584,23.1453 Z M12.143,23.1473 C12.1332,23.1424 12.1222,23.1453 12.1156,23.1526 L12.1099,23.1665 L12.0758,23.7812 C12.0751,23.7927 12.0828,23.8019 12.0926,23.8046 L12.1083,23.8032 L12.3092,23.7105 L12.3186,23.7024 L12.3225,23.6906 L12.3404,23.2611 L12.3372,23.2485 L12.3278,23.2397 L12.143,23.1473 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M19.0712,3.92875 C19.6235,3.92875 20.0712,4.37647 20.0712,4.92875 L20.0712,10.5856 C20.0712,10.9028 19.9207,11.2012 19.6656,11.3898 L12.4676,16.71 L13.4143,17.6567 C13.8048,18.0472 13.8048,18.6804 13.4143,19.0709 L12.0001,20.4851 C11.6958,20.7895 11.2308,20.8649 10.8458,20.6724 L8.66203,19.5805 L7.05036,21.1922 C6.65984,21.5827 6.02667,21.5827 5.63615,21.1922 L2.80772,18.3638 C2.4172,17.9733 2.4172,17.3401 2.80772,16.9496 L4.41939,15.3379 L3.32751,13.1541 C3.13502,12.7692 3.21047,12.3042 3.51483,11.9998 L4.92904,10.5856 C5.31957,10.1951 5.95273,10.1951 6.34326,10.5856 L7.28994,11.5323 L12.6101,4.33436 C12.7987,4.07926 13.0971,3.92875 13.4143,3.92875 L19.0712,3.92875 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
-        break;
-      case "vip":
-        roleImage.style.height = "36px";
-        roleImage.innerHTML = `<?xml version="1.0" encoding="utf-8"?>
-        <svg width="40px" height="40px" viewBox="0 0 22 28" xmlns="http://www.w3.org/2000/svg">
-            <g>
-                <path fill="none" d="M0 0h24v24H0z"/>
-                <path stroke="white" stroke-width="3" fill="${colors[startingColor]}" d="M4.873 3h14.254a1 1 0 0 1 .809.412l3.823 5.256a.5.5 0 0 1-.037.633L12.367 21.602a.5.5 0 0 1-.734 0L.278 9.302a.5.5 0 0 1-.037-.634l3.823-5.256A1 1 0 0 1 4.873 3z"/>
-            </g>
-        </svg>`;
-        break;
-      case "sub":
-        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?><svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>heart_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Shape' transform='translate(0.000000, -48.000000)' fill-rule='nonzero'><g id='heart_fill' transform='translate(0.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path stroke="white" stroke-width="3" d='M18.4938,3.80125 C20.5893,5.02215 22.0628,7.50088 21.9979,10.3931 C21.861,16.5 13.5000003,21 12.0000003,21 C10.5000003,21 2.13902,16.5 2.00206,10.3931 C1.9372,7.50088 3.41065,5.02215 5.50615,3.80125 C7.46612,2.65932 9.92814,2.65319 12.0000003,4.33847 C14.0719,2.65319 16.5339,2.65932 18.4938,3.80125 Z' id='路径' fill='${colors[startingColor]}'></path></g></g></g></svg>`;
-        break;
-      case "viewer":
-        roleImage.innerHTML = `<?xml version='1.0' encoding='UTF-8'?>
-        <svg width='40px' height='40px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><title>chat_3_fill</title><g id='页面-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'><g id='Contact' transform='translate(-768.000000, -48.000000)' fill-rule='nonzero'><g id='chat_3_fill' transform='translate(768.000000, 48.000000)'><path d='M24,0 L24,24 L0,24 L0,0 L24,0 Z M12.5934901,23.257841 L12.5819402,23.2595131 L12.5108777,23.2950439 L12.4918791,23.2987469 L12.4918791,23.2987469 L12.4767152,23.2950439 L12.4056548,23.2595131 C12.3958229,23.2563662 12.3870493,23.2590235 12.3821421,23.2649074 L12.3780323,23.275831 L12.360941,23.7031097 L12.3658947,23.7234994 L12.3769048,23.7357139 L12.4804777,23.8096931 L12.4953491,23.8136134 L12.4953491,23.8136134 L12.5071152,23.8096931 L12.6106902,23.7357139 L12.6232938,23.7196733 L12.6232938,23.7196733 L12.6266527,23.7031097 L12.609561,23.275831 C12.6075724,23.2657013 12.6010112,23.2592993 12.5934901,23.257841 L12.5934901,23.257841 Z M12.8583906,23.1452862 L12.8445485,23.1473072 L12.6598443,23.2396597 L12.6498822,23.2499052 L12.6498822,23.2499052 L12.6471943,23.2611114 L12.6650943,23.6906389 L12.6699349,23.7034178 L12.6699349,23.7034178 L12.678386,23.7104931 L12.8793402,23.8032389 C12.8914285,23.8068999 12.9022333,23.8029875 12.9078286,23.7952264 L12.9118235,23.7811639 L12.8776777,23.1665331 C12.8752882,23.1545897 12.8674102,23.1470016 12.8583906,23.1452862 L12.8583906,23.1452862 Z M12.1430473,23.1473072 C12.1332178,23.1423925 12.1221763,23.1452606 12.1156365,23.1525954 L12.1099173,23.1665331 L12.0757714,23.7811639 C12.0751323,23.7926639 12.0828099,23.8018602 12.0926481,23.8045676 L12.108256,23.8032389 L12.3092106,23.7104931 L12.3186497,23.7024347 L12.3186497,23.7024347 L12.3225043,23.6906389 L12.340401,23.2611114 L12.337245,23.2485176 L12.337245,23.2485176 L12.3277531,23.2396597 L12.1430473,23.1473072 Z' id='MingCute' fill-rule='nonzero'></path><path d='M2,11.5 C2,6.64261 6.65561,3 12,3 C17.3444,3 22,6.64261 22,11.5 C22,16.3574 17.3444,20 12,20 C11.3472,20 10.708,19.9469 10.0886,19.8452 C9.99597,19.918 9.83571,20.0501 9.63851,20.1891 C9.0713,20.5887 8.24917,21 7,21 C6.44772,21 6,20.5523 6,20 C6,19.4499 6.14332,18.7663 5.90624,18.2438 C3.57701,16.7225 2,14.2978 2,11.5 Z' id='路径' fill='${colors[startingColor]}' stroke='white' stroke-width='3'></path></g></g></g></svg>`;
-        break;
     }
     return roleImage;
   }
@@ -337,7 +404,11 @@ class mainEvent {
 
   async createRenderedTextElement() {
     const renderedText = document.createElement("div");
+    let theme = fieldData.theme;
     renderedText.classList.add("rendered-text");
+    theme === "purple"
+      ? renderedText.classList.add("rendered-text-purple")
+      : null;
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
@@ -377,7 +448,7 @@ class mainEvent {
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found") {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -409,9 +480,6 @@ class mainEvent {
     });
     let textContainer = document.createElement("p");
     textContainer.classList.add("text");
-    if (this.themeColor() == "purple") {
-      textContainer.classList.add("white-text");
-    }
     textContainer.innerHTML = words.join(" ");
     return textContainer;
   }
@@ -459,6 +527,13 @@ class mainEvent {
     return trimmed;
   }
 
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "f";
+    return `${startingLetter}${randomString}`;
+  }
+
   async createMainEventContainer() {
     const mainContainer = document.createElement("div");
 
@@ -483,9 +558,10 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
+    const eventType = this.event.type;
 
     const amount = this.amount;
-    const sender = this.event.name || this.event.sender;
+    let sender = this.event.sender || this.event.name;
     let eventText = dictionary[this.event.type];
     if (this.event.gifted) {
       eventText = dictionary["giftsub"];
@@ -524,36 +600,70 @@ class mainEvent {
 
     const nameAndText = `${text}`;
     const nameContainer = document.createElement("p");
+    const spider = document.createElement("img");
+    spider.classList.add("spider");
+    spider.src = "https://i.postimg.cc/05fsjBnp/araara.png";
+    const line = document.createElement("div");
+    line.classList.add("line2");
+    const web = document.createElement("img");
+    web.classList.add("web");
+    web.src = "https://i.postimg.cc/KzDdK1PZ/telara.png";
+    const band = document.createElement("img");
+    switch (eventType) {
+      case "follower":
+        band.src = "https://i.postimg.cc/k4vcMR73/bandera-fol.png";
+        break;
+      case "subscriber":
+        band.src = "https://i.postimg.cc/vTPtfR10/bandera-sub.png";
+        break;
+      case "cheer":
+        band.src = "https://i.postimg.cc/zvDkyDfL/bandera-cheer.png";
+        break;
+      case "tip":
+        band.src = "https://i.postimg.cc/wxFVSNWD/bandera-tip.png";
+        break;
+      case "raid":
+        band.src = "https://i.postimg.cc/wvp2dQ8Q/bandera-raid.png";
+        break;
+    }
+    band.classList.add("band");
+    mainContainer.appendChild(band);
+    mainContainer.appendChild(spider);
+    mainContainer.appendChild(web);
 
     const fungiContainer = document.createElement("div");
-    const fungi = document.createElement("img");
-    const dots = document.createElement("div");
-    dots.classList.add("dots");
-    const starContainer = document.createElement("div");
-    const star = document.createElement("img");
-    star.classList.add("star");
-    starContainer.classList.add("star-container");
-    star.src = "https://i.postimg.cc/90jf5y2c/estrella-mich.png";
-    starContainer.appendChild(star);
-
     const fungiDivContainer = document.createElement("div");
-    for (let i = 0; i < 6; i++) {
-      const dot = document.createElement("div");
-      dot.classList.add(`dot-${i + 1}`);
-      dots.appendChild(dot);
-    }
 
-    fungiContainer.appendChild(dots);
-    fungiContainer.appendChild(starContainer);
+    fungiDivContainer.classList.add(`event-leafs-container`);
     fungiContainer.classList.add("fungi-container");
-    fungiContainer.appendChild(nameContainer);
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
 
+    const eventAndNameContainer = document.createElement("div");
+    eventAndNameContainer.classList.add("event-and-name-container");
+    eventAndNameContainer.appendChild(nameContainer);
+    fungiContainer.appendChild(eventAndNameContainer);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
+    const newContainer = document.createElement("div");
+    newContainer.innerHTML = `
+    <div class="new-container" id=${this.id}>
+      <div class="event-container">
+        <div class="toggle">
+          <div class="toggle-circle"></div>
+        </div>
+        <div class="event-and-name-container">
+          <p class="event-name">${nameAndText}</p>
+        </div>
+      </div>
+    </div>
+    `;
+    // newContainer.classList.add("new-container");
+    // newContainer.setAttribute("id", `${this.id}`);
+    // newContainer.appendChild(mainContainer);
+    // newContainer.appendChild(line);
 
-    return mainContainer;
+    return newContainer;
   }
 }
 
@@ -608,6 +718,7 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
+  maxMessages = fieldData.maxMessages;
   let main = document.querySelector("main");
 });
 
@@ -634,32 +745,11 @@ const removeMessage = (mainContainer) => {
   if (elem) {
     elem.style.animationName = "removeMessage";
     elem.style.animationDuration = "0.7s";
+    elem.style.animationFillMode = "forwards";
     setTimeout(() => {
       elem.remove();
     }, 1000);
   }
-};
-
-const removeEvent = (mainContainer, event) => {
-  const elem = mainContainer;
-  elem.querySelector(".event-leafs-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".event-leafs-container-2").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-2").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(".event-leafs-container-1").style.animationName =
-    "hideLeftStar";
-  elem.querySelector(".event-leafs-container-1").style.animationDuration =
-    "0.7s";
-  elem.querySelector(".event-leafs-container-1").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(`.${event}`).style.animationName = "hideNames";
-  setTimeout(() => {
-    elem.remove();
-  }, 1000);
 };
 
 let repeatedEvents = 0;
@@ -693,7 +783,6 @@ const ignoreMessagesStartingWith = (message) => {
 
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
-
   if (event.isCommunityGift) return;
 
   if (listener === "message") {
@@ -705,51 +794,27 @@ window.addEventListener("onEventReceived", async (obj) => {
 
   const mainCont = document.querySelector("main");
 
-  if (isBulk && repeatedEvents < maxEvents) {
-    repeatedEvents++;
-    return;
-  }
-
-  repeatedEvents = 0;
-  isBulk = false;
-  maxEvents = 0;
-
   const events = new mainEvent(event, listener);
-  if (event.bulkGifted) {
-    isBulk = true;
-    maxEvents = event.count;
-    listener = "bulk";
-  }
+
   events.init.then((mainContainer) => {
-    if (listener === "message") {
-      mainContainer
-        .querySelector(".main-container")
-        .classList.add(startingColor);
-    } else {
-      mainContainer.querySelector(".main-container");
-    }
-    switch (startingColor) {
-      case "pink":
-        startingColor = "yellow";
-        break;
-      case "yellow":
-        startingColor = "purple";
-        break;
-      case "purple":
-        startingColor = "pink";
-        break;
-    }
     if (fieldData.allowDeleteMessages === "true") {
-      if (listener === "message") {
+      if (fieldData.deleteMessagesOption === "amount") {
+        if (currentAmountOfMessages >= maxMessages) {
+          let messageToRemove = currentMessagesIds.shift();
+          removeMessage(document.querySelector(`#${messageToRemove}`));
+          currentMessagesIds.push(mainContainer.id);
+        } else {
+          currentAmountOfMessages++;
+          currentMessagesIds.push(mainContainer.id);
+        }
+      }
+      if (fieldData.deleteMessagesOption === "timer") {
         setTimeout(() => {
           removeMessage(mainContainer);
-        }, fieldData.deleteMessages * 1000);
-      } else {
-        setTimeout(() => {
-          removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 1000);
+        }, fieldData.deleteMessagesTimer * 1000);
       }
     }
     mainCont.appendChild(mainContainer);
+    return mainContainer;
   });
 });
