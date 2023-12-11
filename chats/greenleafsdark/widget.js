@@ -121,23 +121,23 @@ class mainEvent {
     switch (role) {
       case "mod":
         // roleText = "mod";
-        roleImageURL = "https://i.postimg.cc/qqzNspM6/espada-mod.png";
+        roleImageURL = "https://i.postimg.cc/pLGSDrmX/mod-dark.png";
         break;
       case "vip":
         // roleText = "vip";
-        roleImageURL = "https://i.postimg.cc/qM6tgB59/luna-vip.png";
+        roleImageURL = "https://i.postimg.cc/c1R5FXvz/vip-dark.png";
         break;
       case "subscriber":
         // roleText = "sub";
-        roleImageURL = "https://i.postimg.cc/zBdLHy51/cora-sub.png";
+        roleImageURL = "https://i.postimg.cc/C1D6T4mz/sub-dark.png";
         break;
       case "streamer":
         // roleText = "streamer";
-        roleImageURL = "https://i.postimg.cc/fLnm0kPp/cam-streamer.png";
+        roleImageURL = "https://i.postimg.cc/3NTfKDc9/streamer-dark.png";
         break;
       default:
         // roleText = "";
-        roleImageURL = "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png";
+        roleImageURL = "https://i.postimg.cc/vTtqDZRy/viewer-dark.png";
         // roleText.style.display = "none";
         break;
     }
@@ -843,8 +843,8 @@ function addLines(container, listener, event) {
     messageContainer.style.height = `${currentHeight}px`;
   }, 300);
   const contHeight = container.offsetHeight + currentHeight;
-  const shiny = "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png";
-  const moon = "https://i.postimg.cc/pr4pk3pG/luna-hojas.png";
+  const shiny = "https://i.postimg.cc/LsJbvSPk/brillito-dark.png";
+  const moon = "https://i.postimg.cc/d0gSxfRb/luna-dark.png";
   const linesContainer = document.createElement("div");
   console.log(contHeight);
   linesContainer.classList.add("lines-container");

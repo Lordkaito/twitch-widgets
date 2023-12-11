@@ -100,7 +100,7 @@ main {
   height: 90px;
   /* margin-right: 15px; */
   position: relative;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 
 .super-main-container .flowers-container {
@@ -480,6 +480,8 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  text-shadow: 1px 1px 2px black, 1px -1px 2px black, -1px 1px 2px black,
+    -1px -1px 2px black;
   /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
 }
 
@@ -512,6 +514,8 @@ main {
   font-size: 1.5rem;
   /* font-weight: 700; */
   /* transform: translateX(-20rem); */
+  text-shadow: 1px 1px 2px black, 1px -1px 2px black, -1px 1px 2px black,
+    -1px -1px 2px black;
   animation: fadeIn 0.6s ease-in-out forwards;
 }
 
@@ -1121,7 +1125,7 @@ main {
 .no-sub-line2-container {
   transform: rotate(40deg);
   position: absolute;
-  top: -.4rem;
+  top: -0.4rem;
   left: 2rem;
   height: 2rem;
 }

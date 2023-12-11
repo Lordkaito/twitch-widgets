@@ -1,10 +1,10 @@
 :root {
-  --message-color: #72a101;
-  --message-background-color: #ffefdb;
+  --message-color: #ffefdb;
+  --message-background-color: rgba(255, 239, 219, .5);
   --message-border-color: #e1daff;
   --user-color: #5e8501;
   --user-role-color: #ffaf66;
-  --user-background-color: #b0cd6c;
+  --user-background-color: rgba(176, 205, 108, .2);
   --user-border-color: #e6e6e6;
   --pronouns-color: #7c3844;
   --pronouns-background-color: #ffd7ea;

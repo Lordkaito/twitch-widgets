@@ -71,7 +71,7 @@ main {
 }
 
 .main-container {
-  min-width: 20rem;
+  min-width: 13rem;
   max-width: 36rem;
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@ main {
   background: var(--message-background-color);
   background-image: url("https://i.postimg.cc/jjy11DYn/fueguito.png");
   background-repeat: no-repeat;
-  background-position: bottom -1rem left 8rem;
+  background-position: bottom -1rem left 5rem;
   background-size: 125px;
   position: relative;
   /* overflow: hidden; */
@@ -241,7 +241,7 @@ main {
 .rendered-text {
   word-wrap: break-word;
   display: inline-block;
-  min-width: 20rem;
+  min-width: 13rem;
   max-width: 37rem;
   color: var(--message-color);
   white-space: normal;

@@ -1,18 +1,18 @@
 :root {
-  --message-color: #72a101;
-  --message-background-color: #ffefdb;
+  --message-color: #ffefdb;
+  --message-background-color: #34440d;
   --message-border-color: #e1daff;
   --user-color: #5e8501;
   --user-role-color: #ffaf66;
   --user-background-color: #b0cd6c;
   --user-border-color: #e6e6e6;
-  --pronouns-color: #7c3844;
+  --pronouns-color: #b0cd6c;
   --pronouns-background-color: #ffd7ea;
   --pronouns-border-color: #e6e6e6;
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
   --event-background-color: #252247;
-  --event-color: #fdf9fa;
+  --event-color: #34440d;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
 }
@@ -114,7 +114,7 @@ main {
 .line {
   width: 3px;
   height: 0;
-  background-color: #ffefdb;
+  background-color: #34440d;
   border-radius: 40px;
   bottom: 0;
   left: 3rem;
@@ -308,7 +308,7 @@ main {
 }
 
 .username-info .dot {
-  background-color: #ffefdb;
+  background-color: #34440d;
   height: 5px;
   width: 5px;
   border-radius: 50%;
@@ -317,7 +317,7 @@ main {
 }
 
 .dot {
-  background-color: #ffefdb;
+  background-color: #34440d;
   height: 5px;
   width: 5px;
   border-radius: 50%;
@@ -661,10 +661,10 @@ main {
 .role-container {
   display: flex;
   align-items: center;
-  color: #5e8501;
+  color: #b0cd6c;
   left: -1rem;
   top: 0.3rem;
-  background-color: #ffefdb;
+  background-color: #34440d;
   padding: 0.2rem 0.5rem;
   border-radius: 20px;
   font-weight: 500;
@@ -762,7 +762,7 @@ main {
 
 .toggle {
   background-color: transparent;
-  border: 4px solid white;
+  border: 4px solid #5e8501;
   border-radius: 20px;
   height: 20px;
   width: 40px;
