@@ -137,18 +137,21 @@ class mainEvent {
         userBackground: "#b0cd6c",
         textColor: "#b0cd6c",
         textBackground: "#34440d",
+        lineColor: "#34440d",
       },
       light: {
         username: "#b0cd6c",
         userBackground: "rgba(176, 205, 108, .2)",
         textColor: "#ffefdb",
         textBackground: "rgba(255, 239, 219, .5)",
+        lineColor: "rgba(255, 239, 219, 1)"
       },
       regular: {
         username: "#5e8501",
         userBackground: "#b0cd6c",
         textColor: "#72a101",
         textBackground: "#ffefdb",
+        lineColor: "#ffefdb",
       },
     };
 
@@ -193,7 +196,7 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline; background-color: ${colors[theme].textBackground};`;
+      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor};`;
     }
 
     superMainContainer.innerHTML = `
@@ -208,10 +211,10 @@ class mainEvent {
               }">
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
-              <span class="capitalize-user" style="color: ${colors[theme].username}">${this.user}</span>
-              <span class="dot" style="background-color: ${
-                colors[theme].textBackground
-              }"></span>
+              <span class="capitalize-user" style="color: ${
+                colors[theme].username
+              }">${this.user}</span>
+              <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
@@ -226,9 +229,9 @@ class mainEvent {
       message.innerText
     }</p>
                 <div class="dots-container">
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
+                  <span class="dot" style="background-color: ${colors[theme].lineColor}"></span>
+                  <span class="dot" style="background-color: ${colors[theme].lineColor}"></span>
+                  <span class="dot" style="background-color: ${colors[theme].lineColor}"></span>
                 </div>
               </div>
             </div>
@@ -706,13 +709,42 @@ class mainEvent {
     const newContainer = document.createElement("div");
     newContainer.classList.add("new-container");
     newContainer.setAttribute("id", `${this.id}`);
+    const theme = fieldData.theme;
+    let toggleClass = "toggle-circle"
+    if(theme === "dark") {
+      toggleClass = "toggle-circle-dark"
+    }
+
+    const colors = {
+      dark: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#b0cd6c",
+        textBackground: "#34440d",
+        lineColor: "#34440d",
+      },
+      light: {
+        username: "#b0cd6c",
+        userBackground: "rgba(176, 205, 108, .2)",
+        textColor: "#ffefdb",
+        textBackground: "rgba(255, 239, 219, .5)",
+        lineColor: "rgba(255, 239, 219, 1)"
+      },
+      regular: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#72a101",
+        textBackground: "#ffefdb",
+        lineColor: "#ffefdb",
+      },
+    };
     newContainer.innerHTML = `
       <div class="event-container">
-        <div class="toggle">
-          <div class="toggle-circle"></div>
+        <div class="toggle" style="border-color: ${colors[theme].textColor}">
+          <div class="${toggleClass}"></div>
         </div>
         <div class="event-and-name-container">
-          <p class="event-name">${nameAndText}</p>
+          <p class="event-name" style="color: ${colors[theme].textColor}">${nameAndText}</p>
         </div>
       </div>
     `;
@@ -889,18 +921,21 @@ function addLines(container, listener, event) {
       userBackground: "#b0cd6c",
       textColor: "#b0cd6c",
       textBackground: "#34440d",
+      lineColor: "#34440d",
     },
     light: {
       username: "#5e8501",
       userBackground: "rgba(176, 205, 108, .2)",
       textColor: "#ffefdb",
       textBackground: "rgba(255, 239, 219, .5)",
+      lineColor: "rgba(255, 239, 219, 1)"
     },
     regular: {
       username: "#5e8501",
       userBackground: "#b0cd6c",
       textColor: "#72a101",
       textBackground: "#ffefdb",
+      lineColor: "#ffefdb",
     },
   };
   const theme = fieldData.theme;
@@ -940,18 +975,18 @@ function addLines(container, listener, event) {
   if (listener === "message") {
     linesContainer.innerHTML = `
       <span class="dot" style="background-color: ${
-        colors[theme].textBackground
+        colors[theme].lineColor
       }"></span>
       <img src="${images[theme].shiny}" class="shiny"/>
       <div class="line-container" style="${
         contHeight <= 140 ? "height: 65%" : "height: 75%"
       };" >
         <div class="line" style="background-color: ${
-          colors[theme].textBackground
+          colors[theme].lineColor
         }"></div>
       </div>
       <span class="dot" style="background-color: ${
-        colors[theme].textBackground
+        colors[theme].lineColor
       }"></span>
   `;
   }
