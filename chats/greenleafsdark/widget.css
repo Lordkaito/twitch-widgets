@@ -162,7 +162,7 @@ main {
 
 .lines-container .dot:last-child {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0rem;
   animation: fadeIn 0.5s 1.5s linear forwards;
 }
 
@@ -426,7 +426,7 @@ main {
   flex-grow: 1;
   /* align-items: center; */
   width: 100%;
-  background-color: var(--message-background-color);
+  /* background-color: var(--message-background-color); */
   padding: 1rem 0;
   /* height: 0; */
   border-top-left-radius: 15px;

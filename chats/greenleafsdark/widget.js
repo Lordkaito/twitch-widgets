@@ -4,6 +4,29 @@ let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
+const themeImages = {
+  dark: {
+    mod: "https://i.postimg.cc/pLGSDrmX/mod-dark.png",
+    vip: "https://i.postimg.cc/c1R5FXvz/vip-dark.png",
+    sub: "https://i.postimg.cc/C1D6T4mz/sub-dark.png",
+    streamer: "https://i.postimg.cc/3NTfKDc9/streamer-dark.png",
+    viewer: "https://i.postimg.cc/vTtqDZRy/viewer-dark.png",
+  },
+  light: {
+    mod: "https://i.postimg.cc/qqzNspM6/espada-mod.png",
+    vip: "https://i.postimg.cc/qM6tgB59/luna-vip.png",
+    sub: "https://i.postimg.cc/zBdLHy51/cora-sub.png",
+    streamer: "https://i.postimg.cc/fLnm0kPp/cam-streamer.png",
+    viewer: "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png",
+  },
+  regular: {
+    mod: "https://i.postimg.cc/qqzNspM6/espada-mod.png",
+    vip: "https://i.postimg.cc/qM6tgB59/luna-vip.png",
+    sub: "https://i.postimg.cc/zBdLHy51/cora-sub.png",
+    streamer: "https://i.postimg.cc/fLnm0kPp/cam-streamer.png",
+    viewer: "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png",
+  },
+};
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -72,18 +95,15 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -111,6 +131,28 @@ class mainEvent {
   }
 
   async createMainContainerElement() {
+    const colors = {
+      dark: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#b0cd6c",
+        textBackground: "#34440d",
+      },
+      light: {
+        username: "#b0cd6c",
+        userBackground: "rgba(176, 205, 108, .2)",
+        textColor: "#ffefdb",
+        textBackground: "rgba(255, 239, 219, .5)",
+      },
+      regular: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#72a101",
+        textBackground: "#ffefdb",
+      },
+    };
+
+    const theme = fieldData.theme;
     const superMainContainer = document.createElement("div");
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
@@ -118,29 +160,27 @@ class mainEvent {
     const role = this.roles.role;
     let roleImageURL = "";
     let roleText = await this.getUserPronoun();
-    switch (role) {
-      case "mod":
-        // roleText = "mod";
-        roleImageURL = "https://i.postimg.cc/pLGSDrmX/mod-dark.png";
-        break;
-      case "vip":
-        // roleText = "vip";
-        roleImageURL = "https://i.postimg.cc/c1R5FXvz/vip-dark.png";
-        break;
-      case "subscriber":
-        // roleText = "sub";
-        roleImageURL = "https://i.postimg.cc/C1D6T4mz/sub-dark.png";
-        break;
-      case "streamer":
-        // roleText = "streamer";
-        roleImageURL = "https://i.postimg.cc/3NTfKDc9/streamer-dark.png";
-        break;
-      default:
-        // roleText = "";
-        roleImageURL = "https://i.postimg.cc/vTtqDZRy/viewer-dark.png";
-        // roleText.style.display = "none";
-        break;
-    }
+    console.log(role);
+    roleImageURL = await themeImages[theme][role];
+    // switch (role) {
+    //   case "mod":
+    //     roleImageURL = themeImages[theme].mod;
+    //     break;
+    //   case "vip":
+    //     roleImageURL = themeImages[theme].vip;
+    //     break;
+    //   case "subscriber":
+    //     roleImageURL = themeImages[theme].sub;
+    //     break;
+    //   case "streamer":
+    //     roleImageURL = themeImages[theme].streamer;
+    //     break;
+    //   default:
+    //     console.log(Object.keys(themeImages));
+    //     roleImageURL = themeImages[theme]["viewer"];
+    //     break;
+    // }
+    console.log(roleImageURL);
 
     function showBadges(thisObj) {
       return thisObj.badges
@@ -150,33 +190,41 @@ class mainEvent {
         .join("");
     }
     let inlineStyle;
-    if (fieldData.allowPronouns.value == "false") {
-      inlineStyle = `display: none`;
-    } else if (fieldData.allowPronouns.value == "true" && roleText != "") {
-      inlineStyle = `display: inline`;
+    if (fieldData.allowPronouns == "false" || roleText == "") {
+      inlineStyle = `display: none;`;
+    } else if (fieldData.allowPronouns == "true" && roleText != "") {
+      inlineStyle = `display: inline; background-color: ${colors[theme].textBackground};`;
     }
 
     superMainContainer.innerHTML = `
       <div class="main-container">
         <div class="message-container">
-          <div class="username-info-container">
+          <div class="username-info-container" style="background-color:${
+            colors[theme].userBackground
+          }">
             <div class="username-info">
               <span class="username-badges" style="${
                 fieldData.displayBadges == "false" ? "display: none;" : ""
               }">
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
-              <span class="capitalize-user">${this.user}</span>
-              <span class="dot"></span>
+              <span class="capitalize-user" style="color: ${colors[theme].username}">${this.user}</span>
+              <span class="dot" style="background-color: ${
+                colors[theme].textBackground
+              }"></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
               <img src="${roleImageURL}" class="role"/>
               <img src="https://i.postimg.cc/1zQVkxMb/enredadera.png" class="enredadera"/>
             </div>
-            <div class="message-icon-container">
+            <div class="message-icon-container" style="background-color: ${
+              colors[theme].textBackground
+            };">
               <div class="rendered-text">
-                <p class="text">${message.innerText}</p>
+                <p class="text" style="color: ${colors[theme].textColor}">${
+      message.innerText
+    }</p>
                 <div class="dots-container">
                   <span class="dot"></span>
                   <span class="dot"></span>
@@ -835,36 +883,82 @@ window.addEventListener("onEventReceived", async (obj) => {
 });
 
 function addLines(container, listener, event) {
-  const messageContainer = container.querySelector(".message-icon-container");
-  const currentHeight = messageContainer.clientHeight;
-  messageContainer.style.height = "0px";
-  messageContainer.style.transition = "height 0.5s ease-in-out";
-  setTimeout(() => {
-    messageContainer.style.height = `${currentHeight}px`;
-  }, 300);
+  const colors = {
+    dark: {
+      username: "#5e8501",
+      userBackground: "#b0cd6c",
+      textColor: "#b0cd6c",
+      textBackground: "#34440d",
+    },
+    light: {
+      username: "#5e8501",
+      userBackground: "rgba(176, 205, 108, .2)",
+      textColor: "#ffefdb",
+      textBackground: "rgba(255, 239, 219, .5)",
+    },
+    regular: {
+      username: "#5e8501",
+      userBackground: "#b0cd6c",
+      textColor: "#72a101",
+      textBackground: "#ffefdb",
+    },
+  };
+  const theme = fieldData.theme;
+  const images = {
+    dark: {
+      moon: "https://i.postimg.cc/d0gSxfRb/luna-dark.png",
+      shiny: "https://i.postimg.cc/LsJbvSPk/brillito-dark.png",
+    },
+    light: {
+      moon: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
+      shiny: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
+    },
+    regular: {
+      moon: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
+      shiny: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
+    },
+  };
+
+  let messageContainer, currentHeight;
+
+  if (listener === "message") {
+    messageContainer = container.querySelector(".message-icon-container");
+    currentHeight = messageContainer.offsetHeight;
+    messageContainer.style.height = "0px";
+    messageContainer.style.transition = "height 0.5s ease-in-out";
+    setTimeout(() => {
+      messageContainer.style.height = `${currentHeight}px`;
+    }, 300);
+  }
+
   const contHeight = container.offsetHeight + currentHeight;
   const shiny = "https://i.postimg.cc/LsJbvSPk/brillito-dark.png";
   const moon = "https://i.postimg.cc/d0gSxfRb/luna-dark.png";
   const linesContainer = document.createElement("div");
   console.log(contHeight);
   linesContainer.classList.add("lines-container");
-  // linesContainer.style.height = `${contHeight - 20}px`;
   if (listener === "message") {
     linesContainer.innerHTML = `
-      <span class="dot"></span>
-      <img src="${shiny}" class="shiny"/>
+      <span class="dot" style="background-color: ${
+        colors[theme].textBackground
+      }"></span>
+      <img src="${images[theme].shiny}" class="shiny"/>
       <div class="line-container" style="${
-        contHeight <= 140 ? "height: 50%" : "height: 70%"
-      }" >
-        <div class="line"></div>
+        contHeight <= 140 ? "height: 65%" : "height: 75%"
+      };" >
+        <div class="line" style="background-color: ${
+          colors[theme].textBackground
+        }"></div>
       </div>
-      <span class="dot"></span>
+      <span class="dot" style="background-color: ${
+        colors[theme].textBackground
+      }"></span>
   `;
   }
   if (listener !== "message") {
     console.log("no es message");
     linesContainer.innerHTML = `
-      <img src="${moon}" class="moon"/>
+      <img src="${images[theme].moon}" class="moon"/>
   `;
   }
 

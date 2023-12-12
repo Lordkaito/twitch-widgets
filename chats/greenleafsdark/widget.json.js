@@ -5,6 +5,17 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
+  theme: {
+    type: "dropdown",
+    label: "Theme:",
+    value: "light",
+    group: "Customization",
+    options: {
+      regular: "Green",
+      dark: "Dark",
+      light: "Light",
+    },
+  },
   widgetHeight: {
     label: "Widget height (recommended 1080)",
     type: "text",
@@ -104,16 +115,6 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
-  theme: {
-    type: "dropdown",
-    label: "Theme:",
-    value: "pink",
-    group: "Customization",
-    options: {
-      pink: "Pink",
-      purple: "Purple",
-    },
-  },
   deleteMessagesOption: {
     label: "How to delete messages:",
     type: "dropdown",
@@ -141,5 +142,5 @@ let fieldData = {
     min: 1,
     max: 60,
     step: 1,
-  }
+  },
 };

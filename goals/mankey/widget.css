@@ -267,7 +267,7 @@ main {
 
 .nube1 {
   top: 39rem;
-  left: 18rem;
+  left: 20rem;
 }
 
 .nube1 img {
@@ -298,13 +298,15 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 2.7rem;
+  top: 2.4rem;
   bottom: 50%;
-  left: 1.2rem;
+  left: 1rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-  color: #693a27;
+  color: white;
+  text-shadow: 3px 0 #414a56, -3px 0 #414a56, 0 3px #414a56, 0 -3px #414a56,
+    2px 3px #414a56, -2px -3px #414a56, 2px -3px #414a56, -2px 3px #414a56;
   min-width: 4.6rem;
   text-align: center;
 }
@@ -337,7 +339,7 @@ main {
 
 .nube4 {
   top: 28.7rem;
-  left: 31.3rem;
+  left: 30.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -347,15 +349,14 @@ main {
 
 .nube4 p {
   position: absolute;
-
-  top: 3.3rem;
-  left: 2rem;
+  top: 2.1rem;
+  left: 0.7rem;
   font-size: 1.6rem;
   font-weight: 700;
-
   text-align: center;
-  color: #693a27;
-
+  color: white;
+  text-shadow: 3px 0 #414a56, -3px 0 #414a56, 0 3px #414a56, 0 -3px #414a56,
+    2px 3px #414a56, -2px -3px #414a56, 2px -3px #414a56, -2px 3px #414a56;
   max-width: 6rem;
   line-height: 0.9;
 }

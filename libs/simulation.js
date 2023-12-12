@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaito_",
+        displayName: "Lordkaidto_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "hello!",
+        text: "asfd",
         isAction: false,
         emotes: ["HypeShock"],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
