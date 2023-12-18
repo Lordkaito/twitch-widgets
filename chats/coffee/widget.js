@@ -4,169 +4,73 @@ let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-const baseUrls = {
-  dark: {
-    roles: [
-      {
-        name: "moon",
-        urls: {
-          1: "https://i.postimg.cc/d0gSxfRb/luna-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923499609989210/luna-dark.png?ex=658dbd01&is=657b4801&hm=65250cc1ec22df9e65af12345e7b5a3b9cb82109cbdaee75fa5353aedba4d0cc&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "shiny",
-        urls: {
-          1: "https://i.postimg.cc/LsJbvSPk/brillito-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923499282841620/brillito-dark.png?ex=658dbd01&is=657b4801&hm=d6c9310b22b9039c9b60f2907fc2dc3672ddcedf32d06eb366df00025dd8a676&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "mod",
-        urls: {
-          1: "https://i.postimg.cc/pLGSDrmX/mod-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923499911991296/mod-dark.png?ex=658dbd01&is=657b4801&hm=e13eb06f6cf1c2c5f3db79c3bc8283c600a7a836c4ae940e303740ac46dd803c&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "vip",
-        urls: {
-          1: "https://i.postimg.cc/c1R5FXvz/vip-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923501065416774/vip-dark.png?ex=658dbd01&is=657b4801&hm=7d294cc4bfedca9986b289520517ff083f3c793992d610296c8d5263fd3a405e&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "subscriber",
-        urls: {
-          1: "https://i.postimg.cc/C1D6T4mz/sub-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923500541124638/sub-dark.png?ex=658dbd01&is=657b4801&hm=66fd73c80e3e9e07deccd579adeda73248a35811c8c793cc034248ac39b7cadc&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "streamer",
-        urls: {
-          1: "https://i.postimg.cc/3NTfKDc9/streamer-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923500251725874/streamer-dark.png?ex=658dbd01&is=657b4801&hm=521aaa611e0842084c472cab792f849d8118022c70019a4043f696b756e11b9e&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "viewer",
-        urls: {
-          1: "https://i.postimg.cc/vTtqDZRy/viewer-dark.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923500822155376/viewer-dark.png?ex=658dbd01&is=657b4801&hm=9dbfd12ea8a089b9b82c38ac32f94a434bbd453821d8033a21bf1dc51b2639b0&=&format=webp&quality=lossless",
-        },
-      },
-    ],
+let baseUrls = [
+  {
+    name: "coffee",
+    // coffee
+    urls: {
+      1: "https://i.postimg.cc/rmb727j1/cafeee.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979745419314/cafeee.png?ex=658dc6c3&is=657b51c3&hm=f5548e4d32654f16cc6a3913b784877d7b03ceee7aa096061f8e9bb1e058caac&=&format=webp&quality=lossless",
+    },
   },
-  light: {
-    roles: [
-      {
-        name: "moon",
-        urls: {
-          1: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "shiny",
-        urls: {
-          1: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "mod",
-        urls: {
-          1: "https://i.postimg.cc/qqzNspM6/espada-mod.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "vip",
-        urls: {
-          1: "https://i.postimg.cc/qM6tgB59/luna-vip.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "subscriber",
-        urls: {
-          1: "https://i.postimg.cc/zBdLHy51/cora-sub.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "streamer",
-        urls: {
-          1: "https://i.postimg.cc/fLnm0kPp/cam-streamer.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "viewer",
-        urls: {
-          1: "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-        },
-      },
-    ],
+  {
+    name: "mod",
+    // mod
+    urls: {
+      1: "https://i.postimg.cc/fb86BV0g/cafe-mod.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978239684768/cafe-mod.png?ex=658dc6c3&is=657b51c3&hm=6fd529a403fe19470e6c61d3bce1a4fb7fc955a0b7314711603e6dd3b7364346&=&format=webp&quality=lossless",
+    },
   },
-  regular: {
-    roles: [
-      {
-        name: "moon",
-        urls: {
-          1: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "shiny",
-        urls: {
-          1: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "mod",
-        urls: {
-          1: "https://i.postimg.cc/qqzNspM6/espada-mod.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "vip",
-        urls: {
-          1: "https://i.postimg.cc/qM6tgB59/luna-vip.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "subscriber",
-        urls: {
-          1: "https://i.postimg.cc/zBdLHy51/cora-sub.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "streamer",
-        urls: {
-          1: "https://i.postimg.cc/fLnm0kPp/cam-streamer.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-        },
-      },
-      {
-        name: "viewer",
-        urls: {
-          1: "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png",
-          2: "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-        },
-      },
-    ],
+  {
+    // vip
+    name: "vip",
+    urls: {
+      1: "https://i.postimg.cc/c4YG01Vr/cafe-vip.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979514744913/cafe-vip.png?ex=658dc6c3&is=657b51c3&hm=e7bacd2a0e159c776379b3e6042be46c7c1e29c4dea9a817cdbf251675cf30d7&=&format=webp&quality=lossless",
+    },
   },
-};
-
-let imagesUrls = {};
+  {
+    // sub
+    name: "sub",
+    urls: {
+      1: "https://i.postimg.cc/jSb050bv/cafe-sub.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978738786304/cafe-sub.png?ex=658dc6c3&is=657b51c3&hm=d2d030a73a9a173e55d2d35ed076fffabba5014265878921f3ca7e61a5830f3a&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // streamer
+    name: "streamer",
+    urls: {
+      1: "https://i.postimg.cc/W1wRqWpV/cafe-streamer.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978495529010/cafe-streamer.png?ex=658dc6c3&is=657b51c3&hm=c9ae7e9012eb74382fbc5e4b10ccd7924e59bbc2f8663d689995fbf242bddf93&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // viewer
+    name: "viewer",
+    urls: {
+      1: "https://i.postimg.cc/q7JPssg3/cafe-viewer.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979091128402/cafe-viewer.png?ex=658dc6c3&is=657b51c3&hm=cbf651c0d0d2ecbd316c37eb42619fd66621f889092c204bc02fa7f1e94b1d43&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // moon
+    name: "moon",
+    urls: {
+      1: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // shiny
+    name: "shiny",
+    urls: {
+      1: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
+    },
+  },
+];
+let coffeeImages = {};
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -268,32 +172,14 @@ class mainEvent {
 
   async createMainContainerElement() {
     const colors = {
-      dark: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#b0cd6c",
-        textBackground: "#34440d",
-        lineColor: "#34440d",
-        pronsColor: "#b0cd6c",
-        dotsColor: "#b0cd6c",
-      },
-      light: {
-        username: "#ddff91",
-        userBackground: "rgba(176, 205, 108, .2)",
-        textColor: "#ffefdb",
-        textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "rgba(255, 239, 219, 1)",
-        pronsColor: "#5e8501",
-        dotsColor: "#ddff91",
-      },
-      regular: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#72a101",
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#a35e46",
+        textColor: "#a35e46",
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
-        pronsColor: "#5e8501",
-        dotsColor: "#b0cd6c",
+        pronsColor: "#a35e46",
+        dotsColor: "#d79a85",
       },
     };
 
@@ -302,16 +188,9 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
     const role = this.roles.role;
-    console.log(role);
-    let roleImageURL = imagesUrls[role];
-    console.log("roleImageURL", roleImageURL);
+    let roleImageURL = coffeeImages[role];
+    console.log(roleImageURL, "asdfasdfadsfasdfasdfasdf");
     let roleText = await this.getUserPronoun();
-    // const isValidUrl = await checkImgUrl(themeImages[theme][role][1]);
-    // if (!isValidUrl) {
-    //   roleImageURL = await themeImages[theme][role][2];
-    // } else {
-    //   roleImageURL = await themeImages[theme][role][1];
-    // }
 
     function showBadges(thisObj) {
       return thisObj.badges
@@ -324,36 +203,28 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
+      inlineStyle = `display: inline; background-color: ${colors.coffee.lineColor}; color: ${colors.coffee.pronsColor}`;
     }
 
-    let enredaderaUrl;
-    let campanasUrl;
-    const isValidEnredadera = await checkImgUrl(
-      "https://i.postimg.cc/1zQVkxMb/enredadera.png"
+    const isValidChocoUrl = await checkImgUrl(
+      "https://i.postimg.cc/LXrQbL4v/chocoo.png"
     );
-    const isValidCampanas = await checkImgUrl(
-      "https://i.postimg.cc/257LmHKy/campanitas-flores.png"
-    );
-    if (!isValidEnredadera) {
-      enredaderaUrl =
-        "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless";
+    let chocoUrl;
+    if (!isValidChocoUrl) {
+      // replace this
+      chocoUrl =
+        "https://media.discordapp.net/attachments/1184922970498539520/1184933979091128402/cafe-viewer.png?ex=658dc6c3&is=657b51c3&hm=cbf651c0d0d2ecbd316c37eb42619fd66621f889092c204bc02fa7f1e94b1d43&=&format=webp&quality=lossless";
     } else {
-      enredaderaUrl = "https://i.postimg.cc/1zQVkxMb/enredadera.png";
+      chocoUrl = "https://i.postimg.cc/LXrQbL4v/chocoo.png";
     }
 
-    if (!isValidCampanas) {
-      campanasUrl =
-        "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless";
-    } else {
-      campanasUrl = "https://i.postimg.cc/257LmHKy/campanitas-flores.png";
-    }
+    let coffeeUrl = coffeeImages.coffee;
 
     superMainContainer.innerHTML = `
       <div class="main-container">
         <div class="message-container">
           <div class="username-info-container" style="background-color:${
-            colors[theme].userBackground
+            colors.coffee.userBackground
           }">
             <div class="username-info">
               <span class="username-badges" style="${
@@ -362,38 +233,37 @@ class mainEvent {
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
               <span class="capitalize-user" style="color: ${
-                colors[theme].username
+                colors.coffee.username
               }">${this.user}</span>
               <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
               <img src="${roleImageURL}" class="role"/>
-              <img src="${enredaderaUrl}" class="enredadera"/>
+              <img src="${coffeeUrl}" class="coffee"/>
             </div>
             <div class="message-icon-container" style="background-color: ${
-              colors[theme].textBackground
+              colors.coffee.textBackground
             };">
               <div class="rendered-text">
-              <p class="text" style="color: ${colors[theme].textColor}">${
+              <p class="text" style="color: ${colors.coffee.textColor}">${
       (await this.buildMessage()).innerHTML
     }</p>
                 <div class="dots-container">
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <img src="${campanasUrl}" class="campanas" />
     </div>`;
     return superMainContainer;
   }
@@ -588,7 +458,7 @@ class mainEvent {
   get id() {
     // generate random string
     const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
+    const startingLetter = "c";
     return `${startingLetter}${randomString}`;
   }
 
@@ -657,51 +527,26 @@ class mainEvent {
     const newContainer = document.createElement("div");
     newContainer.classList.add("new-container");
     newContainer.setAttribute("id", `${this.id}`);
-    const theme = fieldData.theme;
-    let toggleClass = "toggle-circle";
-    let toggleClass2 = "toggle";
-    if (theme === "dark") {
-      toggleClass = "toggle-circle-dark";
-      toggleClass2 = "toggle-dark";
-    }
-
     const colors = {
-      dark: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#b0cd6c",
-        textBackground: "#34440d",
-        lineColor: "#34440d",
-        dotsColor: "#ffefdb",
-        eventsColor: "#34440d",
-      },
-      light: {
-        username: "#b0cd6c",
-        userBackground: "rgba(176, 205, 108, .2)",
-        textColor: "#ffefdb",
-        textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "rgba(255, 239, 219, 1)",
-        dotsColor: "#ddff91",
-        eventsColor: "#ffefdb",
-      },
-      regular: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#72a101",
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#9b2d2c",
+        textColor: "#9b2d2c",
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
-        dotsColor: "#ffefdb",
+        pronsColor: "#a35e46",
+        dotsColor: "#9b2d2c",
         eventsColor: "#ffefdb",
       },
     };
 
     newContainer.innerHTML = `
       <div class="event-container">
-        <div class="${toggleClass2}">
-          <div class="${toggleClass}"></div>
+        <div class="toggle">
+          <div class="toggle-circle"></div>
         </div>
         <div class="event-and-name-container">
-          <p class="event-name" style="color: ${colors[theme].eventsColor}">${nameAndText}</p>
+          <p class="event-name" style="color: ${colors.coffee.eventsColor}">${nameAndText}</p>
         </div>
       </div>
     `;
@@ -761,29 +606,26 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   maxMessages = fieldData.maxMessages;
-  checkAllUrls();
+  await checkAllUrls();
 });
 
 async function checkAllUrls() {
-  const theme = fieldData.theme;
-  console.log(theme);
-  const roles = baseUrls[theme].roles;
-  roles.forEach(async (role) => {
-    const url1 = role.urls[1];
-    const url2 = role.urls[2];
-    const isValidUrl1 = await checkImgUrl(url1);
-    const isValidUrl2 = await checkImgUrl(url2);
-
-    if (isValidUrl1) {
-      imagesUrls[role.name] = url1;
+  for (item in baseUrls) {
+    console.log(baseUrls[item].urls[1]);
+    const isValidUrl = await checkImgUrl(baseUrls[item].urls[1]);
+    const isValidUrl2 = await checkImgUrl(baseUrls[item].urls[2]);
+    if (isValidUrl) {
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[1];
+      console.log("coffee images", coffeeImages);
     } else if (isValidUrl2) {
-      imagesUrls[role.name] = url2;
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[2];
+      console.log("coffee images 2", coffeeImages);
     } else {
-      imagesUrls[role.name] = null;
+      coffeeImages[baseUrls[item].name] = null;
+      console.log("coffee images 3", coffeeImages);
     }
-  });
+  }
 }
-console.log(imagesUrls, "imagesUrls");
 
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
@@ -886,29 +728,20 @@ window.addEventListener("onEventReceived", async (obj) => {
 
 async function addLines(container, listener, event) {
   const colors = {
-    dark: {
-      username: "#5e8501",
-      userBackground: "#b0cd6c",
-      textColor: "#b0cd6c",
-      textBackground: "#34440d",
-      lineColor: "#34440d",
-    },
-    light: {
-      username: "#5e8501",
-      userBackground: "rgba(176, 205, 108, .2)",
-      textColor: "#ffefdb",
-      textBackground: "rgba(255, 239, 219, .5)",
-      lineColor: "rgba(255, 239, 219, 1)",
-    },
-    regular: {
-      username: "#5e8501",
-      userBackground: "#b0cd6c",
-      textColor: "#72a101",
+    coffee: {
+      username: "#ffefdb",
+      userBackground: "#a35e46",
+      textColor: "#a35e46",
       textBackground: "#ffefdb",
       lineColor: "#ffefdb",
+      pronsColor: "#a35e46",
+      dotsColor: "#d79a85",
     },
   };
-  const theme = fieldData.theme;
+
+  let moonUrl = coffeeImages.moon;
+  let shinyUrl = coffeeImages.shiny;
+
   let messageContainer, currentHeight;
 
   if (listener === "message") {
@@ -924,24 +757,21 @@ async function addLines(container, listener, event) {
   const contHeight = container.offsetHeight + currentHeight;
   const linesContainer = document.createElement("div");
   linesContainer.classList.add("lines-container");
-  let shinyUrl = imagesUrls["shiny"];
-  let moonUrl = imagesUrls["moon"];
-
   if (listener === "message") {
     linesContainer.innerHTML = `
       <span class="dot" style="background-color: ${
-        colors[theme].lineColor
+        colors.coffee.lineColor
       }"></span>
       <img src="${shinyUrl}" class="shiny"/>
       <div class="line-container" style="${
         contHeight <= 140 ? "height: 65%" : "height: 75%"
       };" >
         <div class="line" style="background-color: ${
-          colors[theme].lineColor
+          colors.coffee.lineColor
         }"></div>
       </div>
       <span class="dot" style="background-color: ${
-        colors[theme].lineColor
+        colors.coffee.lineColor
       }"></span>
   `;
   }

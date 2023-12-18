@@ -4,6 +4,73 @@ let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
+let baseUrls = [
+  {
+    name: "choco",
+    // choco
+    urls: {
+      1: "https://i.postimg.cc/LXrQbL4v/chocoo.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354892642725898/chocoo.png?ex=6592f217&is=65807d17&hm=2ee831b1a838f0381f672c39e866c9454d417b0dde7887ea87161b1244c1ab10&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    name: "mod",
+    // mod
+    urls: {
+      1: "https://i.postimg.cc/hjJ3spnf/choco-mod.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354891308945510/choco-mod.png?ex=6592f217&is=65807d17&hm=c963fc3763e8925c237add145acc1c0bbd6bf913883004c6858f00addf4d8c13&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // vip
+    name: "vip",
+    urls: {
+      1: "https://i.postimg.cc/JhY2jS9f/choco-vip.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354892428808192/choco-vip.png?ex=6592f217&is=65807d17&hm=d3fa3f0096f0968d4f9c0b2ae8c16f42f9139c6af7ce3b74d46e6ec2c78d91a2&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // sub
+    name: "sub",
+    urls: {
+      1: "https://i.postimg.cc/6QpP2B1V/choco-sub.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354891870974166/choco-sub.png?ex=6592f217&is=65807d17&hm=9f0ede77def77c29d7e1ac5fa6c82ba148a5e88650d61f904fc233a99bf83243&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // streamer
+    name: "streamer",
+    urls: {
+      1: "https://i.postimg.cc/FHZqHYGs/choco-streamer.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354891573170236/choco-streamer.png?ex=6592f217&is=65807d17&hm=346268a20311ea3da90b8a67942c7fe5ea460a5588f7cada1707985bed2211de&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // viewer
+    name: "viewer",
+    urls: {
+      1: "https://i.postimg.cc/Xqd1SqpW/choco-viewer.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354892206526604/choco-viewer.png?ex=6592f217&is=65807d17&hm=ec9909d117cf5a720b4d2e57d700a9dd42db6ff25b2091dd37130216e9601a82&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // moon
+    name: "moon",
+    urls: {
+      1: "https://i.postimg.cc/v8VN6qXK/copo.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354892860838031/copo.png?ex=6592f217&is=65807d17&hm=19f0113638e21a9836946ebbfc6e662de73a29406cfe096fbbc4c555d48d0102&=&format=webp&quality=lossless",
+    },
+  },
+  {
+    // shiny
+    name: "shiny",
+    urls: {
+      1: "https://i.postimg.cc/L8RwSttb/bastoncito.png",
+      2: "https://media.discordapp.net/attachments/1184922970498539520/1186354891069862029/bastoncito.png?ex=6592f217&is=65807d17&hm=872cc2f65254c6e1356feda9d87c13273b6d34aefa422653f01cbb522e1ccc46&=&format=webp&quality=lossless",
+    },
+  },
+];
+let coffeeImages = {};
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -72,18 +139,15 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -106,41 +170,27 @@ class mainEvent {
     return await this.createMainContainerElement();
   }
 
-  get userColor() {
-    return this.event.data.displayColor;
-  }
-
   async createMainContainerElement() {
+    const colors = {
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#9b2d2c",
+        textColor: "#9b2d2c",
+        textBackground: "#ffefdb",
+        lineColor: "#ffefdb",
+        pronsColor: "#a35e46",
+        dotsColor: "#9b2d2c",
+      },
+    };
+
+    const theme = fieldData.theme;
     const superMainContainer = document.createElement("div");
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
-    const message = await this.buildMessage();
     const role = this.roles.role;
-    let roleImageURL = "";
+    let roleImageURL = coffeeImages[role];
+    console.log(roleImageURL, "asdfasdfadsfasdfasdfasdf");
     let roleText = await this.getUserPronoun();
-    switch (role) {
-      case "mod":
-        // roleText = "mod";
-        roleImageURL = "https://i.postimg.cc/qqzNspM6/espada-mod.png";
-        break;
-      case "vip":
-        // roleText = "vip";
-        roleImageURL = "https://i.postimg.cc/qM6tgB59/luna-vip.png";
-        break;
-      case "subscriber":
-        // roleText = "sub";
-        roleImageURL = "https://i.postimg.cc/zBdLHy51/cora-sub.png";
-        break;
-      case "streamer":
-        // roleText = "streamer";
-        roleImageURL = "https://i.postimg.cc/fLnm0kPp/cam-streamer.png";
-        break;
-      default:
-        // roleText = "";
-        roleImageURL = "https://i.postimg.cc/j5HN6t05/bocadillo-viewer.png";
-        // roleText.style.display = "none";
-        break;
-    }
 
     function showBadges(thisObj) {
       return thisObj.badges
@@ -150,186 +200,60 @@ class mainEvent {
         .join("");
     }
     let inlineStyle;
-    if (fieldData.allowPronouns.value == "false") {
-      inlineStyle = `display: none`;
-    } else if (fieldData.allowPronouns.value == "true" && roleText != "") {
-      inlineStyle = `display: inline`;
+    if (fieldData.allowPronouns == "false" || roleText == "") {
+      inlineStyle = `display: none;`;
+    } else if (fieldData.allowPronouns == "true" && roleText != "") {
+      inlineStyle = `display: inline; background-color: ${colors.coffee.lineColor}; color: ${colors.coffee.pronsColor}`;
     }
+
+    let chocoUrl = coffeeImages.choco;
 
     superMainContainer.innerHTML = `
       <div class="main-container">
         <div class="message-container">
-          <div class="username-info-container">
+          <div class="username-info-container" style="background-color:${
+            colors.coffee.userBackground
+          }">
             <div class="username-info">
               <span class="username-badges" style="${
                 fieldData.displayBadges == "false" ? "display: none;" : ""
               }">
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
-              <span class="capitalize-user">${this.user}</span>
-              <span class="dot"></span>
+              <span class="capitalize-user" style="color: ${
+                colors.coffee.username
+              }">${this.user}</span>
+              <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
               <img src="${roleImageURL}" class="role"/>
-              <img src="https://i.postimg.cc/1zQVkxMb/enredadera.png" class="enredadera"/>
+              <img src="${chocoUrl}" class="coffee"/>
             </div>
-            <div class="message-icon-container">
+            <div class="message-icon-container" style="background-color: ${
+              colors.coffee.textBackground
+            };">
               <div class="rendered-text">
-                <p class="text">${message.innerText}</p>
+              <p class="text" style="color: ${colors.coffee.textColor}">${
+      (await this.buildMessage()).innerHTML
+    }</p>
                 <div class="dots-container">
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
+                  <span class="dot" style="background-color: ${
+                    colors.coffee.dotsColor
+                  }"></span>
+                  <span class="dot" style="background-color: ${
+                    colors.coffee.dotsColor
+                  }"></span>
+                  <span class="dot" style="background-color: ${
+                    colors.coffee.dotsColor
+                  }"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <img src="https://i.postimg.cc/257LmHKy/campanitas-flores.png" class="campanas" />
     </div>`;
-    // <div class="enredadera-container"></div>
-
-    // const line = document.createElement("div");
-    // line.classList.add("line");
-    // const web = document.createElement("img");
-    // web.classList.add("web");
-    // web.src = "https://i.postimg.cc/KzDdK1PZ/telara.png";
-
-    // superMainContainer.classList.add("super-main-container");
-    // superMainContainer.setAttribute("id", `${this.id}`);
-    // mainContainer.classList.add("main-container");
-    // const leftTopFlower = document.createElement("img");
-    // leftTopFlower.src = "https://i.postimg.cc/1tQk5GNC/murci.png";
-    // leftTopFlower.classList.add("left-top-flower");
-    // mainContainer.appendChild(leftTopFlower);
-
-    // mainContainer.appendChild(await this.createMessageContainerElement());
-    // mainContainer.appendChild(line);
-    // mainContainer.appendChild(web);
-    // superMainContainer.appendChild(mainContainer);
-
     return superMainContainer;
-  }
-
-  async createUsernameInfoElement() {
-    const usernameInfo = document.createElement("div");
-    const usernameInfoContainer = document.createElement("div");
-    const hyphen = document.createElement("span");
-    hyphen.classList.add("hyphen");
-    usernameInfoContainer.classList.add("username-info-container");
-
-    const role = this.roles.role;
-    const roleCont = document.createElement("div");
-    roleCont.classList.add("role-container");
-    const roleText = document.createElement("span");
-    roleText.classList.add("role-text");
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    switch (role) {
-      case "mod":
-        roleText.innerText = "mod";
-        break;
-      case "vip":
-        roleText.innerText = "vip";
-        break;
-      case "subscriber":
-        roleText.innerText = "sub";
-        break;
-      case "streamer":
-        roleText.innerText = "streamer";
-        break;
-      default:
-        roleText.innerText = "";
-        roleText.style.display = "none";
-        dot.style.display = "none";
-        break;
-    }
-    roleCont.appendChild(roleText);
-    usernameInfo.classList.add("username-info");
-    usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfoContainer.appendChild(dot);
-    usernameInfoContainer.appendChild(roleCont);
-    return usernameInfoContainer;
-  }
-
-  async createMessageContainerElement() {
-    const messageContainer = document.createElement("div");
-    messageContainer.classList.add("message-container");
-    const purpleCont = document.createElement("div");
-    purpleCont.classList.add("purple-cont");
-    messageContainer.appendChild(
-      await this.createMessageIconContainerElement()
-    );
-    const rightTopFlower = document.createElement("img");
-    rightTopFlower.src = "https://i.postimg.cc/q7yfTbg6/fanta.png";
-    rightTopFlower.classList.add("right-top-flower");
-    if (this.isSub || this.isStreamer) {
-      messageContainer.appendChild(rightTopFlower);
-    }
-    // messageContainer.appendChild(purpleCont);
-    return messageContainer;
-  }
-
-  createUsernameBadgesElement() {
-    const usernameBadges = document.createElement("span");
-    usernameBadges.classList.add("username-badges");
-    this.badges.forEach((badge) => {
-      let badgeImg = document.createElement("img");
-      badgeImg.classList.add("badges-img");
-      badgeImg.src = badge.url;
-      usernameBadges.appendChild(badgeImg);
-    });
-
-    if (fieldData.displayBadges == "false") {
-      usernameBadges.style.display = "none";
-    }
-    return usernameBadges;
-  }
-
-  createCapitalizeUserElement() {
-    const capitalizeUser = document.createElement("span");
-    capitalizeUser.classList.add("capitalize-user");
-    capitalizeUser.innerText = this.user;
-    return capitalizeUser;
-  }
-
-  createRoleContainer() {
-    const roleContainer = document.createElement("span");
-    roleContainer.classList.add("role-container");
-    roleContainer.appendChild(this.roleImages);
-    return roleContainer;
-  }
-
-  async createPronounsContainer() {
-    const pronounsContainer = document.createElement("div");
-    const pronouns = document.createElement("span");
-    let theme = fieldData.theme;
-    pronouns.classList.add("prons");
-    pronounsContainer.classList.add("pronouns");
-    theme === "purple"
-      ? pronounsContainer.classList.add("pronouns-purple")
-      : null;
-    pronouns.innerText = await this.getUserPronoun();
-    pronouns.innerText == ""
-      ? (pronounsContainer.style.display = "none")
-      : (pronounsContainer.style.display = "block");
-    if (fieldData.allowPronouns == "false") {
-      pronounsContainer.style.display = "none";
-    }
-
-    pronounsContainer.appendChild(pronouns);
-    return pronounsContainer;
-  }
-
-  async createMessageIconContainerElement() {
-    const messageIconContainer = document.createElement("div");
-    messageIconContainer.classList.add("message-icon-container");
-    messageIconContainer.appendChild(await this.createRenderedTextElement());
-    messageIconContainer.appendChild(await this.createUsernameInfoElement());
-    return messageIconContainer;
   }
 
   get roleImages() {
@@ -410,18 +334,6 @@ class mainEvent {
         break;
     }
     return pronoun;
-  }
-
-  async createRenderedTextElement() {
-    const renderedText = document.createElement("div");
-    let theme = fieldData.theme;
-    renderedText.classList.add("rendered-text");
-    theme === "purple"
-      ? renderedText.classList.add("rendered-text-purple")
-      : null;
-    renderedText.classList.add(`${this.roles.role}-text`);
-    renderedText.appendChild(await this.buildMessage());
-    return renderedText;
   }
 
   getRole() {
@@ -507,12 +419,6 @@ class mainEvent {
     return customEmotesArr;
   }
 
-  themeColor() {
-    let color = fieldData.theme;
-
-    return color;
-  }
-
   buildEvent() {
     return this.createMainEvent();
   }
@@ -540,13 +446,11 @@ class mainEvent {
   get id() {
     // generate random string
     const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
+    const startingLetter = "c";
     return `${startingLetter}${randomString}`;
   }
 
   async createMainEventContainer() {
-    const mainContainer = document.createElement("div");
-
     const { name } = this;
 
     let {
@@ -568,7 +472,6 @@ class mainEvent {
       bulkgift: bulkGiftText,
       raid: raidText,
     };
-    const eventType = this.event.type;
 
     const amount = this.amount;
     let sender = this.event.sender || this.event.name;
@@ -609,70 +512,32 @@ class mainEvent {
     }
 
     const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
-    const spider = document.createElement("img");
-    spider.classList.add("spider");
-    spider.src = "https://i.postimg.cc/05fsjBnp/araara.png";
-    const line = document.createElement("div");
-    line.classList.add("line2");
-    const web = document.createElement("img");
-    web.classList.add("web");
-    web.src = "https://i.postimg.cc/KzDdK1PZ/telara.png";
-    const band = document.createElement("img");
-    switch (eventType) {
-      case "follower":
-        band.src = "https://i.postimg.cc/k4vcMR73/bandera-fol.png";
-        break;
-      case "subscriber":
-        band.src = "https://i.postimg.cc/vTPtfR10/bandera-sub.png";
-        break;
-      case "cheer":
-        band.src = "https://i.postimg.cc/zvDkyDfL/bandera-cheer.png";
-        break;
-      case "tip":
-        band.src = "https://i.postimg.cc/wxFVSNWD/bandera-tip.png";
-        break;
-      case "raid":
-        band.src = "https://i.postimg.cc/wvp2dQ8Q/bandera-raid.png";
-        break;
-    }
-    band.classList.add("band");
-    mainContainer.appendChild(band);
-    mainContainer.appendChild(spider);
-    mainContainer.appendChild(web);
-
-    const fungiContainer = document.createElement("div");
-    const fungiDivContainer = document.createElement("div");
-
-    fungiDivContainer.classList.add(`event-leafs-container`);
-    fungiContainer.classList.add("fungi-container");
-    nameContainer.classList.add("event-name");
-    nameContainer.innerText = nameAndText;
-
-    const eventAndNameContainer = document.createElement("div");
-    eventAndNameContainer.classList.add("event-and-name-container");
-    eventAndNameContainer.appendChild(nameContainer);
-    fungiContainer.appendChild(eventAndNameContainer);
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
     const newContainer = document.createElement("div");
     newContainer.classList.add("new-container");
     newContainer.setAttribute("id", `${this.id}`);
+    const colors = {
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#9b2d2c",
+        textColor: "#9b2d2c",
+        textBackground: "#ffefdb",
+        lineColor: "#ffefdb",
+        pronsColor: "#a35e46",
+        dotsColor: "#9b2d2c",
+        eventsColor: "#ffefdb",
+      },
+    };
+
     newContainer.innerHTML = `
       <div class="event-container">
         <div class="toggle">
           <div class="toggle-circle"></div>
         </div>
         <div class="event-and-name-container">
-          <p class="event-name">${nameAndText}</p>
+          <p class="event-name" style="color: ${colors.coffee.eventsColor}">${nameAndText}</p>
         </div>
       </div>
     `;
-    // newContainer.classList.add("new-container");
-    // newContainer.setAttribute("id", `${this.id}`);
-    // newContainer.appendChild(mainContainer);
-    // newContainer.appendChild(line);
-
     return newContainer;
   }
 }
@@ -729,8 +594,26 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   maxMessages = fieldData.maxMessages;
-  let main = document.querySelector("main");
+  await checkAllUrls();
 });
+
+async function checkAllUrls() {
+  for (item in baseUrls) {
+    console.log(baseUrls[item].urls[1]);
+    const isValidUrl = await checkImgUrl(baseUrls[item].urls[1]);
+    const isValidUrl2 = await checkImgUrl(baseUrls[item].urls[2]);
+    if (isValidUrl) {
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[1];
+      console.log("coffee images", coffeeImages);
+    } else if (isValidUrl2) {
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[2];
+      console.log("coffee images 2", coffeeImages);
+    } else {
+      coffeeImages[baseUrls[item].name] = null;
+      console.log("coffee images 3", coffeeImages);
+    }
+  }
+}
 
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
@@ -753,12 +636,10 @@ async function loadGlobalEmotes() {
 const removeMessage = (mainContainer) => {
   const elem = mainContainer;
   if (elem) {
-    elem.style.animationName = "removeMessage";
-    elem.style.animationDuration = "0.7s";
-    elem.style.animationFillMode = "forwards";
+    elem.style.animation = "removeMessage 0.7s 1s ease-in-out";
     setTimeout(() => {
       elem.remove();
-    }, 1000);
+    }, 1500);
   }
 };
 
@@ -829,44 +710,70 @@ window.addEventListener("onEventReceived", async (obj) => {
       return mainContainer;
     })
     .then((mainContainer) => {
-      console.log(mainContainer);
       addLines(mainContainer, listener, event);
     });
 });
 
-function addLines(container, listener, event) {
-  const messageContainer = container.querySelector(".message-icon-container");
-  const currentHeight = messageContainer.clientHeight;
-  messageContainer.style.height = "0px";
-  messageContainer.style.transition = "height 0.5s ease-in-out";
-  setTimeout(() => {
-    messageContainer.style.height = `${currentHeight}px`;
-  }, 300);
+async function addLines(container, listener, event) {
+  const colors = {
+    coffee: {
+      username: "#ffefdb",
+      userBackground: "#a35e46",
+      textColor: "#a35e46",
+      textBackground: "#ffefdb",
+      lineColor: "#ffefdb",
+      pronsColor: "#a35e46",
+      dotsColor: "#d79a85",
+    },
+  };
+
+  let moonUrl = coffeeImages.moon;
+  let shinyUrl = coffeeImages.shiny;
+
+  let messageContainer, currentHeight;
+
+  if (listener === "message") {
+    messageContainer = container.querySelector(".message-icon-container");
+    currentHeight = messageContainer.offsetHeight;
+    messageContainer.style.height = "0px";
+    messageContainer.style.transition = "height 0.5s ease-in-out";
+    setTimeout(() => {
+      messageContainer.style.height = `${currentHeight + 10}px`;
+    }, 300);
+  }
+
   const contHeight = container.offsetHeight + currentHeight;
-  const shiny = "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png";
-  const moon = "https://i.postimg.cc/pr4pk3pG/luna-hojas.png";
   const linesContainer = document.createElement("div");
-  console.log(contHeight);
   linesContainer.classList.add("lines-container");
-  // linesContainer.style.height = `${contHeight - 20}px`;
   if (listener === "message") {
     linesContainer.innerHTML = `
-      <span class="dot"></span>
-      <img src="${shiny}" class="shiny"/>
+      <span class="dot" style="background-color: ${
+        colors.coffee.lineColor
+      }"></span>
+      <img src="${shinyUrl}" class="shiny"/>
       <div class="line-container" style="${
-        contHeight <= 140 ? "height: 50%" : "height: 70%"
-      }" >
-        <div class="line"></div>
+        contHeight <= 140 ? "height: 65%" : "height: 75%"
+      };" >
+        <div class="line" style="background-color: ${
+          colors.coffee.lineColor
+        }"></div>
       </div>
-      <span class="dot"></span>
+      <span class="dot" style="background-color: ${
+        colors.coffee.lineColor
+      }"></span>
   `;
   }
   if (listener !== "message") {
-    console.log("no es message");
     linesContainer.innerHTML = `
-      <img src="${moon}" class="moon"/>
+      <img src="${moonUrl}" class="moon"/>
   `;
   }
 
   container.appendChild(linesContainer);
+}
+
+async function checkImgUrl(url) {
+  return await fetch(url).then((res) => {
+    return res.ok;
+  });
 }

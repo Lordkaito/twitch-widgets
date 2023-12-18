@@ -8,7 +8,7 @@ let fieldData = {
   theme: {
     type: "dropdown",
     label: "Theme:",
-    value: "regular",
+    value: "light",
     group: "Customization",
     options: {
       regular: "Green",

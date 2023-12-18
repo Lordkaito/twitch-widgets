@@ -563,7 +563,7 @@ main {
 
 .new-container .lines-container {
   justify-content: center;
-  left: -0.6rem;
+  left: -1.2rem;
 }
 
 .moon {
@@ -729,16 +729,12 @@ main {
   }
 }
 
-.enredadera {
+.coffee {
   position: absolute;
-  transform: scale(0.89);
-  right: 0.4rem;
-  top: -0.4rem;
+  transform: scale(0.8);
+  right: -2rem;
+  top: -2rem;
   z-index: 2;
-  /* height: 8.8rem; */
-  /* transform-origin: top; */
-  /* transform-style: preserve-3d; */
-  /* animation: growEnredadera2 2s 1s ease-in-out forwards; */
 }
 
 @keyframes growEnredadera {
@@ -815,18 +811,7 @@ main {
 
   100% {
     left: 1.3rem;
-    background-color: #b0cd6c;
+    background-color: #97bd75;
   }
 }
 
-@keyframes toggle2 {
-  0% {
-    left: 0.2rem;
-    background-color: #34440d;
-  }
-
-  100% {
-    left: 1.3rem;
-    background-color: #b0cd6c;
-  }
-}
