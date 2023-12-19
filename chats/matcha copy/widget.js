@@ -4,59 +4,85 @@ let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-
-let imagesUrls = {
-  dark: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923499911991296/mod-dark.png?ex=658dbd01&is=657b4801&hm=e13eb06f6cf1c2c5f3db79c3bc8283c600a7a836c4ae940e303740ac46dd803c&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923501065416774/vip-dark.png?ex=658dbd01&is=657b4801&hm=7d294cc4bfedca9986b289520517ff083f3c793992d610296c8d5263fd3a405e&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500541124638/sub-dark.png?ex=658dbd01&is=657b4801&hm=66fd73c80e3e9e07deccd579adeda73248a35811c8c793cc034248ac39b7cadc&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500822155376/viewer-dark.png?ex=658dbd01&is=657b4801&hm=9dbfd12ea8a089b9b82c38ac32f94a434bbd453821d8033a21bf1dc51b2639b0&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500251725874/streamer-dark.png?ex=658dbd01&is=657b4801&hm=521aaa611e0842084c472cab792f849d8118022c70019a4043f696b756e11b9e&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1184923499609989210/luna-dark.png?ex=658dbd01&is=657b4801&hm=65250cc1ec22df9e65af12345e7b5a3b9cb82109cbdaee75fa5353aedba4d0cc&=&format=webp&quality=lossless",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923499282841620/brillito-dark.png?ex=658dbd01&is=657b4801&hm=d6c9310b22b9039c9b60f2907fc2dc3672ddcedf32d06eb366df00025dd8a676&=&format=webp&quality=lossless",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+let baseUrls = [
+  {
+    name: "choco",
+    // choco
+    urls: {
+      1: "https://i.postimg.cc/L4Q8v9Qq/matchaa.png",
+      2: "",
+    },
   },
-  light: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+  {
+    name: "mod",
+    // mod
+    urls: {
+      1: "https://i.postimg.cc/RV3VDk2g/te-mod.png",
+      2: "",
+    },
   },
-  regular: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+  {
+    // vip
+    name: "vip",
+    urls: {
+      1: "https://i.postimg.cc/KY5ZTxg8/te-vip.png",
+      2: "",
+    },
   },
+  {
+    // sub
+    name: "sub",
+    urls: {
+      1: "https://i.postimg.cc/YCY2p1rg/te-sub.png",
+      2: "",
+    },
+  },
+  {
+    // streamer
+    name: "streamer",
+    urls: {
+      1: "https://i.postimg.cc/mr4Lhtkn/te-streamer.png",
+      2: "",
+    },
+  },
+  {
+    // viewer
+    name: "viewer",
+    urls: {
+      1: "https://i.postimg.cc/Pxrdz9mz/te-viewer.png",
+      2: "",
+    },
+  },
+  {
+    // moon
+    name: "moon",
+    urls: {
+      1: "https://i.postimg.cc/DytykCTn/brilli-te.png",
+      2: "",
+    },
+  },
+  {
+    // shiny
+    name: "shiny",
+    urls: {
+      1: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
+      2: "",
+    },
+  },
+];
+let coffeeImages = {
+  choco:
+    "https://media.discordapp.net/attachments/1184922970498539520/1186358575786897491/matchaa.png?ex=6592f585&is=65808085&hm=cc657369c4e4e6425a7bf72d01aca4d89314ec3c02190ffc35fbd29e1b33857d&=&format=webp&quality=lossless",
+  mod: "https://media.discordapp.net/attachments/1184922970498539520/1186358576097267883/te-mod.png?ex=6592f586&is=65808086&hm=b150f1b3aa615dacd6923d2d69e32a30ee4cec7da2155efb0610d6be91fed7f1&=&format=webp&quality=lossless",
+  vip: "https://media.discordapp.net/attachments/1184922970498539520/1186358577108103319/te-vip.png?ex=6592f586&is=65808086&hm=b16cf191f7523743e3261415c3ee6513bad89ee9150a29f7d78edb825d987a93&=&format=webp&quality=lossless",
+  sub: "https://media.discordapp.net/attachments/1184922970498539520/1186358576608981052/te-sub.png?ex=6592f586&is=65808086&hm=feaee005882698ea20352eb9902fcc4f54b4626c03f7a34b9746f99506a99e57&=&format=webp&quality=lossless",
+  streamer:
+    "https://media.discordapp.net/attachments/1184922970498539520/1186358576390873108/te-streamer.png?ex=6592f586&is=65808086&hm=d28c35e09404faa8cf390177cf2998dce0eecd7aad866f27f4463e228bf584f1&=&format=webp&quality=lossless",
+  viewer:
+    "https://media.discordapp.net/attachments/1184922970498539520/1186358576873218210/te-viewer.png?ex=6592f586&is=65808086&hm=e4813278bf07266fb7c59996452047fa8be89ef7c94cd5c87b549ef79af5a1b0&=&format=webp&quality=lossless",
+  moon: "https://media.discordapp.net/attachments/1184922970498539520/1186358575434571917/brilli-te.png?ex=6592f585&is=65808085&hm=4ad7a53718c1b1311250def6cf710732978e4d131e5097800b8a390564b032ea&=&format=webp&quality=lossless",
+  shiny:
+    "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
 };
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -159,32 +185,14 @@ class mainEvent {
 
   async createMainContainerElement() {
     const colors = {
-      dark: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#b0cd6c",
-        textBackground: "#34440d",
-        lineColor: "#34440d",
-        pronsColor: "#b0cd6c",
-        dotsColor: "#b0cd6c",
-      },
-      light: {
-        username: "#ddff91",
-        userBackground: "rgba(176, 205, 108, .2)",
-        textColor: "#ffefdb",
-        textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "rgba(255, 239, 219, 1)",
-        pronsColor: "#5e8501",
-        dotsColor: "#ddff91",
-      },
-      regular: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#72a101",
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#666a50",
+        textColor: "#666a50",
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
-        pronsColor: "#5e8501",
-        dotsColor: "#b0cd6c",
+        pronsColor: "#666a50",
+        dotsColor: "#97bd75",
       },
     };
 
@@ -193,7 +201,7 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
     const role = this.roles.role;
-    let roleImageURL = imagesUrls[theme][role];
+    let roleImageURL = coffeeImages[role];
     let roleText = await this.getUserPronoun();
 
     function showBadges(thisObj) {
@@ -207,17 +215,16 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
+      inlineStyle = `display: inline; background-color: ${colors.coffee.lineColor}; color: ${colors.coffee.pronsColor}`;
     }
 
-    let enredaderaUrl = imagesUrls[theme].enredadera;
-    let campanasUrl = imagesUrls[theme].campanas;
+    let chocoUrl = coffeeImages.choco;
 
     superMainContainer.innerHTML = `
       <div class="main-container">
         <div class="message-container">
           <div class="username-info-container" style="background-color:${
-            colors[theme].userBackground
+            colors.coffee.userBackground
           }">
             <div class="username-info">
               <span class="username-badges" style="${
@@ -226,38 +233,37 @@ class mainEvent {
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
               <span class="capitalize-user" style="color: ${
-                colors[theme].username
+                colors.coffee.username
               }">${this.user}</span>
               <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
               <img src="${roleImageURL}" class="role"/>
-              <img src="${enredaderaUrl}" class="enredadera"/>
+              <img src="${chocoUrl}" class="coffee"/>
             </div>
             <div class="message-icon-container" style="background-color: ${
-              colors[theme].textBackground
+              colors.coffee.textBackground
             };">
               <div class="rendered-text">
-              <p class="text" style="color: ${colors[theme].textColor}">${
+              <p class="text" style="color: ${colors.coffee.textColor}">${
       (await this.buildMessage()).innerHTML
     }</p>
                 <div class="dots-container">
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                   <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
+                    colors.coffee.dotsColor
                   }"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <img src="${campanasUrl}" class="campanas" />
     </div>`;
     return superMainContainer;
   }
@@ -452,7 +458,7 @@ class mainEvent {
   get id() {
     // generate random string
     const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
+    const startingLetter = "c";
     return `${startingLetter}${randomString}`;
   }
 
@@ -521,51 +527,26 @@ class mainEvent {
     const newContainer = document.createElement("div");
     newContainer.classList.add("new-container");
     newContainer.setAttribute("id", `${this.id}`);
-    const theme = fieldData.theme;
-    let toggleClass = "toggle-circle";
-    let toggleClass2 = "toggle";
-    if (theme === "dark") {
-      toggleClass = "toggle-circle-dark";
-      toggleClass2 = "toggle-dark";
-    }
-
     const colors = {
-      dark: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#b0cd6c",
-        textBackground: "#34440d",
-        lineColor: "#34440d",
-        dotsColor: "#ffefdb",
-        eventsColor: "#34440d",
-      },
-      light: {
-        username: "#b0cd6c",
-        userBackground: "rgba(176, 205, 108, .2)",
-        textColor: "#ffefdb",
-        textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "rgba(255, 239, 219, 1)",
-        dotsColor: "#ddff91",
-        eventsColor: "#ffefdb",
-      },
-      regular: {
-        username: "#5e8501",
-        userBackground: "#b0cd6c",
-        textColor: "#72a101",
+      coffee: {
+        username: "#ffefdb",
+        userBackground: "#9b2d2c",
+        textColor: "#9b2d2c",
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
-        dotsColor: "#ffefdb",
+        pronsColor: "#a35e46",
+        dotsColor: "#9b2d2c",
         eventsColor: "#ffefdb",
       },
     };
 
     newContainer.innerHTML = `
       <div class="event-container">
-        <div class="${toggleClass2}">
-          <div class="${toggleClass}"></div>
+        <div class="toggle">
+          <div class="toggle-circle"></div>
         </div>
         <div class="event-and-name-container">
-          <p class="event-name" style="color: ${colors[theme].eventsColor}">${nameAndText}</p>
+          <p class="event-name" style="color: ${colors.coffee.eventsColor}">${nameAndText}</p>
         </div>
       </div>
     `;
@@ -625,8 +606,22 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   maxMessages = fieldData.maxMessages;
-  // checkAllUrls();
+  await checkAllUrls();
 });
+
+async function checkAllUrls() {
+  for (item in baseUrls) {
+    const isValidUrl = await checkImgUrl(baseUrls[item].urls[1]);
+    const isValidUrl2 = await checkImgUrl(baseUrls[item].urls[2]);
+    if (isValidUrl) {
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[1];
+    } else if (isValidUrl2) {
+      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[2];
+    } else {
+      coffeeImages[baseUrls[item].name] = null;
+    }
+  }
+}
 
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
@@ -729,29 +724,20 @@ window.addEventListener("onEventReceived", async (obj) => {
 
 async function addLines(container, listener, event) {
   const colors = {
-    dark: {
-      username: "#5e8501",
-      userBackground: "#b0cd6c",
-      textColor: "#b0cd6c",
-      textBackground: "#34440d",
-      lineColor: "#34440d",
-    },
-    light: {
-      username: "#5e8501",
-      userBackground: "rgba(176, 205, 108, .2)",
-      textColor: "#ffefdb",
-      textBackground: "rgba(255, 239, 219, .5)",
-      lineColor: "rgba(255, 239, 219, 1)",
-    },
-    regular: {
-      username: "#5e8501",
-      userBackground: "#b0cd6c",
-      textColor: "#72a101",
+    coffee: {
+      username: "#ffefdb",
+      userBackground: "#a35e46",
+      textColor: "#a35e46",
       textBackground: "#ffefdb",
       lineColor: "#ffefdb",
+      pronsColor: "#a35e46",
+      dotsColor: "#d79a85",
     },
   };
-  const theme = fieldData.theme;
+
+  let moonUrl = coffeeImages.moon;
+  let shinyUrl = coffeeImages.shiny;
+
   let messageContainer, currentHeight;
 
   if (listener === "message") {
@@ -767,24 +753,21 @@ async function addLines(container, listener, event) {
   const contHeight = container.offsetHeight + currentHeight;
   const linesContainer = document.createElement("div");
   linesContainer.classList.add("lines-container");
-  let shinyUrl = imagesUrls[theme]["shiny"];
-  let moonUrl = imagesUrls[theme]["moon"];
-
   if (listener === "message") {
     linesContainer.innerHTML = `
       <span class="dot" style="background-color: ${
-        colors[theme].lineColor
+        colors.coffee.lineColor
       }"></span>
       <img src="${shinyUrl}" class="shiny"/>
       <div class="line-container" style="${
         contHeight <= 140 ? "height: 65%" : "height: 75%"
       };" >
         <div class="line" style="background-color: ${
-          colors[theme].lineColor
+          colors.coffee.lineColor
         }"></div>
       </div>
       <span class="dot" style="background-color: ${
-        colors[theme].lineColor
+        colors.coffee.lineColor
       }"></span>
   `;
   }
@@ -797,8 +780,8 @@ async function addLines(container, listener, event) {
   container.appendChild(linesContainer);
 }
 
-// async function checkImgUrl(url) {
-//   return await fetch(url).then((res) => {
-//     return res.ok;
-//   });
-// }
+async function checkImgUrl(url) {
+  return await fetch(url).then((res) => {
+    return res.ok;
+  });
+}
