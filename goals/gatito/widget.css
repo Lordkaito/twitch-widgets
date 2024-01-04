@@ -45,6 +45,7 @@ main {
   height: 40rem;
   position: relative;
   background: linear-gradient(to top,#ff9bd9, #ffff);
+  border-radius: 0px 0px 20px 20px;
 }
 
 #round {
