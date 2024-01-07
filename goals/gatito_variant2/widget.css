@@ -44,7 +44,7 @@ main {
   flex-direction: column;
   height: 40rem;
   position: relative;
-  background: linear-gradient(to top,#ff9bd9, #ffff);
+  background: linear-gradient(to top,#ff9bd9 , #ffff,#d2fecd );
   border-radius: 0px 0px 20px 20px;
 }
 
@@ -259,7 +259,7 @@ main {
   position: absolute;
   z-index: 1;
   top: 3.7rem;
-  left: -0.5rem;
+  left: -1.4rem;
   opacity: 1;
   /* transform: translate(.8); */
 }
