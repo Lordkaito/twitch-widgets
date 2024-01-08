@@ -33,9 +33,9 @@ main {
   position: relative;
   width: 30rem;
   height: 6rem;
-  /* padding: 0.4rem 1.5rem; */
-  /* background-color: #ffefdb; */
-  /* border-radius: 50px; */
+  padding: 0.4rem 1.5rem;
+  /* background-color: #6c86eb; */
+  border-radius: 20px;
   /* border: 5px solid #b8dd4f; */
   display: grid;
   place-content: center;
@@ -45,45 +45,42 @@ main {
   position: absolute;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
-  padding-left: 1rem;
+  justify-content: flex-end;
+  /* padding-left: 1rem; */
   width: 100%;
   height: 100%;
-  top: 0;
-  bottom: 0;
-  margin: auto;
 }
 
 .progress-bar-container {
   width: 27rem;
-  height: 3.5rem;
-  /* bottom: -.6rem; */
-  /* right: -3rem; */
+  height: 3.2rem;
+  bottom: -.6rem;
+  right: -3rem;
   border-radius: 30px;
-  background: transparent;
+  /* background-color: #e7ccff; */
   position: relative;
   overflow: hidden;
-  border: 4px solid #fff7f1;
+  border: 3px solid #fff7f1;
 }
 
 .progression {
   /* position: absolute; */
   text-align: center;
   vertical-align: middle;
-  line-height: 3.5rem;
-  color: white;
+  line-height: 3.2rem;
+  color: #fff4f4;
   font-size: 1.5rem;
   font-weight: 500;
   /* margin: auto; */
   /* width: 100%; */
   height: 100%;
   z-index: 4;
+  margin-right: .2rem;
   bottom: 0rem;
   /* text-shadow: 1px 2px 5px rgba(88, 62, 32, .8); */
   /* display: flex; */
   align-items: center;
   justify-content: center;
-  opacity: 0;
 }
 
 .bit {
@@ -93,7 +90,7 @@ main {
 .progress-bar {
   display: flex;
   width: 0px;
-  background: linear-gradient(90deg, #ffe794 0%, #fb9bc0 100%);;
+  background: linear-gradient(90deg, #ffe794 0%, #fb9bc0 100%);
   height: 70px;
   transition: width 0.2s;
   position: relative;
@@ -148,34 +145,39 @@ main {
   color: #ddb78a;
 }
 
-.tree {
+.moon {
   position: absolute;
-  bottom: .5rem;
-  transform: scale(.8);
+  bottom: .2rem;
+  left: -.5rem;
+  transform: scale(.7);
+  display: none;
 }
 
-.setas {
+.astronaut {
   position: absolute;
-  bottom: -.4rem;
-  right: -.6rem;
+  bottom: -1.5rem;
+  right: -1.7rem;
   z-index: 2;
-  transform: scale(.75);
+  transform: scale(.8);
+  display: none;
 }
 
 .goal-text {
+  /* border: 1px solid red; */
   position: absolute;
-  bottom: 0rem;
-  left: 2rem;
+  bottom: .1rem;
+  z-index: 2;
+  left: 7rem;
   margin-top: .5rem;
+  /* margin-left: 2rem; */
   max-width: 34rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffe794;
-  text-transform: uppercase;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #ffefdb;
   background-color: #857bdd;
   padding: .5rem 1rem;
-  border-radius: 30px;
-  z-index: 1;
+  border-radius: 20px;
+  text-transform: uppercase;
   /* text-shadow: 1px 2px 5px rgba(88, 62, 32, .8); */
   /* white-space: nowrap; */
 }
@@ -264,7 +266,7 @@ main {
 
 .cadenas {
   position: absolute;
-  bottom: -4.3rem;
-  right: 2rem;
-  transform: scale(.7);
+  bottom: -4rem;
+  right: 0;
+  transform: scale(.6);
 }

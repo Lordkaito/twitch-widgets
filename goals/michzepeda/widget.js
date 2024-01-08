@@ -35,14 +35,6 @@ let widgetApiData = {
     amount: 0,
   },
 };
-let storedEvents = [];
-let eventCounter = 0;
-let timeout = null;
-let firstEvent = true;
-let previousSender = "";
-let currentSender = "";
-let items, step, goalType;
-let animationActive = false;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
@@ -85,9 +77,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get(
-  //   "beniartsAutummGoalWidgetPreviousGained"
-  // );
+  // let data = await SE_API.store.get("beniartsElureGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -105,7 +95,7 @@ function init(obj, apiData, initial = false) {
   goalType = mainObj.fieldData.goalType;
 
   let amount = apiData[goalType].amount;
-  if (mainObj.fieldData.goalStartQuantity !== 0) {
+  if (mainObj.fieldData.goalStart !== 0) {
     amount = amount + mainObj.fieldData.goalStartQuantity;
   }
 
@@ -119,11 +109,19 @@ function init(obj, apiData, initial = false) {
     bit: document.querySelector(".bit"),
   };
 
+  items.goalText.innerText = mainObj.fieldData.goalText;
+  // items.goalTypeText2.innerText = mainObj.fieldData.goalText2;
+  if (mainObj.fieldData.version === "2") {
+    items.nube4.style.display = "none";
+    items.nube1.style.display = "none";
+    items.luna.style.top = "6.5rem";
+    items.textVersion2.innerText = mainObj.fieldData.goalText;
+  }
+
   step = getStep(
     items.progressBarContainer,
     mainObj.fieldData.goalObjectiveQuantity
   );
-  items.title.innerText = mainObj.fieldData.title;
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -147,7 +145,13 @@ function getStep(container, objective) {
   return step;
 }
 
+function getGachoStep(diff, objective) {
+  return diff / objective;
+}
+
 function handleGrow(amount, callback, initial = false) {
+  let currency = mainObj.fieldData.currency;
+
   let amountToUpdate =
     widgetApiData[goalType].amount +
     amount +
@@ -157,7 +161,6 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
-  let currency = mainObj.fieldData.currency;
   let goalTypeText;
   switch (goalType) {
     case "tip":
@@ -173,20 +176,23 @@ function handleGrow(amount, callback, initial = false) {
       goalTypeText = "Follow goal";
       break;
   }
-
+  // items.objective.innerText = getPercentage(
+  //   amountToUpdate,
+  //   mainObj.fieldData.goalObjectiveQuantity
+  // );
   if (!completedGoal) {
     items.progressBar.style.width = `${amountToUpdate * step}px`;
     if (goalType === "tip") {
-      items.goalText.innerText = `${goalTypeText} ${getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      )}`;
+      items.goalText.innerText =
+        `${goalTypeText} ${amountToUpdate}` +
+        currency +
+        ` | ${mainObj.fieldData.goalObjectiveQuantity}` +
+        currency;
       items.progressionText.innerText = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );
     } else if (goalType === "cheer") {
-      console.log(goalType);
       items.goalText.innerText = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
       items.progressionText.innerText = getPercentage(
         amountToUpdate,
@@ -205,155 +211,43 @@ function handleGrow(amount, callback, initial = false) {
       amountToUpdate,
       mainObj.fieldData.goalObjectiveQuantity
     );
-    console.log(
-      getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
-    );
-    items.goalText.innerText = mainObj.fieldData.completeGoalText;
+    items.goalText.innerText = `${goalTypeText} ${amountToUpdate} | ${mainObj.fieldData.goalObjectiveQuantity}`;
+    // items.progressNums2.innerText = `${mainObj.fieldData.goalObjectiveQuantity}`;
+
+    // 100% completed
+    if (goalType === "tip") {
+      items.goalText.innerText =
+        `${goalTypeText} ${amountToUpdate}` +
+        currency +
+        ` | ${mainObj.fieldData.goalObjectiveQuantity}` +
+        currency;
+      items.progressionText.innerText = getPercentage(
+        amountToUpdate,
+        mainObj.fieldData.goalObjectiveQuantity
+      );
+    }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
   }
 }
 
+function getPercentage(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage) + "%";
+}
+
+function getPercentageInNums(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage);
+}
+
 function updateApiData(amountToUpdate) {
-  // widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set(
-  //   "beniartsAutummGoalWidgetPreviousGained",
-  //   widgetApiData
-  // );
+  widgetApiData[goalType].amount = amountToUpdate;
+  // SE_API.store.set("beniartsElureGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set(
-  //  "beniartsAutummGoalWidgetPreviousGained",
-  //   defaultApiData
-  // );
+  // SE_API.store.set("beniartsElureGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
-}
-
-function cancelExecution(detail) {
-  if (!detail.event.gifted) {
-    currentSender = detail.event.sender || detail.event.name;
-    detail.event.amount = 1;
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "custom",
-          event: {
-            amount: 1,
-            avatar: detail.event.avatar,
-            displayName: detail.event.displayName,
-            gifted: detail.event.gifted,
-            type: detail.event.type,
-            tier: detail.event.tier,
-            message: detail.event.message,
-            name: detail.event.name,
-            quantity: detail.event.quantity,
-            sessionTop: detail.event.sessionTop,
-            providerId: detail.event.providerId,
-            originalEventName: detail.event.originalEventName,
-          },
-        },
-      })
-    );
-    return;
-  }
-
-  if (firstEvent || currentSender === previousSender || previousSender === "") {
-    storedEvents.push(detail.event);
-  } else {
-    detail.event.amount = 1;
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "custom",
-          event: {
-            amount: 1,
-            avatar: detail.event.avatar,
-            displayName: detail.event.displayName,
-            gifted: detail.event.gifted,
-            sender: detail.event.sender,
-            type: detail.event.type,
-            tier: detail.event.tier,
-            message: detail.event.message,
-            name: detail.event.name,
-            quantity: detail.event.quantity,
-            sessionTop: detail.event.sessionTop,
-            providerId: detail.event.providerId,
-            originalEventName: detail.event.originalEventName,
-          },
-        },
-      })
-    );
-    previousSender = "";
-  }
-
-  if (timeout) {
-    clearTimeout(timeout);
-  }
-
-  timeout = setTimeout(() => {
-    if (storedEvents.length > 1) {
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "custom",
-            event: {
-              amount: storedEvents.length,
-              avatar: detail.event.avatar,
-              displayName: detail.event.displayName,
-              gifted: detail.event.gifted,
-              sender: storedEvents[0].sender,
-              type: detail.event.type,
-              tier: detail.event.tier,
-              message: detail.event.message,
-              name: detail.event.name,
-              quantity: detail.event.quantity,
-              sessionTop: detail.event.sessionTop,
-              providerId: detail.event.providerId,
-              originalEventName: detail.event.originalEventName,
-            },
-          },
-        })
-      );
-      previousSender = "";
-    } else if (storedEvents.length === 1) {
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "custom",
-            event: {
-              amount: storedEvents.length,
-              avatar: detail.event.avatar,
-              displayName: detail.event.displayName,
-              gifted: detail.event.gifted,
-              sender: storedEvents[0].sender,
-              type: "custom",
-              tier: detail.event.tier,
-              message: detail.event.message,
-              name: detail.event.name,
-              quantity: detail.event.quantity,
-              sessionTop: detail.event.sessionTop,
-              providerId: detail.event.providerId,
-              originalEventName: detail.event.originalEventName,
-            },
-          },
-        })
-      );
-    }
-    storedEvents = [];
-  }, 500);
-}
-
-// function resetApiData() {
-//   handleGrow();
-// }
-
-function getPercentage(amount, objective) {
-  let percentage = (amount / objective) * 100;
-  console.log(percentage);
-  if (isNaN(percentage) || isNaN(amount) || isNaN(objective)) {
-    return "0%";
-  }
-  return Math.round(percentage) + "%";
 }
