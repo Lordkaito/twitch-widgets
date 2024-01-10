@@ -121,20 +121,20 @@ class Message {
       }
     });
 
-    if(this.isStreamer) {
-      priorityRole = []
+    if (this.isStreamer) {
+      priorityRole = [];
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
       return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
-      priorityRole = []
+      priorityRole = [];
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
       return priorityRole[0];
     }
 
-    let minPriorityRole = []
-    if(priorityRole.length >= 1) {
+    let minPriorityRole = [];
+    if (priorityRole.length >= 1) {
       priorityRole.sort((a, b) => {
         return a.priority - b.priority;
       });
@@ -246,7 +246,6 @@ class Message {
   get renderedText() {
     return this.message.data.renderedText;
   }
-
 
   get text() {
     return this.message.data.text;
@@ -441,7 +440,7 @@ class Message {
     if (fieldData.allowPronouns == "false") {
       pronounsContainer.style.display = "none";
     }
-    pronouns.classList.add(`${this.roles.role}-prons`)
+    pronouns.classList.add(`${this.roles.role}-prons`);
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -1158,6 +1157,7 @@ let isBulk = false;
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
   if (event.bulkGifted) listener = "bulk";
+  if (event.isCommunityGift) return;
 
   const mainCont = document.querySelector("main");
 
@@ -1231,8 +1231,10 @@ window.addEventListener("onEventReceived", async (obj) => {
             }, fieldData.deleteMessages * 100000000);
           }
           const body = document.querySelector("body");
-          body.style.webkitMaskImage = "webkit-gradient(linear, left 20%, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))";
-          body.style.maskImage = "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))";
+          body.style.webkitMaskImage =
+            "webkit-gradient(linear, left 20%, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)))";
+          body.style.maskImage =
+            "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))";
           mainCont.appendChild(subContainer);
         })
         .finally(() => {

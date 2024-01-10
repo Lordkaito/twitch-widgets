@@ -101,7 +101,9 @@ main {
 }
 
 #image {
+  transition: left 0.2s;
   transform: scaleX(-1);
+  position: absolute;
 }
 
 .img-container {

@@ -23,7 +23,7 @@ let fieldData = {
   allowDeleteMessages: {
     type: "dropdown",
     label: "Delete messages on/off:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",
@@ -104,4 +104,42 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
+  theme: {
+    type: "dropdown",
+    label: "Theme:",
+    value: "purple",
+    group: "Customization",
+    options: {
+      pink: "Pink",
+      purple: "Purple",
+    },
+  },
+  deleteMessagesOption: {
+    label: "How to delete messages:",
+    type: "dropdown",
+    group: "Customization",
+    value: "amount",
+    options: {
+      timer: "Timer",
+      amount: "Messages amount",
+    },
+  },
+  maxMessages: {
+    label: "Max messages to show:",
+    type: "number",
+    group: "Customization",
+    value: 5,
+    min: 1,
+    max: 100,
+    step: 1,
+  },
+  deleteMessagesTimer: {
+    label: "Delete messages timer (in seconds):",
+    type: "number",
+    group: "Customization",
+    value: 10,
+    min: 1,
+    max: 60,
+    step: 1,
+  }
 };

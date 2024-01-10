@@ -289,7 +289,10 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    if(fieldData.userAndPronsColor !== "" && fieldData.userAndPronsColor !== null){
+    if (
+      fieldData.userAndPronsColor !== "" &&
+      fieldData.userAndPronsColor !== null
+    ) {
       capitalizeUser.style.color = fieldData.userAndPronsColor;
     }
     capitalizeUser.innerText = this.user;
@@ -535,7 +538,7 @@ class mainEvent {
       textContainer.classList.add("white-text");
     }
     textContainer.innerHTML = words.join(" ");
-    if(fieldData.textColor != "" && fieldData.textColor != null){
+    if (fieldData.textColor != "" && fieldData.textColor != null) {
       textContainer.style.color = fieldData.textColor;
     }
     return textContainer;
@@ -874,23 +877,29 @@ window.addEventListener("onEventReceived", async (obj) => {
         startingColor = "red";
         break;
     }
-    if (fieldData.allowDeleteMessages === "true") {
+    if (fieldData.deleteMessages === "true") {
       if (listener === "message") {
-        if(currentAmountOfMessages >= maxMessages) {
-          let messageToRemove = currentMessagesIds.shift();
-          removeMessage(document.querySelector("#" + messageToRemove));
-          currentMessagesIds.push(mainContainer.id);
-        } else {
-          currentAmountOfMessages++;
-          currentMessagesIds.push(mainContainer.id);
+        if (fieldData.deleteMessagesOption === "amount") {
+          console.log("amount");
+          if (currentAmountOfMessages >= maxMessages) {
+            let messageToRemove = currentMessagesIds.shift();
+            removeMessage(document.querySelector("#" + messageToRemove));
+            currentMessagesIds.push(mainContainer.id);
+          } else {
+            currentAmountOfMessages++;
+            currentMessagesIds.push(mainContainer.id);
+          }
         }
-        // setTimeout(() => {
-        //   removeMessage(mainContainer);
-        // }, fieldData.deleteMessages * 1000);
+        if (fieldData.deleteMessagesOption === "timer") {
+          console.log("timer");
+          setTimeout(() => {
+            removeMessage(mainContainer);
+          }, fieldData.deleteMessagesTimer * 1000);
+        }
       } else {
         setTimeout(() => {
           removeEvent(mainContainer, "event-name");
-        }, fieldData.deleteMessages * 1000);
+        }, fieldData.deleteMessagesTimer * 1000);
       }
     }
     mainCont.appendChild(mainContainer);

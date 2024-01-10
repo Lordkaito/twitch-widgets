@@ -10,69 +10,6 @@ const PRONOUNS_API = {
   pronouns: `${PRONOUNS_API_BASE}/pronouns`,
 };
 
-const colors = {
-  streamer: {
-    user: {
-      background: "#feedbe",
-      text: "#a28363",
-      border: "",
-    },
-    prons: {
-      background: "feedbe",
-      text: "#a28363",
-      border: "",
-    },
-  },
-  mod: {
-    user: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fabad0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  vip: {
-    user: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fc93c0",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  subscriber: {
-    user: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#fb9784",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-  viewer: {
-    user: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-    prons: {
-      background: "#f6be93",
-      text: "#fef9fd",
-      border: "",
-    },
-  },
-};
-
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
 const priorities = {
   streamer: 1,
@@ -133,18 +70,15 @@ class mainEvent {
       }
     });
 
-    if (priorityRole.length === 0 && this.isStreamer) {
+    if (this.isStreamer) {
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
     priorityRole.sort((a, b) => a.priority - b.priority);
     return priorityRole[0];
-    return priorityRole;
   }
 
   eventType() {
@@ -164,7 +98,7 @@ class mainEvent {
       badgeImg.src = badge.url;
       // flower.src = badge.url;
     });
-    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png"
+    flower.src = "https://i.postimg.cc/6QrcwNBC/3-5.png";
 
     if (flower.src === "") {
       flower.style.display = "none";
@@ -195,32 +129,18 @@ class mainEvent {
     let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
-    const animation = fieldData.animation;
 
     superMainContainer.classList.add("super-main-container");
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
-    // mainContainer.style.backgroundColor = this.userColor;
 
     mainContainer.appendChild(this.flower);
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
     mainContainer.appendChild(await this.createMessageContainerElement());
-    // mainContainer.appendChild(await this.createPronounsContainer());
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
-  }
-
-  get butterfly() {
-    const img = document.createElement("img");
-    const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-    img.classList.add("butterfly");
-    imgContainer.classList.add("butterfly-container");
-    // imgContainer.appendChild(img);
-
-    return imgContainer;
   }
 
   async createUsernameInfoElement() {
@@ -231,9 +151,7 @@ class mainEvent {
     usernameInfo.classList.add("username-info");
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
-    // usernameInfoContainer.appendChild(this.createRoleContainer());
     usernameInfoContainer.appendChild(usernameInfo);
-    // usernameInfo.style.backgroundColor = `${colors[role.role].user.background}`;
     return usernameInfoContainer;
   }
 
@@ -264,17 +182,10 @@ class mainEvent {
   }
 
   createCapitalizeUserElement() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-    };
     let role = this.roles;
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
-    // capitalizeUser.style.color = colors[startingColor];
     capitalizeUser.innerText = this.user;
-    // capitalizeUser.style.color = this.userColor;
     return capitalizeUser;
   }
 
@@ -286,11 +197,6 @@ class mainEvent {
   }
 
   async createPronounsContainer() {
-    let colors = {
-      red: "#fb6183",
-      orange: "#ff8d4e",
-      yellow: "#feca76",
-    };
     let role = this.roles;
     const pronounsContainer = document.createElement("div");
     const pronouns = document.createElement("span");
@@ -304,8 +210,6 @@ class mainEvent {
       pronounsContainer.style.opacity = "0";
     }
     pronouns.style.color = colors[startingColor];
-
-    // pronouns.style.color = this.userColor;
 
     pronounsContainer.appendChild(pronouns);
     return pronounsContainer;
@@ -623,26 +527,22 @@ class mainEvent {
 
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
-    const dots = document.createElement('div')
-    dots.classList.add('dots')
-    const starContainer = document.createElement('div')
-    const star = document.createElement('img')
-    star.classList.add('star')
-    starContainer.classList.add('star-container')
-    star.src = "https://i.postimg.cc/3RQqCBxF/errwef.png";
-    starContainer.appendChild(star)
+    const dots = document.createElement("div");
+    dots.classList.add("dots");
+    const starContainer = document.createElement("div");
+    const star = document.createElement("img");
+    star.classList.add("star");
+    starContainer.classList.add("star-container");
+    star.src = "https://i.postimg.cc/90jf5y2c/estrella-mich.png";
+    starContainer.appendChild(star);
 
-    // fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
-
-    // fungi.classList.add("fungi");
     const fungiDivContainer = document.createElement("div");
     for (let i = 0; i < 6; i++) {
-      const dot = document.createElement('div')
-      dot.classList.add(`dot-${i + 1}`)
-      dots.appendChild(dot)
+      const dot = document.createElement("div");
+      dot.classList.add(`dot-${i + 1}`);
+      dots.appendChild(dot);
     }
 
-    // fungiDivContainer.appendChild(fungi);
     fungiContainer.appendChild(dots);
     fungiContainer.appendChild(starContainer);
     fungiContainer.classList.add("fungi-container");
@@ -709,11 +609,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   let main = document.querySelector("main");
-
-  // if (fieldData.transparency == "false") {
-  //   main.style.maskImage = "none";
-  //   main.style.webkitMaskImage = "none";
-  // }
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -799,14 +694,7 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  // if(listener !== "subscriber-latest" && listener !== "message") {
-  //   return;
-  // }
-
-  if (listener === "subscriber-latest") {
-    holdedEvent(event);
-    return;
-  }
+  if (event.isCommunityGift) return;
 
   if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);
@@ -865,111 +753,3 @@ window.addEventListener("onEventReceived", async (obj) => {
     mainCont.appendChild(mainContainer);
   });
 });
-
-let storedEvents = [];
-let eventCounter = 0;
-let eventTimer = null;
-let firstEvent = true;
-let previousEvent = "";
-let previousSender = "";
-let currentSender = "";
-let sameEventsAmount = 0;
-
-const dispatchNewEvent = (event) => {
-  if (
-    previousSender === currentSender ||
-    firstEvent === true ||
-    previousSender === ""
-  ) {
-    storedEvents.push(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "subscriber",
-          event: event,
-        },
-      })
-    );
-    previousSender = "";
-  }
-
-  if (eventTimer) {
-    clearTimeout(eventTimer);
-  }
-
-  eventTimer = setTimeout(() => {
-    if (storedEvents.length > 1) {
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "bulk",
-            event: {
-              amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
-              sender: storedEvents[0].sender,
-              type: "bulkgift",
-              bulkGifted: true,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
-            },
-          },
-        })
-      );
-      eventCounter += storedEvents.length;
-      previousSender = "";
-    } else if (storedEvents.length === 1) {
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "subscriber",
-            event: {
-              amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
-              sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
-            },
-          },
-        })
-      );
-      previousSender = "";
-    }
-    storedEvents = [];
-    eventTimer = null;
-    eventCounter = 0;
-  }, 500);
-  firstEvent = false;
-  previousSender = event.sender;
-};
-
-const holdedEvent = async (event) => {
-  if (event.gifted) {
-    currentSender = event.sender;
-    dispatchNewEvent(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "subscriber",
-          event: event,
-        },
-      })
-    );
-  }
-};

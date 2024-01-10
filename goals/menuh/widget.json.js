@@ -26,7 +26,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "subscriber",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -149,4 +149,16 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  currency: {
+    type: "text",
+    label: "Currency name:",
+    value: "$",
+    group: "Customization",
+  },
+  goalCompletedText: {
+    type: "text",
+    label: "Custom text for goal completed (max 40)",
+    value: "Goal completed!",
+    group: "Events",
+  }
 };

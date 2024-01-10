@@ -55,7 +55,7 @@ main {
   text-align: center;
   vertical-align: middle;
   line-height: 25px;
-  color: #f3bdf9;
+  color: #dad2f7;
   font-size: 1.2rem;
   margin: auto;
   bottom: -0.3rem;
@@ -158,4 +158,27 @@ main {
   border: 1px solid red;
   width: 800px;
   height: 1000px;
+}
+
+#image {
+  position: absolute;
+  transition: left 0.2s;
+}
+
+#title {
+  color: #dad2f7;
+}
+
+.goalCompleted {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 25px;
+  color: #dad2f7;
+  font-size: 1.2rem;
+  margin: auto;
+  bottom: -0.3rem;
+  z-index: 4;
+  text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em;
+  opacity: 0;
 }

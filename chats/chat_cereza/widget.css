@@ -1,9 +1,9 @@
 :root {
   --message-color: white;
-  --message-color-2: #eb6967;;
+  --message-color-2: #f94865;
   --message-background-color: #fff5ed;
   --message-border-color: #7bb87e;
-  --user-color: red;
+  --user-color: #f94865;
   --user-background-color: white;
   --user-border-color: #e6e6e6;
   --user-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
@@ -57,7 +57,6 @@ main {
   align-items: flex-start;
   justify-content: flex-end;
   padding-left: 5rem;
-  /* z-index: 1; */
 }
 
 .super-main-container {
@@ -67,7 +66,6 @@ main {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   padding: 0 1rem;
-  /* transform-style: preserve-3d; */
 }
 
 .main-container {
@@ -78,68 +76,12 @@ main {
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
-  /* left: 1.875rem; */
   width: 100%;
-  border-radius: 40px;
-  /* background: linear-gradient(180deg, #85dbd5, #e0c58c); */
-  background: linear-gradient(180deg, #eb6967, #eb6967);
+  border-radius: 50px;
+  border: 5px solid #eb6967;
+  background: rgba(255, 255, 255, .8);
   z-index: 1 !important;
 }
-
-.main-container::before {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  /* border: 5px solid transparent; */
-  /* background-color: pink; */
-  background-color: whitesmoke;
-  z-index: -2;
-  transition: border;
-  border-radius: 40px;
-}
-
-.red::before {
-  /* background-color: #ff879e; */
-}
-
-.orange::before {
-  background-color: #ffb891;
-}
-
-.yellow::before {
-  background-color: #ffd99d;
-}
-
-.green::before {
-  background-color: #8ee282;
-}
-
-.blue::before {
-  background-color: #70e7df;
-}
-
-.purple::before {
-  background-color: #bb9cdf;
-}
-
-/* .main-container::after {
-  content: "";
-  position: absolute;
-  top: -0.5rem;
-  left: -0.5rem;
-  width: 100%;
-  height: 100%;
-  border-radius: 40px;
-  border: double 7px transparent;
-  background-image: linear-gradient(white, white),
-    radial-gradient(at bottom, #97e1d8, #e3cd92);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  z-index: -1;
-} */
 
 .username-info-container {
   display: grid;
@@ -170,7 +112,7 @@ main {
 
 .flower {
   position: absolute;
-  bottom: -0.5rem;
+  bottom: -1.3rem;
   left: -1.5rem;
   height: 64px;
   width: 64px;
@@ -212,7 +154,6 @@ main {
 
 .message-container {
   padding-top: 1rem;
-  /* padding-bottom: 0.7rem; */
   flex-grow: 1;
   overflow: hidden;
   margin-bottom: 1.25rem;
@@ -223,7 +164,6 @@ main {
   flex-grow: 1;
   align-items: center;
   gap: 0.625rem;
-  /* margin-top: 0.625rem; */
 }
 
 .text {
@@ -239,25 +179,19 @@ main {
   color: var(--message-color-2);
   white-space: normal;
   margin-right: 0.625rem;
-  /* margin-left: 5rem; */
-  padding-top: 1.25rem;
+  padding-top: .9rem;
   padding-right: 2rem;
   padding-left: 4rem;
   animation: twinkleText 0.5 1 forwards;
-  text-shadow: rgba(56, 56, 56, .65) 0.1em 0.1em 0.5em;
 }
 
 .pronouns {
   color: var(--pronouns-color);
+  position: absolute;
   font-size: 12px;
   text-transform: uppercase;
   text-align: center;
-  width: 6.25rem;
-  /* justify-self: right; */
-  /* margin-right: 2rem; */
-  /* position: absolute; */
-  bottom: 0;
-  /* left: 14rem; */
+  bottom: -.6rem;
   z-index: 1;
   font-weight: 700;
 }
@@ -373,7 +307,6 @@ main {
 .role {
   width: 40px;
   height: 40px;
-  /* transform: scale(0.65); */
 }
 
 .fungi-container {
@@ -478,19 +411,16 @@ main {
   0% {
     transform: scale(0);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 
   50% {
     transform: scale(110%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 
   100% {
     transform: scale(100%);
     transform-origin: bottom center;
-    /* transform-style: preserve-3d; */
   }
 }
 

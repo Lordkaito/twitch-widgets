@@ -65,7 +65,7 @@ let fieldData = {
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value: "(user) just suscribed!",
+    value: "yooooooooasdfasdfasfd just suscribed!",
     group: "Events",
   },
   followText: {

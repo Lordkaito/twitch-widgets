@@ -1,0 +1,298 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+}
+
+#top-container {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  font-size: 1.325rem;
+  position: relative;
+}
+
+.top-tip-container,
+.top-cheer-container {
+  background-color: #fcfbdf;
+  border-radius: 10px;
+  width: 350px;
+  color: #95867e;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  max-height: 40px;
+}
+
+.latest-tip-container,
+.latest-cheer-container {
+  background-color: #95867e;
+  border-radius: 10px;
+  width: 350px;
+  color: #fcfbdf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0rem;
+  top: 3.2rem;
+  max-height: 40px;
+}
+
+.latest-tip-container::after,
+.latest-cheer-container::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  right: 1rem;
+  width: 20px;
+  height: 25px;
+  background-color: #95867e;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.top-tip-container::after,
+.top-cheer-container::after {
+  content: "";
+  position: absolute;
+  bottom: -0.3rem;
+  left: 1rem;
+  width: 20px;
+  height: 25px;
+  background-color: #fcfbdf;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.cont {
+  display: flex;
+  align-items: center;
+  transform: translate(170px);
+  position: relative;
+  height: 40px;
+}
+
+.latest-tip-cheer-qnty {
+  width: 8.3rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 40px;
+  padding-right: .4rem;
+}
+
+.top-tip-cheer-qnty {
+  width: 17.4rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 40px;
+  padding-right: .8rem;
+}
+
+.top-tip-text,
+.top-cheer-text,
+.latest-cheer-text,
+.latest-tip-text {
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.latest-tip-text {
+  padding-left: 0px;
+}
+
+.top-cheer-text {
+  width: 7.7rem;
+}
+
+.top-tip-text {
+  width: 19rem;
+  padding-left: 10px;
+}
+
+.latest-cheer-text {
+  width: 8.9rem;
+}
+
+.top-tip-cheer-text-container,
+.latest-tip-cheer-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 10px;
+}
+
+.top-tip-cheer-text-container > p,
+.latest-tip-cheer-text-container > p {
+  min-width: 100%;
+  text-align: center;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.latest-tip-cheer-text-container > p {
+  color: #e96e99;
+}
+
+#first-copy-top {
+  display: flex;
+  transition: transform 10s linear;
+  position: absolute;
+  left: 0;
+}
+
+#second-copy-top {
+  display: flex;
+  transition: transform 10s linear;
+  position: absolute;
+  left: 0;
+}
+
+#first-copy-latest {
+  display: flex;
+}
+
+#second-copy-latest {
+  display: flex;
+}
+
+.widget {
+  margin: 10rem;
+}
+
+.m-scroll {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.m-scroll__title {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.scroller-1,
+.scroller-3,
+.scroller-2,
+.scroller-4 {
+  display: flex;
+  animation: scrollText 15s linear infinite;
+  transform: translate(120%);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.scroller-1 p,
+.scroller-3 p,
+.scroller-2 p,
+.scroller-4 p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+
+@keyframes scrollText {
+  from {
+    transform: translateX(150%);
+  }
+
+
+
+  to {
+    transform: translateX(-150%);
+  }
+}
+
+.active {
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0;
+}
+
+.animate {
+  animation: update 0.5s ease-in-out;
+}
+
+.animate2 {
+  animation: update2 0.5s ease-in-out;
+}
+
+@keyframes update {
+  from {
+    transform: scale(0);
+    transform-origin: bottom left;
+  }
+
+  50% {
+    transform: scale(1.2);
+    transform-origin: bottom left;
+  }
+
+  to {
+    transform: scale(1);
+    transform-origin: bottom left;
+  }
+}
+
+@keyframes update2 {
+  from {
+    transform: scale(0);
+    transform-origin: bottom right;
+  }
+
+  50% {
+    transform: scale(1.2);
+    transform-origin: bottom right;
+  }
+
+  to {
+    transform: scale(1);
+    transform-origin: bottom right;
+  }
+}
+
+.darkhole {
+  position: absolute;
+  top: 3.5rem;
+  left: 3rem;
+  animation: blink 5s linear infinite;
+}
+
+@keyframes blink {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.heart {
+  transform: scale(.9);
+}

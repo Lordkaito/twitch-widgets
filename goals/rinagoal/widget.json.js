@@ -8,7 +8,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 10000,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -17,7 +17,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 3,
+    value: 0,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -26,7 +26,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "cheer",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -155,4 +155,16 @@ let fieldData = {
       pink: "Pink",
     },
   },
+  title: {
+    type: "text",
+    label: "Title",
+    value: "Sub goal",
+    group: "Customization",
+  },
+  currency: {
+    type: "text",
+    label: "Currency",
+    value: "€",
+    group: "Customization",
+  }
 };

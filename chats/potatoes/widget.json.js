@@ -57,9 +57,9 @@ let fieldData = {
     label: "Time to delete messages (max 60):",
     type: "number",
     group: "Customization",
-    value: 2,
+    value: 200000,
     min: 1,
-    max: 60,
+    // max: 60,
     step: 1,
   },
   displayBadges: {

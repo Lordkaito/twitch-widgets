@@ -1,0 +1,446 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+.playing {
+  opacity: 1 !important;
+}
+
+main {
+  overflow: hidden;
+  width: 800px;
+  max-height: 1080px;
+  height: 1080px;
+  display: grid;
+  place-content: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 37rem;
+  /* width: 250px; */
+  position: relative;
+}
+
+#round {
+  width: 1.25rem;
+  height: 42rem;
+  padding: 1.5rem 0.4rem 4rem 0.4rem;
+  background-color: transparent;
+  border-radius: 50px;
+  /* border: 4px solid white; */
+  display: grid;
+  place-content: center;
+  /* overflow: hidden; */
+  /* background-image: url("https://i.postimg.cc/LshvDJ7R/peluches.png"); */
+  background-repeat: no-repeat;
+  background-position: bottom -1.8rem right -3.9rem;
+}
+
+.gifReg {
+  position: absolute;
+  left: -31rem;
+  top: -16.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.reg {
+  width: 694px;
+  height: 432px;
+  transform: scale(0.85);
+}
+
+.progression {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.75;
+  color: white;
+  font-size: 0.8rem;
+  height: 100%;
+  z-index: 4;
+  top: 15rem;
+  left: 1.25rem;
+}
+
+.progressNums {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  color: #edc76f;
+  font-size: 2.3rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  bottom: -2rem;
+}
+
+.progress-bar-container {
+  width: 12px;
+  height: 31rem;
+  border-radius: 15px;
+  /* background-color: #efd9ca; */
+  position: relative;
+  /* overflow: hidden; */
+  top: -2rem;
+}
+
+.progress-bar {
+  display: flex;
+  background-color: #43cc69;
+  width: 6px;
+  transition: height 0.2s ease-in-out;
+  position: relative;
+  bottom: 1rem;
+  border-radius: 15px 15px 0 0;
+  background-position: bottom;
+  /* border: 1px solid white */
+}
+
+.fake-progress {
+  position: absolute;
+  width: 6px;
+  height: 3.1rem;
+  background-color: #43cc69;
+  /* background-color: red; */
+  border-radius: 0 0 15px 15px;
+  z-index: 2;
+  bottom: -2rem;
+  transition: height 0.2s ease-in-out;
+}
+
+.img-progress {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* transform: scaleY(-1); */
+}
+
+.hidden-container {
+  position: absolute;
+  height: 100%;
+}
+
+.img-container {
+  /* opacity: 0; */
+  position: absolute;
+  z-index: 2;
+  bottom: -15.7rem;
+  left: -1.3rem;
+  transition: left 0.2s;
+}
+
+.img-container img {
+  height: 195px;
+  width: 126px;
+  transform: scale(0.85);
+}
+.progression-img {
+  position: absolute;
+  /* right: -2rem; */
+  top: 0.6rem;
+  z-index: 3;
+}
+
+.goal-name {
+  position: absolute;
+  top: 3.9rem;
+  left: 3rem;
+  width: 14rem;
+  height: 3.5rem;
+  background-color: #fff4f4;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-transform: uppercase;
+  color: #9e9cef;
+  display: none;
+}
+
+.goal-name p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
+}
+
+.widget {
+  border: 1px solid red;
+  width: 800px;
+  height: 1000px;
+}
+
+#image {
+  position: absolute;
+  top: -14rem;
+  left: -1.4rem;
+  transition: top 0.2s;
+}
+
+.gancho {
+  position: absolute;
+  top: 0rem;
+  left: -2rem;
+  margin-top: 2.5rem;
+}
+
+.ganchos {
+  position: absolute;
+  transition: top 0.2s;
+  top: 0rem; /* this is the position for 100% */
+  left: 0.2rem; /* this is the position for 100% */
+  /* bottom: 0; this is the position for 0% */
+  /* opacity: 0; */
+  top: 30rem;
+}
+
+.gancho-detras {
+  position: absolute;
+  z-index: 1;
+}
+
+.gancho-delante {
+  position: absolute;
+  z-index: 2;
+}
+
+.nube1-container,
+.nube2-container {
+  position: absolute;
+  opacity: 0;
+}
+
+.soporte {
+  position: relative;
+  z-index: 2;
+  /* opacity: 0; */
+  top: -2.5rem;
+  left: -0.05rem;
+}
+
+.peluche {
+  position: absolute;
+  z-index: 1;
+  top: -2rem;
+  left: -4.5rem;
+  transform: scale(0.6);
+  opacity: 1;
+}
+
+.peluche2,
+.peluche3,
+.peluche4 {
+  opacity: 0;
+}
+
+.nube1 {
+  top: 19.2rem;
+  left: 18rem;
+}
+
+.nube1 img {
+  transform: scale(1);
+}
+
+.nube2 img {
+  transform: scale(0.8);
+}
+
+.nube3 img {
+  transform: scale(0.8);
+}
+
+.nube2 {
+  top: 24.5rem;
+  left: 18rem;
+}
+
+.nube3 {
+  top: 29.5rem;
+  left: 18rem;
+}
+
+.nube {
+  position: absolute;
+}
+
+.nube1 p {
+  position: absolute;
+  top: 1.6rem;
+  bottom: 50%;
+  left: 1.2rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+  color: white;
+  min-width: 4.6rem;
+  text-align: center;
+}
+
+.nube2 p {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.7rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+  color: #8ac995;
+  min-width: 3.5rem;
+  text-align: center;
+}
+
+.nube3 p {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.7rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+  color: #8ac995;
+  min-width: 3.5rem;
+  text-align: center;
+}
+
+.nube4 {
+  bottom: 17rem;
+  left: 31rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nube4 p {
+  position: absolute;
+  /* top: 50%; this is if the text inside is one line only */
+  top: 35%;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+  text-align: center;
+  color: #8ac995;
+  line-height: 0.9;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.flower {
+  position: absolute;
+  transform: scaleX(-1) scale(0.8);
+  left: -1.3rem;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+}
+
+.flower-1 {
+  bottom: 0rem;
+  /* opacity: 1; */
+}
+
+.flower-2 {
+  bottom: 3.1rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+  /* opacity: 1; */
+}
+
+.flower-3 {
+  bottom: 6.2rem;
+}
+
+.flower-4 {
+  bottom: 9.3rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-5 {
+  bottom: 12.4rem;
+}
+
+.flower-6 {
+  bottom: 15.5rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-7 {
+  bottom: 18.6rem;
+}
+
+.flower-8 {
+  bottom: 21.7rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+}
+
+.flower-9 {
+  bottom: 24.8rem;
+}
+
+.flower-10 {
+  bottom: 27.9rem;
+  left: calc(.7rem - 8px);
+  transform: scaleX(1) scale(0.8);
+  /* opacity: 1; */
+}
+
+.crown-flower {
+  position: absolute;
+  top: -6rem;
+  left: -3.35rem;
+  opacity: 0;
+}

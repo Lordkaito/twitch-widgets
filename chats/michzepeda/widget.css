@@ -18,7 +18,7 @@
 }
 
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
   overflow-wrap: break-word;
@@ -290,7 +290,6 @@ main {
   font-size: 12px;
   text-transform: uppercase;
   text-align: center;
-  width: 6.25rem;
   /* justify-self: right; */
   /* margin-right: 2rem; */
   /* position: absolute; */

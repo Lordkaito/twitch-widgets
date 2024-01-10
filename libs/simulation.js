@@ -49,7 +49,7 @@ let session = {
         count: 6,
       },
       "subscriber-latest": {
-        name: "test",
+        name: "Lordkaito_",
         amount: 1,
         tier: "1",
         message: "My test",
@@ -384,11 +384,11 @@ let events = {
           turbo: "0",
           "user-id": "675807879",
           "user-type": "",
-          vip: "1",
+          vip: "0",
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitod_",
+        displayName: "Lordkaito_",
         displayColor: "#FF0000",
         badges: [
           {
@@ -411,9 +411,9 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "hola que tal adsf adf w ff adsf asdf asdf asdf asdf asdf adf asd fasdf",
+        text: "asfd",
         isAction: false,
-        emotes: [],
+        emotes: ["HypeShock"],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
       },
     },

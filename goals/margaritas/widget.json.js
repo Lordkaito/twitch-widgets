@@ -5,7 +5,7 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  goalText: {
+  completeGoalText: {
     type: "text",
     label: "Goal text (max 40):",
     value: "GOAL COMPLETED!",

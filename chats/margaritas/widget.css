@@ -69,7 +69,7 @@ main {
 }
 
 .main-container {
-  max-width: 37.5rem;
+  max-width: 28.5rem;
   background: var(--message-background-color);
   margin-bottom: 1.875rem;
   position: relative;
@@ -194,7 +194,6 @@ main {
   font-size: 12px;
   text-transform: uppercase;
   text-align: center;
-  width: 6.25rem;
   justify-self: right;
   margin-right: 2rem;
   position: relative;

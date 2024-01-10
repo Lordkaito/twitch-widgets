@@ -48,7 +48,7 @@ let fieldData = {
   title: {
     type: "text",
     label: "Goal title (max 11):",
-    value: "",
+    value: "Goal",
     group: "Customization",
   },
   startFromCero: {

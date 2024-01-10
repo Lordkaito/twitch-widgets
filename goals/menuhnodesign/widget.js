@@ -1,254 +1,342 @@
 let mainObj = {};
-let goal = {};
-let goalType, goalObjectiveQuantity, goalStartQuantity;
-let current = 0;
-let gained = {
-  subscriber: { type: "subscriber", amount: 0 },
-  follower: { type: "follower", amount: 0 },
-  tip: { type: "tip", amount: 0 },
-  cheer: { type: "cheer", amount: 0 },
+let defaultApiData = {
+  subscriber: {
+    type: "subscriber",
+    amount: 0,
+  },
+  follower: {
+    type: "follower",
+    amount: 0,
+  },
+  cheer: {
+    type: "cheer",
+    amount: 0,
+  },
+  tip: {
+    type: "tip",
+    amount: 0,
+  },
 };
+let widgetApiData = {
+  subscriber: {
+    type: "subscriber",
+    amount: 0,
+  },
+  follower: {
+    type: "follower",
+    amount: 0,
+  },
+  cheer: {
+    type: "cheer",
+    amount: 0,
+  },
+  tip: {
+    type: "tip",
+    amount: 0,
+  },
+};
+let storedEvents = [];
+let eventCounter = 0;
+let timeout = null;
+let firstEvent = true;
+let previousSender = "";
+let currentSender = "";
+let items, step, goalType;
 
-// all this is just for session goals, and the progress resets if you reload widget, change config or session resets
-
-const progress = document.querySelector(".progress-bar-container");
-progress.style.setProperty("--progress-bar-left", "0");
-
-window.addEventListener("onWidgetLoad", function (obj) {
-  let apiData;
-  SE_API.store.get("beniartsGoalWidgetPreviousGained").then((data) => {
-    if (data === null) {
-      apiData = gained;
-    } else {
-      apiData = data;
-    }
-    init(obj, initGoal, apiData);
-  });
+window.addEventListener("onWidgetLoad", async function (obj) {
+  let api = await getApiData(obj);
+  init(obj, api, true);
 });
 
-const init = (obj, initGoalCallback, data) => {
-  initialStart = false;
-  mainObj.data = obj["detail"]["session"]["data"];
-  mainObj.recents = obj["detail"]["recents"];
-  mainObj.currency = obj["detail"]["currency"];
-  mainObj.channelName = obj["detail"]["channel"]["username"];
-  mainObj.apiToken = obj["detail"]["channel"]["apiToken"];
-  mainObj.fieldData = obj["detail"]["fieldData"];
-
-  goalType = mainObj.fieldData.goalType;
-  goalStartQuantity = mainObj.fieldData.goalStartQuantity;
-  if (mainObj.fieldData.goalStartQuantity === null) {
-    goalStartQuantity = 0;
-  }
-  goalObjectiveQuantity = mainObj.fieldData.goalObjectiveQuantity;
-  initGoalCallback(goalType, data);
-};
-
-const progressFn = (data, listener) => {
-  if (data.type === "subscriber" && data.gifted === true) {
-    grow(data.type, data.amount);
-  } else if (data.type === "subscriber" || data.type === "follower") {
-    grow(data.type);
-  } else {
-    grow(data.type, data.amount);
-  }
-};
-
-const grow = (type, amount = 1, data) => {
-  if (type !== goalType) {
-    if (type === "initial") {
-      gained = data;
-      if (
-        mainObj.fieldData.goalStartQuantity !== 0 &&
-        mainObj.fieldData.goalFullType === "allTime"
-      ) {
-        amount = data[goalType].amount + goalStartQuantity;
-      } else if (mainObj.fieldData.goalFullType === "session") {
-        amount = 0;
-      } else {
-        amount = data[goalType].amount;
-      }
-    } else {
-      return;
-    }
-  }
-
-  switch (type) {
-    case "subscriber":
-      gained.subscriber.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
-      break;
-    case "follower":
-      gained.follower.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
-      break;
-    case "tip":
-      gained.tip.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
-      break;
-    case "cheer":
-      gained.cheer.amount += amount;
-      SE_API.store.set("beniartsGoalWidgetPreviousGained", gained);
-      break;
-    default:
-      break;
-  }
-  const progression = document.querySelector(".progression");
-  total = goal.current + amount;
-  goal.current += amount;
-  progression.innerText = goal.current + "/" + goalObjectiveQuantity;
-};
+let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
   if (obj.detail.event.value === "reset") {
-    let clear = {
-      subscriber: { type: "subscriber", amount: 0 },
-      follower: { type: "follower", amount: 0 },
-      tip: { type: "tip", amount: 0 },
-      cheer: { type: "cheer", amount: 0 },
-    };
-    SE_API.store.set("beniartsGoalWidgetPreviousGained", clear);
-    window.location.reload();
+    clearApiData();
+    return;
   }
 
-  if (obj.detail.listener === "grow") {
-    progressFn(obj.detail.event);
-  } else {
-    holdedEvent(obj.detail.event);
+  let event = obj.detail.event;
+  let listener = obj.detail.listener;
+
+  if (event.type === goalType) {
+    if (listener === "cheer-latest" || listener === "tip-latest") {
+      handleGrow(event.amount, updateApiData, false);
+      return;
+    }
+
+    if (listener === "subscriber-latest" || listener === "follower-latest") {
+      if (event.bulkGifted) {
+        return;
+      }
+      handleGrow(1, updateApiData, false);
+      return;
+    }
   }
 });
 
-const initGoal = (type, data) => {
-  // let current = goalStartQuantity;
-  let step;
-  const progression = document.querySelector(".progression");
-
-  let goalTitle = "";
-  if (mainObj.fieldData.title != "") {
-    goalTitle = mainObj.fieldData.title;
-    const title = document.querySelector(".goal-title");
-    const titleP = document.querySelector("#title");
-    titleP.innerText = goalTitle;
-  }
-  // const maxChars = 11;
-  // if (goalTitle.length > maxChars) {
-  //   goalTitle = goalTitle.substring(0, maxChars);
-  // }
-
-  goal = {
-    type: type,
-    current: current,
-    step: step,
-  };
-  progression.innerText = current + "/" + goalObjectiveQuantity;
-  if (mainObj.fieldData.goalFullType === "allTime") {
-    grow("initial", 1, data);
+const getApiData = async (obj) => {
+  let data = await SE_API.store.get(
+    "beniartsMenuhNoDesignGoalWidgetPreviousGained"
+  );
+  if (data === null) {
+    widgetApiData = defaultApiData;
   } else {
-    grow("initial", goalStartQuantity, data);
+    widgetApiData = data;
   }
+  if (obj.detail.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+  }
+  // widgetApiData = defaultApiData;
+  return widgetApiData;
 };
 
-let storedEvents = [];
-let eventCounter = 0;
-let eventTimer = null;
-let firstEvent = true;
-let previousSender = "";
+function init(obj, apiData, initial = false) {
+  mainObj = obj.detail;
+  goalType = mainObj.fieldData.goalType;
 
-const dispatchNewEvent = (event) => {
-  if (
-    previousSender === currentSender ||
-    firstEvent === true ||
-    previousSender === ""
-  ) {
-    storedEvents.push(event);
+  let amount = apiData[goalType].amount;
+  if (mainObj.fieldData.goalStart !== 0) {
+    amount = amount + mainObj.fieldData.goalStartQuantity;
+  }
+
+  items = {
+    progressBar: document.querySelector(".progress-bar"),
+    goalText: document.querySelector(".goal-text"),
+    colita: document.querySelector(".colita"),
+    progressBarContainer: document.querySelector(".progress-bar-container"),
+    progressionText: document.querySelector(".progression"),
+    title: document.querySelector("#title"),
+    progressImg: document.querySelector(".img-container"),
+  };
+
+  step = getStep(
+    items.progressBarContainer,
+    mainObj.fieldData.goalObjectiveQuantity
+  );
+
+  items.title.innerText = mainObj.fieldData.title;
+  let { goalNameColor, numbersColor, progressBarColor, progressBackColor } =
+    mainObj.fieldData;
+  if (mainObj.fieldData.goalNameColor === "#123456") {
+    goalNameColor = goalNameColor;
   } else {
-    event.amount = 1;
+    goalNameColor = mainObj.fieldData.goalNameColor;
+  }
+
+  if (mainObj.fieldData.numbersColor === "#123456") {
+    numbersColor = numbersColor;
+  } else {
+    numbersColor = mainObj.fieldData.numbersColor;
+  }
+
+  if (mainObj.fieldData.progressBarColor === "#123456") {
+    progressBarColor = progressBarColor;
+  } else {
+    progressBarColor = mainObj.fieldData.progressBarColor;
+  }
+
+  if (mainObj.fieldData.progressBackColor === "#123456") {
+    progressBackColor = progressBackColor;
+  } else {
+    progressBackColor = mainObj.fieldData.progressBackColor;
+  }
+  let progressBarBack = document.querySelector(".progress-bar-container");
+  progressBarBack.style.backgroundColor = progressBackColor;
+  items.progressionText.style.color = numbersColor;
+  items.title.style.color = goalNameColor;
+
+  if (mainObj.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+    handleGrow(amount, null, true);
+  } else if (initial === true) {
+    handleGrow(amount, null, true);
+  } else {
+    handleGrow(amount, updateApiData, false);
+  }
+}
+
+function checkIfCompleted(amountToUpdate) {
+  let objective = mainObj.fieldData.goalObjectiveQuantity;
+  let currentAmount = amountToUpdate;
+  return currentAmount >= objective;
+}
+
+function getStep(container, objective) {
+  const containerWidth = container.offsetWidth;
+  const step = containerWidth / objective;
+  return step;
+}
+
+function handleGrow(amount, callback, initial = false) {
+  let amountToUpdate =
+    widgetApiData[goalType].amount +
+    amount +
+    mainObj.fieldData.goalStartQuantity;
+  if (initial === true) {
+    amountToUpdate = amount;
+  }
+
+  let completedGoal = checkIfCompleted(amountToUpdate);
+  let currency = mainObj.fieldData.currency;
+  if (!completedGoal) {
+
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
+    } else {
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
+  } else {
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
+    } else {
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
+    const goalCompleted = document.querySelector(".goalCompleted");
+    if (mainObj.fieldData.goalCompletedText !== "") {
+    }
+  }
+  if (callback !== null || mainObj.fieldData.goalFullType === "session") {
+    callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
+  }
+}
+
+function updateApiData(amountToUpdate) {
+  widgetApiData[goalType].amount = amountToUpdate;
+  SE_API.store.set(
+    "beniartsMenuhNoDesignGoalWidgetPreviousGained",
+    widgetApiData
+  );
+}
+
+function clearApiData() {
+  SE_API.store.set(
+    "beniartsMenuhNoDesignGoalWidgetPreviousGained",
+    defaultApiData
+  );
+  window.location.reload();
+}
+
+function cancelExecution(detail) {
+  if (!detail.event.gifted) {
+    currentSender = detail.event.sender || detail.event.name;
+    detail.event.amount = 1;
     window.dispatchEvent(
       new CustomEvent("onEventReceived", {
         detail: {
-          listener: "grow",
-          event: event,
+          listener: "custom",
+          event: {
+            amount: 1,
+            avatar: detail.event.avatar,
+            displayName: detail.event.displayName,
+            gifted: detail.event.gifted,
+            type: detail.event.type,
+            tier: detail.event.tier,
+            message: detail.event.message,
+            name: detail.event.name,
+            quantity: detail.event.quantity,
+            sessionTop: detail.event.sessionTop,
+            providerId: detail.event.providerId,
+            originalEventName: detail.event.originalEventName,
+          },
+        },
+      })
+    );
+    return;
+  }
+
+  if (firstEvent || currentSender === previousSender || previousSender === "") {
+    storedEvents.push(detail.event);
+  } else {
+    detail.event.amount = 1;
+    window.dispatchEvent(
+      new CustomEvent("onEventReceived", {
+        detail: {
+          listener: "custom",
+          event: {
+            amount: 1,
+            avatar: detail.event.avatar,
+            displayName: detail.event.displayName,
+            gifted: detail.event.gifted,
+            sender: detail.event.sender,
+            type: detail.event.type,
+            tier: detail.event.tier,
+            message: detail.event.message,
+            name: detail.event.name,
+            quantity: detail.event.quantity,
+            sessionTop: detail.event.sessionTop,
+            providerId: detail.event.providerId,
+            originalEventName: detail.event.originalEventName,
+          },
         },
       })
     );
     previousSender = "";
   }
 
-  if (eventTimer) {
-    clearTimeout(eventTimer);
+  if (timeout) {
+    clearTimeout(timeout);
   }
 
-  eventTimer = setTimeout(() => {
+  timeout = setTimeout(() => {
     if (storedEvents.length > 1) {
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {
-            listener: "grow",
+            listener: "custom",
             event: {
               amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
+              avatar: detail.event.avatar,
+              displayName: detail.event.displayName,
+              gifted: detail.event.gifted,
               sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
+              type: detail.event.type,
+              tier: detail.event.tier,
+              message: detail.event.message,
+              name: detail.event.name,
+              quantity: detail.event.quantity,
+              sessionTop: detail.event.sessionTop,
+              providerId: detail.event.providerId,
+              originalEventName: detail.event.originalEventName,
             },
           },
         })
       );
-      eventCounter += storedEvents.length;
       previousSender = "";
     } else if (storedEvents.length === 1) {
       window.dispatchEvent(
         new CustomEvent("onEventReceived", {
           detail: {
-            listener: "grow",
+            listener: "custom",
             event: {
               amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
+              avatar: detail.event.avatar,
+              displayName: detail.event.displayName,
+              gifted: detail.event.gifted,
               sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
+              type: "custom",
+              tier: detail.event.tier,
+              message: detail.event.message,
+              name: detail.event.name,
+              quantity: detail.event.quantity,
+              sessionTop: detail.event.sessionTop,
+              providerId: detail.event.providerId,
+              originalEventName: detail.event.originalEventName,
             },
           },
         })
       );
-      previousSender = "";
     }
     storedEvents = [];
-    eventTimer = null;
-    eventCounter = 0;
   }, 500);
-  firstEvent = false;
-  previousSender = event.sender;
-};
-
-const holdedEvent = (event) => {
-  if (event.gifted) {
-    currentSender = event.sender;
-    dispatchNewEvent(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "grow",
-          event: event,
-        },
-      })
-    );
-  }
-};
+}

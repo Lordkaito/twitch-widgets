@@ -1,0 +1,169 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+main {
+  overflow: hidden;
+  max-height: 1080px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  margin-bottom: 4rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 250px;
+  width: 37rem;
+  position: relative;
+}
+
+#round {
+  width: 37rem;
+  height: 70px;
+  padding: 0.4rem 1.5rem;
+  border-radius: 50px;
+  display: grid;
+  place-content: center;
+  background: rgba(255, 255, 255, .8);
+  position: relative;
+  border: 6px solid #eb6967;
+}
+
+
+.progress-bar-container {
+  width: 34rem;
+  height: 50px;
+  border-radius: 15px;
+  background-color: #fff4f4;
+  position: relative;
+  overflow: hidden;
+  border: inset 5px solid #ff8d4e;
+}
+
+.progression {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 55px;
+  color: white;
+  font-size: 1.5rem;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  text-shadow: -1px -1px 0 #f94865, 1px -1px 0 #f94865, -1px 1px 0 #f94865,
+    1px 1px 0 #f94865;
+}
+
+.progress-bar {
+  display: flex;
+  width: 0px;
+  background: #f94865;
+  height: 70px;
+  transition: width 0.2s;
+  position: relative;
+}
+
+.img-progress {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hidden-container {
+  position: absolute;
+  height: 100%;
+}
+
+#image {
+  transition: left 0.2s;
+  transform: scaleX(-1);
+  position: absolute;
+}
+
+.img-container {
+  position: absolute;
+  z-index: 2;
+  top: 7rem;
+  left: 1rem;
+  transition: left 0.2s;
+  /* opacity: .5; */
+}
+
+.img-container img {
+  height: 60px;
+  width: 60px;
+}
+.progression-img {
+  position: absolute;
+  /* right: -2rem; */
+  top: 0.6rem;
+  z-index: 3;
+}
+
+.goal-name {
+  position: absolute;
+  top: 3.9rem;
+  left: 3rem;
+  width: 14rem;
+  height: 3.5rem;
+  background-color: #fff;
+  box-shadow: rgba(120, 120, 120, 0.38) 0px 3px 3px 1px;
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-transform: uppercase;
+  color: #f94865;
+  /* border: 5px solid #eb6967; */
+}
+
+.goal-name p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
+}
+
+.widget {
+  border: 1px solid red;
+  width: 800px;
+  height: 1000px;
+}

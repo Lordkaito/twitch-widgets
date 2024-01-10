@@ -585,7 +585,16 @@ class mainEvent {
       resub: resubText,
     };
 
-    const amount = this.amount;
+    let amount;
+    if (this.listener === "subscriber-latest") {
+      if (this.event.bulkGifted) {
+        amount = this.event.amount;
+      } else {
+        amount = 1;
+      }
+    } else {
+      amount = this.event.amount;
+    }
     let sender = this.event.sender;
     if (this.event.originalEventName === "raid-latest")
       sender = this.event.name;
@@ -799,18 +808,20 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  if (listener === "subscriber-latest") {
-    holdedEvent(event);
-    return;
-  }
-  
-  if(listener === 'message') {
+  // if (listener === "subscriber-latest") {
+  //   holdedEvent(event);
+  //   return;
+  // }
+
+  if (event.isCommunityGift) return;
+
+  if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);
     if (isBlackListed) return;
-  	let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-  	if (specialSymbols) return;
+    let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+    if (specialSymbols) return;
   }
-  
+
   const mainCont = document.querySelector("main");
 
   if (isBulk && repeatedEvents < maxEvents) {

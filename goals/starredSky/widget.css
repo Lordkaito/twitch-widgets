@@ -1,0 +1,239 @@
+* {
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+.playing {
+  opacity: 1 !important;
+}
+
+.general {
+  display: grid;
+  place-content: center;
+}
+
+main {
+  overflow: hidden;
+  width: 800px;
+  max-height: 1080px;
+  height: 1080px;
+  display: grid;
+  place-content: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 37rem;
+  /* width: 250px; */
+  position: relative;
+}
+
+#round {
+  width: 45px;
+  /* height: 42rem; */
+  /* padding: 1.5rem 0.4rem 4rem 0.4rem; */
+  background-color: #8c3f0a;
+  border-radius: 50px;
+  border: 6px solid white;
+  display: grid;
+  place-content: center;
+}
+
+.gifReg {
+  position: absolute;
+  left: -12.5rem;
+  top: -17.5rem;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.reg {
+  /* width: 694px; */
+  /* height: 432px; */
+  opacity: 1;
+  transform: scale(0.85);
+}
+
+.progress-bar-container {
+  /* width: 50px; */
+  height: 38rem;
+  border-radius: 50px;
+  background-color: #d6d4ff;
+  /* position: relative; */
+  overflow: hidden;
+  top: -2rem;
+}
+
+.progression {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.75;
+  color: white;
+  font-size: 1.2rem;
+  height: 100%;
+  z-index: 4;
+  top: 2rem;
+  left: 2.5rem;
+}
+
+.progressNums {
+  /* opacity: 0; */
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-size: 2rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  top: -3rem;
+  text-shadow: 3px 0 #687dd4, -3px 0 #687dd4, 0 3px #687dd4, 0 -3px #687dd4,
+    2px 3px #687dd4, -2px -3px #687dd4, 2px -3px #687dd4, -2px 3px #687dd4;
+}
+
+.progress-bar {
+  display: flex;
+  width: 0px;
+  background-color: transparent;
+  background-image: url("https://i.postimg.cc/PxnGbvFr/cielo.png");
+  background-position: bottom left -20rem;
+  background-repeat: no-repeat;
+  height: 0;
+  width: 70px;
+  transition: height 1s ease-in-out;
+  position: relative;
+}
+
+.img-progress {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hidden-container {
+  position: absolute;
+  height: 100%;
+}
+
+.img-container {
+  /* opacity: 0; */
+  position: absolute;
+  z-index: 2;
+  bottom: -9rem;
+  left: -6.8rem;
+  transition: left 0.2s;
+}
+
+.img-container img {
+  height: 195px;
+  width: 136spx;
+  transform: scale(0.6);
+}
+
+.progression-img {
+  position: absolute;
+  /* right: -2rem; */
+  top: 0.6rem;
+  z-index: 3;
+}
+
+.goal-name {
+  position: absolute;
+  top: 3.9rem;
+  left: 3rem;
+  width: 14rem;
+  height: 3.5rem;
+  background-color: #fff4f4;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.8);
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-transform: uppercase;
+  color: #9e9cef;
+  display: none;
+}
+
+.goal-name p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
+}
+
+.widget {
+  border: 1px solid red;
+  width: 800px;
+  height: 1000px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(20deg);
+  }
+}
+
+@keyframes rotateBack {
+  0% {
+    transform: rotateZ(20deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes rotateLeft {
+  0% {
+    transform: scaleX(-1) rotateZ(0deg);
+  }
+
+  100% {
+    transform: scaleX(-1) rotateZ(20deg);
+  }
+}
+
+@keyframes rotateBackLeft {
+  0% {
+    transform: scaleX(-1) rotateZ(20deg);
+  }
+  100% {
+    transform: scaleX(-1) rotateZ(0deg);
+  }
+}

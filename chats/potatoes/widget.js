@@ -1,4 +1,4 @@
-// let fieldData = {};
+let fieldData = {};
 let currentEvent = null;
 let initialBorder = "purple";
 
@@ -259,7 +259,6 @@ class Message {
   }
 
   get isMod() {
-    console.log(this.message);
     return this.message.data.tags.mod === "1";
   }
 
@@ -1588,6 +1587,7 @@ let isBulk = false;
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
   if (event.bulkGifted) listener = "bulk";
+  if (event.isCommunityGift) return;
 
   const mainCont = document.querySelector("main");
 
