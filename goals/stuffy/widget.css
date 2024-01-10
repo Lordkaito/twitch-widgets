@@ -263,7 +263,7 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 3.7rem;
+  top: 5rem;
   left: -1.4rem;
   opacity: 1;
   /* transform: translate(.8); */
