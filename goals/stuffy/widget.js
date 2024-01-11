@@ -208,7 +208,7 @@ function handleGrow(amount, callback, initial = false) {
     }rem)`;
     console.log(items.ganchos.style.top);
     items.progressBar.style.height = `calc(100% - ${
-      amountToUpdate * step - 15
+      amountToUpdate * step - 5
     }px)`;
     if (goalType === "tip") {
       items.progressionText.innerHTML = getPercentage(
@@ -223,7 +223,7 @@ function handleGrow(amount, callback, initial = false) {
     }
   } else {
     items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
+    items.progressBar.style.height = "1%";
     items.progressionText.innerHTML = getPercentage(
       amountToUpdate,
       mainObj.fieldData.goalObjectiveQuantity
