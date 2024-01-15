@@ -34,7 +34,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "tip",
+    value: "subscriber",
     group: "Customization",
     options: {
       subscriber: "Sub",
