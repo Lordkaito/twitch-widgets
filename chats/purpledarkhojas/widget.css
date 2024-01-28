@@ -1,6 +1,5 @@
 :root {
   --toggle-box: #f1e8f9;
-  --switch-border-color: #f1e8f9;
   --ball-switch-color-1: #f1e8f9;
   --ball-switch-color-2: #c29afd;
   --message-color: #876ab9;
@@ -20,21 +19,25 @@
   --event-color: #f1e8f9;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
-/* degradado fondo username de: #c29afd a #614d8c
+/* Esto es un recolor del chat de las hojas, solo que habrá que quitar los temas que tiene y hacerlo en el base.
+
+degradado fondo username de: #c19afd a #614e8d
 
 username: #f1e8f9
 
-fondo mensaje, fondo pronombres y cadena izquierda: #f1e8f9
+fondo mensaje, fondo pronombres y cadena izquierda: #45336d
 
-texto pronombres: #876ab9
+texto pronombres: #d6bbff
 
-texto mensajes: #876ab9
+texto mensajes: #d6bbff
 
-caja del switch y texto eventos: #f1e8f9
+caja del switch #c199fd
 
-bolita switch antes: #f1e8f9 bolita switch después: #c29afd
+texto eventos #45336d
 
+bolita switch antes: #c199fd bolita switch después: #45336d
 
+⚠ las hojas y las piedras se mantienen del chat lila (no hace falta sistituir sus enlaces)
 
 field de opción de mostrar la plantita (un check)
 
@@ -796,7 +799,7 @@ left: 26.2rem;
 
 .toggle {
   background-color: transparent;
-  border: 3px solid var(--switch-border-color);
+  border: 3px solid #ffefdb;
   border-radius: 20px;
   height: 15px;
   width: 30px;
