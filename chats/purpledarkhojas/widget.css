@@ -1,24 +1,26 @@
 :root {
   --toggle-box: #f1e8f9;
-  --ball-switch-color-1: #f1e8f9;
-  --ball-switch-color-2: #c29afd;
-  --message-color: #876ab9;
-  --message-background-color: #f1e8f9;
+  --switch-border-color: #c199fd;
+  --ball-switch-color-1: #c199fd;
+  --ball-switch-color-2: #45336d;
+  --message-color: #d6bbff;
+  --message-background-color: #45336d;
   --message-border-color: #e1daff;
   --user-color: #f1e8f9;
-  --user-role-color: #ffaf66;
-  --user-background-color1: #c29afd;
-  --user-background-color2: #614d8c;
+  --user-role-color: #f1e8f9;
+  --user-background-color1: #c19afd;
+  --user-background-color2: #614e8d;
   --user-border-color: #e6e6e6;
-  --pronouns-color: #876ab9;
-  --pronouns-background-color: #f1e8f9;
+  --pronouns-color: #d6bbff;
+  --pronouns-background-color: #45336d;
   --pronouns-border-color: #e6e6e6;
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
   --event-background-color: #252247;
-  --event-color: #f1e8f9;
+  --event-color: #45336d;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
+
 /* Esto es un recolor del chat de las hojas, solo que habrá que quitar los temas que tiene y hacerlo en el base.
 
 degradado fondo username de: #c19afd a #614e8d
@@ -799,7 +801,7 @@ left: 26.2rem;
 
 .toggle {
   background-color: transparent;
-  border: 3px solid #ffefdb;
+  border: 3px solid var(--switch-border-color);
   border-radius: 20px;
   height: 15px;
   width: 30px;

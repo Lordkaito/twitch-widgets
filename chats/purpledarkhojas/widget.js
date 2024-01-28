@@ -41,17 +41,17 @@ let imagesUrls = {
       "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
   },
   regular: {
-    mod: "https://i.postimg.cc/MG7gCkBz/lila-mod.png",
-    vip: "https://i.postimg.cc/MK4kRmxJ/lila-vip.png",
+    mod: "https://i.postimg.cc/fL0CGmpm/morado-mod.png",
+    vip: "https://i.postimg.cc/J0VxMtCg/morado-vip.png",
     subscriber:
-      "https://i.postimg.cc/nLb6SVCd/lila-sub.png",
+      "https://i.postimg.cc/Hnw2xHpL/morado-sub.png",
     viewer:
-      "https://i.postimg.cc/ZYwzYhMR/lila-viewer.png",
+      "https://i.postimg.cc/7Y49RCVJ/morado-viewer.png",
     streamer:
-      "https://i.postimg.cc/Njr3x2f9/lila-streamer.png",
-    moon: "https://i.postimg.cc/bNdcsF7R/lunalila.png",
+      "https://i.postimg.cc/R0YGpXsv/morado-streamer.png",
+    moon: "https://i.postimg.cc/RCKGG1cz/lunamorado.png",
     shiny:
-      "https://i.postimg.cc/4yxCv8ms/brillito.png",
+      "https://i.postimg.cc/Z5VwpT6B/brillitomorado.png",
     enredadera:
       "https://i.postimg.cc/nrRy3vD7/hojaslila.png",
     campanas:
@@ -182,8 +182,8 @@ class mainEvent {
       regular: {
         username: "#ffffff",
         userBackground: "#b0cd6c",
-        textColor: "#876ab9",
-        textBackground: "#ffefdb",
+        textColor: "#d6bbff",
+        textBackground: "#45336d",
         lineColor: "#ffefdb",
         pronsColor: "#5e8501",
         dotsColor: "#b0cd6c",
@@ -560,7 +560,7 @@ class mainEvent {
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
         dotsColor: "#ffefdb",
-        eventsColor: "#ffefdb",
+        eventsColor: "#45336d",
       },
     };
 
@@ -753,7 +753,7 @@ async function addLines(container, listener, event) {
       userBackground: "#b0cd6c",
       textColor: "#72a101",
       textBackground: "#ffefdb",
-      lineColor: "#f1e8f9",
+      lineColor: "#45336d",
     },
   };
   const theme = fieldData.theme;
