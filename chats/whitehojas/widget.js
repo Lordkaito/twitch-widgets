@@ -550,7 +550,7 @@ class mainEvent {
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
         dotsColor: "#ffefdb",
-        eventsColor: "#ffefdb",
+        eventsColor: "#ffffff",
       },
     };
 
