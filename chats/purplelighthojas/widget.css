@@ -20,7 +20,7 @@
   --event-color: #f1e8f9;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
-/* degradado fondo username de: #c29afd a #614d8c
+  /* degradado fondo username de: #c29afd a #614d8c
 
 username: #f1e8f9
 
@@ -277,6 +277,7 @@ main {
     stroke-dasharray: 0, 283;
     stroke-dashoffset: 0;
   }
+
   100% {
     stroke-dasharray: 283, 283;
   }
@@ -307,7 +308,7 @@ main {
   overflow: hidden;
   order: -1;
   width: 100%;
-  background: linear-gradient(to right, var(--user-background-color1), var(--user-background-color2)) ;
+  background: linear-gradient(to right, var(--user-background-color1), var(--user-background-color2));
 }
 
 .dots-container {
@@ -461,11 +462,36 @@ main {
 }
 
 /* Diamond class */
-.diamond{
-width: 3.4rem; 
-position: absolute; 
-bottom: 0.1rem; 
-left: 26.2rem;
+.diamond {
+  width: 3.4rem;
+  position: absolute;
+  bottom: 0rem;
+  left: 26.2rem;
+  animation: appearing 1s ease-in-out;
+}
+
+@keyframes appearing {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 0.5;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes growMessage {
@@ -688,6 +714,7 @@ left: 26.2rem;
   order: 2;
   transition: none;
 }
+
 .event-leafs-container-2 {
   order: 2;
 }
