@@ -184,7 +184,7 @@ class mainEvent {
         userBackground: "#b0cd6c",
         textColor: "#f59cbc",
         textBackground: "#ffefdb",
-        lineColor: "#ffefdb",
+        lineColor: "#eee4ff",
         pronsColor: "#5e8501",
         dotsColor: "#b0cd6c",
       },
@@ -209,9 +209,9 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } 
-    // else if (fieldData.allowPronouns == "true" && roleText != "") {
-    //   inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
-    // }
+    else if (fieldData.allowPronouns == "true" && roleText != "") {
+      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
+    }
 
     let enredaderaUrl = imagesUrls[theme].enredadera;
     let campanasUrl = imagesUrls[theme].campanas;
