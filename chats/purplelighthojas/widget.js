@@ -165,7 +165,7 @@ class mainEvent {
         username: "#5e8501",
         userBackground: "#b0cd6c",
         textColor: "#b0cd6c",
-        textBackground: "#34440d",
+        textBackground: "#f1e8f9",
         lineColor: "#34440d",
         pronsColor: "#b0cd6c",
         dotsColor: "#b0cd6c",
@@ -174,7 +174,7 @@ class mainEvent {
         username: "#ddff91",
         userBackground: "rgba(176, 205, 108, .2)",
         textColor: "#f1e8f9",
-        textBackground: "rgba(255, 239, 219, .5)",
+        textBackground: "#f1e8f9",
         lineColor: "rgba(255, 239, 219, 1)",
         pronsColor: "#5e8501",
         dotsColor: "#ddff91",
@@ -183,9 +183,9 @@ class mainEvent {
         username: "#ffffff",
         userBackground: "#b0cd6c",
         textColor: "#876ab9",
-        textBackground: "#ffefdb",
-        lineColor: "#ffefdb",
-        pronsColor: "#5e8501",
+        textBackground: "#f1e8f9",
+        lineColor: "#f1e8f9",
+        pronsColor: "#876ab9",
         dotsColor: "#b0cd6c",
       },
     };
@@ -209,9 +209,9 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } 
-    // else if (fieldData.allowPronouns == "true" && roleText != "") {
-    //   inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
-    // }
+    else if (fieldData.allowPronouns == "true" && roleText != "") {
+      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
+    }
 
     let enredaderaUrl = imagesUrls[theme].enredadera;
     let campanasUrl = imagesUrls[theme].campanas;
@@ -247,17 +247,7 @@ class mainEvent {
               <p class="text" style="color: ${colors[theme].textColor}">${
       (await this.buildMessage()).innerHTML
     }</p>
-                <div class="dots-container">
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -539,7 +529,7 @@ class mainEvent {
         username: "#5e8501",
         userBackground: "#b0cd6c",
         textColor: "#b0cd6c",
-        textBackground: "#34440d",
+        textBackground: "#f1e8f9",
         lineColor: "#34440d",
         dotsColor: "#ffefdb",
         eventsColor: "#34440d",
@@ -548,7 +538,7 @@ class mainEvent {
         username: "#b0cd6c",
         userBackground: "rgba(176, 205, 108, .2)",
         textColor: "#ffefdb",
-        textBackground: "rgba(255, 239, 219, .5)",
+        textBackground: "#f1e8f9",
         lineColor: "rgba(255, 239, 219, 1)",
         dotsColor: "#ddff91",
         eventsColor: "#ffefdb",
@@ -557,10 +547,10 @@ class mainEvent {
         username: "#5e8501",
         userBackground: "#b0cd6c",
         textColor: "#72a101",
-        textBackground: "#ffefdb",
+        textBackground: "#f1e8f9",
         lineColor: "#ffefdb",
         dotsColor: "#ffefdb",
-        eventsColor: "#ffefdb",
+        eventsColor: "#f1e8f9",
       },
     };
 
@@ -738,21 +728,24 @@ async function addLines(container, listener, event) {
       username: "#5e8501",
       userBackground: "#b0cd6c",
       textColor: "#b0cd6c",
-      textBackground: "#34440d",
+      textBackground: "#f1e8f9",
+      // textBackground: "#34440d",
       lineColor: "#34440d",
     },
     light: {
       username: "#5e8501",
       userBackground: "rgba(176, 205, 108, .2)",
       textColor: "#ffefdb",
-      textBackground: "rgba(255, 239, 219, .5)",
+      textBackground: "#f1e8f9",
+      // textBackground: "rgba(255, 239, 219, .5)",
       lineColor: "rgba(255, 239, 219, 1)",
     },
     regular: {
       username: "#5e8501",
       userBackground: "#b0cd6c",
       textColor: "#72a101",
-      textBackground: "#ffefdb",
+      textBackground: "#f1e8f9",
+      // textBackground: "#ffefdb",
       lineColor: "#f1e8f9",
     },
   };
