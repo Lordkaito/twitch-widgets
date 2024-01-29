@@ -247,17 +247,7 @@ class mainEvent {
               <p class="text" style="color: ${colors[theme].textColor}">${
       (await this.buildMessage()).innerHTML
     }</p>
-                <div class="dots-container">
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                </div>
+               
               </div>
             </div>
           </div>

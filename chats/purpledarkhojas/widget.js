@@ -184,8 +184,8 @@ class mainEvent {
         userBackground: "#b0cd6c",
         textColor: "#d6bbff",
         textBackground: "#45336d",
-        lineColor: "#ffefdb",
-        pronsColor: "#5e8501",
+        lineColor: "#45336d",
+        pronsColor: "#d6bbff",
         dotsColor: "#b0cd6c",
       },
     };
@@ -209,9 +209,9 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } 
-    // else if (fieldData.allowPronouns == "true" && roleText != "") {
-    //   inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
-    // }
+    else if (fieldData.allowPronouns == "true" && roleText != "") {
+      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
+    }
 
     let enredaderaUrl = imagesUrls[theme].enredadera;
     let campanasUrl = imagesUrls[theme].campanas;
@@ -247,17 +247,7 @@ class mainEvent {
               <p class="text" style="color: ${colors[theme].textColor}">${
       (await this.buildMessage()).innerHTML
     }</p>
-                <div class="dots-container">
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                </div>
+             
               </div>
             </div>
           </div>
