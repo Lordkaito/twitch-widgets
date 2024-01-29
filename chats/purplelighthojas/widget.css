@@ -39,7 +39,6 @@ bolita switch antes: #f1e8f9 bolita switch después: #c29afd
 field de opción de mostrar la plantita (un check)
 
 y field de opción de mostrar las piedras (un check) */
-
 }
 
 * {
@@ -308,7 +307,11 @@ main {
   overflow: hidden;
   order: -1;
   width: 100%;
-  background: linear-gradient(to right, var(--user-background-color1), var(--user-background-color2));
+  background: linear-gradient(
+    to right,
+    var(--user-background-color1),
+    var(--user-background-color2)
+  );
 }
 
 .dots-container {
@@ -331,7 +334,7 @@ main {
   opacity: 0;
   animation: fadeIn 0.5s 0.5s linear forwards;
   margin: 0.2rem;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 
 .username-info .dot {
@@ -467,26 +470,13 @@ main {
   position: absolute;
   bottom: 0rem;
   left: 26.2rem;
-  animation: appearing 1s ease-in-out;
+  opacity: 0;
+  animation: appearing 1s 0.5s ease-in-out forwards;
 }
 
 @keyframes appearing {
   0% {
     opacity: 0;
-  }
-
-  25% {
-    opacity: 0.1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-  75% {
-    opacity: 0.5;
-  }
-
-  90% {
-    opacity: 0.7;
   }
 
   100% {
