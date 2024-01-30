@@ -150,10 +150,11 @@ class mainEvent {
 
     // mainContainer.appendChild(img);
     // mainContainer.appendChild(thingy);
-    // mainContainer.appendChild(circle);
+    mainContainer.appendChild(circle);
     mainContainer.appendChild(ear);
     mainContainer.appendChild(ear2);
     mainContainer.appendChild(await this.createMessageContainerElement());
+    superMainContainer.appendChild(this.roleImages);
     superMainContainer.appendChild(await this.createUsernameInfoElement());
     superMainContainer.appendChild(mainContainer);
 
@@ -170,7 +171,6 @@ class mainEvent {
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfo.appendChild(this.roleImages);
 
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
     return usernameInfoContainer;

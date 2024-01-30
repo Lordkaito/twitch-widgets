@@ -101,7 +101,7 @@ main {
   background: var(--message-background-color);
   position: absolute;
   bottom: -.7rem;
-  right: 1.7rem;
+  left: 1.2rem;
   z-index: -1;
 }
 
@@ -239,7 +239,7 @@ main {
   color: var(--message-color);
   white-space: normal;
   text-align: left;
-  padding: 0 2rem 0 3.2rem;
+  padding: 0 2rem 0 2rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
   animation: twinkleText 0.5 1 forwards;
@@ -363,10 +363,10 @@ main {
 
 .role {
   position: absolute;
-  right: -12.2rem;
+  right: 1.5rem;
   top: 2rem;
   z-index: 100;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s 1s ease-in-out forwards;
   opacity: 0;
   transform: scale(0.7);
 }
