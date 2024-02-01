@@ -50,7 +50,7 @@ main {
   /* background: linear-gradient(to top,#ff9bd9 , #ffff,#d2fecd ); */
   background: url('https://i.postimg.cc/HsV94Fxj/peluchesssw.png');
   background-color: var(--goal-background-color);
-  background-position: bottom;
+  background-position: bottom -5rem right -6rem;
   background-repeat: no-repeat;
   border-radius: 0px 0px 20px 20px;
 }
@@ -312,7 +312,7 @@ main {
 .nube1 p {
   position: absolute;
   top: 4rem;
-  left: 2.54rem;
+  left: 2.3rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
@@ -361,13 +361,13 @@ color: var(--star-p-color);
 .nube4 p {
   position: absolute;
 
-  top: 24%;
+  top: 30%;
   font-size: 1.6rem;
   font-weight: 700;
 
   text-align: center;
   color: var(--star-p-color);
-  text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
+  text-shadow: 1.7px 0 #363f46, -1.7px 0 #363f46, 0 1.7px #363f46, 0 -1.7px #363f46, 2px 1.7px #363f46, -2px -1.7px #363f46, 2px -1.7px #363f46, -2px 1.7px #363f46;
   max-width: 6rem;
   line-height: 0.9;
   left: 1rem;
