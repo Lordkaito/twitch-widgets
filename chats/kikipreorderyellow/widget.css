@@ -362,13 +362,14 @@ main {
 
 .role {
   position: absolute;
-  right: 1.5rem;
+  right: 1.8rem;
   top: 2rem;
   z-index: 100;
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  animation: fadeIn 0.5s 1s ease-in-out forwards;
   opacity: 0;
-  transform: scale(0.7);
+  transform: scale(0.9);
 }
+
 
 .fungi-container {
   display: flex;
