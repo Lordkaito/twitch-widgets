@@ -127,8 +127,6 @@ main {
 .barSeparator{
   font-size: 2.3rem;
   padding: 0 .5rem;
-  position: absolute;
-  left: 87px;
   text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
   0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
   2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
@@ -138,29 +136,27 @@ main {
 
 .obtectiveText{
   font-size: 2.3rem;
+  text-align: end;
+  width: 100%;
 }
 
 .objective2{
-  position: absolute;
-  left: 110px;
+  width: 100%;
+  text-align: start;
 
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
-  width: 200px;
-  /* text-align: center; */
+  width: 1000px;
   display: flex;
-  /* vertical-align: middle; */
+  justify-content: center;
   color: var(--progressNums-color);
   font-size: 2.3rem;
   z-index: 4;
   margin-bottom: 1rem;
   top: -3.3rem;
-  left: -81px;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
+  left: -481px;
   text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
     0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
     2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
