@@ -59,9 +59,12 @@ let animationActive = false;
 // document
 //   .getElementById("progressCircle")
 //   .addEventListener("click", aumentarProgreso);
+let objective;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
+  objective = obj.detail.fieldData.goalObjectiveQuantity;
+  console.log(objective);
   init(obj, api, true);
 });
 
@@ -195,12 +198,25 @@ function checkIfCompleted(amountToUpdate) {
 
 function getStep(container, objective) {
   const containerHeight = container.offsetHeight;
-  const step = containerHeight / objective;
+  const step = container / objective;
   return step;
 }
 
 function getGachoStep(diff, objective) {
   return diff / objective;
+}
+
+let progreso = 0;
+let circle = document.querySelector("circle");
+let progressText = document.getElementById("progressCircle");
+const newStep = getStep(540, objective);
+function aumentarProgreso(amount) {
+  const thing = getStep(540, objective) * amount;
+  console.log(thing);
+  progreso += newStep;
+  let progress = 540 - (540 * thing) / 720;
+  circle.style.strokeDashoffset = progress;
+  progressText.innerText = getPercentage(amount, objective);
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -214,36 +230,10 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    let ganchosHeight = 32;
     console.log(amountToUpdate);
-    let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
-    let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-      amountToUpdate * ganchoStep
-    }rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${
-      amountToUpdate * step - 5
-    }px)`;
-    if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-    } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
-    }
+    aumentarProgreso(amountToUpdate);
   } else {
-    items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "1%";
-    items.progressionText.innerHTML = getPercentage(
-      amountToUpdate,
-      mainObj.fieldData.goalObjectiveQuantity
-    );
+    aumentarProgreso(objective);
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
