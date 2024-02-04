@@ -57,7 +57,7 @@ main {
   flex-direction: column;
   height: 40rem;
   position: relative;
-  background: linear-gradient(to top,var(--background-container-1) ,  var(--background-container-2) );
+  background: linear-gradient(to bottom,var(--background-container-1) ,  var(--background-container-2) );
   border-radius: 0px 0px 20px 20px;
 }
 
