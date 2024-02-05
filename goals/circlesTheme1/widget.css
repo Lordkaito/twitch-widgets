@@ -25,7 +25,16 @@ el color de la cantidad de porcentaje
 el color del nombre del goal (que se podrá editar el texto tb)
 
 el color de las cantidades de 100/200 */
-
+.img-goal{
+position: absolute;
+width: 83px;
+height: 83px;
+top: 55px;
+left: 58px;
+}
+.container-img{
+  position: relative;
+}
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
@@ -56,8 +65,8 @@ svg {
 }
 .progress-text {
   position: absolute;
-  top: 60.8%;
-  left: 50.6%;
+  top: 82.8%;
+  left: 51.6%;
   color: white;
   transform: translate(-50%, -50%);
   font-size: 20px;
