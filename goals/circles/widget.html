@@ -41,13 +41,12 @@
 			/>
 			<div class="general">
 				<main class="main">
-					<svg>
+					<svg class="prueba">
 						<circle cx="100" cy="100" r="80" stroke-linecap="round"></circle>
 					</svg>
 					<div class="progress">
 						<span class="progress-text" id="progressCircle">0%</span>
 					</div>
-					<button onclick="aumentarProgreso()">Aumentar Progreso</button>
 				</main>
 			</div>
 
@@ -56,21 +55,21 @@
         -->
 		</div>
 		<script>
-			let progreso = 0;
-			let circle = document.querySelector("circle");
-			let progressText = document.getElementById("progressCircle");
-			function aumentarProgreso() {
-				if (progreso < 100) {
-					progreso += 10;
-					let progress = 540 - (540 * progreso) / 130;
-					circle.style.strokeDashoffset = progress;
-					progressText.innerText = progreso + "%";
-				}
-			}
+			// let progreso = 0;
+			// let circle = document.querySelector("circle");
+			// let progressText = document.getElementById("progressCircle");
+			// function aumentarProgreso() {
+			// 	if (progreso < 100) {
+			// 		progreso += 10;
+			// 		let progress = 540 - (540 * progreso) / 130;
+			// 		circle.style.strokeDashoffset = progress;
+			// 		progressText.innerText = progreso + "%";
+			// 	}
+			// }
 
-			document
-				.getElementById("progressCircle")
-				.addEventListener("click", aumentarProgreso);
+			// document
+			// 	.getElementById("progressCircle")
+			// 	.addEventListener("click", aumentarProgreso);
 		</script>
 		<script src="widget.js"></script>
 		<div class="event-emulator">

@@ -41,7 +41,7 @@ circle {
   transition: stroke-dashoffset 0.5s;
 }
 svg {
-  transform: rotate(120deg);
+  transform: rotate(124deg);
 }
 .progress-text {
   position: absolute;
