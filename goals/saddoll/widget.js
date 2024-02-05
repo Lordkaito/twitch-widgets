@@ -220,15 +220,15 @@ function handleGrow(amount, callback, initial = false) {
     }px)`;
     if (goalType === "tip") {
       if (amountToUpdate == '10') {
-        items.progressionText.innerHTML =  "<div class=' obtectiveText'>" + getPercentage(
+        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + getPercentage(
           amountToUpdate,
           mainObj.fieldData.goalObjectiveQuantity
-        ) + "</div><span class='barSeparator'>|</span><div class='objective2 obtectiveText'>" + items.objective.innerText + "</div>";
+        ) + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
       }else{
-        items.progressionText.innerHTML =  "<div class=' obtectiveText'>" + getPercentage(
+        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + getPercentage(
           amountToUpdate,
           mainObj.fieldData.goalObjectiveQuantity
-        ) + "</div><span class='barSeparator'>|</span><div class='objective2 obtectiveText'>" + items.objective.innerText + "</div>";
+        ) + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
       }
     } else {
       items.progressionText.innerHTML = getPercentage(
@@ -240,7 +240,7 @@ function handleGrow(amount, callback, initial = false) {
     items.ganchos.style.top = `0`;
     items.progressBar.style.height = "0%";
     // CHANGED
-    items.progressionText.innerHTML = "<div class=' obtectiveText' >" + items.objective.innerText + "</div><span class='barSeparator'>|</span><div class='obtectiveText objective2'>" + items.objective.innerText + "</div>";
+    items.progressionText.innerHTML = "<p class=' obtectiveText' >" + items.objective.innerText + "</p><span class='barSeparator'>|</span><p class='obtectiveText objective2'>" + items.objective.innerText + "</p>";
     items.peluche.src =  images.url1;
     // items.progressionText.innerHTML = getPercentage(
     //   amountToUpdate,
