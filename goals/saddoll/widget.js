@@ -231,22 +231,13 @@ function handleGrow(amount, callback, initial = false) {
       amountToUpdate * step - 15
     }px)`;
     if (goalType === "tip") {
-      if (amountToUpdate == '10') {
-        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + getPercentage(
-          amountToUpdate,
-          mainObj.fieldData.goalObjectiveQuantity
-        ) + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
+      if (amountToUpdate >= '10') {
+        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + amountToUpdate + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
       }else{
-        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + getPercentage(
-          amountToUpdate,
-          mainObj.fieldData.goalObjectiveQuantity
-        ) + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
+        items.progressionText.innerHTML =  "<p class=' obtectiveText'>" + amountToUpdate + "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" + items.objective.innerText + "</p>";
       }
     } else {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
+      items.progressionText.innerHTML = amountToUpdate;
     }
   } else {
     items.ganchos.style.top = `0`;
