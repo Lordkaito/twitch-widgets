@@ -153,7 +153,7 @@ function init(obj, apiData, initial = false) {
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText = getPercentage(amount, objective, false) + mainObj.fieldData.currency + "/" +
+    items.objective.innerText = amount + mainObj.fieldData.currency + "/" +
       mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
 
@@ -217,7 +217,7 @@ function aumentarProgreso(amount) {
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
   circle.style.strokeDashoffset = progress;
-  progressText.innerText = getPercentage(amount, objective, true);
+  progressText.innerText = getPercentage(amount, objective);
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -231,20 +231,14 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    console.log(amountToUpdate);
-    if (goalType === "tip") {
-      if (amountToUpdate >= '10') {
-        items.objective.innerText = getPercentage(
-          amountToUpdate,
-          mainObj.fieldData.goalObjectiveQuantity, false
-        ) + mainObj.fieldData.currency + '/' +
-          mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
-        aumentarProgreso(amountToUpdate);
-      }
-    }
-  } else {
+    // if (goalType === "tip") {
+    items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
+      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+    aumentarProgreso(amountToUpdate);
+    // }
+  } else if (amountToUpdate == mainObj.fieldData.goalObjectiveQuantity) {
     aumentarProgreso(objective);
-    items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency + '/' +
+    items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
       mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -252,12 +246,10 @@ function handleGrow(amount, callback, initial = false) {
   }
 }
 
-function getPercentage(amount, objective, isPercentage) {
+function getPercentage(amount, objective) {
   let percentage = (amount / objective) * 100;
-  if (isPercentage) {
-    return Math.round(percentage) + "%";
-  }
-  return Math.round(percentage);
+  return Math.round(percentage) + "%";
+
 }
 
 function updateApiData(amountToUpdate) {

@@ -1,17 +1,18 @@
 :root {
   --round-background-color: #fff;
   --round-border-color: white;
-  --progression-color: white;
-  --progressNums-color: white;
+  --progression-color: #fff5e7;
+  --progressNums-color: #fff5e7;
   --progressNums-border-color:#c78dc8;
   
   --progress-bar-background-color: #70648a;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #7bc8d3;
+  --goal-stroke-color: #fff5e7;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
   --nube-p-color: #f59b61;
-  --star-p-color: #fff;
-  --star-p-border-color: #c78dc8;
+  --star-p-color: #fff5e7;
+  --star-p-border-color: transparente;
 }
 
 /* color crema base: #fff5e7
@@ -67,7 +68,7 @@ circle {
 }
 
 .circle-outside {
-  stroke: #4caf50;
+  stroke: var(--goal-stroke-color);
 }
 
 .circle-inside {
@@ -84,7 +85,7 @@ svg {
   position: absolute;
   top: 82.8%;
   left: 51.6%;
-  color: white;
+  color: var(--progressNums-color);
   transform: translate(-50%, -50%);
   font-size: 20px;
 }
