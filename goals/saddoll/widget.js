@@ -64,26 +64,38 @@ window.addEventListener("onEventReceived", function (obj) {
 
   let event = obj.detail.event;
   let listener = obj.detail.listener;
+  const eventMultipliers = {
+    subscriber: mainObj.fieldData.subMultiplier,
+    follower: mainObj.fieldData.followMultiplier,
+    cheer: mainObj.fieldData.cheerMultiplier,
+    tip: mainObj.fieldData.tipMultiplier,
+    giftSub: mainObj.fieldData.giftSubMultiplier,
+  }
 
   if (event.isCommunityGift) return;
 
   if (event.type === goalType) {
-    if (listener === "cheer-latest" || listener === "tip-latest") {
-      handleGrow(event.amount, updateApiData, false);
+    if (listener === "cheer-latest") {
+      handleGrow((event.amount * eventMultipliers.cheer), updateApiData, false);
+      return;
+    }
+
+    if(listener === "tip-latest") {
+      handleGrow((event.amount * eventMultipliers.tip), updateApiData, false);
       return;
     }
 
     if (listener === "follower-latest") {
-      handleGrow(1, updateApiData, false);
+      handleGrow((1 * eventMultipliers.follower), updateApiData, false);
       return;
     }
 
     if (listener === "subscriber-latest") {
       if (event.bulkGifted) {
-        handleGrow(event.amount, updateApiData, false);
+        handleGrow((event.amount * eventMultipliers.giftSub), updateApiData, false);
         return;
       }
-      handleGrow(1, updateApiData, false);
+      handleGrow((1 * eventMultipliers.subscriber), updateApiData, false);
       return;
     }
   }
