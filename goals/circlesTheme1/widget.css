@@ -25,6 +25,7 @@ el color de la cantidad de porcentaje
 el color del nombre del goal (que se podrá editar el texto tb)
 
 el color de las cantidades de 100/200 */
+
 .img-goal{
 position: absolute;
 width: 83px;
@@ -35,6 +36,7 @@ left: 58px;
 .container-img{
   position: relative;
 }
+
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
@@ -48,18 +50,33 @@ left: 58px;
 }
 
 /* Circle */
+.prueba{
+  position: relative;
+}
+
 svg {
   width: 200px;
   height: 200px;
 }
+
 circle {
   fill: none;
-  stroke: #4caf50;
   stroke-width: 10;
   stroke-dasharray: 540;
   stroke-dashoffset: 540;
-  transition: stroke-dashoffset 0.5s;
 }
+
+.circle-outside {
+  stroke: #4caf50;
+}
+
+.circle-inside {
+  position: absolute;
+  z-index: -1;
+  stroke: rgba(255, 255, 255, .3);
+  stroke-dasharray: 945;
+}
+
 svg {
   transform: rotate(124deg);
 }
@@ -358,8 +375,8 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 2.3rem;
-  left: 1.6rem;
+  top: 1.3rem;
+  left: 18.6rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
@@ -408,7 +425,7 @@ color: var(--star-p-color);
 .nube4 p {
   position: absolute;
 
-  top: 36%;
+  top: 6rem;
   font-size: 1.6rem;
   font-weight: 700;
 
@@ -417,7 +434,7 @@ color: var(--star-p-color);
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
   max-width: 6rem;
   line-height: 0.9;
-  left: 3rem;
+  left: 5rem;
 }
 
 .goal-type-amount {

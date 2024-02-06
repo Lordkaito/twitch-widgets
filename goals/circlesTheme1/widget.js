@@ -1,3 +1,4 @@
+
 let mainObj = {};
 let defaultApiData = {
   subscriber: {
@@ -146,13 +147,13 @@ function init(obj, apiData, initial = false) {
     subscriber: "sub goal",
     follower: "follow goal",
     cheer: "cheer goal",
-    tip: "tip goal",
+    tip: "Tips",
   };
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
+    items.objective.innerText = getPercentage(amount, objective, false) + mainObj.fieldData.currency + "/" +
       mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
 
@@ -216,7 +217,7 @@ function aumentarProgreso(amount) {
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
   circle.style.strokeDashoffset = progress;
-  progressText.innerText = getPercentage(amount, objective);
+  progressText.innerText = getPercentage(amount, objective, true);
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -231,18 +232,32 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
     console.log(amountToUpdate);
-    aumentarProgreso(amountToUpdate);
+    if (goalType === "tip") {
+      if (amountToUpdate >= '10') {
+        items.objective.innerText = getPercentage(
+          amountToUpdate,
+          mainObj.fieldData.goalObjectiveQuantity, false
+        ) + mainObj.fieldData.currency + '/' +
+          mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+        aumentarProgreso(amountToUpdate);
+      }
+    }
   } else {
     aumentarProgreso(objective);
+    items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency + '/' +
+      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
   }
 }
 
-function getPercentage(amount, objective) {
+function getPercentage(amount, objective, isPercentage) {
   let percentage = (amount / objective) * 100;
-  return Math.round(percentage) + "%";
+  if (isPercentage) {
+    return Math.round(percentage) + "%";
+  }
+  return Math.round(percentage);
 }
 
 function updateApiData(amountToUpdate) {
