@@ -433,7 +433,7 @@ color: var(--star-p-color);
   text-align: center;
   color: var(--star-p-color);
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
-  max-width: 6rem;
+  width: 10rem;
   line-height: 0.9;
   left: 5rem;
 }

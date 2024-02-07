@@ -34,13 +34,37 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "tip",
+    value: "subscriber",
     group: "Customization",
     options: {
       subscriber: "Sub",
       follower: "Follow",
       cheer: "Cheer",
       tip: "Tip",
+    },
+  },
+  goalTheme: {
+    type: "dropdown",
+    label: "Goal theme:",
+    value: "bonsai",
+    group: "Customization",
+    options: {
+      monstera: "Monstera",
+      sabila: "Sabila",
+      bonsai: "Bonsai",
+      enrredadera: "Enrredadera",
+    },
+  },
+  goalColor: {
+    type: "colorpicker",
+    label: "Goal colors:",
+    value: "color1",
+    group: "Customization",
+    options: {
+      color1: "color1",
+      color2: "color2",
+      color3: "color3",
+      color4: "color4",
     },
   },
   goalFullType: {

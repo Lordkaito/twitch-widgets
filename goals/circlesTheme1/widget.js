@@ -141,13 +141,14 @@ function init(obj, apiData, initial = false) {
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
+    goalTheme: document.querySelector(".img-goal"),
   };
 
   let text = {
-    subscriber: "sub goal",
-    follower: "follow goal",
-    cheer: "cheer goal",
-    tip: "Tips",
+    subscriber: "DAILY SUBS",
+    follower: "FOLLOWS",
+    cheer: "BITS",
+    tip: "TIPS",
   };
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
@@ -155,6 +156,30 @@ function init(obj, apiData, initial = false) {
   if (mainObj.fieldData.goalType === "tip") {
     items.objective.innerText = amount + mainObj.fieldData.currency + "/" +
       mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+  }
+
+  if (mainObj.fieldData.goalType === "follower" || "subscriber" || "cheer") {
+    items.objective.innerText = amount + "/" +
+      mainObj.fieldData.goalObjectiveQuantity;
+  }
+
+  switch (mainObj.fieldData.goalTheme) {
+    case "sabila":
+      items.goalTheme.src = "https://i.postimg.cc/s2LPq2bS/planta1.png";
+      break;
+    case "enrredadera":
+      items.goalTheme.src = "https://i.postimg.cc/T1VrKJ1q/planta2.png";
+      break;
+    case "monstera":
+      items.goalTheme.src = "https://i.postimg.cc/zvZCDczG/planta4.png";
+      break;
+    case "bonsai":
+      items.goalTheme.src = "https://i.postimg.cc/63GVXXNP/planta8.png";
+      break;
+
+    default:
+      items.goalTheme.src = "https://i.postimg.cc/zvZCDczG/planta4.png";
+      break;
   }
 
   if (mainObj.fieldData.goalObjectiveQuantity > 999) {
@@ -231,15 +256,23 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    // if (goalType === "tip") {
-    items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
     aumentarProgreso(amountToUpdate);
-    // }
-  } else if (amountToUpdate == mainObj.fieldData.goalObjectiveQuantity) {
+    if (goalType === "tip") {
+      items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
+        mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+    } else {
+      items.objective.innerText = amountToUpdate + '/' +
+        mainObj.fieldData.goalObjectiveQuantity;
+    }
+  } else {
     aumentarProgreso(objective);
-    items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+      if (goalType === "tip") {
+        items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
+          mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+      } else {
+        items.objective.innerText = amountToUpdate + '/' +
+          mainObj.fieldData.goalObjectiveQuantity;
+      }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
