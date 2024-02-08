@@ -46,7 +46,7 @@ let fieldData = {
   goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "jazmin_rosa",
+    value: "sabila",
     group: "Customization",
     options: {
       monstera: "Monstera",
