@@ -46,13 +46,17 @@ let fieldData = {
   goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "monstera",
+    value: "jazmin_rosa",
     group: "Customization",
     options: {
       monstera: "Monstera",
       sabila: "Sabila",
       bonsai: "Bonsai",
       enrredadera: "Enrredadera",
+      jazmin_amarilla: "Jazmin Amarilla",
+      jazmin_rosa: "Jazmin Rosa",
+      campanillas_invierno: "Campanillas de invierno",
+      lavanda: "Lavanda",
     },
   },
   barColor: {
