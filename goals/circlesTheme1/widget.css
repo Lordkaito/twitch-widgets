@@ -431,7 +431,7 @@ color: var(--star-p-color);
   font-size: 1.6rem;
   font-weight: 700;
 
-  text-align: center;
+  text-align: left;
   /* color: var(--star-p-color); */
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
   width: 10rem;

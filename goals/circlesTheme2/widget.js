@@ -246,7 +246,7 @@ function aumentarProgreso(amount) {
   console.log(thing);
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
-  circle.style.transition = 'stroke-dashoffset 2s ease-out'; // Agrega esta línea
+  circle.style.transition = 'stroke-dashoffset .5s ease-out'; // Agrega esta línea
   circle.style.strokeDashoffset = progress;
   items.progressCircle.innerText = getPercentage(amount, objective);
 }
