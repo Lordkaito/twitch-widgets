@@ -43,10 +43,10 @@ let fieldData = {
       tip: "Tip",
     },
   },
-  goalTheme: {
+  goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "bonsai",
+    value: "monstera",
     group: "Customization",
     options: {
       monstera: "Monstera",
@@ -55,17 +55,29 @@ let fieldData = {
       enrredadera: "Enrredadera",
     },
   },
-  goalColor: {
+  barColor: {
     type: "colorpicker",
-    label: "Goal colors:",
-    value: "color1",
+    label: "Bar color:",
+    value: "#3cc300",
     group: "Customization",
-    options: {
-      color1: "color1",
-      color2: "color2",
-      color3: "color3",
-      color4: "color4",
-    },
+  },
+  porcentageBarColor: {
+    type: "colorpicker",
+    label: "Porcentage color:",
+    value: "#6fc300",
+    group: "Customization",
+  },
+  textGoalColor: {
+    type: "colorpicker",
+    label: "Text color:",
+    value: "#dff300",
+    group: "Customization",
+  },
+  numsGoalColor: {
+    type: "colorpicker",
+    label: "Numbers color:",
+    value: "#d6cbd0",
+    group: "Customization",
   },
   goalFullType: {
     type: "dropdown",

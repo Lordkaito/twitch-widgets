@@ -67,9 +67,9 @@ circle {
   stroke-dashoffset: 540;
 }
 
-.circle-outside {
+/* .circle-outside {
   stroke: var(--goal-stroke-color);
-}
+} */
 
 .circle-inside {
   position: absolute;
@@ -85,7 +85,7 @@ svg {
   position: absolute;
   top: 82.8%;
   left: 51.6%;
-  color: var(--progressNums-color);
+  /* color: var(--progressNums-color); */
   transform: translate(-50%, -50%);
   font-size: 20px;
 }
@@ -431,7 +431,7 @@ color: var(--star-p-color);
   font-weight: 700;
 
   text-align: center;
-  color: var(--star-p-color);
+  /* color: var(--star-p-color); */
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
   width: 10rem;
   line-height: 0.9;
