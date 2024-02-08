@@ -1,10 +1,10 @@
 
 let mainObj = {};
 const goalTree = {
-  tree1: "https://i.postimg.cc/s2LPq2bS/planta1.png",
-  tree2: "https://i.postimg.cc/T1VrKJ1q/planta2.png",
-  tree3: "https://i.postimg.cc/zvZCDczG/planta4.png",
-  tree4: "https://i.postimg.cc/63GVXXNP/planta8.png",
+  tree5: "https://i.postimg.cc/Z5XTd07y/planta3.png",
+  tree6: "https://i.postimg.cc/4xYfyp5g/planta5.png",
+  tree7: "https://i.postimg.cc/7L7qMDdt/planta6.png",
+  tree8: "https://i.postimg.cc/Dyjf7x16/planta7.png",
 }
 let defaultApiData = {
   subscriber: {
@@ -185,17 +185,17 @@ function init(obj, apiData, initial = false) {
 
   // Setting custom tree to goal
   switch (mainObj.fieldData.goalTree) {
-    case "sabila":
-      items.goalTree.src = goalTree.tree1;
+    case "jazmin_amarilla":
+      items.goalTree.src = goalTree.tree5;
       break;
-    case "enrredadera":
-      items.goalTree.src = goalTree.tree2;
+    case "jazmin_rosa":
+      items.goalTree.src = goalTree.tree6;
       break;
-    case "monstera":
-      items.goalTree.src = goalTree.tree3;
+    case "campanillas_invierno":
+      items.goalTree.src = goalTree.tree7;
       break;
-    case "bonsai":
-      items.goalTree.src = goalTree.tree4;
+    case "lavanda":
+      items.goalTree.src = goalTree.tree8;
       break;
 
     default:
