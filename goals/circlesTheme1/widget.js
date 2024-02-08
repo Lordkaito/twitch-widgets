@@ -1,11 +1,10 @@
-
 let mainObj = {};
 const goalTree = {
   tree1: "https://i.postimg.cc/s2LPq2bS/planta1.png",
   tree2: "https://i.postimg.cc/T1VrKJ1q/planta2.png",
   tree3: "https://i.postimg.cc/zvZCDczG/planta4.png",
   tree4: "https://i.postimg.cc/63GVXXNP/planta8.png",
-}
+};
 let defaultApiData = {
   subscriber: {
     type: "subscriber",
@@ -153,33 +152,32 @@ function init(obj, apiData, initial = false) {
     titleGoal: document.querySelector("#goal-type-text"),
   };
 
-  let text = {
-    subscriber: "DAILY SUBS",
-    follower: "FOLLOWS",
-    cheer: "BITS",
-    tip: "TIPS",
-  };
+  let text = mainObj.fieldData.goalTypeText;
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText = amount + mainObj.fieldData.currency + "/" +
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+    items.objective.innerText =
+      amount +
+      mainObj.fieldData.currency +
+      "/" +
+      mainObj.fieldData.goalObjectiveQuantity +
+      mainObj.fieldData.currency;
   }
 
   if (mainObj.fieldData.goalType === "follower" || "subscriber" || "cheer") {
-    items.objective.innerText = amount + "/" +
-      mainObj.fieldData.goalObjectiveQuantity;
+    items.objective.innerText =
+      amount + "/" + mainObj.fieldData.goalObjectiveQuantity;
   }
   // Setting custom color to text porcentage
   items.progressCircle.style.color = mainObj.fieldData.porcentageBarColor;
-  
+
   // Setting custom color to progress bar
   items.goalStroke.style.stroke = mainObj.fieldData.barColor;
-  
+
   // Setting custom color to title of goal
   items.titleGoal.style.color = mainObj.fieldData.textGoalColor;
-  
+
   // Setting custom color to nums/counters of goal
   items.objective.style.color = mainObj.fieldData.numsGoalColor;
 
@@ -187,19 +185,19 @@ function init(obj, apiData, initial = false) {
   switch (mainObj.fieldData.goalTree) {
     case "sabila":
       items.goalTree.src = goalTree.tree1;
-      items.goalTree.style.left = '16px';
+      items.goalTree.style.left = "16px";
       break;
-      case "enrredadera":
-        items.goalTree.src = goalTree.tree2;
-        items.goalTree.style.left = '5px';
-        break;
-        case "monstera":
-          items.goalTree.src = goalTree.tree3;
-          items.goalTree.style.left = '14px';
-          break;
-          case "bonsai":
-            items.goalTree.src = goalTree.tree4;
-            items.goalTree.style.left = '9px';
+    case "enrredadera":
+      items.goalTree.src = goalTree.tree2;
+      items.goalTree.style.left = "5px";
+      break;
+    case "monstera":
+      items.goalTree.src = goalTree.tree3;
+      items.goalTree.style.left = "14px";
+      break;
+    case "bonsai":
+      items.goalTree.src = goalTree.tree4;
+      items.goalTree.style.left = "9px";
       break;
 
     default:
@@ -207,7 +205,7 @@ function init(obj, apiData, initial = false) {
       break;
   }
 
-  items.goalTypeText.innerText = text[goalType];
+  items.goalTypeText.innerText = text;
 
   step = getStep(
     items.progressBarContainer,
@@ -225,7 +223,6 @@ function init(obj, apiData, initial = false) {
 }
 
 function checkIfCompleted(amountToUpdate) {
-
   let objective = mainObj.fieldData.goalObjectiveQuantity;
   let currentAmount = amountToUpdate;
   return currentAmount >= objective;
@@ -250,7 +247,7 @@ function aumentarProgreso(amount) {
   console.log(thing);
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
-  circle.style.transition = 'stroke-dashoffset .5s ease-out'; // Agrega esta línea
+  circle.style.transition = "stroke-dashoffset .5s ease-out"; // Agrega esta línea
   circle.style.strokeDashoffset = progress;
   items.progressCircle.innerText = getPercentage(amount, objective);
 }
@@ -268,20 +265,28 @@ function handleGrow(amount, callback, initial = false) {
   if (!completedGoal) {
     aumentarProgreso(amountToUpdate);
     if (goalType === "tip") {
-      items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
-        mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+      items.objective.innerText =
+        amountToUpdate +
+        mainObj.fieldData.currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        mainObj.fieldData.currency;
     } else {
-      items.objective.innerText = amountToUpdate + '/' +
-        mainObj.fieldData.goalObjectiveQuantity;
+      items.objective.innerText =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
     aumentarProgreso(objective);
     if (goalType === "tip") {
-      items.objective.innerText = amountToUpdate + mainObj.fieldData.currency + '/' +
-        mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+      items.objective.innerText =
+        amountToUpdate +
+        mainObj.fieldData.currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        mainObj.fieldData.currency;
     } else {
-      items.objective.innerText = amountToUpdate + '/' +
-        mainObj.fieldData.goalObjectiveQuantity;
+      items.objective.innerText =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
@@ -292,7 +297,6 @@ function handleGrow(amount, callback, initial = false) {
 function getPercentage(amount, objective) {
   let percentage = (amount / objective) * 100;
   return Math.round(percentage) + "%";
-
 }
 
 function updateApiData(amountToUpdate) {

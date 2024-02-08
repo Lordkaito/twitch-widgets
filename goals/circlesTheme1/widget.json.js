@@ -13,7 +13,7 @@ let fieldData = {
   },
   goalTypeText: {
     type: "text",
-    label: "Goal type:",
+    label: "Goal text:",
     value: "sub goal",
     group: "Customization",
   },

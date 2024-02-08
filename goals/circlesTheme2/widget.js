@@ -153,12 +153,7 @@ function init(obj, apiData, initial = false) {
     titleGoal: document.querySelector("#goal-type-text"),
   };
 
-  let text = {
-    subscriber: "DAILY SUBS",
-    follower: "FOLLOWS",
-    cheer: "BITS",
-    tip: "TIPS",
-  };
+  let text = mainObj.fieldData.goalTypeText;
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
@@ -187,27 +182,27 @@ function init(obj, apiData, initial = false) {
   switch (mainObj.fieldData.goalTree) {
     case "jazmin_amarilla":
       items.goalTree.src = goalTree.tree6;
-      items.goalTree.style.left = '28px';
+      items.goalTree.style.left = "2.1rem";
       break;
-      case "jazmin_rosa":
-        items.goalTree.src = goalTree.tree5;
-      items.goalTree.style.left = '-6px';
+    case "jazmin_rosa":
+      items.goalTree.src = goalTree.tree5;
+      items.goalTree.style.left = "-.1rem";
       break;
     case "campanillas_invierno":
       items.goalTree.src = goalTree.tree7;
-      items.goalTree.style.left = '39px';
+      items.goalTree.style.left = "2.8rem";
       break;
     case "lavanda":
       items.goalTree.src = goalTree.tree8;
-      items.goalTree.style.left = '39px';
+      items.goalTree.style.left = "2.9rem";
       break;
 
     default:
-      items.goalTree.src = goalTree.tree8;
+      items.goalTree.src = goalTree.tree4;
       break;
   }
 
-  items.goalTypeText.innerText = text[goalType];
+  items.goalTypeText.innerText = text
 
   step = getStep(
     items.progressBarContainer,
@@ -232,7 +227,7 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
+  // const containerHeight = container.offsetHeight;
   const step = container / objective;
   return step;
 }

@@ -13,7 +13,7 @@ let fieldData = {
   },
   goalTypeText: {
     type: "text",
-    label: "Goal type:",
+    label: "Goal text:",
     value: "sub goal",
     group: "Customization",
   },
@@ -46,7 +46,7 @@ let fieldData = {
   goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "jazmin_amarilla",
+    value: "jazmin_rosa",
     group: "Customization",
     options: {
       jazmin_amarilla: "Jazmin Amarilla",

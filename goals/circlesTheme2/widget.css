@@ -29,14 +29,15 @@ el color de las cantidades de 100/200 */
 
 .img-goal{
 position: absolute;
-transform: scale(0.3);
+transform: scale(0.4);
 top: -9px;
 /* left: 13px; */
 }
+
 .container-img{
-  position: absolute;
-  top: 32rem;
-  left: 21rem;
+  /* position: absolute; */
+  top: 30.9rem;
+  left: 22rem;
 }
 
 .subcontainer-img{
@@ -112,7 +113,9 @@ main {
   height: 1080px;
   display: grid;
   place-content: center;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -421,36 +424,28 @@ color: var(--star-p-color);
 }
 
 .nube4 {
-  top: 42.5%;
-  left: 31.2rem;
+  /* top: 50%;
+  left: 36rem; */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  flex-direction: column;
+  /* gap: 30px; */
+  /* flex-direction: column; */
 }
 
 .nube4 p {
-  position: absolute;
+  /* position: absolute; */
 
   top: 6rem;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
 
-  text-align: center;
+  text-align: left;
   /* color: var(--star-p-color); */
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
-  width: 10rem;
-  line-height: 1.7;
+  width: 500px;
+  /* line-height: 1.7; */
   left: 5rem;
-}
-
-.goal-type-amount {
-  position: absolute !important;
-  top: 4rem !important;
-  left: 0.6rem;
-  width: 100px;
-  height: 50px;
 }
 
 @keyframes fadeOut {
