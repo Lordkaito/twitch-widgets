@@ -187,15 +187,19 @@ function init(obj, apiData, initial = false) {
   switch (mainObj.fieldData.goalTree) {
     case "sabila":
       items.goalTree.src = goalTree.tree1;
+      items.goalTree.style.left = '16px';
       break;
-    case "enrredadera":
-      items.goalTree.src = goalTree.tree2;
-      break;
-    case "monstera":
-      items.goalTree.src = goalTree.tree3;
-      break;
-    case "bonsai":
-      items.goalTree.src = goalTree.tree4;
+      case "enrredadera":
+        items.goalTree.src = goalTree.tree2;
+        items.goalTree.style.left = '5px';
+        break;
+        case "monstera":
+          items.goalTree.src = goalTree.tree3;
+          items.goalTree.style.left = '14px';
+          break;
+          case "bonsai":
+            items.goalTree.src = goalTree.tree4;
+            items.goalTree.style.left = '9px';
       break;
 
     default:

@@ -29,12 +29,17 @@ el color de las cantidades de 100/200 */
 
 .img-goal{
 position: absolute;
-width: 83px;
-height: 83px;
-top: 55px;
-left: 58px;
+transform: scale(0.3);
+top: -9px;
+/* left: 13px; */
 }
 .container-img{
+  position: absolute;
+  top: 30.9rem;
+  left: 22rem;
+}
+
+.subcontainer-img{
   position: relative;
 }
 
@@ -435,7 +440,7 @@ color: var(--star-p-color);
   /* color: var(--star-p-color); */
   text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
   width: 10rem;
-  line-height: 0.9;
+  line-height: 1.7;
   left: 5rem;
 }
 

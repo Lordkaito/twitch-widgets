@@ -186,20 +186,24 @@ function init(obj, apiData, initial = false) {
   // Setting custom tree to goal
   switch (mainObj.fieldData.goalTree) {
     case "jazmin_amarilla":
-      items.goalTree.src = goalTree.tree5;
-      break;
-    case "jazmin_rosa":
       items.goalTree.src = goalTree.tree6;
+      items.goalTree.style.left = '28px';
+      break;
+      case "jazmin_rosa":
+        items.goalTree.src = goalTree.tree5;
+      items.goalTree.style.left = '-6px';
       break;
     case "campanillas_invierno":
       items.goalTree.src = goalTree.tree7;
+      items.goalTree.style.left = '39px';
       break;
     case "lavanda":
       items.goalTree.src = goalTree.tree8;
+      items.goalTree.style.left = '39px';
       break;
 
     default:
-      items.goalTree.src = goalTree.tree4;
+      items.goalTree.src = goalTree.tree8;
       break;
   }
 

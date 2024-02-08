@@ -46,7 +46,7 @@ let fieldData = {
   goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "lavanda",
+    value: "jazmin_amarilla",
     group: "Customization",
     options: {
       jazmin_amarilla: "Jazmin Amarilla",
