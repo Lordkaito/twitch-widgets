@@ -35,6 +35,12 @@ top: 55px;
 left: 58px;
 }
 .container-img{
+  position: absolute;
+  top: 32rem;
+  left: 21rem;
+}
+
+.subcontainer-img{
   position: relative;
 }
 
@@ -107,6 +113,7 @@ main {
   height: 1080px;
   display: grid;
   place-content: center;
+  position: relative;
 }
 
 .container {
