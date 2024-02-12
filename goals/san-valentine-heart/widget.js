@@ -36,24 +36,25 @@ let widgetApiData = {
     amount: 0,
   },
 };
-let storedEvents = [];
-let eventCounter = 0;
-let timeout = null;
-let firstEvent = true;
-let previousSender = "";
-let currentSender = "";
 let items, step, goalType;
-let animationActive = false;
 let objective;
+let activeGoal;
+let goals;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   let api = await getApiData(obj);
   objective = obj.detail.fieldData.goalObjectiveQuantity;
-  console.log(objective);
+  goals = {
+    goal1: obj.detail.fieldData.goalObjectiveQuantity,
+    goal2: obj.detail.fieldData.goalObjectiveQuantity2,
+    goal3: obj.detail.fieldData.goalObjectiveQuantity3,
+    goal4: obj.detail.fieldData.goalObjectiveQuantity4,
+    goal5: obj.detail.fieldData.goalObjectiveQuantity5,
+    goal6: obj.detail.fieldData.goalObjectiveQuantity6,
+  };
+  activeGoal = goals.goal1;
   init(obj, api, true);
 });
-
-let firstCopy = true;
 
 window.addEventListener("onEventReceived", function (obj) {
   if (obj.detail.event.value === "reset") {
@@ -89,6 +90,15 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
+  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
   widgetApiData = defaultApiData;
   return widgetApiData;
 };
@@ -163,44 +173,42 @@ function init(obj, apiData, initial = false) {
   }
 }
 
-function checkIfCompleted(amountToUpdate) {
-  let objective = mainObj.fieldData.goalObjectiveQuantity;
+function checkIfCompleted(amountToUpdate, currentGoal) {
+  // let objective = mainObj.fieldData.goalObjectiveQuantity;
   let currentAmount = amountToUpdate;
-  return currentAmount >= objective;
+  return currentAmount >= currentGoal;
 }
-function checkIfCompletedGoals(amountToUpdate) {
-  const objectives = [
-    mainObj.fieldData.goalObjectiveQuantity,
-    mainObj.fieldData.goalObjectiveQuantity2,
-    mainObj.fieldData.goalObjectiveQuantity3,
-    mainObj.fieldData.goalObjectiveQuantity4,
-    mainObj.fieldData.goalObjectiveQuantity5,
-    mainObj.fieldData.goalObjectiveQuantity6,
-  ];
-  const currentAmount = amountToUpdate;
-  let nextGoal = 0;
 
-  for (let i = 0; i < objectives.length; i++) {
-    console.log(currentAmount + " vs " + objectives[i]);
-    if (currentAmount === objectives[i]) {
-      if (objectives[i + 1] !== undefined) {
-        nextGoal = objectives[i + 1];
-      } else {
-        nextGoal = null;
-      }
-      return {
-        isCompleted: true,
-        goal: nextGoal,
-        goals: objectives,
-      };
-    }
-  }
+// function checkIfCompletedGoals(amountToUpdate) {
+//   const objectives = [
+//     mainObj.fieldData.goalObjectiveQuantity,
+//     mainObj.fieldData.goalObjectiveQuantity2,
+//     mainObj.fieldData.goalObjectiveQuantity3,
+//     mainObj.fieldData.goalObjectiveQuantity4,
+//     mainObj.fieldData.goalObjectiveQuantity5,
+//     mainObj.fieldData.goalObjectiveQuantity6,
+//   ];
+//   const currentAmount = amountToUpdate;;
 
-  return {
-    isCompleted: false,
-    goals: objectives,
-  };
-}
+//   for (let i = 0; i < objectives.length; i++) {
+//     console.log(currentAmount + " vs " + objectives[i]);
+//     if (currentAmount === objectives[i]) {
+//       if (objectives[i + 1] !== undefined) {
+//         let nextGoal = objectives[i + 1];
+//       } else {
+//         let nextGoal = null;
+//       }
+//       return {
+//         isCompleted: true,
+//         goal: nextGoal,
+//       };
+//     }
+//   }
+
+//   return {
+//     isCompleted: false,
+//   };
+// }
 
 function getStep(container, objective) {
   const step = container / objective;
@@ -223,14 +231,19 @@ function aumentarProgreso(amount) {
   items.progressCircle.innerText = getPercentage(amount, objective);
 }
 
+function getActiveGoal(keys, activeGoal) {
+  const current = keys.find((key) => goals[key] === activeGoal);
+  return current;
+}
+
 function handleGrow(amount, callback, initial = false) {
   let chocolates = {
-    chocolate1: document.querySelector(".img-goal1"),
-    chocolate2: document.querySelector(".img-goal2"),
-    chocolate3: document.querySelector(".img-goal3"),
-    chocolate4: document.querySelector(".img-goal4"),
-    chocolate5: document.querySelector(".img-goal5"),
-    chocolate6: document.querySelector(".img-goal6"),
+    goal1: document.querySelector(".img-goal1"),
+    goal2: document.querySelector(".img-goal2"),
+    goal3: document.querySelector(".img-goal3"),
+    goal4: document.querySelector(".img-goal4"),
+    goal5: document.querySelector(".img-goal5"),
+    goal6: document.querySelector(".img-goal6"),
   };
 
   let amountToUpdate =
@@ -242,7 +255,7 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
-  let { isCompleted, goal, goals } = checkIfCompletedGoals(amountToUpdate);
+  // let { isCompleted, goal } = checkIfCompletedGoals(amountToUpdate);
   // let currentGoal = mainObj.fieldData.goalStartQuantity;
 
   // true
@@ -250,36 +263,42 @@ function handleGrow(amount, callback, initial = false) {
 
   // false
   // isCompleted = false
+  const completed = checkIfCompleted(amountToUpdate, activeGoal);
+  console.log(completed);
 
-  aumentarProgreso(amountToUpdate);
-  if (goal) {
-    items.objective.innerText = amountToUpdate + " | " + goal;
-  }
-
-  if (goals) {
-    
-    items.goalTopBox.classList.remove("upOutTop");
-    chocolates.chocolate1.classList.remove("upOut");
-    if (amountToUpdate <= goals[0] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[0];
-    } else if (amountToUpdate <= goals[1] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[1];
-    } else if (amountToUpdate <= goals[2] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[2];
-    } else if (amountToUpdate <= goals[3] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[3];
-    } else if (amountToUpdate <= goals[4] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[4];
-    } else if (amountToUpdate <= goals[5] && isCompleted == false) {
-      items.objective.innerText = amountToUpdate + " | " + goals[5];
+  if (!completed) {
+    items.objective.innerText = amountToUpdate + " | " + activeGoal;
+  } else {
+    if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
+      items.objective.innerText =
+        amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
+    } else {
+      const keys = Object.keys(goals);
+      const current = getActiveGoal(keys, activeGoal, amountToUpdate);
+      const currentIndex = keys.indexOf(current);
+      const nextIndex = (currentIndex + 1) % keys.length;
+      const nextGoal = keys[nextIndex];
+      activeGoal = goals[nextGoal];
+      items.objective.innerText = amountToUpdate + " | " + activeGoal;
+      items.goalTopBox.classList.add("upOutTop");
+      chocolates[current].classList.add("upOut");
+      // items.objective.innerText = amountToUpdate + " | " + goal;
     }
   }
 
-  if (isCompleted) {
-    items.goalTopBox.classList.add("upOutTop");
-    chocolates.chocolate1.classList.add("upOut");
-    items.objective.innerText = amountToUpdate + " | " + goal;
-  }
+  // if (goal) {
+  //   items.objective.innerText = amountToUpdate + " | " + goal;
+  // }
+
+  // if (!isCompleted) {
+  //   items.objective.innerText = amountToUpdate + " | " + goal;
+  // }
+
+  // if (isCompleted) {
+  //   items.goalTopBox.classList.add("upOutTop");
+  //   chocolates.chocolate1.classList.add("upOut");
+  //   items.objective.innerText = amountToUpdate + " | " + goal;
+  // }
 
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
