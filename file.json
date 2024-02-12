@@ -13,14 +13,14 @@
   },
   "goalTypeText": {
     "type": "text",
-    "label": "Goal type:",
+    "label": "Goal text:",
     "value": "sub goal",
     "group": "Customization"
   },
   "goalObjectiveQuantity": {
     "type": "number",
     "label": "Goal objective:",
-    "value": 100,
+    "value": 10,
     "group": "Customization",
     "step": 1
   },

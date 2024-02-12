@@ -30,8 +30,8 @@ el color de las cantidades de 100/200 */
 .img-goal{
 position: absolute;
 transform: scale(0.4);
-top: -9px;
-/* left: 13px; */
+top: -0.5625rem;
+left: -0.25rem;
 }
 
 .container-img{

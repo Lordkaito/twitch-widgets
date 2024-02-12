@@ -1,9 +1,9 @@
 let mainObj = {};
 const goalTree = {
-  tree1: "https://i.postimg.cc/s2LPq2bS/planta1.png",
-  tree2: "https://i.postimg.cc/T1VrKJ1q/planta2.png",
-  tree3: "https://i.postimg.cc/zvZCDczG/planta4.png",
-  tree4: "https://i.postimg.cc/63GVXXNP/planta8.png",
+  tree1: "https://i.postimg.cc/KzMqkDwH/planta1.png",
+  tree2: "https://i.postimg.cc/tg1Dwzq4/planta2.png",
+  tree3: "https://i.postimg.cc/3J7SNpBt/planta4.png",
+  tree4: "https://i.postimg.cc/RZpXgYzY/planta8.png",
 };
 let defaultApiData = {
   subscriber: {
@@ -185,19 +185,19 @@ function init(obj, apiData, initial = false) {
   switch (mainObj.fieldData.goalTree) {
     case "sabila":
       items.goalTree.src = goalTree.tree1;
-      items.goalTree.style.left = "16px";
+      // items.goalTree.style.left = "16px";
       break;
     case "enrredadera":
       items.goalTree.src = goalTree.tree2;
-      items.goalTree.style.left = "5px";
+      // items.goalTree.style.left = "5px";
       break;
     case "monstera":
       items.goalTree.src = goalTree.tree3;
-      items.goalTree.style.left = "14px";
+      // items.goalTree.style.left = "14px";
       break;
     case "bonsai":
       items.goalTree.src = goalTree.tree4;
-      items.goalTree.style.left = "9px";
+      // items.goalTree.style.left = "9px";
       break;
 
     default:
