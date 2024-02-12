@@ -1,14 +1,5 @@
 let mainObj = {};
-const goalBox = {
-  heartBox: "https://i.postimg.cc/N0db0kF2/basecaja.png",
-  // heartTopBox: "https://i.postimg.cc/C5q4myNb/tapacaja.png",
-  // chocolate1: "https://i.postimg.cc/kXSjyS1L/bombon1.png",
-  // chocolate2: "https://i.postimg.cc/FHQTCKwz/bombon2.png",
-  // chocolate3: "https://i.postimg.cc/pdWqx6Wt/bombon3.png",
-  // chocolate4: "https://i.postimg.cc/y8XvMHzP/bombon4.png",
-  // chocolate5: "https://i.postimg.cc/PxNyvvv3/bombon5.png",
-  // chocolate6: "https://i.postimg.cc/9MSpdXGW/bombon6.png",
-};
+
 let defaultApiData = {
   subscriber: {
     type: "subscriber",
@@ -53,22 +44,6 @@ let previousSender = "";
 let currentSender = "";
 let items, step, goalType;
 let animationActive = false;
-
-// let progreso = 0;
-// let circle = document.querySelector("circle");
-// let progressText = document.getElementById("progressCircle");
-// function aumentarProgreso() {
-//   if (progreso < 100) {
-//     progreso += 10;
-//     let progress = 540 - (540 * progreso) / 130;
-//     circle.style.strokeDashoffset = progress;
-//     progressText.innerText = progreso + "%";
-//   }
-// }
-
-// document
-//   .getElementById("progressCircle")
-//   .addEventListener("click", aumentarProgreso);
 let objective;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
@@ -114,15 +89,6 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
-  // if (data === null) {
-  //   widgetApiData = defaultApiData;
-  // } else {
-  //   widgetApiData = data;
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  //   widgetApiData = defaultApiData;
-  // }
   widgetApiData = defaultApiData;
   return widgetApiData;
 };
@@ -180,25 +146,6 @@ function init(obj, apiData, initial = false) {
   // Setting custom color to nums/counters of goal
   items.objective.style.color = mainObj.fieldData.numsGoalColor;
 
-  // Setting each chocolate
-  // items.chocolate1.src = goalBox.chocolate1;
-  // items.chocolate2.src = goalBox.chocolate2;
-  // items.chocolate3.src = goalBox.chocolate3;
-  // items.chocolate4.src = goalBox.chocolate4;
-  // items.chocolate5.src = goalBox.chocolate5;
-  // items.chocolate6.src = goalBox.chocolate6;
-
-  // Setting custom tree to goal
-  switch (mainObj.fieldData.goalBox) {
-    case "heart":
-      items.goalBox.src = goalBox.heartBox;
-      break;
-
-    default:
-      items.goalBox.src = goalBox.heartBox;
-      break;
-  }
-
   items.goalTypeText.innerText = text;
 
   step = getStep(
@@ -221,9 +168,38 @@ function checkIfCompleted(amountToUpdate) {
   let currentAmount = amountToUpdate;
   return currentAmount >= objective;
 }
+function checkIfCompletedGoals(amountToUpdate) {
+  const objectives = [
+    mainObj.fieldData.goalObjectiveQuantity,
+    mainObj.fieldData.goalObjectiveQuantity2,
+    mainObj.fieldData.goalObjectiveQuantity3,
+    mainObj.fieldData.goalObjectiveQuantity4,
+    mainObj.fieldData.goalObjectiveQuantity5,
+    mainObj.fieldData.goalObjectiveQuantity6,
+  ];
+  const currentAmount = amountToUpdate;;
+
+  for (let i = 0; i < objectives.length; i++) {
+    console.log(currentAmount + " vs " + objectives[i]);
+    if (currentAmount === objectives[i]) {
+      if (objectives[i + 1] !== undefined) {
+        let nextGoal = objectives[i + 1];
+      } else {
+        let nextGoal = null;
+      }
+      return {
+        isCompleted: true,
+        goal: nextGoal,
+      };
+    }
+  }
+
+  return {
+    isCompleted: false,
+  };
+}
 
 function getStep(container, objective) {
-  // const containerHeight = container.offsetHeight;
   const step = container / objective;
   return step;
 }
@@ -254,8 +230,6 @@ function handleGrow(amount, callback, initial = false) {
     chocolate6: document.querySelector(".img-goal6"),
   };
 
-  let goalCounter = 0;
-
   let amountToUpdate =
     widgetApiData[goalType].amount +
     amount +
@@ -265,37 +239,28 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
-  let completedGoal = checkIfCompleted(amountToUpdate);
-  aumentarProgreso(amountToUpdate);
-  items.objective.innerText =
-    amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity;
+  let { isCompleted, goal } = checkIfCompletedGoals(amountToUpdate);
+  // let currentGoal = mainObj.fieldData.goalStartQuantity;
 
-  if (completedGoal) {
-    if (goalCounter <= 6 && goalCounter >= 0) {
-      goalCounter++;
-      items.goalTopBox.classList.add("upOutTop");
-      switch (goalCounter) {
-        case 1:
-          chocolates.chocolate1.classList.add("upOut");
-          break;
-        case 2:
-          chocolates.chocolate2.classList.add("upOut");
-          break;
-        case 3:
-          chocolates.chocolate3.classList.add("upOut");
-          break;
-        case 4:
-          chocolates.chocolate4.classList.add("upOut");
-          break;
-        case 5:
-          chocolates.chocolate5.classList.add("upOut");
-          break;
-        case 6:
-          chocolates.chocolate6.classList.add("upOut");
-          goalCounter = 0;
-          break;
-      }
-    }
+  // true
+  // isCompleted = true goal = 200
+
+  // false
+  // isCompleted = false
+
+  aumentarProgreso(amountToUpdate);
+  if (goal) {
+    items.objective.innerText = amountToUpdate + " | " + goal;
+  }
+  
+  if (!isCompleted) {
+    items.objective.innerText = amountToUpdate + " | " + goal;
+  }
+
+  if (isCompleted) {
+    items.goalTopBox.classList.add("upOutTop");
+    chocolates.chocolate1.classList.add("upOut");
+    items.objective.innerText = amountToUpdate + " | " + goal;
   }
 
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {

@@ -24,6 +24,41 @@ let fieldData = {
     group: "Customization",
     step: 1,
   },
+  goalObjectiveQuantity2: {
+    type: "number",
+    label: "Goal objective:",
+    value: 200,
+    group: "Customization",
+    step: 1,
+  },
+  goalObjectiveQuantity3: {
+    type: "number",
+    label: "Goal objective:",
+    value: 300,
+    group: "Customization",
+    step: 1,
+  },
+  goalObjectiveQuantity4: {
+    type: "number",
+    label: "Goal objective:",
+    value: 400,
+    group: "Customization",
+    step: 1,
+  },
+  goalObjectiveQuantity5: {
+    type: "number",
+    label: "Goal objective:",
+    value: 500,
+    group: "Customization",
+    step: 1,
+  },
+  goalObjectiveQuantity6: {
+    type: "number",
+    label: "Goal objective:",
+    value: 600,
+    group: "Customization",
+    step: 1,
+  },
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
@@ -34,7 +69,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "subscriber",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
