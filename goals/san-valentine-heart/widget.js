@@ -177,25 +177,28 @@ function checkIfCompletedGoals(amountToUpdate) {
     mainObj.fieldData.goalObjectiveQuantity5,
     mainObj.fieldData.goalObjectiveQuantity6,
   ];
-  const currentAmount = amountToUpdate;;
+  const currentAmount = amountToUpdate;
+  let nextGoal = 0;
 
   for (let i = 0; i < objectives.length; i++) {
     console.log(currentAmount + " vs " + objectives[i]);
     if (currentAmount === objectives[i]) {
       if (objectives[i + 1] !== undefined) {
-        let nextGoal = objectives[i + 1];
+        nextGoal = objectives[i + 1];
       } else {
-        let nextGoal = null;
+        nextGoal = null;
       }
       return {
         isCompleted: true,
         goal: nextGoal,
+        goals: objectives,
       };
     }
   }
 
   return {
     isCompleted: false,
+    goals: objectives,
   };
 }
 
@@ -239,7 +242,7 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
-  let { isCompleted, goal } = checkIfCompletedGoals(amountToUpdate);
+  let { isCompleted, goal, goals } = checkIfCompletedGoals(amountToUpdate);
   // let currentGoal = mainObj.fieldData.goalStartQuantity;
 
   // true
@@ -252,9 +255,24 @@ function handleGrow(amount, callback, initial = false) {
   if (goal) {
     items.objective.innerText = amountToUpdate + " | " + goal;
   }
-  
-  if (!isCompleted) {
-    items.objective.innerText = amountToUpdate + " | " + goal;
+
+  if (goals) {
+    
+    items.goalTopBox.classList.remove("upOutTop");
+    chocolates.chocolate1.classList.remove("upOut");
+    if (amountToUpdate <= goals[0] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[0];
+    } else if (amountToUpdate <= goals[1] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[1];
+    } else if (amountToUpdate <= goals[2] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[2];
+    } else if (amountToUpdate <= goals[3] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[3];
+    } else if (amountToUpdate <= goals[4] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[4];
+    } else if (amountToUpdate <= goals[5] && isCompleted == false) {
+      items.objective.innerText = amountToUpdate + " | " + goals[5];
+    }
   }
 
   if (isCompleted) {
