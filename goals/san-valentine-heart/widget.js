@@ -205,6 +205,13 @@ function getActiveGoal(keys, activeGoal) {
   return current;
 }
 
+function animationActive(animation, element) {
+  element.classList.contains(animation) &&
+  amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6
+    ? true
+    : false;
+}
+
 function handleGrow(amount, callback, initial = false) {
   let chocolates = {
     goal1: document.querySelector(".img-goal1"),
@@ -227,14 +234,15 @@ function handleGrow(amount, callback, initial = false) {
   const completed = checkIfCompleted(amountToUpdate, activeGoal);
   console.log(completed);
 
-  if (
-    items.goalTopBox.classList.contains("upOutTop") &&
-    amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6
-  ) {
-    items.goalTopBox.classList.remove("upOutTop");
-  }
-
   if (!completed) {
+
+    if(items.goalTopBox.classList.contains("upOutTop") &&
+    amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6){
+      setTimeout(() => {
+        items.goalTopBox.classList.remove("upOutTop");
+      }, 4000)
+    }
+   
     items.objective.innerText = amountToUpdate + " | " + activeGoal;
   } else {
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
