@@ -287,12 +287,12 @@ main {
   }
   
   80%{
-    opacity:0;
-    transform: translateY(-30px);
+    transform: translateY(-90px);
   }
   
   100%{
     opacity:0;
+    transform: translateY(-140px);
   }
   
 }
