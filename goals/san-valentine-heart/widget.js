@@ -193,7 +193,6 @@ let circle = document.querySelector("circle");
 const newStep = getStep(540, objective);
 function aumentarProgreso(amount) {
   const thing = getStep(540, objective) * amount;
-  console.log(thing);
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
   circle.style.strokeDashoffset = progress;
@@ -210,6 +209,10 @@ function animationActive(animation, element) {
   amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6
     ? true
     : false;
+}
+
+function animationActive(element) {
+  return element.classList.contains("upOutTop");
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -232,34 +235,30 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   const completed = checkIfCompleted(amountToUpdate, activeGoal);
-  console.log(completed);
 
   if (!completed) {
-
-    if(items.goalTopBox.classList.contains("upOutTop") &&
-    amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6){
-      setTimeout(() => {
-        items.goalTopBox.classList.remove("upOutTop");
-      }, 4000)
-    }
-   
     items.objective.innerText = amountToUpdate + " | " + activeGoal;
   } else {
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
       items.objective.innerText =
-        amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
-      chocolates.goal6.classList.add("upOut");
-      items.goalTopBox.classList.add("upOutTop");
+        amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;Ï
     } else {
       const keys = Object.keys(goals);
       const current = getActiveGoal(keys, activeGoal, amountToUpdate);
       const currentIndex = keys.indexOf(current);
       const nextIndex = (currentIndex + 1) % keys.length;
       const nextGoal = keys[nextIndex];
+
+      if (amountToUpdate == activeGoal) {
+        if (animationActive(items.goalTopBox)) return;
+        items.goalTopBox.classList.add("upOutTop");
+        setTimeout(() => {
+          items.goalTopBox.classList.remove("upOutTop");
+        }, 4000);
+      }
       activeGoal = goals[nextGoal];
       items.objective.innerText = amountToUpdate + " | " + activeGoal;
       chocolates[current].classList.add("upOut");
-      items.goalTopBox.classList.add("upOutTop");
     }
   }
 

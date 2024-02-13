@@ -13,14 +13,49 @@
   },
   "goalTypeText": {
     "type": "text",
-    "label": "Goal type:",
-    "value": "sub goal",
+    "label": "Goal text:",
+    "value": "Next Goal",
     "group": "Customization"
   },
   "goalObjectiveQuantity": {
     "type": "number",
     "label": "Goal objective:",
     "value": 100,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalObjectiveQuantity2": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 200,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalObjectiveQuantity3": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 300,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalObjectiveQuantity4": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 400,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalObjectiveQuantity5": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 500,
+    "group": "Customization",
+    "step": 1
+  },
+  "goalObjectiveQuantity6": {
+    "type": "number",
+    "label": "Goal objective:",
+    "value": 600,
     "group": "Customization",
     "step": 1
   },
@@ -34,7 +69,7 @@
   "goalType": {
     "type": "dropdown",
     "label": "Goal type:",
-    "value": "subscriber",
+    "value": "tip",
     "group": "Customization",
     "options": {
       "subscriber": "Sub",
@@ -43,17 +78,12 @@
       "tip": "Tip"
     }
   },
-  "goalTree": {
+  "goalBox": {
     "type": "dropdown",
     "label": "Goal theme:",
-    "value": "lavanda",
+    "value": "heart",
     "group": "Customization",
-    "options": {
-      "jazmin_amarilla": "Jazmin Amarilla",
-      "jazmin_rosa": "Jazmin Rosa",
-      "campanillas_invierno": "Campanillas de invierno",
-      "lavanda": "Lavanda"
-    }
+    "options": { "heart": "Heart" }
   },
   "barColor": {
     "type": "colorpicker",
@@ -67,10 +97,28 @@
     "value": "#6fc300",
     "group": "Customization"
   },
-  "textGoalColor": {
+  "textGoalTitleColor": {
     "type": "colorpicker",
     "label": "Text color:",
-    "value": "#dff300",
+    "value": "#ffe4c2",
+    "group": "Customization"
+  },
+  "backgroundGoalTitleColor": {
+    "type": "colorpicker",
+    "label": "Text color:",
+    "value": "#cf4055",
+    "group": "Customization"
+  },
+  "goalColor": {
+    "type": "colorpicker",
+    "label": "Text color:",
+    "value": "#cf4055",
+    "group": "Customization"
+  },
+  "backgroundGoalColor": {
+    "type": "colorpicker",
+    "label": "Text color:",
+    "value": "#f38e99",
     "group": "Customization"
   },
   "numsGoalColor": {
