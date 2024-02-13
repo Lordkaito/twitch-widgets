@@ -293,19 +293,20 @@ main {
   
   100%{
     opacity:0;
-    transform: translateY(-30px);  
   }
+  
 }
 
 @keyframes upOutTop {
   0%{
-    opacity:1;
+    /* opacity:1; */
     transform: translateY(0deg);
   }
   
-  80%{
-    opacity:0;
-    transform: translateY(-30px);
+  60%{
+    /* opacity:0; */
+    transform: translateY(-60px);
+    transform: translateX(400px);
   }
   
   

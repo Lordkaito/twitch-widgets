@@ -179,37 +179,6 @@ function checkIfCompleted(amountToUpdate, currentGoal) {
   return currentAmount >= currentGoal;
 }
 
-// function checkIfCompletedGoals(amountToUpdate) {
-//   const objectives = [
-//     mainObj.fieldData.goalObjectiveQuantity,
-//     mainObj.fieldData.goalObjectiveQuantity2,
-//     mainObj.fieldData.goalObjectiveQuantity3,
-//     mainObj.fieldData.goalObjectiveQuantity4,
-//     mainObj.fieldData.goalObjectiveQuantity5,
-//     mainObj.fieldData.goalObjectiveQuantity6,
-//   ];
-//   const currentAmount = amountToUpdate;;
-
-//   for (let i = 0; i < objectives.length; i++) {
-//     console.log(currentAmount + " vs " + objectives[i]);
-//     if (currentAmount === objectives[i]) {
-//       if (objectives[i + 1] !== undefined) {
-//         let nextGoal = objectives[i + 1];
-//       } else {
-//         let nextGoal = null;
-//       }
-//       return {
-//         isCompleted: true,
-//         goal: nextGoal,
-//       };
-//     }
-//   }
-
-//   return {
-//     isCompleted: false,
-//   };
-// }
-
 function getStep(container, objective) {
   const step = container / objective;
   return step;
@@ -255,16 +224,15 @@ function handleGrow(amount, callback, initial = false) {
     amountToUpdate = amount;
   }
 
-  // let { isCompleted, goal } = checkIfCompletedGoals(amountToUpdate);
-  // let currentGoal = mainObj.fieldData.goalStartQuantity;
-
-  // true
-  // isCompleted = true goal = 200
-
-  // false
-  // isCompleted = false
   const completed = checkIfCompleted(amountToUpdate, activeGoal);
   console.log(completed);
+
+  if (
+    items.goalTopBox.classList.contains("upOutTop") &&
+    amountToUpdate <= mainObj.fieldData.goalObjectiveQuantity6
+  ) {
+    items.goalTopBox.classList.remove("upOutTop");
+  }
 
   if (!completed) {
     items.objective.innerText = amountToUpdate + " | " + activeGoal;
@@ -272,6 +240,8 @@ function handleGrow(amount, callback, initial = false) {
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
       items.objective.innerText =
         amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
+      chocolates.goal6.classList.add("upOut");
+      items.goalTopBox.classList.add("upOutTop");
     } else {
       const keys = Object.keys(goals);
       const current = getActiveGoal(keys, activeGoal, amountToUpdate);
@@ -280,9 +250,8 @@ function handleGrow(amount, callback, initial = false) {
       const nextGoal = keys[nextIndex];
       activeGoal = goals[nextGoal];
       items.objective.innerText = amountToUpdate + " | " + activeGoal;
-      items.goalTopBox.classList.add("upOutTop");
       chocolates[current].classList.add("upOut");
-      // items.objective.innerText = amountToUpdate + " | " + goal;
+      items.goalTopBox.classList.add("upOutTop");
     }
   }
 
