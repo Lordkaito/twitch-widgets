@@ -13,7 +13,7 @@ let fieldData = {
   },
   goalTypeText: {
     type: "text",
-    label: "Goal type:",
+    label: "Goal text:",
     value: "sub goal",
     group: "Customization",
   },
@@ -42,6 +42,42 @@ let fieldData = {
       cheer: "Cheer",
       tip: "Tip",
     },
+  },
+  goalTree: {
+    type: "dropdown",
+    label: "Goal theme:",
+    value: "bonsai",
+    group: "Customization",
+    options: {
+      monstera: "Monstera",
+      sabila: "Sabila",
+      bonsai: "Bonsai",
+      enrredadera: "Enrredadera",
+    },
+  },
+  barColor: {
+    type: "colorpicker",
+    label: "Bar color:",
+    value: "#3cc300",
+    group: "Customization",
+  },
+  porcentageBarColor: {
+    type: "colorpicker",
+    label: "Porcentage color:",
+    value: "#6fc300",
+    group: "Customization",
+  },
+  textGoalColor: {
+    type: "colorpicker",
+    label: "Text color:",
+    value: "#dff300",
+    group: "Customization",
+  },
+  numsGoalColor: {
+    type: "colorpicker",
+    label: "Numbers color:",
+    value: "#d6cbd0",
+    group: "Customization",
   },
   goalFullType: {
     type: "dropdown",

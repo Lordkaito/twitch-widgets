@@ -1,17 +1,18 @@
 :root {
   --round-background-color: #fff;
   --round-border-color: white;
-  --progression-color: white;
-  --progressNums-color: white;
-  --progressNums-border-color:#c78dc8;
-  
+  --progression-color: #fff5e7;
+  --progressNums-color: #fff5e7;
+  --progressNums-border-color: #c78dc8;
+
   --progress-bar-background-color: #70648a;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #7bc8d3;
+  --goal-stroke-color: #fff5e7;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
   --nube-p-color: #f59b61;
-  --star-p-color: #fff;
-  --star-p-border-color: #c78dc8;
+  --star-p-color: #fff5e7;
+  --star-p-border-color: transparente;
 }
 
 /* color crema base: #fff5e7
@@ -26,6 +27,23 @@ el color del nombre del goal (que se podrá editar el texto tb)
 
 el color de las cantidades de 100/200 */
 
+.img-goal{
+  position: absolute;
+  transform: scale(0.4);
+  top: -0.5625rem;
+  left: -0.25rem;
+  }
+
+.container-img {
+  /* position: absolute; */
+  top: 30.9rem;
+  left: 22rem;
+}
+
+.subcontainer-img {
+  position: relative;
+}
+
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
@@ -39,26 +57,41 @@ el color de las cantidades de 100/200 */
 }
 
 /* Circle */
+.prueba {
+  position: relative;
+}
+
 svg {
   width: 200px;
   height: 200px;
 }
+
 circle {
   fill: none;
-  stroke: #4caf50;
   stroke-width: 10;
   stroke-dasharray: 540;
   stroke-dashoffset: 540;
-  transition: stroke-dashoffset 0.5s;
 }
+
+.circle-outside {
+  transition: all 4s ease-out; /* Modifica esta línea */
+}
+
+.circle-inside {
+  position: absolute;
+  z-index: -1;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-dasharray: 945;
+}
+
 svg {
   transform: rotate(124deg);
 }
 .progress-text {
   position: absolute;
-  top: 60.8%;
-  left: 50.6%;
-  color: white;
+  top: 82.8%;
+  left: 51.6%;
+  /* color: var(--progressNums-color); */
   transform: translate(-50%, -50%);
   font-size: 20px;
 }
@@ -66,7 +99,6 @@ svg {
   text-align: center;
 }
 /* Circle */
-
 
 .playing {
   opacity: 1 !important;
@@ -79,6 +111,9 @@ main {
   height: 1080px;
   display: grid;
   place-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -88,7 +123,7 @@ main {
   height: 40rem;
   position: relative;
   /* background: linear-gradient(to top,#ff9bd9 , #ffff,#d2fecd ); */
-  background: url('https://i.postimg.cc/9FpVr2zt/fondogoalpi.png');
+  background: url("https://i.postimg.cc/9FpVr2zt/fondogoalpi.png");
   background-position: center;
   border-radius: 0px 0px 20px 20px;
 }
@@ -155,10 +190,14 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--progressNums-border-color), -3px 0 var(--progressNums-border-color),
-    0 3px var(--progressNums-border-color), 0 -3px var(--progressNums-border-color),
-    2px 3px var(--progressNums-border-color), -2px -3px var(--progressNums-border-color),
-    2px -3px var(--progressNums-border-color), -2px 3px var(--progressNums-border-color);
+  text-shadow: 3px 0 var(--progressNums-border-color),
+    -3px 0 var(--progressNums-border-color),
+    0 3px var(--progressNums-border-color),
+    0 -3px var(--progressNums-border-color),
+    2px 3px var(--progressNums-border-color),
+    -2px -3px var(--progressNums-border-color),
+    2px -3px var(--progressNums-border-color),
+    -2px 3px var(--progressNums-border-color);
 }
 
 .progress-bar {
@@ -349,13 +388,17 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 2.3rem;
-  left: 1.6rem;
+  top: 1.3rem;
+  left: 18.6rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-color: var(--star-p-color);
-  text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
+  color: var(--star-p-color);
+  text-shadow: 1.7px 0 var(--star-p-border-color),
+    -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color),
+    0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color),
+    -2px -1.7px var(--star-p-border-color),
+    2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
   min-width: 4.6rem;
   text-align: center;
 }
@@ -387,36 +430,32 @@ color: var(--star-p-color);
 }
 
 .nube4 {
-  top: 42.5%;
-  left: 31.2rem;
+  /* top: 50%;
+  left: 36rem; */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  flex-direction: column;
+  /* gap: 30px; */
+  /* flex-direction: column; */
 }
 
 .nube4 p {
-  position: absolute;
+  /* position: absolute; */
 
-  top: 36%;
+  top: 6rem;
   font-size: 1.6rem;
   font-weight: 700;
 
-  text-align: center;
-  color: var(--star-p-color);
-  text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
-  max-width: 6rem;
-  line-height: 0.9;
-  left: 3rem;
-}
-
-.goal-type-amount {
-  position: absolute !important;
-  top: 4rem !important;
-  left: 0.6rem;
-  width: 100px;
-  height: 50px;
+  text-align: left;
+  /* color: var(--star-p-color); */
+  text-shadow: 1.7px 0 var(--star-p-border-color),
+    -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color),
+    0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color),
+    -2px -1.7px var(--star-p-border-color),
+    2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
+  width: 500px;
+  /* line-height: 1.7; */
+  left: 5rem;
 }
 
 @keyframes fadeOut {

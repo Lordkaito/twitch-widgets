@@ -1,4 +1,10 @@
 let mainObj = {};
+const goalTree = {
+  tree5: "https://i.postimg.cc/tRFv9Dh1/planta3.png",
+  tree6: "https://i.postimg.cc/wTVWmv4g/planta5.png",
+  tree7: "https://i.postimg.cc/SRLgVNyL/planta6.png",
+  tree8: "https://i.postimg.cc/qvv1XTWn/planta7.png",
+};
 let defaultApiData = {
   subscriber: {
     type: "subscriber",
@@ -140,40 +146,66 @@ function init(obj, apiData, initial = false) {
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
+    goalTree: document.querySelector(".img-goal"),
+    goalStroke: document.querySelector("#stroke-circle"),
+    progressCircle: document.getElementById("progressCircle"),
+    titleGoal: document.querySelector("#goal-type-text"),
   };
 
-  let text = {
-    subscriber: "sub goal",
-    follower: "follow goal",
-    cheer: "cheer goal",
-    tip: "tip goal",
-  };
+  let text = mainObj.fieldData.goalTypeText;
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
   if (mainObj.fieldData.goalType === "tip") {
     items.objective.innerText =
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+      amount +
+      mainObj.fieldData.currency +
+      "/" +
+      mainObj.fieldData.goalObjectiveQuantity +
+      mainObj.fieldData.currency;
   }
 
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
+  if (mainObj.fieldData.goalType === "follower" || "subscriber" || "cheer") {
+    items.objective.innerText =
+      amount + "/" + mainObj.fieldData.goalObjectiveQuantity;
+  }
+  // Setting custom color to text porcentage
+  items.progressCircle.style.color = mainObj.fieldData.porcentageBarColor;
+
+  // Setting custom color to progress bar
+  items.goalStroke.style.stroke = mainObj.fieldData.barColor;
+
+  // Setting custom color to title of goal
+  items.titleGoal.style.color = mainObj.fieldData.textGoalColor;
+
+  // Setting custom color to nums/counters of goal
+  items.objective.style.color = mainObj.fieldData.numsGoalColor;
+
+  // Setting custom tree to goal
+  switch (mainObj.fieldData.goalTree) {
+    case "jazmin_amarilla":
+      items.goalTree.src = goalTree.tree6;
+      // items.goalTree.style.left = "2.1rem";
+      break;
+    case "jazmin_rosa":
+      items.goalTree.src = goalTree.tree5;
+      // items.goalTree.style.left = "-.1rem";
+      break;
+    case "campanillas_invierno":
+      items.goalTree.src = goalTree.tree7;
+      // items.goalTree.style.left = "2.8rem";
+      break;
+    case "lavanda":
+      items.goalTree.src = goalTree.tree8;
+      // items.goalTree.style.left = "2.9rem";
+      break;
+
+    default:
+      items.goalTree.src = goalTree.tree4;
+      break;
   }
 
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  items.goalTypeText.innerText = text[goalType];
+  items.goalTypeText.innerText = text;
 
   step = getStep(
     items.progressBarContainer,
@@ -197,7 +229,7 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
+  // const containerHeight = container.offsetHeight;
   const step = container / objective;
   return step;
 }
@@ -208,15 +240,20 @@ function getGachoStep(diff, objective) {
 
 let progreso = 0;
 let circle = document.querySelector("circle");
-let progressText = document.getElementById("progressCircle");
+// let progressText = document.getElementById("progressCircle");
 const newStep = getStep(540, objective);
 function aumentarProgreso(amount) {
+  if (amount > objective) {
+    items.progressCircle.innerText = getPercentage(amount, objective);
+    return;
+  }
   const thing = getStep(540, objective) * amount;
   console.log(thing);
   progreso += newStep;
   let progress = 540 - (540 * thing) / 720;
+  circle.style.transition = "stroke-dashoffset .5s ease-out"; // Agrega esta línea
   circle.style.strokeDashoffset = progress;
-  progressText.innerText = getPercentage(amount, objective);
+  items.progressCircle.innerText = getPercentage(amount, objective);
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -230,10 +267,31 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    console.log(amountToUpdate);
     aumentarProgreso(amountToUpdate);
+    if (goalType === "tip") {
+      items.objective.innerText =
+        amountToUpdate +
+        mainObj.fieldData.currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        mainObj.fieldData.currency;
+    } else {
+      items.objective.innerText =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
   } else {
-    aumentarProgreso(objective);
+    aumentarProgreso(amountToUpdate);
+    if (goalType === "tip") {
+      items.objective.innerText =
+        amountToUpdate +
+        mainObj.fieldData.currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        mainObj.fieldData.currency;
+    } else {
+      items.objective.innerText =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+    }
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
