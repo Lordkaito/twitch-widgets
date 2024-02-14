@@ -362,7 +362,7 @@ let events = {
     event: {
       type: "message",
       name: "Lordkaito_",
-      message: "test",
+      message: "!goal",
       originalEventName: "message",
       service: "twitch",
       data: {

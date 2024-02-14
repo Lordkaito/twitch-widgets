@@ -66,19 +66,25 @@ window.addEventListener("onEventReceived", function (obj) {
   let listener = obj.detail.listener;
 
   if (event.isCommunityGift) return;
-  if (listener == "message" && event.data.text == mainObj.fieldData.command) {
+
+  if (
+    listener == "message" &&
+    event.data.text.startsWith(mainObj.fieldData.command)
+  ) {
     if (animationActive(items.goalTopBox)) return;
     items.goalTopBox.classList.add("upOutTop");
     setTimeout(() => {
       items.goalTopBox.classList.remove("upOutTop");
     }, 4000);
   }
+
   if (event.type === "message" && event.message === mainObj.fieldData.command) {
     if (animationActive(items.goalTopBox)) return;
     items.goalTopBox.classList.add("upOutTop");
     setTimeout(() => {
       items.goalTopBox.classList.remove("upOutTop");
     }, 4000);
+    return;
   }
 
   if (event.type === goalType) {
@@ -127,29 +133,19 @@ function init(obj, apiData, initial = false) {
   }
 
   items = {
-    progressBar: document.querySelector(".progress-bar"),
-    goalText: document.querySelector(".goal-text"),
-    colita: document.querySelector(".colita"),
-    progressBarContainer: document.querySelector(".progress-bar-container"),
-    progressionText: document.querySelector(".progressNums"),
-    title: document.querySelector("#title"),
-    progressImg: document.querySelector(".img-container"),
-    completeText: document.querySelector(".progression"),
-    reg: document.querySelector(".gifReg"),
-    image: document.querySelector("#image"),
-    ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
-    goalBox: document.querySelector(".img-goal"),
     goalTopBox: document.querySelector(".img-goal-top"),
-    goalStroke: document.querySelector("#stroke-circle"),
-    progressCircle: document.getElementById("progressCircle"),
     titleGoal: document.querySelector("#goal-type-text"),
   };
 
   let text = mainObj.fieldData.goalTypeText.toLowerCase();
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  // if (goalType === "tip") {
+  //   items.objective.innerText =
+  //     mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
+  // }
 
   // Setting custom color to title of goal
   items.titleGoal.style.color = "#ffe4c2";
@@ -202,17 +198,6 @@ function getGachoStep(diff, objective) {
   return diff / objective;
 }
 
-let progreso = 0;
-let circle = document.querySelector("circle");
-const newStep = getStep(540, objective);
-function aumentarProgreso(amount) {
-  const thing = getStep(540, objective) * amount;
-  progreso += newStep;
-  let progress = 540 - (540 * thing) / 720;
-  circle.style.strokeDashoffset = progress;
-  items.progressCircle.innerText = getPercentage(amount, objective);
-}
-
 function getActiveGoal(keys, activeGoal) {
   const current = keys.find((key) => goals[key] === activeGoal);
   return current;
@@ -250,13 +235,30 @@ function handleGrow(amount, callback, initial = false) {
 
   const completed = checkIfCompleted(amountToUpdate, activeGoal);
 
+  const currency = mainObj.fieldData.currency;
+
   if (!completed) {
     items.objective.innerText = amountToUpdate + " | " + activeGoal;
+    if (goalType === "tip") {
+      items.objective.innerText =
+        amountToUpdate +
+        currency +
+        " | " +
+        activeGoal +
+        currency;
+    }
   } else {
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
       items.objective.innerText =
         amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
-      Ï;
+      if (goalType === "tip") {
+        items.objective.innerText =
+          amountToUpdate +
+          currency +
+          " | " +
+          mainObj.fieldData.goalObjectiveQuantity6 +
+          currency;
+      }
     } else {
       const keys = Object.keys(goals);
       const current = getActiveGoal(keys, activeGoal, amountToUpdate);
@@ -264,7 +266,7 @@ function handleGrow(amount, callback, initial = false) {
       const nextIndex = (currentIndex + 1) % keys.length;
       const nextGoal = keys[nextIndex];
 
-      if (amountToUpdate == activeGoal) {
+      if (amountToUpdate >= activeGoal) {
         if (animationActive(items.goalTopBox)) return;
         items.goalTopBox.classList.add("upOutTop");
         setTimeout(() => {
@@ -273,6 +275,10 @@ function handleGrow(amount, callback, initial = false) {
       }
       activeGoal = goals[nextGoal];
       items.objective.innerText = amountToUpdate + " | " + activeGoal;
+      if (goalType === "tip") {
+        items.objective.innerText =
+          amountToUpdate + currency + " | " + activeGoal + currency;
+      }
       chocolates[current].classList.add("upOut");
     }
   }

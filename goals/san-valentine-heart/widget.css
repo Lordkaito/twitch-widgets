@@ -15,11 +15,6 @@
   --star-p-border-color: transparente;
 }
 
-
-.hidden{
-  opacity: 0;
-}
-
 .container-img {
   /* position: absolute; */
   top: 30.9rem;
@@ -42,37 +37,6 @@
   letter-spacing: 0.125rem;
 }
 
-/* Circle */
-.prueba {
-  position: relative;
-}
-
-svg {
-  width: 200px;
-  height: 200px;
-}
-
-circle {
-  fill: none;
-  stroke-width: 10;
-  stroke-dasharray: 540;
-  stroke-dashoffset: 540;
-}
-
-.circle-outside {
-  transition: all 4s ease-out; /* Modifica esta línea */
-}
-
-.circle-inside {
-  position: absolute;
-  z-index: -1;
-  stroke: rgba(255, 255, 255, 0.3);
-  stroke-dasharray: 945;
-}
-
-svg {
-  transform: rotate(124deg);
-}
 .progress-text {
   position: absolute;
   top: 82.8%;
@@ -230,18 +194,18 @@ main {
   z-index: 3;
 }
 
-.goal-obj-50{
-  padding:1rem;
+.goal-obj-50 {
+  padding: 1rem;
   border-radius: 0 18px 18px 18px;
   margin-top: 20px;
-  color:rgb(207, 64, 85) !important;
+  color: rgb(207, 64, 85) !important;
   width: fit-content;
   min-width: 8rem;
 }
 
-.box{
+.box {
   position: relative;
-  width:  100%;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -251,21 +215,21 @@ main {
 
 .img-goal {
   position: absolute;
-  transform: scale(.7);
+  transform: scale(0.7);
 }
 
 .img-goal-top {
   position: absolute;
-  transform: scale(.7);
+  transform: scale(0.7);
   z-index: 20;
 }
 
-.chocolate{
+.chocolate {
   position: absolute;
-  transform: scale(.7);
+  transform: scale(0.7);
 }
 
-.upOut{
+.upOut {
   animation-name: upOut;
   animation-duration: 1s;
   animation-delay: 2s;
@@ -273,7 +237,7 @@ main {
   animation-timing-function: linear;
 }
 
-.upOutTop{
+.upOutTop {
   animation-name: upOutTop;
   animation-duration: 4s;
   animation-fill-mode: backwards;
@@ -281,40 +245,38 @@ main {
 }
 
 @keyframes upOut {
-  0%{
-    opacity:1;
+  0% {
+    opacity: 1;
     transform: translateY(0deg);
   }
-  
-  80%{
+
+  80% {
     transform: translateY(-90px);
   }
-  
-  100%{
-    opacity:0;
+
+  100% {
+    opacity: 0;
     transform: translateY(-140px);
   }
-  
 }
 
 @keyframes upOutTop {
-  0%{
+  0% {
     /* opacity:1; */
     transform: translateY(0deg);
   }
-  
-  60%{
+
+  60% {
     /* opacity:0; */
     transform: translateY(-60px);
     transform: translateX(400px);
   }
-  
-  
 }
 
-.goal-details{
+.goal-details {
   position: relative;
-  left: 15rem;
+  left: 27rem;
+  width: 500px;
 }
 
 .goal-name {
