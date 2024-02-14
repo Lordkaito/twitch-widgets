@@ -45,6 +45,12 @@ let fieldData = {
     group: "Customization",
     step: 1,
   },
+  command: {
+    type: "text",
+    label: "Command:",
+    value: "!goal",
+    group: "Customization",
+  },
   goalObjectiveQuantity5: {
     type: "number",
     label: "Goal objective:",

@@ -235,8 +235,8 @@ main {
   border-radius: 0 18px 18px 18px;
   margin-top: 20px;
   color:rgb(207, 64, 85) !important;
-  width: fit-content !important;
-
+  width: fit-content;
+  min-width: 8rem;
 }
 
 .box{
@@ -314,7 +314,7 @@ main {
 
 .goal-details{
   position: relative;
-  left: 369px;
+  left: 15rem;
 }
 
 .goal-name {
@@ -519,16 +519,22 @@ main {
   font-size: 1.6rem;
   font-weight: 700;
 
-  text-align: left;
+  text-align: center;
   /* color: var(--star-p-color); */
   text-shadow: 1.7px 0 var(--star-p-border-color),
     -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color),
     0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color),
     -2px -1.7px var(--star-p-border-color),
     2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
-  width: 500px;
+  /* width: 500px; */
   /* line-height: 1.7; */
   left: 5rem;
+  width: fit-content;
+  min-width: 8rem;
+}
+
+.nube4 .goal-obj-50 {
+  font-size: 2rem;
 }
 
 @keyframes fadeOut {
@@ -547,4 +553,9 @@ main {
   100% {
     opacity: 1;
   }
+}
+
+.goal-type-text {
+  width: fit-content;
+  min-width: 8rem;
 }

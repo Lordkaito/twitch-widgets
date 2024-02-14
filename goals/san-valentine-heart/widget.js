@@ -66,6 +66,20 @@ window.addEventListener("onEventReceived", function (obj) {
   let listener = obj.detail.listener;
 
   if (event.isCommunityGift) return;
+  if (listener == "message" && event.data.text == mainObj.fieldData.command) {
+    if (animationActive(items.goalTopBox)) return;
+    items.goalTopBox.classList.add("upOutTop");
+    setTimeout(() => {
+      items.goalTopBox.classList.remove("upOutTop");
+    }, 4000);
+  }
+  if (event.type === "message" && event.message === mainObj.fieldData.command) {
+    if (animationActive(items.goalTopBox)) return;
+    items.goalTopBox.classList.add("upOutTop");
+    setTimeout(() => {
+      items.goalTopBox.classList.remove("upOutTop");
+    }, 4000);
+  }
 
   if (event.type === goalType) {
     if (listener === "cheer-latest" || listener === "tip-latest") {
@@ -133,7 +147,7 @@ function init(obj, apiData, initial = false) {
     titleGoal: document.querySelector("#goal-type-text"),
   };
 
-  let text = mainObj.fieldData.goalTypeText;
+  let text = mainObj.fieldData.goalTypeText.toLowerCase();
 
   items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
 
@@ -241,7 +255,8 @@ function handleGrow(amount, callback, initial = false) {
   } else {
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
       items.objective.innerText =
-        amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;Ï
+        amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
+      Ï;
     } else {
       const keys = Object.keys(goals);
       const current = getActiveGoal(keys, activeGoal, amountToUpdate);
