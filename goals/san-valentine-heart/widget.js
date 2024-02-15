@@ -78,15 +78,6 @@ window.addEventListener("onEventReceived", function (obj) {
     }, 4000);
   }
 
-  if (event.type === "message" && event.message === mainObj.fieldData.command) {
-    if (animationActive(items.goalTopBox)) return;
-    items.goalTopBox.classList.add("upOutTop");
-    setTimeout(() => {
-      items.goalTopBox.classList.remove("upOutTop");
-    }, 4000);
-    return;
-  }
-
   if (event.type === goalType) {
     if (listener === "cheer-latest" || listener === "tip-latest") {
       handleGrow(event.amount, updateApiData, false);
@@ -241,13 +232,21 @@ function handleGrow(amount, callback, initial = false) {
     items.objective.innerText = amountToUpdate + " | " + activeGoal;
     if (goalType === "tip") {
       items.objective.innerText =
-        amountToUpdate +
-        currency +
-        " | " +
-        activeGoal +
-        currency;
+        amountToUpdate + currency + " | " + activeGoal + currency;
     }
   } else {
+    if (amountToUpdate >= activeGoal) {
+      if (animationActive(items.goalTopBox)) {
+      } else {
+        const keys = Object.keys(goals);
+        const current = getActiveGoal(keys, activeGoal, amountToUpdate);
+        items.goalTopBox.classList.add("upOutTop");
+        chocolates[current].classList.add("upOut");
+        setTimeout(() => {
+          items.goalTopBox.classList.remove("upOutTop");
+        }, 4000);
+      }
+    }
     if (amountToUpdate >= mainObj.fieldData.goalObjectiveQuantity6) {
       items.objective.innerText =
         amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity6;
@@ -267,11 +266,13 @@ function handleGrow(amount, callback, initial = false) {
       const nextGoal = keys[nextIndex];
 
       if (amountToUpdate >= activeGoal) {
-        if (animationActive(items.goalTopBox)) return;
-        items.goalTopBox.classList.add("upOutTop");
-        setTimeout(() => {
-          items.goalTopBox.classList.remove("upOutTop");
-        }, 4000);
+        if (animationActive(items.goalTopBox)) {
+        } else {
+          items.goalTopBox.classList.add("upOutTop");
+          setTimeout(() => {
+            items.goalTopBox.classList.remove("upOutTop");
+          }, 4000);
+        }
       }
       activeGoal = goals[nextGoal];
       items.objective.innerText = amountToUpdate + " | " + activeGoal;
