@@ -1,5 +1,6 @@
 :root {
   --message-color: #3b557d;
+  --event-border-color: #3b557d;
   --message-background-color: #ffe7d9;
   --message-border-color: #ffe7c8;
   --user-color: #213346;
@@ -256,7 +257,7 @@ main {
 }
 
 .message-container {
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
   /* padding-bottom: 0.7rem; */
   flex-grow: 1;
   overflow: hidden;
@@ -365,40 +366,14 @@ main {
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 0.5s ease-in-out forwards;
-  background-color: var(--event-background-color);
+  /* background-color: var(--event-background-color); */
   padding: 3px 10px;
   border-radius: 40px;
-  text-shadow: 0 2px 0.2em var(--event-shadow-color);
+  text-shadow: 3px 0 0 var(--event-border-color), 0 3px 0 var(--event-border-color), -3px 0 0 var(--event-border-color), 0 -3px 0 var(--event-border-color), 2px 2px 0 var(--event-border-color), -2px -2px 0 var(--event-border-color), 2px -2px 0 var(--event-border-color), -2px 2px 0 var(--event-border-color);
 }
 
-.event-leafs-container-1,
-.event-leafs-container-2 {
-  height: 40px;
-  width: 40px;
-  display: grid;
-  place-content: center;
-}
-
-.event-leafs-container-1 img,
-.event-leafs-container-2 img {
-  height: 37px;
-  width: 40px;
-  transform: scale(0.65);
-}
-
-.event-leafs-container-1 img {
-  animation: showLeftFungi 0.5s ease-in-out forwards;
-}
-
-.event-leafs-container-2 img {
-  order: 2;
-  transition: none;
-  transform: rotateY(180deg);
-  animation: showRightFungi 0.5s ease-in-out forwards;
-}
-
-.event-leafs-container-2 {
-  order: 2;
+.fungi{
+  width: 45px;
 }
 
 .role-container {

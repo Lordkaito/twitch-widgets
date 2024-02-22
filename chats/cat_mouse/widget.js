@@ -26,7 +26,6 @@ class mainEvent {
   constructor(event, listener) {
     this.event = event;
     this.listener = listener;
-    console.log(this.event);
   }
 
   get init() {
@@ -86,6 +85,7 @@ class mainEvent {
   }
 
   eventType() {
+    console.log(this);
     if (this.listener === "message") {
       return this.buildMessageCont();
     } else {
@@ -170,8 +170,6 @@ class mainEvent {
 
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-
-    
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createRoleElement());
@@ -316,7 +314,7 @@ class mainEvent {
       case "sub":
         roleImage.src = `https://i.postimg.cc/KYd9JkFx/inssub.png`;
         break;
-        case "viewer":
+      case "viewer":
         roleImage.src = `https://i.postimg.cc/LsqCtkcx/insviewer.png`;
         // roleImage.style.display = "none";
         break;
@@ -576,15 +574,12 @@ class mainEvent {
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
+    const fungi = document.createElement("img");
+
+    fungi.src = "https://i.postimg.cc/bN8B7tnv/insevent.png";
+    fungi.classList.add("fungi");
+    const fungiDivContainer = document.createElement("div");
     for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`event-leafs-container-${i + 1}`);
       fungiDivContainer.appendChild(fungi);
       fungiContainer.classList.add("fungi-container");
       fungiContainer.appendChild(fungiDivContainer);
@@ -712,10 +707,9 @@ const ignoreMessagesStartingWith = (message) => {
 
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
-
-  if (listener !== "message") {
-    return;
-  }
+  // if (listener !== "message") {
+  //   return;
+  // }
 
   if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);
