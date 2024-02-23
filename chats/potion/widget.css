@@ -88,7 +88,7 @@ main {
   animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  padding: 0 1rem;
+  padding: 0px 0 20px 0;
   margin-bottom: 0.5rem;
 }
 
