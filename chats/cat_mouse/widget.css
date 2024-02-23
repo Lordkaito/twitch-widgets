@@ -289,9 +289,9 @@ main {
   color: var(--message-color);
   white-space: normal;
   text-align: left;
-  padding: 0 2rem 0 2rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  padding: 0rem 2rem 0rem 2rem;
+  margin-bottom: 0rem;
+  margin-top: 2rem;
   animation: twinkleText 0.5 1 forwards;
 }
 
@@ -398,8 +398,9 @@ main {
 .fungi-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   width: 100%;
+  padding-bottom: 10px;
 }
 
 @keyframes showLeftFungi {
