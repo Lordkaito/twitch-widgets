@@ -589,6 +589,7 @@ class mainEvent {
     nameContainer.innerText = nameAndText;
 
     mainContainer.classList.add("event-container");
+    mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.appendChild(fungiContainer);
 
     return mainContainer;
@@ -669,6 +670,16 @@ async function loadGlobalEmotes() {
 
 const removeMessage = (messageContainer) => {
   const elem = messageContainer;
+  if (elem) {
+    elem.style.animation = "removeMessage 0.5s ease-in-out forwards";
+    setTimeout(() => {
+      elem.remove();
+    }, 700);
+  }
+};
+
+const removeEvent = (eventContainer) => {
+  const elem = eventContainer;
   if (elem) {
     elem.style.animation = "removeMessage 0.5s ease-in-out forwards";
     setTimeout(() => {
