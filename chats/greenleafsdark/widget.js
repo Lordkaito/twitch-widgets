@@ -7,55 +7,37 @@ let maxMessages;
 
 let imagesUrls = {
   dark: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923499911991296/mod-dark.png?ex=658dbd01&is=657b4801&hm=e13eb06f6cf1c2c5f3db79c3bc8283c600a7a836c4ae940e303740ac46dd803c&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923501065416774/vip-dark.png?ex=658dbd01&is=657b4801&hm=7d294cc4bfedca9986b289520517ff083f3c793992d610296c8d5263fd3a405e&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500541124638/sub-dark.png?ex=658dbd01&is=657b4801&hm=66fd73c80e3e9e07deccd579adeda73248a35811c8c793cc034248ac39b7cadc&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500822155376/viewer-dark.png?ex=658dbd01&is=657b4801&hm=9dbfd12ea8a089b9b82c38ac32f94a434bbd453821d8033a21bf1dc51b2639b0&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923500251725874/streamer-dark.png?ex=658dbd01&is=657b4801&hm=521aaa611e0842084c472cab792f849d8118022c70019a4043f696b756e11b9e&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1184923499609989210/luna-dark.png?ex=658dbd01&is=657b4801&hm=65250cc1ec22df9e65af12345e7b5a3b9cb82109cbdaee75fa5353aedba4d0cc&=&format=webp&quality=lossless",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923499282841620/brillito-dark.png?ex=658dbd01&is=657b4801&hm=d6c9310b22b9039c9b60f2907fc2dc3672ddcedf32d06eb366df00025dd8a676&=&format=webp&quality=lossless",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+    mod: "https://i.ibb.co/2hzZR28/mod-dark.png",
+    vip: "https://i.ibb.co/0fBpJCV/vip-dark.png",
+    subscriber: "https://i.ibb.co/PNdGmkL/viewer-dark.png",
+    viewer: "https://i.ibb.co/PNdGmkL/viewer-dark.png",
+    streamer: "https://i.ibb.co/VLk7gbF/streamer-dark.png",
+    moon: "https://i.ibb.co/hVV659W/luna-dark.png",
+    shiny: "https://i.ibb.co/rHGvkg2/brillito-dark.png",
+    enredadera: "https://i.ibb.co/sKFbRMF/enredadera.png",
+    campanas: "https://i.ibb.co/ygX80y7/campanitas-flores.png",
   },
   light: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1193324218478247997/lunablanca.png?ex=65ac4cc8&is=6599d7c8&hm=d2caccb6b04dda5959fdd298b85d3fa069e4fc93668fc981765ab25f5c7a0601&=&format=webp&quality=lossless&width=48&height=48",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1193324218281107607/brilloblanco.png?ex=65ac4cc8&is=6599d7c8&hm=d1cca008d4317700e4807a3afe809008bc73f72b079ef5b389abb01840b295ba&=&format=webp&quality=lossless&width=40&height=40",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+    mod: "https://i.ibb.co/9qzSDQ9/espada-mod.png",
+    vip: "https://i.ibb.co/fSzdDcV/luna-vip.png",
+    subscriber: "https://i.ibb.co/4PvWShf/cora-sub.png",
+    viewer: "https://i.ibb.co/S0ygpsv/bocadillo-viewer.png",
+    streamer: "https://i.ibb.co/DRfZV6w/cam-streamer.png",
+    moon: "https://i.ibb.co/Mnqf824/luna-hojas.png",
+    shiny: "https://i.ibb.co/qgBCyfh/brillito-hojas.png",
+    enredadera: "https://i.ibb.co/sKFbRMF/enredadera.png",
+    campanas: "https://i.ibb.co/ygX80y7/campanitas-flores.png",
   },
   regular: {
-    mod: "https://media.discordapp.net/attachments/1184922970498539520/1184923223759011920/espada-mod.png?ex=658dbcbf&is=657b47bf&hm=4af0062c1e588c42f957767080fb1fa090968fc32b248982a0c55ce032b7b596&=&format=webp&quality=lossless",
-    vip: "https://media.discordapp.net/attachments/1184922970498539520/1184923224182640761/luna-vip.png?ex=658dbcbf&is=657b47bf&hm=4fec1d14d78829095f17543016348e6c9fb523710ba3395f8997b9d1f5c05e98&=&format=webp&quality=lossless",
-    subscriber:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923242327195648/cora-sub.png?ex=658dbcc3&is=657b47c3&hm=df847e2cfc92d9ba3026234a890abb037ad43b37ca85e9f7c2e37f3203910ff8&=&format=webp&quality=lossless",
-    viewer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923532728221827/bocadillo-viewer.png?ex=658dbd09&is=657b4809&hm=8c790fcde4d65747457245696c636009c80faf3307ba8524fa08f3d779759801&=&format=webp&quality=lossless",
-    streamer:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923533369954375/cam-streamer.png?ex=658dbd09&is=657b4809&hm=c159f17b960f657ee8359b9e465582c9292791930eb49e66e79105675c20b7d6&=&format=webp&quality=lossless",
-    moon: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-    shiny:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-    enredadera:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923223486386226/enredadera.png?ex=658dbcbf&is=657b47bf&hm=25b70f50d45c5e56fc396ba8925335355cf7fedc1a9f7039ad4bb69833fff449&=&format=webp&quality=lossless",
-    campanas:
-      "https://media.discordapp.net/attachments/1184922970498539520/1184923222785933427/campanitas-flores.png?ex=658dbcbf&is=657b47bf&hm=043c9f40998d369aa756762b87de3d6b3e3d82d51f3d394d8d5789ebed16f345&=&format=webp&quality=lossless",
+    mod: "https://i.ibb.co/9qzSDQ9/espada-mod.png",
+    vip: "https://i.ibb.co/fSzdDcV/luna-vip.png",
+    subscriber: "https://i.ibb.co/4PvWShf/cora-sub.png",
+    viewer: "https://i.ibb.co/S0ygpsv/bocadillo-viewer.png",
+    streamer: "https://i.ibb.co/DRfZV6w/cam-streamer.png",
+    moon: "https://i.ibb.co/Mnqf824/luna-hojas.png",
+    shiny: "https://i.ibb.co/qgBCyfh/brillito-hojas.png",
+    enredadera: "https://i.ibb.co/sKFbRMF/enredadera.png",
+    campanas: "https://i.ibb.co/ygX80y7/campanitas-flores.png",
   },
 };
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
@@ -166,17 +148,15 @@ class mainEvent {
         textBackground: "#34440d",
         lineColor: "#34440d",
         pronsColor: "#b0cd6c",
-        pronsBgColor: "#",
         dotsColor: "#b0cd6c",
       },
       light: {
         username: "#ddff91",
         userBackground: "rgba(176, 205, 108, .2)",
-        textColor: "#fff",
+        textColor: "#ffefdb",
         textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "#fff",
+        lineColor: "rgba(255, 239, 219, 1)",
         pronsColor: "#5e8501",
-        pronsBgColor: "rgba(255, 239, 219, 1)",
         dotsColor: "#ddff91",
       },
       regular: {
@@ -186,7 +166,6 @@ class mainEvent {
         textBackground: "#ffefdb",
         lineColor: "#ffefdb",
         pronsColor: "#5e8501",
-        pronsBgColor: "#ffefdb",
         dotsColor: "#b0cd6c",
       },
     };
@@ -196,8 +175,16 @@ class mainEvent {
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
     const role = this.roles.role;
+    console.log(role);
     let roleImageURL = imagesUrls[theme][role];
+    console.log("roleImageURL", roleImageURL);
     let roleText = await this.getUserPronoun();
+    // const isValidUrl = await checkImgUrl(themeImages[theme][role][1]);
+    // if (!isValidUrl) {
+    //   roleImageURL = await themeImages[theme][role][2];
+    // } else {
+    //   roleImageURL = await themeImages[theme][role][1];
+    // }
 
     function showBadges(thisObj) {
       return thisObj.badges
@@ -210,7 +197,7 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`;
     } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline; background-color: ${colors[theme].pronsBgColor}; color: ${colors[theme].pronsColor}`;
+      inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
     }
 
     let enredaderaUrl = imagesUrls[theme].enredadera;
@@ -547,8 +534,8 @@ class mainEvent {
         userBackground: "rgba(176, 205, 108, .2)",
         textColor: "#ffefdb",
         textBackground: "rgba(255, 239, 219, .5)",
-        lineColor: "#fff",
-        dotsColor: "#fff",
+        lineColor: "rgba(255, 239, 219, 1)",
+        dotsColor: "#ddff91",
         eventsColor: "#ffefdb",
       },
       regular: {
@@ -628,7 +615,6 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   maxMessages = fieldData.maxMessages;
-  // checkAllUrls();
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -744,7 +730,7 @@ async function addLines(container, listener, event) {
       userBackground: "rgba(176, 205, 108, .2)",
       textColor: "#ffefdb",
       textBackground: "rgba(255, 239, 219, .5)",
-      lineColor: "#fff",
+      lineColor: "rgba(255, 239, 219, 1)",
     },
     regular: {
       username: "#5e8501",
@@ -799,9 +785,3 @@ async function addLines(container, listener, event) {
 
   container.appendChild(linesContainer);
 }
-
-// async function checkImgUrl(url) {
-//   return await fetch(url).then((res) => {
-//     return res.ok;
-//   });
-// }
