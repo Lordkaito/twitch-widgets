@@ -1,82 +1,27 @@
 :root {
-  /* Pink variables */
-  --user-pink-background-color: #f9929b;
-  --user-pink-color: #ffe8c8;
-  --message-pink-background-color: #ffe8c8;
-  --message-pink-color: #9c564b;
-  --message-pink-border-color: #f79e60;
-  --pronouns-pink-background-color: rgba(122, 201, 168, 50%); /* 50% opacidad*/
-  --pronouns-pink-color: #fff3e1;
-
-  /* Red variables */
-  --message-color: #ffffff;
-  --message-background-color: #16122d;
-  --message-border-color: #ffe7c8;
-  --user-color: #213346;
-  --user-background-color: #f7c92c;
+  --message-color: #553a2f;
+  --message-background-color: #fdefc8;
+  --message-border-color: #7bb87e;
+  --user-color: #fdefc8;
+  --user-background-color: #ee9ab1;
   --user-border-color: #e6e6e6;
-  --pronouns-color: blue;
-  --pronouns-background-color: #ba6414;
+  --pronouns-color: #ee9ab1;
+  --pronouns-background-color: #fdefc8;
   --pronouns-border-color: #e6e6e6;
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
-  --mod-background-color: #62d85f;
-  --vip-background-color: #f683cf;
-  --viewer-background-color: #bf43ff;
-  --streamer-background-color: #e4b25f;
-  --sub-background-color: #8074ff;
   --mods-message-border: #fff3eb;
   --event-background-color: rgba(155, 179, 142, 0.5);
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
+/* fondo: #fdefc8
 
-.pinkMessage {
-  color: var(--message-pink-background-color);
-  background-color: var(--message-pink-background-color);
-  border-color: var(--message-pink-border-color);
-}
+ROSA: #ee9ab1
 
-.pinkUser {
-  background-color: var(--user-pink-background-color);
-  color: var(--user-pink-color);
-}
+texto marron: #553a2f
 
-.pinkPronous {
-  background-color: var(--pronouns-pink-background-color);
-  color: var(--pronouns-pink-color);
-}
-/* tema rojo
-
-fondo user: #e75140
-
-username: #ffe8c8
-
-fondo mensaje: #ffe8c8
-
-texto mensaje: #9c564b
-
-borde mensaje: #f79e60
-
-fondo pronombres: #7ac9a8 (50% opacidad)
-
-pronombres: #fff3e1
-
-tema rosa
-
-fondo user: #f9929b
-
-username: #ffe8c8
-
-fondo mensaje: #ffe8c8
-
-texto mensaje: #9c564b
-
-borde mensaje: #f79e60
-
-fondo pronombres: #7ac9a8 (50% opacidad)
-
-pronombres: #fff3e1 */
+El base de este el mismo que el anterior */
 
 * {
   font-family: "Fredoka", sans-serif;
@@ -128,7 +73,7 @@ main {
   animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  padding: 0px 0 20px 0;
+  padding: 0 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -141,10 +86,9 @@ main {
   margin-bottom: 1rem;
   margin-top: 0.5rem;
   width: 100%;
-  border-radius: 55px;
-  /* background: var(--message-background-color); */
+  border-radius: 20px;
+  background: var(--message-background-color);
   position: relative;
-  box-shadow: 0 0 0 5px var(--message-border-color);
   /* overflow: hidden; */
 }
 
@@ -156,7 +100,7 @@ main {
   margin-right: 0.625rem;
   background: var(--message-background-color);
   position: absolute;
-  bottom: -0.7rem;
+  bottom: -.7rem;
   left: 1.2rem;
   z-index: -1;
 }
@@ -194,10 +138,6 @@ main {
   animation: fadeIn 0.5s 0.7s ease-in-out forwards;
   margin-left: 1rem;
   /* justify-content: center; */
-  position: absolute;
-  z-index: 100;
-  top: -13px;
-  /* transform: rotateZ(-6deg); */
 }
 
 @keyframes fadeIn {
@@ -214,29 +154,13 @@ main {
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
-  /* background-color: var(--user-background-color); */
+  background-color: var(--user-background-color);
   padding: 0.4rem 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   position: relative;
-}
-
-.mod-bg {
-  background-color: var(--mod-background-color);
-}
-.vip-bg {
-  background-color: var(--vip-background-color);
-}
-.streamer-bg {
-  background-color: var(--streamer-background-color);
-}
-.viewer-bg {
-  background-color: var(--viewer-background-color);
-}
-.sub-bg {
-  background-color: var(--sub-background-color);
 }
 
 .flower {
@@ -272,17 +196,6 @@ main {
 }
 
 .capitalize-user {
-  color: var(--user-color);
-  font-weight: 500;
-  font-size: 1.35rem;
-  display: inline-block;
-  max-width: 11ch;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.capitalize-role {
   color: var(--user-color);
   font-weight: 500;
   font-size: 1.35rem;
@@ -335,7 +248,7 @@ main {
 .pronouns {
   color: white;
   background-color: var(--pronouns-background-color);
-  padding: 0.4rem 0.4rem;
+  padding: .4rem .4rem;
   border-radius: 1.25rem;
   font-size: 12px;
   text-align: center;
@@ -344,6 +257,7 @@ main {
 }
 
 .prons {
+  color: var(--pronouns-color);
   max-width: 100%;
   text-align: center;
 }
@@ -449,8 +363,8 @@ main {
 
 .role {
   position: absolute;
-  right: 0.8rem;
-  top: 3rem;
+  right: 1.8rem;
+  top: 1rem;
   z-index: 100;
   animation: fadeIn 0.5s 1s ease-in-out forwards;
   opacity: 0;
@@ -596,23 +510,25 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
-  transform: scale(0.8);
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  transform: scale(.8);
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
 }
 
 .ear {
   position: absolute;
-  right: -1.1rem;
-  top: -0.9rem;
-  transform: rotate(-5deg) scale(0.8) scaleX(-1);
-  z-index: -1;
+  right: -.9rem;
+  top: -.6rem;
+  transform: scale(0.8) scaleX(-1);
+  z-index: 1;
+  transform-style: preserve-3d;
 }
 
 .ear2 {
   position: absolute;
-  left: -1rem;
-  top: -0.9rem;
-  transform: rotate(8deg) scale(0.8);
-  z-index: -1;
+  left: -.9rem;
+  top: -.6rem;
+  transform: scale(0.8);
+  z-index: 1;
+  transform-style: preserve-3d;
 }

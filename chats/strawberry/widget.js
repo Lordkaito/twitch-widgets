@@ -4,6 +4,32 @@ let startingColor = "red";
 let maxMessages;
 let currentAmountOfMessages = 0;
 let currentMessagesIds = [];
+let theme
+const themes = {
+  red: {
+    userBackground: "#e75140",
+    username: "#ffe8c8",
+    messageBackground: "#ffe8c8",
+    messageText: "#9c564b",
+    messageBorder: "#f79e60",
+    pronounsBackground: "rgba(122, 201, 168, 0.5)",
+    pronounsText: "#fff3e1",
+    vipImg: "https://i.ibb.co/YQ8Hb8s/fresasmodvipstreamer.png",
+    regularImg: "https://i.ibb.co/qFYjDDy/fresassub.png",
+  },
+  pink: {
+    userBackground: "#f9929b",
+    username: "#ffe8c8",
+    messageBackground: "#ffe8c8",
+    messageText: "#9c564b",
+    messageBorder: "#f79e60",
+    pronounsBackground: "rgba(122, 201, 168, 0.5)",
+    pronounsText: "#fff3e1",
+    vipImg: "https://i.ibb.co/G9hTtpQ/rosafresasmodvipstreamer.png",
+    regularImg: "https://i.ibb.co/FD6Zm3j/rosafresassub.png",
+  }
+}
+
 
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
@@ -26,7 +52,6 @@ class mainEvent {
   constructor(event, listener) {
     this.event = event;
     this.listener = listener;
-    console.log(this.event);
   }
 
   get init() {
@@ -125,31 +150,10 @@ class mainEvent {
   }
 
   async createMainContainerElement() {
-    const colors = {
-      pink: {
-        userBg: "#f9929b",
-        userColor: "#ffe8c8",
-        messageBg: "#ffe8c8",
-        messageColor: "#9c564b",
-        messageBorderColor: "#f79e60",
-        pronounsBg: "rgba(122, 201, 168, 50%)",
-        pronounsColor: "#fff3e1"
-      },
-      red: {
-        userBg: "#e75140",
-        userColor: "#ffe8c8",
-        messageBg: "#ffe8c8",
-        messageColor: "#9c564b",
-        messageBorderColor: "#f79e60",
-        pronounsBg: "rgba(122, 201, 168, 50%)",
-        pronounsColor: "#fff3e1"
-      }
-    }
+    let role = this.roles;
     const mainContainer = document.createElement("div");
     const superMainContainer = document.createElement("div");
     const animation = fieldData.animation;
-    const theme = fieldData.theme;
-    const circle = document.createElement("div");
     const img = document.createElement("img");
     const thingy = document.createElement("img");
     const ear = document.createElement("img");
@@ -161,101 +165,23 @@ class mainEvent {
 
     img.src = "https://i.postimg.cc/fLkM72py/panzatotoro.png";
     thingy.src = "https://i.postimg.cc/brmWR4c6/kikilazo.png";
-    ear.src = "https://i.postimg.cc/rmZ6h4GR/oreja-marron.png";
-    ear2.src = "https://i.postimg.cc/rmZ6h4GR/oreja-marron.png";
+    ear.src = "https://i.ibb.co/hgtF5sf/tostadaa.png";
+    ear2.src = "https://i.ibb.co/hgtF5sf/tostadaa.png";
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
-    circle.classList.add("circle");
-    let role = this.roles.role;
-    console.log(role);
-    // let roleImageURL = imagesUrls[theme][role];
-    // console.log("roleImageURL", roleImageURL);
-    let roleText = await this.getUserPronoun();
-    // mainContainer.classList.add("main-container");
+    mainContainer.classList.add("main-container");
+    mainContainer.style.background = themes[theme].messageBackground;
+    mainContainer.style.border = `4px solid ${themes[theme].messageBorder}`;
 
-    function showBadges(thisObj) {
-      return thisObj.badges
-        .map((badge) => {
-          return `<img src="${badge.url}" class="badges-img"/>`;
-        })
-        .join("");
-    }
-    // userBg: "#f9929b",
-    // userColor: "#ffe8c8",
-    // messageBg: "#ffe8c8",
-    // messageColor: "#9c564b",
-    // messageBorderColor: "#f79e60",
-    // pronounsBg: "rgba(122, 201, 168, 50%)",
-    // pronounsColor: "#fff3e1"
-    let inlineStyle;
-    if (fieldData.allowPronouns == "false" || roleText == "") {
-      inlineStyle = `display: none;`;
-    } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline; background-color: ${colors[theme].pronounsBg}; color: ${colors[theme].pronounsColor}`;
-    }
-    superMainContainer.innerHTML = `
-      <div class="main-container">
-        <div class="message-container">
-          <div class="username-info-container" style="background-color:${
-            colors[theme].userBg
-          }">
-            <div class="username-info">
-              <span class="username-badges" style="${
-                fieldData.displayBadges == "false" ? "display: none;" : ""
-              }">
-                ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
-              </span>
-              <span class="capitalize-user" style="color: ${
-                colors[theme].userColor
-              }">${this.user}</span>
-              <span class="dot" style='${inlineStyle}'></span>
-              <span class="role-container" style='${inlineStyle}'>
-                ${roleText}
-              </span>
-            </div>
-            <div class="message-icon-container" style="background-color: ${
-              colors[theme].textBackground
-            };">
-              <div class="rendered-text">
-              <p class="text" style="color: ${colors[theme].textColor}">${
-      (await this.buildMessage()).innerHTML
-    }</p>
-                <div class="dots-container">
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                  <span class="dot" style="background-color: ${
-                    colors[theme].dotsColor
-                  }"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>`;
-        // <img src="${campanasUrl}" class="campanas" />
-    // let inlineStyle;
-    // if (fieldData.allowPronouns == "false" || roleText == "") {
-    //   inlineStyle = `display: none;`;
-    // } else if (fieldData.allowPronouns == "true" && roleText != "") {
-    //   inlineStyle = `display: inline; background-color: ${colors[theme].lineColor}; color: ${colors[theme].pronsColor}`;
-    // }
-    
     // mainContainer.appendChild(img);
     // mainContainer.appendChild(thingy);
-    // mainContainer.appendChild(circle);
-    // mainContainer.appendChild(ear);
-    // mainContainer.appendChild(ear2);
-    // superMainContainer.appendChild(this.roleImages);
-
-    // mainContainer.appendChild(await this.createMessageContainerElement());
-    // superMainContainer.appendChild(await this.createUsernameInfoElement());
-    // superMainContainer.appendChild(mainContainer);
-
+    mainContainer.appendChild(ear);
+    mainContainer.appendChild(ear2);
+    mainContainer.appendChild(await this.createMessageContainerElement());
+    superMainContainer.appendChild(this.roleImages);
+    superMainContainer.appendChild(await this.createUsernameInfoElement());
+    superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
   }
@@ -263,31 +189,13 @@ class mainEvent {
   async createUsernameInfoElement() {
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const [{ role }] = this.getRole();
 
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-
-    switch (role) {
-      case "streamer":
-        usernameInfo.classList.add("streamer-bg");
-        break;
-      case "mod":
-        usernameInfo.classList.add("mod-bg");
-        break;
-      case "sub":
-        usernameInfo.classList.add("sub-bg");
-        break;
-      case "vip":
-        usernameInfo.classList.add("vip-bg");
-        break;
-      case "viewer":
-        usernameInfo.classList.add("viewer-bg");
-        break;
-    }
+    usernameInfo.style.backgroundColor = themes[theme].userBackground;
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createRoleElement());
+    usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
 
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
@@ -323,20 +231,11 @@ class mainEvent {
     return usernameBadges;
   }
 
-  createRoleElement() {
-    const roleElement = document.createElement("span");
-
-    const [{ role }] = this.getRole();
-    roleElement.innerText = `${role}`;
-    roleElement.classList.add("capitalize-role");
-
-    return roleElement;
-  }
-
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
 
     capitalizeUser.classList.add("capitalize-user");
+    capitalizeUser.style.color = themes[theme].username;
     capitalizeUser.innerText = this.user;
 
     return capitalizeUser;
@@ -357,6 +256,8 @@ class mainEvent {
 
     pronouns.classList.add("prons");
     pronounsContainer.classList.add("pronouns");
+    pronounsContainer.style.backgroundColor = themes[theme].pronounsBackground;
+    pronouns.style.color = themes[theme].pronounsText;
 
     pronouns.innerText = await this.getUserPronoun();
     pronouns.innerText == ""
@@ -400,20 +301,19 @@ class mainEvent {
 
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/2ynTNdpj/jazstreamer.png`;
+        roleImage.src = themes[theme].regularImg;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/0QTZ4WBH/jazmod.png`;
+        roleImage.src = themes[theme].vipImg;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/hPbMC0bp/jazvip.png`;
+        roleImage.src = themes[theme].vipImg;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/Gh1qJfY4/jazsub.png`;
+        roleImage.src = themes[theme].regularImg;
         break;
-        case "viewer":
-        roleImage.src = `https://i.postimg.cc/DfGxGhWV/jazviewer.png`;
-        // roleImage.style.display = "none";
+      case "viewer":
+        roleImage.style.display = "none";
         break;
     }
     return roleImage;
@@ -555,6 +455,7 @@ class mainEvent {
 
     let textContainer = document.createElement("p");
     textContainer.classList.add("text");
+    textContainer.style.color = themes[theme].messageText;
 
     textContainer.innerHTML = words.join(" ");
 
@@ -746,6 +647,8 @@ const GLOBAL_EMOTES = {
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
+  theme = fieldData.theme;
+  console.log(theme);
   maxMessages = fieldData.maxMessages;
 });
 
