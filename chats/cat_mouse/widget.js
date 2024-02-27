@@ -172,7 +172,7 @@ class mainEvent {
     usernameInfo.classList.add("username-info");
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createRoleElement());
+    usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
 
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
@@ -239,8 +239,27 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
 
+    const [{ role }] = this.getRole();
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
+
+    switch (role) {
+      case "streamer":
+        capitalizeUser.classList.add("streamer-color");
+        break;
+      case "mod":
+        capitalizeUser.classList.add("mod-color");
+        break;
+      case "sub":
+        capitalizeUser.classList.add("sub-color");
+        break;
+      case "vip":
+        capitalizeUser.classList.add("vip-color");
+        break;
+      case "viewer":
+        capitalizeUser.classList.add("viewer-color");
+        break;
+    }
 
     return capitalizeUser;
   }
