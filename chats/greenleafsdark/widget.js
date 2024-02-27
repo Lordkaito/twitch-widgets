@@ -9,7 +9,7 @@ let imagesUrls = {
   dark: {
     mod: "https://i.ibb.co/2hzZR28/mod-dark.png",
     vip: "https://i.ibb.co/0fBpJCV/vip-dark.png",
-    subscriber: "https://i.ibb.co/PNdGmkL/viewer-dark.png",
+    subscriber: "https://i.ibb.co/ZBFBVtj/sub-dark.png",
     viewer: "https://i.ibb.co/PNdGmkL/viewer-dark.png",
     streamer: "https://i.ibb.co/VLk7gbF/streamer-dark.png",
     moon: "https://i.ibb.co/hVV659W/luna-dark.png",
@@ -217,7 +217,7 @@ class mainEvent {
               </span>
               <span class="capitalize-user" style="color: ${
                 colors[theme].username
-              }">${this.user}</span>
+              }; max-width: ${fieldData.limitUsernames == "false"? "none" : "13ch"}">${this.user}</span>
               <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}

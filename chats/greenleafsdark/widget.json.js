@@ -1,118 +1,128 @@
 let fieldData = {
-  "emotesId": {
-    "type": "text",
-    "label": "Set your 7TV ID:",
-    "value": "",
-    "group": "Customization"
+  emotesId: {
+    type: "text",
+    label: "Set your 7TV ID:",
+    value: "",
+    group: "Customization",
   },
-  "theme": {
-    "type": "dropdown",
-    "label": "Theme:",
-    "value": "light",
-    "group": "Customization",
-    "options": {
-      "regular": "Green",
-      "dark": "Dark",
-      "light": "Light"
-    }
+  limitUsernames: {
+    type: "dropdown",
+    label: "Limit usernames:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
   },
-  "allowPronouns": {
-  	"type": "dropdown",
-    "label": "Allow pronouns",
-    "value": "true",
-    "group": "Customization",
-    "options": {
-      "true": "Yes",
-      "false": "No"
-    }
+  theme: {
+    type: "dropdown",
+    label: "Theme:",
+    value: "light",
+    group: "Customization",
+    options: {
+      regular: "Green",
+      dark: "Dark",
+      light: "Light",
+    },
   },
-  "deleteMessagesOption": {
-    "label": "How to delete messages:",
-    "type": "dropdown",
-    "group": "Customization",
-    "value": "amount",
-    "options": {
-      "timer": "Timer",
-      "amount": "Messages amount"
-    }
+  allowPronouns: {
+    type: "dropdown",
+    label: "Allow pronouns",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
   },
-  "maxMessages": {
-    "label": "Max messages to show:",
-    "type": "number",
-    "group": "Customization",
-    "value": 5,
-    "min": 1,
-    "max": 100,
-    "step": 1
+  deleteMessagesOption: {
+    label: "How to delete messages:",
+    type: "dropdown",
+    group: "Customization",
+    value: "amount",
+    options: {
+      timer: "Timer",
+      amount: "Messages amount",
+    },
   },
-  "deleteMessagesTimer": {
-    "label": "Delete messages timer (in seconds):",
-    "type": "number",
-    "group": "Customization",
-    "value": 10,
-    "min": 1,
-    "max": 60,
-    "step": 1
+  maxMessages: {
+    label: "Max messages to show:",
+    type: "number",
+    group: "Customization",
+    value: 5,
+    min: 1,
+    max: 100,
+    step: 1,
   },
-  "displayBadges": {
-    "type": "dropdown",
-    "label": "Show badges:",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
+  deleteMessagesTimer: {
+    label: "Delete messages timer (in seconds):",
+    type: "number",
+    group: "Customization",
+    value: 10,
+    min: 1,
+    max: 60,
+    step: 1,
   },
-  "usersBlackList": {
-    "type": "text",
-    "label": "Users blacklist (separated by comma)",
-    "value": "",
-    "group": "Customization"
+  displayBadges: {
+    type: "dropdown",
+    label: "Show badges:",
+    value: "false",
+    group: "Customization",
+    options: { true: "Yes", false: "No" },
   },
-  "specialCharsBlackList": {
-    "type": "text",
-    "label": "Special chars (separated by comma)",
-    "value": "",
-    "group": "Customization"
+  usersBlackList: {
+    type: "text",
+    label: "Users blacklist (separated by comma)",
+    value: "",
+    group: "Customization",
   },
-  "subText": {
-    "type": "text",
-    "label": "Custom text for SUB (max 40)",
-    "value": "(user) just subscribed!",
-    "group": "Events"
+  specialCharsBlackList: {
+    type: "text",
+    label: "Special chars (separated by comma)",
+    value: "",
+    group: "Customization",
   },
-  "followText": {
-    "type": "text",
-    "label": "Custom text for FOLLOW (max 40)",
-    "value": "(user) just followed!",
-    "group": "Events"
+  subText: {
+    type: "text",
+    label: "Custom text for SUB (max 40)",
+    value: "(user) just subscribed!",
+    group: "Events",
   },
-  "cheerText": {
-    "type": "text",
-    "label": "Custom text for Cheers (max 40)",
-    "value": "(user) cheered x(amount)!",
-    "group": "Events"
+  followText: {
+    type: "text",
+    label: "Custom text for FOLLOW (max 40)",
+    value: "(user) just followed!",
+    group: "Events",
   },
-  "tipText": {
-    "type": "text",
-    "label": "Custom text for Tips (max 40)",
-    "value": "(user) tipped $(amount)!",
-    "group": "Events"
+  cheerText: {
+    type: "text",
+    label: "Custom text for Cheers (max 40)",
+    value: "(user) cheered x(amount)!",
+    group: "Events",
   },
-  "giftSubText": {
-    "type": "text",
-    "label": "Custom text for gifted SUB (max 40)",
-    "value": "(sender) gifted a sub to (user)!",
-    "group": "Events"
+  tipText: {
+    type: "text",
+    label: "Custom text for Tips (max 40)",
+    value: "(user) tipped $(amount)!",
+    group: "Events",
   },
-  "bulkGiftText": {
-    "type": "text",
-    "label": "Custom text for many gifts at once (max 40)",
-    "value": "(sender) (amount) sub(s)!",
-    "group": "Events"
+  giftSubText: {
+    type: "text",
+    label: "Custom text for gifted SUB (max 40)",
+    value: "(sender) gifted a sub to (user)!",
+    group: "Events",
   },
-  "raidText": {
-    "type": "text",
-    "label": "Custom text for raids (max 40)",
-    "value": "(sender) sent (amount) raiders!",
-    "group": "Events"
-  }
+  bulkGiftText: {
+    type: "text",
+    label: "Custom text for many gifts at once (max 40)",
+    value: "(sender) (amount) sub(s)!",
+    group: "Events",
+  },
+  raidText: {
+    type: "text",
+    label: "Custom text for raids (max 40)",
+    value: "(sender) sent (amount) raiders!",
+    group: "Events",
+  },
 };
