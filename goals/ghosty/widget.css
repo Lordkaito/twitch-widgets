@@ -74,20 +74,23 @@ main {
   );
 }
 
+/* Estilo para el elemento con la clase "wave" */
 #wave {
   padding: 16rem;
   left: -600px;
   top: 274px;
   position: relative;
   animation-name: moveWave;
-  animation-duration: 5.6s;
+  animation-duration: 3s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
+/* Definición de la animación "moveWave" */
 @keyframes moveWave {
   0% {
-    transform: translateX(300px);
+    transform: translateX(347px);
   }
   100% {
     transform: translateX(520px);
