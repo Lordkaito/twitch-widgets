@@ -190,7 +190,7 @@ class mainEvent {
     }
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createRoleElement());
+    usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
 
     usernameInfoContainer.appendChild(await this.createPronounsContainer());
