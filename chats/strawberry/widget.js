@@ -237,6 +237,7 @@ class mainEvent {
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.style.color = themes[theme].username;
     capitalizeUser.innerText = this.user;
+    capitalizeUser.style.maxWidth = fieldData.limitUsernames == "false"? "none" : "13ch";
 
     return capitalizeUser;
   }

@@ -104,6 +104,16 @@ let fieldData = {
     value: "(sender) sent (amount) raiders!",
     group: "Events",
   },
+  limitUsernames: {
+    type: "dropdown",
+    label: "Limit usernames:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No"
+    }
+  },
   theme: {
     type: "dropdown",
     label: "Theme:",

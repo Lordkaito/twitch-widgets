@@ -363,7 +363,7 @@ main {
 
 .role {
   position: absolute;
-  right: 1.8rem;
+  right: 1.2rem;
   top: 1rem;
   z-index: 100;
   animation: fadeIn 0.5s 1s ease-in-out forwards;
@@ -517,18 +517,18 @@ main {
 
 .ear {
   position: absolute;
-  right: -.9rem;
-  top: -.6rem;
-  transform: scale(0.8) scaleX(-1);
+  right: -.85rem;
+  top: -.45rem;
+  transform: scale(0.9) scaleX(-1);
   z-index: 1;
   transform-style: preserve-3d;
 }
 
 .ear2 {
   position: absolute;
-  left: -.9rem;
-  top: -.6rem;
-  transform: scale(0.8);
+  left: -.85rem;
+  top: -.45rem;
+  transform: scale(0.9);
   z-index: 1;
   transform-style: preserve-3d;
 }

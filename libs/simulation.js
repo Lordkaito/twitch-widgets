@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaito_",
+        displayName: "Lordkaitoooooooooooooooooo_",
         displayColor: "#FF0000",
         badges: [
           {
