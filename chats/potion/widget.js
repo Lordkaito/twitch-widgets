@@ -148,13 +148,13 @@ class mainEvent {
     superMainContainer.setAttribute("id", `${this.id}`);
     circle.classList.add("circle");
     mainContainer.classList.add("main-container");
-
+    mainContainer.appendChild(this.roleImages)
     // mainContainer.appendChild(img);
     // mainContainer.appendChild(thingy);
     // mainContainer.appendChild(circle);
     // mainContainer.appendChild(ear);
     // mainContainer.appendChild(ear2);
-    superMainContainer.appendChild(this.roleImages);
+    // superMainContainer.appendChild(this.roleImages);
 
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(await this.createUsernameInfoElement());

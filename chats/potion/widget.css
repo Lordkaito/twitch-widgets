@@ -414,7 +414,8 @@ main {
 .role {
   position: absolute;
   right: 0.8rem;
-  top: 3rem;
+  bottom: -1rem;
+  right: -.4rem;
   z-index: 100;
   animation: fadeIn 0.5s 1s ease-in-out forwards;
   opacity: 0;
