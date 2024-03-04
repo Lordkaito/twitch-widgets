@@ -211,7 +211,8 @@ class mainEvent {
   createRoleElement() {
     const roleElement = document.createElement("span");
 
-    const [{ role }] = this.getRole();
+    const role = this.roles.role;
+    console.log(role);
     roleElement.innerText = `${role}`;
     roleElement.classList.add("capitalize-role");
 
@@ -222,7 +223,7 @@ class mainEvent {
       case "mod":
         roleElement.classList.add("mod-color");
         break;
-      case "sub":
+      case "subscriber":
         roleElement.classList.add("sub-color");
         break;
       case "vip":
@@ -239,7 +240,7 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
 
-    const [{ role }] = this.getRole();
+    const role = this.roles.role;
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
 
@@ -250,7 +251,7 @@ class mainEvent {
       case "mod":
         capitalizeUser.classList.add("mod-color");
         break;
-      case "sub":
+      case "subscriber":
         capitalizeUser.classList.add("sub-color");
         break;
       case "vip":

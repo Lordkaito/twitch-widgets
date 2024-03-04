@@ -166,10 +166,12 @@ class mainEvent {
   async createUsernameInfoElement() {
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const [{ role }] = this.getRole();
+    const role = this.roles.role
 
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
+
+    console.log(role)
 
     switch (role) {
       case "streamer":
@@ -178,7 +180,7 @@ class mainEvent {
       case "mod":
         usernameInfo.classList.add("mod-bg");
         break;
-      case "sub":
+      case "subscriber":
         usernameInfo.classList.add("sub-bg");
         break;
       case "vip":

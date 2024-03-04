@@ -186,15 +186,19 @@ main {
 .mod-bg {
   background-color: var(--mod-background-color);
 }
+
 .vip-bg {
   background-color: var(--vip-background-color);
 }
+
 .streamer-bg {
   background-color: var(--streamer-background-color);
 }
+
 .viewer-bg {
   background-color: var(--viewer-background-color);
 }
+
 .sub-bg {
   background-color: var(--sub-background-color);
 }
@@ -409,7 +413,7 @@ main {
 
 .role {
   position: absolute;
-  right: .8rem;
+  right: 0.8rem;
   top: 3rem;
   z-index: 100;
   animation: fadeIn 0.5s 1s ease-in-out forwards;
