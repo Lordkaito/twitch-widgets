@@ -5,66 +5,28 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
-  subMultiplier: {
-    type: "number",
-    label: "Subscriber multiplier:",
-    value: 0.5,
-    group: "Customization",
-  },
-  giftSubMultiplier: {
-    type: "number",
-    label: "Gifted sub multiplier:",
-    value: 1,
-    group: "Customization",
-  },
-  followMultiplier: {
-    type: "number",
-    label: "Follower multiplier:",
-    value: 0.5,
-    group: "Customization"
-  },
-  cheerMultiplier: {
-    type: "number",
-    label: "Cheer multiplier:",
-    value: 1,
-    group: "Customization"
-  },
-  tipMultiplier: {
-    type: "number",
-    label: "Tip multiplier:",
-    value: 2,
-    group: "Customization"
-  },
-  completeGoalText: {
-    type: "text",
-    label: "Goal text (max 40):",
-    value: "GOAL COMPLETED!",
-    group: "Customization",
-  },
-  goalTypeText: {
-    type: "text",
-    label: "Goal type:",
-    value: "sub goal",
-    group: "Customization",
-  },
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 100,
+    value: 10,
     group: "Customization",
+    min: 1,
+    max: 100000,
     step: 1,
   },
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 0,
+    value: 4,
     group: "Customization",
+    min: 1,
+    max: 100000,
     step: 1,
   },
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "tip",
+    value: "follower",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -81,7 +43,7 @@ let fieldData = {
     options: {
       allTime: "All time",
       session: "Stream",
-    },
+    }
   },
   startFromCero: {
     type: "dropdown",
@@ -93,36 +55,128 @@ let fieldData = {
       false: "No",
     },
   },
+  subText: {
+    type: "text",
+    label: "Custom text for SUB (max 40)",
+    value:
+      "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
+    group: "Events",
+  },
+  followText: {
+    type: "text",
+    label: "Custom text for FOLLOW (max 40)",
+    value: "just followed!",
+    group: "Events",
+  },
+  cheerText: {
+    type: "text",
+    label: "Custom text for Cheers (max 40)",
+    value: "cheered x(amount)!",
+    group: "Events",
+  },
+  tipText: {
+    type: "text",
+    label: "Custom text for Tips (max 40)",
+    value: "Tipped $(amount)!",
+    group: "Events",
+  },
+  giftSubText: {
+    type: "text",
+    label: "Custom text for gifted SUB (max 40)",
+    value: "(sender) gifted a sub to (user)!",
+    group: "Events",
+  },
+  bulkGiftText: {
+    type: "text",
+    label: "Custom text for many gifts at once (max 40)",
+    value: "(sender) (amount) sub(s)!",
+    group: "Events",
+  },
+  raidText: {
+    type: "text",
+    label: "Custom text for raids (max 40)",
+    value: "(sender) sent (amount) raiders!",
+    group: "Events",
+  },
   widgetHeight: {
     label: "Widget height (recommended 1080)",
     type: "text",
     group: "Customization",
     value: "1080",
   },
-  firstStep: {
+  deleteMessages: {
+    label: "Time to delete messages (max 60):",
     type: "number",
-    label: "First step:",
-    value: 1500,
     group: "Customization",
+    value: 60,
     min: 1,
+    max: 60,
+    step: 1,
   },
-  secondStep: {
-    type: "number",
-    label: "First step:",
-    value: 1750,
+  displayBadges: {
+    type: "dropdown",
+    label: "Show badges:",
+    value: "false",
     group: "Customization",
-    min: 1,
+    options: {
+      true: "Yes",
+      false: "No",
+    },
   },
-  resetGoalData: {
-    type: "button",
-    label: "Reset goal",
-    value: "reset",
+  allowPronouns: {
+    type: "dropdown",
+    label: "Show pronouns:",
+    value: "true",
     group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  theme: {
+    type: "dropdown",
+    label: "Theme",
+    value: "blue",
+    group: "Customization",
+    options: {
+      blue: "Blue",
+      pink: "Pink",
+    },
+  },
+  completeGoalText: {
+    type: "text",
+    label: "Custom text for goal completed (max 40)",
+    value: "Goal completed!",
+    group: "Events",
+  },
+  wateringCanSide: {
+    type: "dropdown",
+    label: "Watering can side:",
+    value: "right",
+    group: "Customization",
+    options: {
+      left: "Left",
+      right: "Right",
+    },
   },
   currency: {
     type: "text",
     label: "Currency:",
-    value: "exp",
+    value: "bits",
     group: "Customization",
+  },
+  animationDelay: {
+    type: "number",
+    label: "Animation delay (s):",
+    value: 5,
+    group: "Customization",
+    step: 1,
+  },
+  animationTime: {
+    type: "number",
+    label: "Animation time (s):",
+    value: 1,
+    group: "Customization",
+    step: 1,
   }
 };

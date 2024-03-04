@@ -17,11 +17,6 @@ let defaultApiData = {
     amount: 0,
   },
 };
-
-let images = {
-  url1: "https://i.postimg.cc/T1rwhcjJ/happy.png",
-};
-
 let widgetApiData = {
   subscriber: {
     type: "subscriber",
@@ -64,49 +59,33 @@ window.addEventListener("onEventReceived", function (obj) {
 
   let event = obj.detail.event;
   let listener = obj.detail.listener;
-  const eventMultipliers = {
-    subscriber: mainObj.fieldData.subMultiplier,
-    follower: mainObj.fieldData.followMultiplier,
-    cheer: mainObj.fieldData.cheerMultiplier,
-    tip: mainObj.fieldData.tipMultiplier,
-    giftSub: mainObj.fieldData.giftSubMultiplier,
-  };
 
   if (event.isCommunityGift) return;
 
   if (event.type === goalType) {
-    if (listener === "cheer-latest") {
-      handleGrow(event.amount * eventMultipliers.cheer, updateApiData, false);
-      return;
-    }
-
-    if (listener === "tip-latest") {
-      handleGrow(event.amount * eventMultipliers.tip, updateApiData, false);
+    if (listener === "cheer-latest" || listener === "tip-latest") {
+      handleGrow(event.amount, updateApiData, false);
       return;
     }
 
     if (listener === "follower-latest") {
-      handleGrow(1 * eventMultipliers.follower, updateApiData, false);
+      handleGrow(1, updateApiData, false);
       return;
     }
 
     if (listener === "subscriber-latest") {
       if (event.bulkGifted) {
-        handleGrow(
-          event.amount * eventMultipliers.giftSub,
-          updateApiData,
-          false
-        );
+        handleGrow(event.amount, updateApiData, false);
         return;
       }
-      handleGrow(1 * eventMultipliers.subscriber, updateApiData, false);
+      handleGrow(1, updateApiData, false);
       return;
     }
   }
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsStarredSkyGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -134,56 +113,24 @@ function init(obj, apiData, initial = false) {
     colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progressNums"),
-    peluche: document.querySelector(".peluche"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
     completeText: document.querySelector(".progression"),
-    typeObjective: document.querySelector(".typeObjective"),
     reg: document.querySelector(".gifReg"),
     image: document.querySelector("#image"),
-    ganchos: document.querySelector(".ganchos"),
-    objective: document.querySelector(".goal-obj-50"),
-    goalTypeText: document.querySelector(".goal-type-text"),
   };
-
-  let text = {
-    subscriber: "sub goal",
-    follower: "follow goal",
-    cheer: "cheer goal",
-    tip: "tip goal",
-  };
-
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
-
-  if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
-    items.typeObjective.innerText = mainObj.fieldData.currency;
-  }
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-
-  items.goalTypeText.innerText = text[goalType];
 
   step = getStep(
     items.progressBarContainer,
     mainObj.fieldData.goalObjectiveQuantity
   );
+
+  // items.title.innerText = mainObj.fieldData.title;
+  let side = mainObj.fieldData.wateringCanSide;
+  if (side === "right") {
+    items.reg.style.transform = "scaleX(-1)";
+    items.reg.style.left = "1.5rem";
+  }
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -202,16 +149,39 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
-  const step = containerHeight / objective;
+  const containerWidth = container.offsetHeight;
+  const step = containerWidth / objective;
   return step;
 }
 
-function getGachoStep(diff, objective) {
-  return diff / objective;
-}
-
 function handleGrow(amount, callback, initial = false) {
+  let time = mainObj.fieldData.animationDelay;
+  let animationTime = mainObj.fieldData.animationTime;
+  items.reg.style.opacity = "1";
+  if (!animationActive) {
+    animationActive = true;
+    items.reg.style.animation =
+      "rotate" + " " + animationTime + "s forwards ease-in-out";
+    setTimeout(() => {
+      items.reg.style.animation =
+        "rotateBack" + " " + animationTime + "s forwards ease-in-out";
+    }, time * 1000);
+    let side = mainObj.fieldData.wateringCanSide;
+    if (side === "right") {
+      // items.reg.classList.add("invert");
+      items.reg.style.animation =
+        "rotateLeft" + " " + animationTime + "s forwards ease-in-out";
+      items.reg.style.left = "1.5rem";
+      setTimeout(() => {
+        items.reg.style.animation =
+          "rotateBackLeft" + " " + animationTime + "s forwards ease-in-out";
+      }, time * 1000);
+    }
+    setTimeout(() => {
+      animationActive = false;
+      items.reg.style.opacity = "0";
+    }, animationTime * 1000 + time * 1000);
+  }
   let amountToUpdate =
     widgetApiData[goalType].amount +
     amount +
@@ -221,72 +191,53 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
+  let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    let ganchosHeight = 32;
-    console.log(amountToUpdate);
-    let barraHeight = items.progressBar.offsetHeight;
-    console.log(barraHeight);
-    let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-      amountToUpdate * ganchoStep
-    }rem)`;
-    console.log(items.ganchos.style.top);
-    items.progressBar.style.height = `calc(100% - ${
-      amountToUpdate * step - 15
-    }px)`;
+    // image.style.left = `${amountToUpdate * step - 23}px`;
+    items.progressBar.style.height = `${amountToUpdate * step}px`;
+
     if (goalType === "tip") {
-      if (amountToUpdate >= "10") {
-        items.progressionText.innerHTML =
-          "<p class=' obtectiveText'>" +
-          amountToUpdate +
-          "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
-          items.objective.innerText +
-          "</p>";
-      } else {
-        items.progressionText.innerHTML =
-          "<p class=' obtectiveText'>" +
-          amountToUpdate +
-          "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
-          items.objective.innerText +
-          "</p>";
-      }
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
     } else {
-      items.progressionText.innerHTML = amountToUpdate;
+      items.progressionText.innerHTML =
+        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
-    items.ganchos.style.top = `0`;
-    items.progressBar.style.height = "0%";
-    // CHANGED
-    items.progressionText.innerHTML =
-      "<p class=' obtectiveText' >" +
-      items.objective.innerText +
-      "</p><span class='barSeparator'>|</span><p class='obtectiveText objective2'>" +
-      items.objective.innerText +
-      "</p>";
-    items.peluche.src = images.url1;
-    // items.progressionText.innerHTML = getPercentage(
-    //   amountToUpdate,
-    //   mainObj.fieldData.goalObjectiveQuantity
-    // );
+    // image.style.left = `32rem`;
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        amountToUpdate +
+        currency +
+        "/" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        currency;
+    } else {
+      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
+    }
+    items.progressBar.style.height = "100%";
+    // items.completeText.innerText = string;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
   }
 }
 
-function getPercentage(amount, objective) {
-  let percentage = (amount / objective) * 100;
-  return Math.round(percentage);
-  // CHANGED
-  // return Math.round(percentage) + "%";
-}
-
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsStarredSkyGoalWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsStarredSkyGoalWidgetPreviousGained", defaultApiData);
   window.location.reload();
+}
+
+function getPercentage(amount, objective) {
+  let percentage = (amount / objective) * 100;
+  return Math.round(percentage) + "%";
 }
