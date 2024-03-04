@@ -8,7 +8,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 100,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -17,7 +17,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 4,
+    value: 0,
     group: "Customization",
     min: 1,
     max: 100000,

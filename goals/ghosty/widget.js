@@ -204,8 +204,11 @@ function handleGrow(amount, callback, initial = false) {
         mainObj.fieldData.goalObjectiveQuantity +
         currency;
     } else {
-      items.progressionText.innerHTML =
-        amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
+      items.progressionText.innerHTML = "<p class=' obtectiveText'>" +
+      amountToUpdate +
+      "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
+      mainObj.fieldData.goalObjectiveQuantity +
+      "</p>";
     }
   } else {
     // image.style.left = `32rem`;

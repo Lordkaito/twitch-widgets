@@ -86,18 +86,56 @@ main {
   left: 2.5rem;
 }
 
-.progressNums {
-  /* opacity: 0; */
+.typeObjective{
   position: absolute;
+  top: -83px;
+  z-index: 20;
+  text-transform: uppercase;
+  text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
+  0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
+  2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
+  2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
+  color: var(--progressNums-color);
+  font-size: 2.3rem;
   text-align: center;
-  vertical-align: middle;
-  color: white;
-  font-size: 2rem;
-  z-index: 4;
-  margin-bottom: 1rem;
-  top: -3rem;
-  text-shadow: 3px 0 #687dd4, -3px 0 #687dd4, 0 3px #687dd4, 0 -3px #687dd4,
-    2px 3px #687dd4, -2px -3px #687dd4, 2px -3px #687dd4, -2px 3px #687dd4;
+}
+
+.barSeparator{
+  font-size: 2.3rem;
+  padding: 0 .5rem;
+  text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
+  0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
+  2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
+  2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
+  color: var(--progressNums-color);
+}
+
+.obtectiveText{
+  font-size: 2.3rem;
+  text-align: end;
+  width: 100%;
+}
+
+.objective2{
+  width: 100%;
+  text-align: start;
+
+}
+
+.progressNums {
+ /* opacity: 0; */
+ display: flex;
+ width: 100%;
+ position: absolute;
+ text-align: center;
+ vertical-align: middle;
+ color: white;
+ font-size: 2rem;
+ z-index: 4;
+ margin-bottom: 1rem;
+ top: 16rem;
+ text-shadow: 3px 0 #687dd4, -3px 0 #687dd4, 0 3px #687dd4, 0 -3px #687dd4,
+   2px 3px #687dd4, -2px -3px #687dd4, 2px -3px #687dd4, -2px 3px #687dd4;
 }
 
 .progress-bar {
