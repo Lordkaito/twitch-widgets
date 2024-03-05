@@ -2,7 +2,7 @@
   --round-background-color: #fff;
   --round-border-color: white;
   --progression-color: white;
-  --progressNums-color: white;
+  --progressNums-color: #3b557d;
   --progress-bar-background-color: #ff9bd9;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e5f8f;
@@ -68,7 +68,7 @@ main {
   width: var(--wth);
   height: 100%;
   background-color: #72a9fc;
-  transition: all 1.3s;
+  transition: width .2s ease-in-out;
 }
 
 #goalImage{
@@ -86,7 +86,7 @@ main {
   top: -13px;
   left: -10px;
   z-index: 200;
-  transition: all 1.3s;
+  transition: left .2s ease-in-out;
 }
 
 #round {
@@ -143,7 +143,7 @@ main {
   position: absolute;
   text-align: center;
   vertical-align: middle;
-  color: black;
+  color: var(--progressNums-color);
   font-size: 1rem;
   z-index: 4;
   margin-bottom: 1rem;
@@ -203,10 +203,10 @@ main {
 
 .goal-name {
   position: absolute;
-  top: -2.8rem;
+  top: -4rem;
   left: 0rem;
-  width: 13rem;
-  height: 2.5rem;
+  width: 14rem;
+  height: 3.8rem;
   background-color: var(--goal-name-box-shadow-color);
   border-radius: 40px;
   text-align: center;
