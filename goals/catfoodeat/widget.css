@@ -3,10 +3,10 @@
   --round-border-color: white;
   --progression-color: white;
   --progressNums-color: #3b557d;
-  --progress-bar-background-color: #ff9bd9;
-  --goal-name-background-color: #fff4f4;
+  --progress-bar-background-color: #a6c0e8;
+  --goal-name-background-color: #ffff;
   --goal-name-color: #9e5f8f;
-  --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
+  --goal-name-box-shadow-color: #0c1b32;
   --nube-p-color: #f59b61;
   --star-p-color: #ffff;
   --star-p-border-color: #8facf5;
@@ -14,6 +14,8 @@
   --background-container-1: #72a9fc;
   --background-container-2: #ffb7e2;
 }
+
+/* fondo goal: #ffe7d9  progreso goal: #a6c0e8  bocadillo goal: #0c1b32  nombre goal: blanco  %: #3b557d */
 
 * {
   font-family: "Fredoka", sans-serif;
@@ -67,7 +69,7 @@ main {
   position: absolute;
   width: var(--wth);
   height: 100%;
-  background-color: #72a9fc;
+  background-color: var(--progress-bar-background-color);
   transition: width .2s ease-in-out;
 }
 
