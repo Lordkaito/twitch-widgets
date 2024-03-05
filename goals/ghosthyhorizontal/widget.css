@@ -1,9 +1,10 @@
 :root {
   --round-background-color: #fff;
   --round-border-color: white;
-  --progression-color: white;
+  --progression-color: #ffffff;
   --progressNums-color: #3b557d;
   --progress-bar-background-color: #ff9bd9;
+  --porcentage-shadow:#590448;
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e5f8f;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
@@ -14,6 +15,16 @@
   --background-container-1: #72a9fc;
   --background-container-2: #ffb7e2;
 }
+
+/* borde numeros: #590448
+
+numeros: #ffffff
+
+borde barra: #ffe7c8
+
+fondo: #16122d
+
+degradado: de #8950b2 a #ff97a3 */
 
 * {
   font-family: "Fredoka", sans-serif;
@@ -55,9 +66,10 @@ main {
 .progress{
   position: relative;
   width: 100%;
-  height: 28px;
+  height: 20px;
   background-color: #fff;
-  border-radius: 4rem;
+  border-color: #ffe7c8;
+  border-radius: 6px;
   overflow: hidden;
   margin: 5px 0;
 }
@@ -86,7 +98,7 @@ main {
   top: -13px;
   left: -10px;
   z-index: 200;
-  transition: left .2s ease-in-out;
+  /* transition: left .2s ease-in-out; */
 }
 
 #round {
@@ -143,14 +155,14 @@ main {
   position: absolute;
   text-align: center;
   vertical-align: middle;
-  color: var(--progressNums-color);
+  color: var(--);
   font-size: 1rem;
   z-index: 4;
   margin-bottom: 1rem;
-  top: .80rem;
+  top: .44rem;
   left: 10rem;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
+  text-shadow: -1px -1px 0 var(--porcentage-shadow), 1px -1px 0 var(--porcentage-shadow), -1px 1px 0 var(--porcentage-shadow),
+    1px 1px 0 var(--porcentage-shadow);
   /* text-shadow: 3px 0 black, -3px 0 black,
     0 3px black, 0 -3px black,
     2px 3px black, -2px -3px black,
