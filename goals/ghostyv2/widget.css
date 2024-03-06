@@ -13,9 +13,15 @@
   --quantity-p-border-color: #ff8ed3;
   --background-container-1: #72a9fc;
   --background-container-2: #ffb7e2;
+  --bgProgressBar: #16122d;
+  --borderNumsColor: #590448;
+  --borderBarColor: #ffe7c8;
+  --numbersColor: #ffffff;
   --gradient-1: #8950b2;
   --gradient-2: #ff97a3;
 }
+
+
 /* borde numeros: #590448
 
 numeros: #ffffff
@@ -67,10 +73,11 @@ main {
   position: relative;
   width: 100%;
   height: 28px;
-  background-color: #fff;
+  background-color: var(--bgProgressBar);
   border-radius: 4rem;
   overflow: hidden;
   margin: 5px 0;
+  border: 3px solid var(--borderBarColor);
 }
 
 .progress::before{
@@ -156,11 +163,11 @@ main {
   width: 100%;
   vertical-align: middle;
   color: var(--progression-color);
-  font-size: 1rem;
+  font-size: 1.3rem;
   z-index: 4;
   margin-bottom: 1rem;
-  top: .80rem;
-  left: -.8rem;
+  top: .68rem;
+  left: -.9rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
   /* text-shadow: 3px 0 black, -3px 0 black,
@@ -219,11 +226,11 @@ main {
   left: 2rem;
   width: 14rem;
   height: 3.8rem;
-  text-shadow: 1.7px 0 var(--gradient-2),
-  -1.7px 0 var(--gradient-2), 0 1.7px var(--gradient-2),
-  0 -1.7px var(--gradient-2), 2px 1.7px var(--gradient-2),
-  -2px -1.7px var(--gradient-2),
-  2px -1.7px var(--gradient-2), -2px 1.7px var(--gradient-2);
+  text-shadow: 1.7px 0 var(--gradient-1),
+  -1.7px 0 var(--gradient-1), 0 1.7px var(--gradient-1),
+  0 -1.7px var(--gradient-1), 2px 1.7px var(--gradient-1),
+  -2px -1.7px var(--gradient-1),
+  2px -1.7px var(--gradient-1), -2px 1.7px var(--gradient-1);
   /* background-color: var(--goal-name-box-shadow-color); */
   border-radius: 40px;
   text-align: center;
