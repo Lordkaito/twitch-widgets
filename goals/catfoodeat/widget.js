@@ -124,6 +124,7 @@ function init(obj, apiData, initial = false) {
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
+    goalName: document.querySelector(".goal-name-text"),
   };
 
   let text = {
@@ -133,12 +134,7 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
-
-  if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
-  }
+  items.goalName.innerText = mainObj.fieldData.goalName ?? "Goal";
 
   if (mainObj.fieldData.goalObjectiveQuantity > 999) {
     items.objective.style.fontSize = "1.5rem";
@@ -157,7 +153,7 @@ function init(obj, apiData, initial = false) {
     items.objective.style.top = "2rem";
     items.objective.style.left = "1.1rem";
   }
-  items.goalTypeText.innerText = text[goalType];
+  // items.goalTypeText.innerText = text[goalType];
 
   step = getStep(
     items.progressBarContainer,
@@ -181,8 +177,8 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
-  const step = containerHeight / objective;
+  // const containerHeight = container.offsetHeight;
+  // const step = containerHeight / objective;
   return step;
 }
 
@@ -200,22 +196,10 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
-  console.log(completedGoal)
-  if (!completedGoal) {
-    // let ganchosHeight = 32;
-    // console.log(amountToUpdate);
-    // let barraHeight = items.progressBar.offsetHeight;
-    // console.log(barraHeight);
-    // let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    // items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-    //   amountToUpdate * ganchoStep
-    // }rem)`;
-    // console.log(items.ganchos.style.top);
-    // items.progressBar.style.height = `calc(100% - ${
-    //   amountToUpdate * step - 5
-    // }px)`;
 
+  if (!completedGoal) {
     // Act catImage progress with calc()
+    items.progressionText.innerText = "2"
     catImage.style.left = `calc(${amountToUpdate}% - 40px)`;
 
     items.progress.style = `--wth:${amountToUpdate}%`;
@@ -226,12 +210,12 @@ function handleGrow(amount, callback, initial = false) {
       mainObj.fieldData.goalObjectiveQuantity
     ))
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
+      items.progressionText.innerText = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );
     } else {
-      items.progressionText.innerHTML = getPercentage(
+      items.progressionText.innerText = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );

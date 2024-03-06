@@ -11,6 +11,12 @@ let fieldData = {
     value: "GOAL COMPLETED!",
     group: "Customization",
   },
+  goalName: {
+    type: "text",
+    label: "Goal name:",
+    value: "Goal text",
+    group: "Customization",
+  },
   goalTypeText: {
     type: "text",
     label: "Goal type:",
