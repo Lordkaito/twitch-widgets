@@ -133,25 +133,6 @@ function init(obj, apiData, initial = false) {
   };
 
   items.goalText.innerText = mainObj.fieldData.goalName ?? "Goal";
-  // items.progressionText.innerHTML = amount + "|" + mainObj.fieldData.goalObjectiveQuantity;
-
-  // if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-  //   items.objective.style.fontSize = "1.5rem";
-  //   items.objective.style.fontSize = "1.3rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
-
-  // if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-  //   items.objective.style.fontSize = "1.3rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
-  // if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-  //   items.objective.style.fontSize = "1.1rem";
-  //   items.objective.style.top = "2rem";
-  //   items.objective.style.left = "1.1rem";
-  // }
 
   step = getStep(
     items.progressBarContainer,
