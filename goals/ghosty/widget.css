@@ -1,3 +1,22 @@
+:root {
+  --bgProgressBar: #16122d;
+  --borderNumsColor: #590448;
+  --borderBarColor: #ffe7c8;
+  --numbersColor: #ffffff;
+  --gradient-1: #8950b2;
+  --gradient-2: #ff97a3;
+}
+
+/* borde numeros: #590448
+
+numeros: #ffffff
+
+borde barra: #ffe7c8
+
+fondo: #16122d
+
+degradado: de #8950b2 a #ff97a3 */
+
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
@@ -43,7 +62,7 @@ main {
   /* padding: 1.5rem 0.4rem 4rem 0.4rem; */
   background-color: #8c3f0a;
   border-radius: 50px;
-  border: 6px solid white;
+  border: 6px solid var(--borderBarColor);
   display: grid;
   place-content: center;
 }
@@ -67,7 +86,7 @@ main {
   /* width: 50px; */
   height: 38rem;
   border-radius: 50px;
-  background-color: #d6d4ff;
+  background-color: var(--bgProgressBar);
   /* position: relative; */
   overflow: hidden;
   top: -2rem;
@@ -86,56 +105,55 @@ main {
   left: 2.5rem;
 }
 
-.typeObjective{
+.typeObjective {
   position: absolute;
   top: -83px;
   z-index: 20;
   text-transform: uppercase;
   text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
-  0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
-  2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
-  2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
+    0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
+    2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
+    2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
   color: var(--progressNums-color);
   font-size: 2.3rem;
   text-align: center;
 }
 
-.barSeparator{
+.barSeparator {
   font-size: 2.3rem;
-  padding: 0 .5rem;
+  padding: 0 0.4rem;
   text-shadow: 3px 0 var(--goal-name-color), -3px 0 var(--goal-name-color),
-  0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
-  2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
-  2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
+    0 3px var(--goal-name-color), 0 -3px var(--goal-name-color),
+    2px 3px var(--goal-name-color), -2px -3px var(--goal-name-color),
+    2px -3px var(--goal-name-color), -2px 3px var(--goal-name-color);
   color: var(--progressNums-color);
 }
 
-.obtectiveText{
+.obtectiveText {
   font-size: 2.3rem;
   text-align: end;
   width: 100%;
 }
 
-.objective2{
+.objective2 {
   width: 100%;
   text-align: start;
-
 }
 
 .progressNums {
- /* opacity: 0; */
- display: flex;
- width: 100%;
- position: absolute;
- text-align: center;
- vertical-align: middle;
- color: white;
- font-size: 2rem;
- z-index: 4;
- margin-bottom: 1rem;
- top: 16rem;
- text-shadow: 3px 0 #687dd4, -3px 0 #687dd4, 0 3px #687dd4, 0 -3px #687dd4,
-   2px 3px #687dd4, -2px -3px #687dd4, 2px -3px #687dd4, -2px 3px #687dd4;
+  /* opacity: 0; */
+  display: flex;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--numbersColor);
+  font-size: 2rem;
+  z-index: 4;
+  margin-bottom: 1rem;
+  top: 16rem;
+  text-shadow: 3px 0 var(--borderNumsColor), -3px 0 var(--borderNumsColor), 0 3px var(--borderNumsColor), 0 -3px var(--borderNumsColor),
+    2px 3px var(--borderNumsColor), -2px -3px var(--borderNumsColor), 2px -3px var(--borderNumsColor), -2px 3px var(--borderNumsColor);
 }
 
 .progress-bar {
