@@ -110,11 +110,10 @@ function init(obj, apiData, initial = false) {
 
   items = {
     progressBar: document.querySelector(".progress-bar"),
-    goalText: document.querySelector(".goal-text"),
+    goalText: document.querySelector(".goal-name-text"),
     colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progress: document.querySelector(".progress"),
-    // catGoal: document.querySelector("#catImage"),
     progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
@@ -133,31 +132,26 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
-  items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity;
+  items.goalText.innerText = mainObj.fieldData.goalName ?? "Goal";
+  // items.progressionText.innerHTML = amount + "|" + mainObj.fieldData.goalObjectiveQuantity;
 
-  if (mainObj.fieldData.goalType === "tip") {
-    items.objective.innerText =
-      mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency;
-  }
+  // if (mainObj.fieldData.goalObjectiveQuantity > 999) {
+  //   items.objective.style.fontSize = "1.5rem";
+  //   items.objective.style.fontSize = "1.3rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
 
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  items.goalTypeText.innerText = text[goalType];
+  // if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
+  //   items.objective.style.fontSize = "1.3rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
+  // if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
+  //   items.objective.style.fontSize = "1.1rem";
+  //   items.objective.style.top = "2rem";
+  //   items.objective.style.left = "1.1rem";
+  // }
 
   step = getStep(
     items.progressBarContainer,
@@ -181,8 +175,8 @@ function checkIfCompleted(amountToUpdate) {
 }
 
 function getStep(container, objective) {
-  const containerHeight = container.offsetHeight;
-  const step = containerHeight / objective;
+  // const containerHeight = container.offsetHeight;
+  // const step = containerHeight / objective;
   return step;
 }
 
@@ -200,36 +194,12 @@ function handleGrow(amount, callback, initial = false) {
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate);
-  console.log(completedGoal)
   if (!completedGoal) {
-    // let ganchosHeight = 32;
-    // console.log(amountToUpdate);
-    // let barraHeight = items.progressBar.offsetHeight;
-    // console.log(barraHeight);
-    // let ganchoStep = getGachoStep(32, mainObj.fieldData.goalObjectiveQuantity);
-    // items.ganchos.style.top = `calc(${ganchosHeight}rem - ${
-    //   amountToUpdate * ganchoStep
-    // }rem)`;
-    // console.log(items.ganchos.style.top);
-    // items.progressBar.style.height = `calc(100% - ${
-    //   amountToUpdate * step - 5
-    // }px)`;
-
-    // Act catImage progress with calc()
-    // catImage.style.left = `calc(${amountToUpdate}% - 40px)`;
-
     items.progress.style = `--wth:${amountToUpdate}%`;
-    // document.getElementById("goalImage").src =
-    // "https://i.ibb.co/x5MKB8j/comederolleno.png";
-    // console.log(getPercentage(
-    //   amountToUpdate,
-    //   mainObj.fieldData.goalObjectiveQuantity
-    // ))
+
     if (goalType === "tip") {
-      items.progressionText.innerHTML = 
-        amountToUpdate + "|" +
-        mainObj.fieldData.goalObjectiveQuantity
-      ;
+      items.progressionText.innerHTML =
+        amountToUpdate + "|" + mainObj.fieldData.goalObjectiveQuantity;
     } else {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
@@ -237,17 +207,10 @@ function handleGrow(amount, callback, initial = false) {
       );
     }
   } else {
-    // items.ganchos.style.top = `0`;
-    // items.progressBar.style.height = "1%";
-    items.progressionText.innerHTML = 
-    amountToUpdate + "|" +
-    mainObj.fieldData.goalObjectiveQuantity
-  ;
-    // catImage.style.left = `calc(100% - 20px)`;
+    items.progressionText.innerHTML =
+      amountToUpdate + "|" + mainObj.fieldData.goalObjectiveQuantity;
 
     items.progress.style = `--wth:100%`;
-    // document.getElementById("goalImage").src =
-    //   "https://i.ibb.co/x5MKB8j/comederolleno.png";
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);

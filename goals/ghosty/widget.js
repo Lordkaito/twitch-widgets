@@ -114,23 +114,13 @@ function init(obj, apiData, initial = false) {
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
-    progressImg: document.querySelector(".img-container"),
     completeText: document.querySelector(".progression"),
-    reg: document.querySelector(".gifReg"),
-    image: document.querySelector("#image"),
   };
 
   step = getStep(
     items.progressBarContainer,
     mainObj.fieldData.goalObjectiveQuantity
   );
-
-  // items.title.innerText = mainObj.fieldData.title;
-  let side = mainObj.fieldData.wateringCanSide;
-  if (side === "right") {
-    items.reg.style.transform = "scaleX(-1)";
-    items.reg.style.left = "1.5rem";
-  }
 
   if (mainObj.fieldData.goalFullType === "session") {
     widgetApiData = defaultApiData;
@@ -155,33 +145,6 @@ function getStep(container, objective) {
 }
 
 function handleGrow(amount, callback, initial = false) {
-  let time = mainObj.fieldData.animationDelay;
-  let animationTime = mainObj.fieldData.animationTime;
-  items.reg.style.opacity = "1";
-  if (!animationActive) {
-    animationActive = true;
-    items.reg.style.animation =
-      "rotate" + " " + animationTime + "s forwards ease-in-out";
-    setTimeout(() => {
-      items.reg.style.animation =
-        "rotateBack" + " " + animationTime + "s forwards ease-in-out";
-    }, time * 1000);
-    let side = mainObj.fieldData.wateringCanSide;
-    if (side === "right") {
-      // items.reg.classList.add("invert");
-      items.reg.style.animation =
-        "rotateLeft" + " " + animationTime + "s forwards ease-in-out";
-      items.reg.style.left = "1.5rem";
-      setTimeout(() => {
-        items.reg.style.animation =
-          "rotateBackLeft" + " " + animationTime + "s forwards ease-in-out";
-      }, time * 1000);
-    }
-    setTimeout(() => {
-      animationActive = false;
-      items.reg.style.opacity = "0";
-    }, animationTime * 1000 + time * 1000);
-  }
   let amountToUpdate =
     widgetApiData[goalType].amount +
     amount +
@@ -193,37 +156,40 @@ function handleGrow(amount, callback, initial = false) {
   let completedGoal = checkIfCompleted(amountToUpdate);
   let currency = mainObj.fieldData.currency;
   if (!completedGoal) {
-    // image.style.left = `${amountToUpdate * step - 23}px`;
     items.progressBar.style.height = `${amountToUpdate * step}px`;
 
     if (goalType === "tip") {
       items.progressionText.innerHTML =
-        amountToUpdate +
-        currency +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
+        "<p class=' obtectiveText'>" +
+        amountToUpdate + currency +
+        "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
+        mainObj.fieldData.goalObjectiveQuantity + currency
+        "</p>";
     } else {
-      items.progressionText.innerHTML = "<p class=' obtectiveText'>" +
+      items.progressionText.innerHTML =
+        "<p class=' obtectiveText'>" +
+        amountToUpdate +
+        "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
+        mainObj.fieldData.goalObjectiveQuantity +
+        "</p>";
+    }
+  } else {
+    if (goalType === "tip") {
+      items.progressionText.innerHTML =
+        "<p class=' obtectiveText'>" +
+        amountToUpdate + currency +
+        "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
+        mainObj.fieldData.goalObjectiveQuantity + currency
+        "</p>";
+    } else {
+      items.progressionText.innerHTML =
+      "<p class=' obtectiveText'>" +
       amountToUpdate +
       "</p><span class='barSeparator'>|</span><p class='objective2 obtectiveText'>" +
       mainObj.fieldData.goalObjectiveQuantity +
       "</p>";
     }
-  } else {
-    // image.style.left = `32rem`;
-    if (goalType === "tip") {
-      items.progressionText.innerHTML =
-        amountToUpdate +
-        currency +
-        "/" +
-        mainObj.fieldData.goalObjectiveQuantity +
-        currency;
-    } else {
-      items.progressionText.innerHTML = `${amountToUpdate}/${mainObj.fieldData.goalObjectiveQuantity}`;
-    }
     items.progressBar.style.height = "100%";
-    // items.completeText.innerText = string;
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
