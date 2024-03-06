@@ -114,7 +114,7 @@ function init(obj, apiData, initial = false) {
     colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progress: document.querySelector(".progress"),
-    catGoal: document.querySelector("#catImage"),
+    // catGoal: document.querySelector("#catImage"),
     progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
@@ -216,20 +216,20 @@ function handleGrow(amount, callback, initial = false) {
     // }px)`;
 
     // Act catImage progress with calc()
-    catImage.style.left = `calc(${amountToUpdate}% - 40px)`;
+    // catImage.style.left = `calc(${amountToUpdate}% - 40px)`;
 
     items.progress.style = `--wth:${amountToUpdate}%`;
-    document.getElementById("goalImage").src =
-    "https://i.ibb.co/x5MKB8j/comederolleno.png";
-    console.log(getPercentage(
-      amountToUpdate,
-      mainObj.fieldData.goalObjectiveQuantity
-    ))
+    // document.getElementById("goalImage").src =
+    // "https://i.ibb.co/x5MKB8j/comederolleno.png";
+    // console.log(getPercentage(
+    //   amountToUpdate,
+    //   mainObj.fieldData.goalObjectiveQuantity
+    // ))
     if (goalType === "tip") {
-      items.progressionText.innerHTML = getPercentage(
-        amountToUpdate,
+      items.progressionText.innerHTML = 
+        amountToUpdate + "|" +
         mainObj.fieldData.goalObjectiveQuantity
-      );
+      ;
     } else {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
@@ -239,15 +239,15 @@ function handleGrow(amount, callback, initial = false) {
   } else {
     // items.ganchos.style.top = `0`;
     // items.progressBar.style.height = "1%";
-    items.progressionText.innerHTML = getPercentage(
-      amountToUpdate,
-      mainObj.fieldData.goalObjectiveQuantity
-    );
-    catImage.style.left = `calc(100% - 20px)`;
+    items.progressionText.innerHTML = 
+    amountToUpdate + "|" +
+    mainObj.fieldData.goalObjectiveQuantity
+  ;
+    // catImage.style.left = `calc(100% - 20px)`;
 
     items.progress.style = `--wth:100%`;
-    document.getElementById("goalImage").src =
-      "https://i.ibb.co/x5MKB8j/comederolleno.png";
+    // document.getElementById("goalImage").src =
+    //   "https://i.ibb.co/x5MKB8j/comederolleno.png";
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
