@@ -44,7 +44,7 @@ main {
 
 .container {
   position: relative;
-  width: 320px;
+  width: 38rem;
 }
 
 .container-progress {
@@ -54,10 +54,10 @@ main {
   width: 100%;
 }
 
-.progress{
+.progress {
   position: relative;
   width: 100%;
-  height: 28px;
+  height: 45px;
   background-color: #ffe7d9;
   border-radius: 4rem;
   overflow: hidden;
@@ -75,20 +75,23 @@ main {
 
 #goalImage{
   position: absolute;
-  right: -7rem;
-  top: -.5rem;
-  width: 76px;
-  height: 44px;
+  right: -10rem;
+  top: -.8rem;
+  /* width: 76px; */
+  /* height: 44px; */
+  transform: scale(.6);
 }
 
 #catImage{
   position: absolute;
-  width: 50px;
-  height: 50px;
-  top: -13px;
-  left: -10px;
-  z-index: 200;
+  /* width: 50px; */
+  /* height: 50px; */
+  /* top: -13px; */
+  /* left: -10px; */
+  z-index: 4;
+  top: -1.5rem;
   transition: left .2s ease-in-out;
+  transform: scale(.6);
 }
 
 #round {
@@ -143,14 +146,23 @@ main {
 .progressNums {
   /* opacity: 0; */
   position: absolute;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
   text-align: center;
+  line-height: 2;
   vertical-align: middle;
   color: var(--progressNums-color);
-  font-size: 1rem;
+  font-size: 2rem;
   z-index: 4;
-  margin-bottom: 1rem;
-  top: .80rem;
-  left: 10rem;
+  /* margin-bottom: 1rem; */
+  /* top: .80rem; */
+  /* left: 10rem; */
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
   /* text-shadow: 3px 0 black, -3px 0 black,

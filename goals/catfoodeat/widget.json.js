@@ -33,7 +33,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 10,
+    value: 0,
     group: "Customization",
     step: 1,
   },

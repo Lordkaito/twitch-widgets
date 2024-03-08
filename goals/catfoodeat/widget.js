@@ -199,16 +199,17 @@ function handleGrow(amount, callback, initial = false) {
 
   if (!completedGoal) {
     // Act catImage progress with calc()
-    items.progressionText.innerText = "2"
-    catImage.style.left = `calc(${amountToUpdate}% - 40px)`;
+    items.progressionText.innerText = "2";
+    catImage.style.left = `calc(${amountToUpdate}% - 2.5rem)`;
 
     items.progress.style = `--wth:${amountToUpdate}%`;
-    document.getElementById("goalImage").src =
-    "https://i.ibb.co/x5MKB8j/comederolleno.png";
-    console.log(getPercentage(
-      amountToUpdate,
-      mainObj.fieldData.goalObjectiveQuantity
-    ))
+    if (amountToUpdate == 0) {
+      document.getElementById("goalImage").src =
+        "https://i.ibb.co/n0q0rLw/comederovacio.png";
+    } else {
+      document.getElementById("goalImage").src =
+        "https://i.ibb.co/x5MKB8j/comederolleno.png";
+    }
     if (goalType === "tip") {
       items.progressionText.innerText = getPercentage(
         amountToUpdate,
@@ -227,7 +228,7 @@ function handleGrow(amount, callback, initial = false) {
       amountToUpdate,
       mainObj.fieldData.goalObjectiveQuantity
     );
-    catImage.style.left = `calc(100% - 20px)`;
+    catImage.style.left = `calc(100% - 3.5rem)`;
 
     items.progress.style = `--wth:100%`;
     document.getElementById("goalImage").src =
