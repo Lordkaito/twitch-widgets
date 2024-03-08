@@ -173,6 +173,7 @@ function handleGrow(amount, callback, initial = false) {
   if (initial === true) {
     amountToUpdate = amount;
   }
+  let currency = mainObj.fieldData.currency;
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
@@ -180,7 +181,7 @@ function handleGrow(amount, callback, initial = false) {
 
     if (goalType === "tip") {
       items.progressionText.innerHTML =
-        amountToUpdate + "|" + mainObj.fieldData.goalObjectiveQuantity;
+        amountToUpdate + currency + " | " + mainObj.fieldData.goalObjectiveQuantity + currency;
     } else {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
@@ -189,7 +190,7 @@ function handleGrow(amount, callback, initial = false) {
     }
   } else {
     items.progressionText.innerHTML =
-      amountToUpdate + "|" + mainObj.fieldData.goalObjectiveQuantity;
+      amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity;
 
     items.progress.style = `--wth:100%`;
   }
