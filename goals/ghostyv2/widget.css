@@ -59,7 +59,7 @@ main {
 
 .container {
   position: relative;
-  width: 320px;
+  width: 38rem;
 }
 
 .container-progress {
@@ -214,10 +214,10 @@ main {
 
 .goal-name {
   position: absolute;
-  top: 4rem;
+  top: 4.5rem;
   left: 4.5rem;
   /* width: 14rem; */
-  height: 3.8rem;
+  /* height: 3.8rem; */
   text-shadow: 1.7px 0 var(--gradient-1),
   -1.7px 0 var(--gradient-1), 0 1.7px var(--gradient-1),
   0 -1.7px var(--gradient-1), 2px 1.7px var(--gradient-1),
@@ -225,7 +225,7 @@ main {
   2px -1.7px var(--gradient-1), -2px 1.7px var(--gradient-1);
   /* background-color: var(--goal-name-box-shadow-color); */
   border-radius: 40px;
-  text-align: center;
+  /* text-align: center; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,6 +239,8 @@ main {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
+  word-wrap: break-word;
+  max-width: 35rem;
 }
 
 .left-ear {
