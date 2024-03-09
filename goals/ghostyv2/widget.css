@@ -157,23 +157,15 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
-  text-align: end;
+  text-align: right;
   width: 100%;
   vertical-align: middle;
   color: var(--progression-color);
   font-size: 1.5rem;
   z-index: 4;
-  margin-bottom: 1rem;
-  top: 1.3rem;
-  left: -.9rem;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
-  /* text-shadow: 3px 0 black, -3px 0 black,
-    0 3px black, 0 -3px black,
-    2px 3px black, -2px -3px black,
-    2px -3px black, -2px 3px black; */
+  top: 1.4rem;
+  left: -2rem;
 }
 
 .progress-bar {
@@ -222,8 +214,8 @@ main {
 
 .goal-name {
   position: absolute;
-  top: 3.5rem;
-  left: 3.5rem;
+  top: 4rem;
+  left: 4.5rem;
   /* width: 14rem; */
   height: 3.8rem;
   text-shadow: 1.7px 0 var(--gradient-1),
@@ -244,7 +236,7 @@ main {
 }
 
 .goal-name p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
 }
