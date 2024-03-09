@@ -91,7 +91,7 @@ main {
   z-index: 4;
   top: -1.5rem;
   transition: left .2s ease-in-out;
-  transform: scale(.6);
+  transform: scale(.7);
 }
 
 #round {
@@ -155,10 +155,10 @@ main {
   right: 0;
   margin: auto;
   text-align: center;
-  line-height: 2;
+  line-height: 2.3;
   vertical-align: middle;
   color: var(--progressNums-color);
-  font-size: 2rem;
+  font-size: 1.7rem;
   z-index: 4;
   /* margin-bottom: 1rem; */
   /* top: .80rem; */
@@ -217,11 +217,11 @@ main {
 
 .goal-name {
   position: absolute;
-  top: -4rem;
+  top: -3.5rem;
   left: 0rem;
   /* width: 14rem; */
   padding: 0 1rem;
-  height: 3.8rem;
+  height: 3.3rem;
   background-color: var(--goal-name-box-shadow-color);
   border-radius: 40px;
   text-align: center;
