@@ -1,42 +1,27 @@
 :root {
-  --message-color: #ffffff;
-  --message-background-color: #16122d;
-  --message-border-color: #ffe7c8;
-  --user-color: #213346;
-  --user-background-color: #f7c92c;
+  --message-color: #553a2f;
+  --message-background-color: #fdefc8;
+  --message-border-color: #7bb87e;
+  --user-color: #fdefc8;
+  --user-background-color: #ee9ab1;
   --user-border-color: #e6e6e6;
-  --pronouns-color: blue;
-  --pronouns-background-color: #ba6414;
+  --pronouns-color: #ee9ab1;
+  --pronouns-background-color: #fdefc8;
   --pronouns-border-color: #e6e6e6;
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
-  --mod-background-color: #62d85f;
-  --vip-background-color: #f683cf;
-  --viewer-background-color: #bf43ff;
-  --streamer-background-color: #e4b25f;
-  --sub-background-color: #8074ff;
   --mods-message-border: #fff3eb;
   --event-background-color: rgba(155, 179, 142, 0.5);
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
-/* borde: #ffe7c8
+/* fondo: #fdefc8
 
-fondo: #16122d
+ROSA: #ee9ab1
 
-texto: #ffffff
+texto marron: #553a2f
 
-username: #213346
-
-mod: #62d85f
-
-vip: #f683cf
-
-viewer: #bf43ff
-
-streamer: #e4b25f
-
-sub: #8074ff */
+El base de este el mismo que el anterior */
 
 * {
   font-family: "Fredoka", sans-serif;
@@ -88,7 +73,7 @@ main {
   animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  padding: 0px 0 20px 0;
+  padding: 0 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -101,11 +86,31 @@ main {
   margin-bottom: 1rem;
   margin-top: 0.5rem;
   width: 100%;
-  border-radius: 55px;
+  border-radius: 20px;
   background: var(--message-background-color);
   position: relative;
-  box-shadow: 0 0 0 5px var(--message-border-color);
   /* overflow: hidden; */
+}
+
+/* .super-main-container2{
+  content: "";
+  width: 2.2rem;
+  height: 4rem;
+  border-radius: 0 0 50% 50%;
+  display: inline-block;
+  margin-right: 0.625rem;
+  background: var(--message-background-color);
+  position: absolute;
+  bottom: 0.3rem;
+  left: 2.2rem;
+  z-index: -1;
+} */
+
+.pegatina {
+  position: absolute;
+  right: 0;
+  bottom: -.3rem;
+  transform: scale(0.8);
 }
 
 .circle {
@@ -116,7 +121,7 @@ main {
   margin-right: 0.625rem;
   background: var(--message-background-color);
   position: absolute;
-  bottom: -0.7rem;
+  bottom: -.7rem;
   left: 1.2rem;
   z-index: -1;
 }
@@ -154,10 +159,6 @@ main {
   animation: fadeIn 0.5s 0.7s ease-in-out forwards;
   margin-left: 1rem;
   /* justify-content: center; */
-  position: absolute;
-  z-index: 100;
-  top: -13px;
-  transform: rotateZ(-6deg);
 }
 
 @keyframes fadeIn {
@@ -174,33 +175,13 @@ main {
   width: fit-content;
   border-radius: 1.25rem;
   text-align: center;
-  /* background-color: var(--user-background-color); */
+  background-color: var(--user-background-color);
   padding: 0.4rem 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   position: relative;
-}
-
-.mod-bg {
-  background-color: var(--mod-background-color);
-}
-
-.vip-bg {
-  background-color: var(--vip-background-color);
-}
-
-.streamer-bg {
-  background-color: var(--streamer-background-color);
-}
-
-.viewer-bg {
-  background-color: var(--viewer-background-color);
-}
-
-.sub-bg {
-  background-color: var(--sub-background-color);
 }
 
 .flower {
@@ -236,17 +217,6 @@ main {
 }
 
 .capitalize-user {
-  color: var(--user-color);
-  font-weight: 500;
-  font-size: 1.35rem;
-  display: inline-block;
-  max-width: 11ch;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.capitalize-role {
   color: var(--user-color);
   font-weight: 500;
   font-size: 1.35rem;
@@ -299,7 +269,7 @@ main {
 .pronouns {
   color: white;
   background-color: var(--pronouns-background-color);
-  padding: 0.4rem 0.4rem;
+  padding: .4rem .4rem;
   border-radius: 1.25rem;
   font-size: 12px;
   text-align: center;
@@ -308,6 +278,7 @@ main {
 }
 
 .prons {
+  color: var(--pronouns-color);
   max-width: 100%;
   text-align: center;
 }
@@ -340,13 +311,25 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 1rem;
+  min-height: 5rem;
+  min-width: 20rem;
+  max-width: 36rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 20px;
+  background: var(--message-background-color);
   position: relative;
-  max-width: 37rem;
-  padding: 1rem 1rem 0.6rem 1rem;
-  animation-fill-mode: forwards;
-  animation-duration: 0.8s;
-  left: 1.875rem;
-  width: 37.5rem;
+}
+
+.event-image {
+  position: absolute;
+  top: -2rem;
+  left: -2rem;
+  transform: scale(.8);
 }
 
 .widget {
@@ -355,7 +338,7 @@ main {
 }
 
 .event-name {
-  max-width: 300px;
+  width: 24rem;
   height: 100%;
   top: 0;
   text-align: center;
@@ -363,12 +346,12 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 1;
-  color: var(--event-color);
+  color: #fff5e9;
   letter-spacing: normal;
   font-size: 1.5rem;
   animation: showNames 0.5s ease-in-out forwards;
-  background-color: var(--event-background-color);
-  padding: 3px 10px;
+  /* background-color: var(--event-background-color); */
+  padding: 1rem;
   border-radius: 40px;
   text-shadow: 0 2px 0.2em var(--event-shadow-color);
 }
@@ -413,9 +396,8 @@ main {
 
 .role {
   position: absolute;
-  right: 0.8rem;
-  bottom: -1rem;
-  right: -.4rem;
+  right: -1rem;
+  top: -1rem;
   z-index: 100;
   animation: fadeIn 0.5s 1s ease-in-out forwards;
   opacity: 0;
@@ -426,7 +408,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 30rem;
 }
 
 @keyframes showLeftFungi {
@@ -561,15 +543,15 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
-  transform: scale(0.8);
-  animation: fadeIn 0.5s 0.7s ease-in-out forwards;
+  transform: scale(.8);
+  animation: fadeIn 0.5s .7s ease-in-out forwards;
   opacity: 0;
 }
 
 .ear {
   position: absolute;
   right: -1.1rem;
-  top: -0.9rem;
+  top: -.9rem;
   transform: rotate(-5deg) scale(0.8) scaleX(-1);
   z-index: -1;
 }
@@ -577,7 +559,7 @@ main {
 .ear2 {
   position: absolute;
   left: -1rem;
-  top: -0.9rem;
+  top: -.9rem;
   transform: rotate(8deg) scale(0.8);
   z-index: -1;
 }

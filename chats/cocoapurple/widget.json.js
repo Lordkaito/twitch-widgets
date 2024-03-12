@@ -43,7 +43,7 @@ let fieldData = {
   allowPronouns: {
     type: "dropdown",
     label: "Show pronouns:",
-    value: "false",
+    value: "true",
     group: "Customization",
     options: {
       true: "Yes",

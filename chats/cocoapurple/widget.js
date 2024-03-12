@@ -22,11 +22,52 @@ const priorities = {
   viewer: 5,
 };
 
+const colors = {
+  subscriber: {
+    userBg: "#efcdff",
+    user: "#765b91",
+    messageBg: "#c09688",
+    messageText: "#fff5e9",
+    img: "https://i.ibb.co/xj4bQqQ/pegatina-sub.png",
+  },
+  mod: {
+    userBg: "#fee9cc",
+    user: "#c09688",
+    messageBg: "#efcdff",
+    messageText: "#765b91",
+    img: "https://i.ibb.co/Tcnn6YT/pegatina-viewer-mod.png",
+  },
+  vip: {
+    userBg: "#efcdff",
+    user: "#fff5e9",
+    messageBg: "#fff5e9",
+    messageText: "#c09688",
+    img: "https://i.ibb.co/QmDjqqz/pegatina-vip-streamer.png",
+  },
+  streamer: {
+    userBg: "#fee9cc",
+    user: "#c09688",
+    messageBg: "#fff5e9",
+    messageText: "#ae88c0",
+    img: "https://i.ibb.co/QmDjqqz/pegatina-vip-streamer.png",
+  },
+  viewer: {
+    userBg: "#fff5e9",
+    user: "#c09688",
+    messageBg: "#e8c0a7",
+    messageText: "#fff5e9",
+    img: "https://i.ibb.co/Tcnn6YT/pegatina-viewer-mod.png",
+  },
+  event: {
+    background: "rgba(239, 205, 255, 0.6)",
+    text: "#fff5e9",
+  },
+};
+
 class mainEvent {
   constructor(event, listener) {
     this.event = event;
     this.listener = listener;
-    console.log(this.event);
   }
 
   get init() {
@@ -141,23 +182,30 @@ class mainEvent {
 
     img.src = "https://i.postimg.cc/fLkM72py/panzatotoro.png";
     thingy.src = "https://i.postimg.cc/brmWR4c6/kikilazo.png";
-    ear.src = "https://i.postimg.cc/rmZ6h4GR/oreja-marron.png";
-    ear2.src = "https://i.postimg.cc/rmZ6h4GR/oreja-marron.png";
+    ear.src = "https://i.postimg.cc/TYGSrCvN/oreja-rosa.png";
+    ear2.src = "https://i.postimg.cc/TYGSrCvN/oreja-rosa.png";
 
     superMainContainer.classList.add("super-main-container");
     superMainContainer.setAttribute("id", `${this.id}`);
     circle.classList.add("circle");
+    circle.style.backgroundColor = colors[role.role].messageBg;
     mainContainer.classList.add("main-container");
-    mainContainer.appendChild(this.roleImages)
+    mainContainer.style.backgroundColor = colors[role.role].messageBg;
+
+    const roleImage = document.createElement("img");
+    roleImage.src = colors[role.role].img;
+    roleImage.classList.add("pegatina");
+
+    mainContainer.appendChild(roleImage);
+
     // mainContainer.appendChild(img);
     // mainContainer.appendChild(thingy);
-    // mainContainer.appendChild(circle);
+    mainContainer.appendChild(circle);
     // mainContainer.appendChild(ear);
     // mainContainer.appendChild(ear2);
-    // superMainContainer.appendChild(this.roleImages);
-
     mainContainer.appendChild(await this.createMessageContainerElement());
     superMainContainer.appendChild(await this.createUsernameInfoElement());
+    // superMainContainer.appendChild(superMainContainer2);
     superMainContainer.appendChild(mainContainer);
 
     return superMainContainer;
@@ -166,36 +214,17 @@ class mainEvent {
   async createUsernameInfoElement() {
     const usernameInfo = document.createElement("div");
     const usernameInfoContainer = document.createElement("div");
-    const role = this.roles.role
 
     usernameInfoContainer.classList.add("username-info-container");
     usernameInfo.classList.add("username-info");
-
-    console.log(role)
-
-    switch (role) {
-      case "streamer":
-        usernameInfo.classList.add("streamer-bg");
-        break;
-      case "mod":
-        usernameInfo.classList.add("mod-bg");
-        break;
-      case "subscriber":
-        usernameInfo.classList.add("sub-bg");
-        break;
-      case "vip":
-        usernameInfo.classList.add("vip-bg");
-        break;
-      case "viewer":
-        usernameInfo.classList.add("viewer-bg");
-        break;
-    }
+    usernameInfo.style.backgroundColor = colors[this.roles.role].userBg;
+    usernameInfo.appendChild(this.roleImages);
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
     usernameInfoContainer.appendChild(usernameInfo);
 
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
+    // usernameInfoContainer.appendChild(await this.createPronounsContainer());
     return usernameInfoContainer;
   }
 
@@ -228,21 +257,12 @@ class mainEvent {
     return usernameBadges;
   }
 
-  createRoleElement() {
-    const roleElement = document.createElement("span");
-
-    const [{ role }] = this.getRole();
-    roleElement.innerText = `${role}`;
-    roleElement.classList.add("capitalize-role");
-
-    return roleElement;
-  }
-
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
 
     capitalizeUser.classList.add("capitalize-user");
     capitalizeUser.innerText = this.user;
+    capitalizeUser.style.color = colors[this.roles.role].user;
 
     return capitalizeUser;
   }
@@ -305,20 +325,19 @@ class mainEvent {
 
     switch (minPriorityRole.role) {
       case "streamer":
-        roleImage.src = `https://i.postimg.cc/2ynTNdpj/jazstreamer.png`;
+        roleImage.src = `https://i.ibb.co/W2ghRyH/badge-streaamer.png`;
         break;
       case "mod":
-        roleImage.src = `https://i.postimg.cc/0QTZ4WBH/jazmod.png`;
+        roleImage.src = `https://i.ibb.co/ZgcHV8Z/badge-mod.png`;
         break;
       case "vip":
-        roleImage.src = `https://i.postimg.cc/hPbMC0bp/jazvip.png`;
+        roleImage.src = `https://i.ibb.co/gJLm4Hj/badge-vip.png`;
         break;
       case "sub":
-        roleImage.src = `https://i.postimg.cc/Gh1qJfY4/jazsub.png`;
+        roleImage.src = `https://i.ibb.co/f4797KD/badge-sub.png`;
         break;
-        case "viewer":
-        roleImage.src = `https://i.postimg.cc/DfGxGhWV/jazviewer.png`;
-        // roleImage.style.display = "none";
+      case "viewer":
+        roleImage.src = "https://i.ibb.co/1mDLTWg/badge-viewer.png";
         break;
     }
     return roleImage;
@@ -462,7 +481,7 @@ class mainEvent {
     textContainer.classList.add("text");
 
     textContainer.innerHTML = words.join(" ");
-
+    textContainer.style.color = colors[this.roles.role].messageText;
     return textContainer;
   }
 
@@ -576,24 +595,31 @@ class mainEvent {
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
+    // for (let i = 0; i < 2; i++) {
+    //   const fungi = document.createElement("img");
 
-      fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
+    //   fungi.src = "https://i.postimg.cc/7P2G22vG/hoja-tulipanes.png";
 
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
+    //   fungi.classList.add("fungi");
+    //   const fungiDivContainer = document.createElement("div");
 
-      fungiDivContainer.classList.add(`event-leafs-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
+    //   fungiDivContainer.classList.add(`event-leafs-container-${i + 1}`);
+    //   fungiDivContainer.appendChild(fungi);
+    //   fungiContainer.appendChild(fungiDivContainer);
+    //   fungiContainer.appendChild(nameContainer);
+    // }
+    fungiContainer.classList.add("fungi-container");
     nameContainer.classList.add("event-name");
     nameContainer.innerText = nameAndText;
+    fungiContainer.appendChild(nameContainer);
+    mainContainer.setAttribute("id", `${this.id}`);
+    const eventImage = document.createElement("img");
+    eventImage.src = "https://i.ibb.co/CK6GnT2/adorno-eventos.png";
+    eventImage.classList.add("event-image");
 
     mainContainer.classList.add("event-container");
+    mainContainer.appendChild(eventImage);
+    mainContainer.style.backgroundColor = colors.event.background;
     mainContainer.appendChild(fungiContainer);
 
     return mainContainer;
@@ -674,11 +700,12 @@ async function loadGlobalEmotes() {
 
 const removeMessage = (messageContainer) => {
   const elem = messageContainer;
+  console.log(elem);
   if (elem) {
-    elem.style.animation = "removeMessage 0.5s ease-in-out forwards";
+    elem.style.animation = "removeMessage .5s ease-in-out forwards";
     setTimeout(() => {
       elem.remove();
-    }, 700);
+    }, 100000700);
   }
 };
 let repeatedEvents = 0;
@@ -713,9 +740,9 @@ const ignoreMessagesStartingWith = (message) => {
 window.addEventListener("onEventReceived", async (obj) => {
   let { listener, event } = obj.detail;
 
-  if (listener !== "message") {
-    return;
-  }
+  // if (listener !== "message") {
+  //   return;
+  // }
 
   if (listener === "message") {
     let isBlackListed = blacklisted(event.data.displayName);
