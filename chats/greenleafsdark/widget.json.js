@@ -5,6 +5,16 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
+  limitUsernames: {
+    type: "dropdown",
+    label: "Limit usernames:",
+    value: "true",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
   theme: {
     type: "dropdown",
     label: "Theme:",
@@ -16,50 +26,50 @@ let fieldData = {
       light: "Light",
     },
   },
-  widgetHeight: {
-    label: "Widget height (recommended 1080)",
-    type: "text",
-    group: "Customization",
-    value: "1080",
-  },
-  deleteMessages: {
-    label: "Time to delete messages (max 60):",
-    type: "number",
-    group: "Customization",
-    value: 2,
-    min: 1,
-    max: 60,
-    step: 1,
-  },
-  allowDeleteMessages: {
+  allowPronouns: {
     type: "dropdown",
-    label: "Delete messages on/off:",
+    label: "Allow pronouns",
     value: "true",
     group: "Customization",
     options: {
       true: "Yes",
       false: "No",
     },
+  },
+  deleteMessagesOption: {
+    label: "How to delete messages:",
+    type: "dropdown",
+    group: "Customization",
+    value: "amount",
+    options: {
+      timer: "Timer",
+      amount: "Messages amount",
+    },
+  },
+  maxMessages: {
+    label: "Max messages to show:",
+    type: "number",
+    group: "Customization",
+    value: 5,
+    min: 1,
+    max: 100,
+    step: 1,
+  },
+  deleteMessagesTimer: {
+    label: "Delete messages timer (in seconds):",
+    type: "number",
+    group: "Customization",
+    value: 10,
+    min: 1,
+    max: 60,
+    step: 1,
   },
   displayBadges: {
     type: "dropdown",
     label: "Show badges:",
     value: "false",
     group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
-  },
-  allowPronouns: {
-    type: "dropdown",
-    label: "Show pronouns:",
-    value: "true",
-    group: "Customization",
-    options: {
-      true: "Yes",
-      false: "No",
-    },
+    options: { true: "Yes", false: "No" },
   },
   usersBlackList: {
     type: "text",
@@ -76,7 +86,7 @@ let fieldData = {
   subText: {
     type: "text",
     label: "Custom text for SUB (max 40)",
-    value: "(user) just suscribed!",
+    value: "(user) just subscribed!",
     group: "Events",
   },
   followText: {
@@ -88,13 +98,13 @@ let fieldData = {
   cheerText: {
     type: "text",
     label: "Custom text for Cheers (max 40)",
-    value: "cheered x(amount)!",
+    value: "(user) cheered x(amount)!",
     group: "Events",
   },
   tipText: {
     type: "text",
     label: "Custom text for Tips (max 40)",
-    value: "Tipped $(amount)!",
+    value: "(user) tipped $(amount)!",
     group: "Events",
   },
   giftSubText: {
@@ -114,33 +124,5 @@ let fieldData = {
     label: "Custom text for raids (max 40)",
     value: "(sender) sent (amount) raiders!",
     group: "Events",
-  },
-  deleteMessagesOption: {
-    label: "How to delete messages:",
-    type: "dropdown",
-    group: "Customization",
-    value: "amount",
-    options: {
-      timer: "Timer",
-      amount: "Messages amount",
-    },
-  },
-  maxMessages: {
-    label: "Max messages to show:",
-    type: "number",
-    group: "Customization",
-    value: 3,
-    min: 1,
-    max: 100,
-    step: 1,
-  },
-  deleteMessagesTimer: {
-    label: "Delete messages timer (in seconds):",
-    type: "number",
-    group: "Customization",
-    value: 2,
-    min: 1,
-    max: 60,
-    step: 1,
   },
 };

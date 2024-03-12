@@ -129,6 +129,8 @@ main {
   justify-content: flex-start;
   flex-direction: column;
   gap: 10px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
   /* min-height: 100px; */
   /* transform: translateY(1rem); */
 }
@@ -533,7 +535,8 @@ main {
   /* margin: 0.9rem 0 0.9rem 0; */
   /* padding: 1.5rem 0; */
   /* padding-left: 1rem; */
-  opacity: 1;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
   background-color: transparent;
   position: relative;
   z-index: 2 !important;
