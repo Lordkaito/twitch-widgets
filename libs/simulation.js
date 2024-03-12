@@ -361,7 +361,7 @@ let events = {
     listener: "message",
     event: {
       type: "message",
-      name: "Lordkaito_",
+      name: "Lordkaitooooooooooo_",
       message: "test",
       originalEventName: "message",
       service: "twitch",
@@ -371,7 +371,7 @@ let events = {
           "badge-info": "",
           badges: "broadcaster/1,premium/1",
           color: "#FF0000",
-          "display-name": "Lordkaito_",
+          "display-name": "Lordkaitoooooooooooo_",
           emotes: "",
           "first-msg": "0",
           flags: "",
@@ -379,7 +379,7 @@ let events = {
           mod: "0",
           "returning-chatter": "0",
           "room-id": "675807879",
-          subscriber: "0",
+          subscriber: "1",
           "tmi-sent-ts": "1680558919103",
           turbo: "0",
           "user-id": "675807879",
@@ -388,7 +388,7 @@ let events = {
         },
         nick: "lordkaito_",
         userId: "675807879",
-        displayName: "Lordkaitoooooooooooooooooo_",
+        displayName: "Lordkaito",
         displayColor: "#FF0000",
         badges: [
           {

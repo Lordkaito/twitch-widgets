@@ -37,7 +37,7 @@
   "allowPronouns": {
     "type": "dropdown",
     "label": "Show pronouns:",
-    "value": "true",
+    "value": "false",
     "group": "Customization",
     "options": { "true": "Yes", "false": "No" }
   },
@@ -100,7 +100,7 @@
     "label": "Theme:",
     "value": "pink",
     "group": "Customization",
-    "options": { "pink": "Pink", "red": "Red" }
+    "options": { "pink": "Pink", "purple": "Purple" }
   },
   "deleteMessagesOption": {
     "label": "How to delete messages:",
