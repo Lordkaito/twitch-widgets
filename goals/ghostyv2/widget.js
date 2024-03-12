@@ -86,7 +86,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsPotionHorizontalGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -155,14 +155,18 @@ function checkIfCompleted(amountToUpdate) {
   return currentAmount >= objective;
 }
 
-function getStep(container, objective) {
-  // const containerHeight = container.offsetHeight;
-  // const step = containerHeight / objective;
+function getStep(width, objective) {
+  console.log(width, objective);
+  const step = width / objective;
   return step;
 }
 
 function getGachoStep(diff, objective) {
   return diff / objective;
+}
+
+function roundtip(amount) {
+  return Math.round(amount * 100) / 100;
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -177,11 +181,13 @@ function handleGrow(amount, callback, initial = false) {
 
   let completedGoal = checkIfCompleted(amountToUpdate);
   if (!completedGoal) {
-    items.progress.style = `--wth:${amountToUpdate}%`;
+    let progressStep = getStep(38, mainObj.fieldData.goalObjectiveQuantity);
+    items.progress.style = `--wth:${amountToUpdate * progressStep}rem`;
 
     if (goalType === "tip") {
+      const rounded = roundtip(amountToUpdate);
       items.progressionText.innerHTML =
-        amountToUpdate + currency + " | " + mainObj.fieldData.goalObjectiveQuantity + currency;
+        rounded + currency + " | " + mainObj.fieldData.goalObjectiveQuantity + currency;
     } else {
       items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
