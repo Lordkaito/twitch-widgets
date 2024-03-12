@@ -20,7 +20,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 100,
+    value: 1,
     group: "Customization",
     step: 1,
   },
@@ -34,7 +34,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "tip",
+    value: "follower",
     group: "Customization",
     options: {
       subscriber: "Sub",
