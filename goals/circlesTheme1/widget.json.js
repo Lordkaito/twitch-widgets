@@ -22,7 +22,7 @@ let fieldData = {
     label: "Goal objective:",
     value: 1,
     group: "Customization",
-    step: 1,
+    step: 0.01,
   },
   goalStartQuantity: {
     type: "number",

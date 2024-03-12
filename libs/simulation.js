@@ -340,7 +340,7 @@ let events = {
     event: {
       type: "tip",
       name: "farmer",
-      amount: 150,
+      amount: 1.11,
       message: "Howdy, my name is Bill",
       originalEventName: "tip-latest",
     },

@@ -241,6 +241,10 @@ function aumentarProgreso(amount) {
   }
 }
 
+function roundtip(amount) {
+  return Math.round(amount * 100) / 100;
+}
+
 function handleGrow(amount, callback, initial = false) {
   let amountToUpdate =
     widgetApiData[goalType].amount +
@@ -254,8 +258,9 @@ function handleGrow(amount, callback, initial = false) {
   if (!completedGoal) {
     aumentarProgreso(amountToUpdate);
     if (goalType === "tip") {
+      const rounded = roundtip(amountToUpdate)
       items.objective.innerText =
-        amountToUpdate +
+        rounded +
         mainObj.fieldData.currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +
@@ -267,8 +272,9 @@ function handleGrow(amount, callback, initial = false) {
   } else {
     aumentarProgreso(amountToUpdate);
     if (goalType === "tip") {
+      const rounded = roundtip(amountToUpdate)
       items.objective.innerText =
-        amountToUpdate +
+        rounded +
         mainObj.fieldData.currency +
         "/" +
         mainObj.fieldData.goalObjectiveQuantity +

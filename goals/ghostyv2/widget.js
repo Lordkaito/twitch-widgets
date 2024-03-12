@@ -86,7 +86,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsPotionHorizontalGoalWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -110,11 +110,10 @@ function init(obj, apiData, initial = false) {
 
   items = {
     progressBar: document.querySelector(".progress-bar"),
-    goalText: document.querySelector(".goal-text"),
+    goalText: document.querySelector(".goal-name-text"),
     colita: document.querySelector(".colita"),
     progressBarContainer: document.querySelector(".progress-bar-container"),
     progress: document.querySelector(".progress"),
-    catGoal: document.querySelector("#catImage"),
     progressionText: document.querySelector(".progressNums"),
     title: document.querySelector("#title"),
     progressImg: document.querySelector(".img-container"),
@@ -124,7 +123,6 @@ function init(obj, apiData, initial = false) {
     ganchos: document.querySelector(".ganchos"),
     objective: document.querySelector(".goal-obj-50"),
     goalTypeText: document.querySelector(".goal-type-text"),
-    goalName: document.querySelector(".goal-name-text"),
   };
 
   let text = {
@@ -134,26 +132,7 @@ function init(obj, apiData, initial = false) {
     tip: "tip goal",
   };
 
-  items.goalName.innerText = mainObj.fieldData.goalName ?? "Goal";
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 999) {
-    items.objective.style.fontSize = "1.5rem";
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-
-  if (mainObj.fieldData.goalObjectiveQuantity > 9999) {
-    items.objective.style.fontSize = "1.3rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  if (mainObj.fieldData.goalObjectiveQuantity > 99999) {
-    items.objective.style.fontSize = "1.1rem";
-    items.objective.style.top = "2rem";
-    items.objective.style.left = "1.1rem";
-  }
-  // items.goalTypeText.innerText = text[goalType];
+  items.goalText.innerText = mainObj.fieldData.goalName ?? "Goal";
 
   step = getStep(
     items.progressBarContainer,
@@ -176,14 +155,18 @@ function checkIfCompleted(amountToUpdate) {
   return currentAmount >= objective;
 }
 
-function getStep(container, objective) {
-  // const containerHeight = container.offsetHeight;
-  // const step = containerHeight / objective;
+function getStep(width, objective) {
+  console.log(width, objective);
+  const step = width / objective;
   return step;
 }
 
 function getGachoStep(diff, objective) {
   return diff / objective;
+}
+
+function roundtip(amount) {
+  return Math.round(amount * 100) / 100;
 }
 
 function handleGrow(amount, callback, initial = false) {
@@ -194,45 +177,28 @@ function handleGrow(amount, callback, initial = false) {
   if (initial === true) {
     amountToUpdate = amount;
   }
+  let currency = mainObj.fieldData.currency;
 
   let completedGoal = checkIfCompleted(amountToUpdate);
-
   if (!completedGoal) {
-    // Act catImage progress with calc()
-    items.progressionText.innerText = "2";
-    catImage.style.left = `calc(${amountToUpdate}% - 2.5rem)`;
+    let progressStep = getStep(38, mainObj.fieldData.goalObjectiveQuantity);
+    items.progress.style = `--wth:${amountToUpdate * progressStep}rem`;
 
-    items.progress.style = `--wth:${amountToUpdate}%`;
-    if (amountToUpdate == 0) {
-      document.getElementById("goalImage").src =
-        "https://i.ibb.co/n0q0rLw/comederovacio.png";
-    } else {
-      document.getElementById("goalImage").src =
-        "https://i.ibb.co/x5MKB8j/comederolleno.png";
-    }
     if (goalType === "tip") {
-      items.progressionText.innerText = getPercentage(
-        amountToUpdate,
-        mainObj.fieldData.goalObjectiveQuantity
-      );
+      const rounded = roundtip(amountToUpdate);
+      items.progressionText.innerHTML =
+        rounded + currency + " | " + mainObj.fieldData.goalObjectiveQuantity + currency;
     } else {
-      items.progressionText.innerText = getPercentage(
+      items.progressionText.innerHTML = getPercentage(
         amountToUpdate,
         mainObj.fieldData.goalObjectiveQuantity
       );
     }
   } else {
-    // items.ganchos.style.top = `0`;
-    // items.progressBar.style.height = "1%";
-    items.progressionText.innerHTML = getPercentage(
-      amountToUpdate,
-      mainObj.fieldData.goalObjectiveQuantity
-    );
-    catImage.style.left = `calc(100% - 3.5rem)`;
+    items.progressionText.innerHTML =
+      amountToUpdate + " | " + mainObj.fieldData.goalObjectiveQuantity;
 
     items.progress.style = `--wth:100%`;
-    document.getElementById("goalImage").src =
-      "https://i.ibb.co/x5MKB8j/comederolleno.png";
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity);
