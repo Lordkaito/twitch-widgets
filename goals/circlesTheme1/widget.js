@@ -50,21 +50,6 @@ let currentSender = "";
 let items, step, goalType;
 let animationActive = false;
 
-// let progreso = 0;
-// let circle = document.querySelector("circle");
-// let progressText = document.getElementById("progressCircle");
-// function aumentarProgreso() {
-//   if (progreso < 100) {
-//     progreso += 10;
-//     let progress = 540 - (540 * progreso) / 130;
-//     circle.style.strokeDashoffset = progress;
-//     progressText.innerText = progreso + "%";
-//   }
-// }
-
-// document
-//   .getElementById("progressCircle")
-//   .addEventListener("click", aumentarProgreso);
 let objective;
 
 window.addEventListener("onWidgetLoad", async function (obj) {
@@ -110,7 +95,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("beniartsCircleGoalsPackWidgetPreviousGained");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -185,19 +170,15 @@ function init(obj, apiData, initial = false) {
   switch (mainObj.fieldData.goalTree) {
     case "sabila":
       items.goalTree.src = goalTree.tree1;
-      // items.goalTree.style.left = "16px";
       break;
     case "enrredadera":
       items.goalTree.src = goalTree.tree2;
-      // items.goalTree.style.left = "5px";
       break;
     case "monstera":
       items.goalTree.src = goalTree.tree3;
-      // items.goalTree.style.left = "14px";
       break;
     case "bonsai":
       items.goalTree.src = goalTree.tree4;
-      // items.goalTree.style.left = "9px";
       break;
 
     default:
@@ -243,13 +224,21 @@ let circle = document.querySelector("circle");
 // let progressText = document.getElementById("progressCircle");
 const newStep = getStep(540, objective);
 function aumentarProgreso(amount) {
-  const thing = getStep(540, objective) * amount;
-  console.log(thing);
-  progreso += newStep;
-  let progress = 540 - (540 * thing) / 720;
-  circle.style.transition = "stroke-dashoffset .5s ease-out"; // Agrega esta línea
-  circle.style.strokeDashoffset = progress;
-  items.progressCircle.innerText = getPercentage(amount, objective);
+  if (amount > objective) {
+    items.progressCircle.innerText = getPercentage(amount, objective);
+    progreso += newStep;
+    let progress = 540 - (540 * 540) / 720;
+    circle.style.transition = "stroke-dashoffset .5s ease-out"; // Agrega esta línea
+    circle.style.strokeDashoffset = progress;
+    return;
+  } else {
+    items.progressCircle.innerText = getPercentage(amount, objective);
+    const thing = getStep(540, objective) * amount;
+    progreso += newStep;
+    let progress = 540 - (540 * thing) / 720;
+    circle.style.transition = "stroke-dashoffset .5s ease-out"; // Agrega esta línea
+    circle.style.strokeDashoffset = progress;
+  }
 }
 
 function roundtip(amount) {
@@ -281,7 +270,7 @@ function handleGrow(amount, callback, initial = false) {
         amountToUpdate + "/" + mainObj.fieldData.goalObjectiveQuantity;
     }
   } else {
-    aumentarProgreso(objective);
+    aumentarProgreso(amountToUpdate);
     if (goalType === "tip") {
       const rounded = roundtip(amountToUpdate)
       items.objective.innerText =
@@ -307,10 +296,10 @@ function getPercentage(amount, objective) {
 
 function updateApiData(amountToUpdate) {
   widgetApiData[goalType].amount = amountToUpdate;
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
+  // SE_API.store.set("beniartsCircleGoalsPackWidgetPreviousGained", widgetApiData);
 }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("beniartsCircleGoalsPackWidgetPreviousGained", defaultApiData);
   window.location.reload();
 }

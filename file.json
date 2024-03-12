@@ -15,6 +15,7 @@
     "step": 1
   },
   "goalStartQuantity": {
+  "goalStartQuantity": {
     "type": "number",
     "label": "Goal start:",
     "value": 0,
@@ -24,7 +25,10 @@
     "step": 1
   },
   "goalType": {
+  "goalType": {
     "type": "dropdown",
+    "label": "Goal type:",
+    "value": "tip",
     "label": "Goal type:",
     "value": "tip",
     "group": "Customization",
@@ -34,16 +38,28 @@
       "cheer": "Cheer",
       "tip": "Tip"
     }
+    "options": {
+      "subscriber": "Sub",
+      "follower": "Follow",
+      "cheer": "Cheer",
+      "tip": "Tip"
+    }
   },
+  "goalFullType": {
   "goalFullType": {
     "type": "dropdown",
     "label": "Goal full type:",
     "value": "allTime",
+    "label": "Goal full type:",
+    "value": "allTime",
     "group": "Customization",
+    "options": { "allTime": "All time", "session": "Stream" }
     "options": { "allTime": "All time", "session": "Stream" }
   },
   "startFromCero": {
+  "startFromCero": {
     "type": "dropdown",
+    "label": "Start from 0:",
     "label": "Start from 0:",
     "value": "false",
     "group": "Customization",

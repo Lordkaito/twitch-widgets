@@ -11,6 +11,12 @@ let fieldData = {
     value: "GOAL COMPLETED!",
     group: "Customization",
   },
+  goalName: {
+    type: "text",
+    label: "Goal name:",
+    value: "Goal text",
+    group: "Customization",
+  },
   goalTypeText: {
     type: "text",
     label: "Goal type:",
@@ -27,7 +33,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 10,
+    value: 0,
     group: "Customization",
     step: 1,
   },

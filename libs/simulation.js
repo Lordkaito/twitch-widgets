@@ -361,7 +361,7 @@ let events = {
     listener: "message",
     event: {
       type: "message",
-      name: "Lordkaito_",
+      name: "Lordkaitooooooooooo_",
       message: "test",
       originalEventName: "message",
       service: "twitch",
@@ -371,7 +371,7 @@ let events = {
           "badge-info": "",
           badges: "broadcaster/1,premium/1",
           color: "#FF0000",
-          "display-name": "Lordkaito_",
+          "display-name": "Lordkaitoooooooooooo_",
           emotes: "",
           "first-msg": "0",
           flags: "",
