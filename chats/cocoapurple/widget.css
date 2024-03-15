@@ -323,6 +323,8 @@ main {
   border-radius: 20px;
   background: var(--message-background-color);
   position: relative;
+  opacity: 1;
+  animation: slideMessage 1s ease-in-out forwards;
 }
 
 .event-image {
