@@ -23,4 +23,23 @@ let fieldData = {
     label: "Remove shelf",
     group: "Shelfs",
   },
+  bookType: {
+    type: "dropdown",
+    value: "one",
+    label: "Book type",
+    group: "Books",
+    options: {
+      one: "One",
+      two: "Two",
+      three: "Three",
+      four: "Four",
+      five: "Five",
+      six: "Six",
+      seven: "Seven",
+      eight: "Eight",
+      nine: "Nine",
+      ten: "Ten",
+      eleven: "Eleven",
+    }
+  }
 };
