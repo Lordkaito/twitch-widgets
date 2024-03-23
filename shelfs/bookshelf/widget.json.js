@@ -1,4 +1,22 @@
 let fieldData = {
+  bookColor: {
+    type: "color",
+    value: "#000000",
+    label: "Book color",
+    group: "Books",
+  },
+  selectedShelf: {
+    type: "dropdown",
+    value: "A",
+    label: "Selected shelf",
+    group: "Shelfs",
+    options: {
+      A: "Shelf A",
+      B: "Shelf B",
+      C: "Shelf C",
+      D: "Shelf D",
+    }
+  },
   addBook: {
     type: "button",
     value: "addBook",
@@ -23,23 +41,4 @@ let fieldData = {
     label: "Remove shelf",
     group: "Shelfs",
   },
-  bookType: {
-    type: "dropdown",
-    value: "one",
-    label: "Book type",
-    group: "Books",
-    options: {
-      one: "One",
-      two: "Two",
-      three: "Three",
-      four: "Four",
-      five: "Five",
-      six: "Six",
-      seven: "Seven",
-      eight: "Eight",
-      nine: "Nine",
-      ten: "Ten",
-      eleven: "Eleven",
-    }
-  }
 };

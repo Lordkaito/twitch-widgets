@@ -24,20 +24,22 @@
 }
 
 .shelf {
-  /* margin-top: 60px; */
   height: 20px;
   order: 2;
+  width: 25rem;
 }
 
 .bigShelf {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 }
 
 .booksContainer {
   display: flex;
+  align-items: end;
+  height: 130px;
+  margin: 0 .3rem;
 }
 
 .horizontal-container {
