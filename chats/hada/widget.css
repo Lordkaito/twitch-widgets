@@ -581,6 +581,7 @@ main {
   align-items: center;
   justify-content: center;
   width: 26rem;
+  min-height: 64px;
   height: 100%;
   border-radius: 20px;
   padding: 1rem 2rem;
@@ -657,7 +658,7 @@ main {
 .event-name {
   height: 100%;
   top: 0;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   /* display: flex; */
   /* align-items: center; */
@@ -923,12 +924,12 @@ main {
 
 .alas-puntos-izq {
   transform: scale(0.9);
-  left: -1.5rem;
+  left: -1.2rem;
 }
 
 .alas-puntos-der {
   transform: scale(0.9) scaleX(-1);
-  right: -1.5rem;
+  right: -1.2rem;
 }
 
 .role-img {
@@ -937,6 +938,16 @@ main {
   top: 0;
   bottom: 0;
   margin: auto;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+}
+
+.bote {
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+}
+
+.joya {
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
 }

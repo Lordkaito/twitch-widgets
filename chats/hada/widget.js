@@ -464,11 +464,11 @@ class mainEvent {
 
     newContainer.innerHTML = `
       <div class="event-container">
-        <img src="https://i.ibb.co/58bPVGq/botehada.png" />
+        <img class="bote" src="https://i.ibb.co/58bPVGq/botehada.png" />
         <div class="event-and-name-container">
           <p class="event-name" style="color: ${colors.eventsColor}">${nameAndText}</p>
         </div>
-        <img src="https://i.ibb.co/nPdC92v/joyahada.png" />
+        <img class="joya" src="https://i.ibb.co/nPdC92v/joyahada.png" />
       </div>
     `;
     return newContainer;

@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "aks jdhfa sdfiaw hciqdhcljkg aksjldchjka sgdchsad chjksa chlhsdcjkl gald c agsdcgakjs gdchjajsgd ciajksdc ghkajsd chas d chcdalsdhg",
+        text: "adhg",
         isAction: false,
         emotes: ["HypeShock"],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
