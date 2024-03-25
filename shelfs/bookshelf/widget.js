@@ -3,7 +3,9 @@ let totalBooks = 0;
 // let fieldData = {};
 let button = document.querySelector(".addShelf");
 button.addEventListener("click", () => {
-  addShelf(mainObj);
+  const shelfs = document.querySelectorAll(".shelf");
+  console.log(shelfs);
+  addShelf(mainObj, shelfs);
 });
 
 let addBookk = document.querySelector(".addBook");
@@ -55,11 +57,13 @@ window.addEventListener("onWidgetLoad", async function (obj) {
   // let api = await getApiData(obj);
   // init(obj, api, true);
   fieldData = obj.detail.fieldData;
+  // renderInitialBooks(widgetApiData);
 });
 
 const allowedEvents = ["addShelf", "removeShelf", "addBook", "removeBook"];
 
 window.addEventListener("onEventReceived", function (obj) {
+  const shelfs = document.querySelectorAll(".shelf");
   // possible events: addShelf, removeShelf, addBook, removeBook
   // when we receive an event to add a book, we check if the current shelf is full
   // if it is, we automatically add a new shelf and then add the book to it
@@ -69,7 +73,8 @@ window.addEventListener("onEventReceived", function (obj) {
   if (!allowedEvents.includes(event.value)) return;
 
   if (event.field === "addShelf") {
-    addShelf();
+    console.log('shelfs here', shelfs);
+    addShelf(1, "A", shelfs);
   }
 
   if (event.field === "removeShelf") {
@@ -77,7 +82,7 @@ window.addEventListener("onEventReceived", function (obj) {
   }
 
   if (event.field == "addBook") {
-    addBook(obj /*, fieldData*/ );
+    addBook(obj /*, fieldData*/);
   }
 
   if (event.field === "removeBook") {
@@ -88,7 +93,7 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("beniartsTulipanGoalWidgetPreviousGained");
+  // let data = await SE_API.store.get("pruebadeapi");
   // if (data === null) {
   //   widgetApiData = defaultApiData;
   // } else {
@@ -130,31 +135,53 @@ function init(obj, apiData, initial = false) {
 }
 
 // function updateApiData(amountToUpdate) {
-//   // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
+//   // SE_API.store.set("pruebadeapi", widgetApiData);
 // }
 
 function clearApiData() {
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", defaultApiData);
+  // SE_API.store.set("pruebadeapi", defaultApiData);
   window.location.reload();
 }
 
-const availableShelfs = [
-  "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
-  "https://i.ibb.co/r0FwjHH/balda-abajo2.png",
-  "https://i.ibb.co/b2GcbKK/balda-abajo3.png",
-  "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
-  "https://i.ibb.co/60jmB5Y/balda-abajo5.png",
-  "https://i.ibb.co/wchZ7nc/balda-arriba1.png",
-  "https://i.ibb.co/w0WdynV/balda-arriba2.png",
-  "https://i.ibb.co/RyLK0ty/balda-arriba3.png",
-  "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
-  "https://i.ibb.co/ZHStcRd/balda-arriba5.png",
-];
+const availableShelfs = {
+  1: {
+    top: "https://i.ibb.co/wchZ7nc/balda-arriba1.png",
+    bottom: "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
+  },
+  2: {
+    top: "https://i.ibb.co/w0WdynV/balda-arriba2.png",
+    bottom: "https://i.ibb.co/r0FwjHH/balda-abajo2.png",
+  },
+  3: {
+    top: "https://i.ibb.co/RyLK0ty/balda-arriba3.png",
+    bottom: "https://i.ibb.co/b2GcbKK/balda-abajo3.png",
+  },
+  4: {
+    top: "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
+    bottom: "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
+  },
+};
+// "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
+// "https://i.ibb.co/r0FwjHH/balda-abajo2.png",
+// "https://i.ibb.co/b2GcbKK/balda-abajo3.png",
+// "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
+// "https://i.ibb.co/60jmB5Y/balda-abajo5.png",
+// "https://i.ibb.co/wchZ7nc/balda-arriba1.png",
+// "https://i.ibb.co/w0WdynV/balda-arriba2.png",
+// "https://i.ibb.co/RyLK0ty/balda-arriba3.png",
+// "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
+// "https://i.ibb.co/ZHStcRd/balda-arriba5.png",
 
-function addShelf() {
+function getPreviousShelf() {
+  const shelfs = document.querySelectorAll(".shelf");
+  console.log(shelfs);
+}
+
+function addShelf(shelfOption, shelfTheme, previousShelf) {
+  shelfOption = 1;
+  shelfTheme = "A";
   try {
-    const selectedShelf =
-      availableShelfs[Math.floor(Math.random() * availableShelfs.length)];
+    const selectedShelf = availableShelfs[shelfOption].top;
     const bigShelf = document.createElement("div");
     bigShelf.classList.add("bigShelf");
     bigShelf.id = items.shelfContainer.childNodes.length + 1;
@@ -164,6 +191,11 @@ function addShelf() {
     shelfImg.id = items.shelfContainer.childNodes.length + 1;
     shelfImg.classList.add("shelf");
     shelfImg.src = selectedShelf;
+    shelfImg.classList.add(
+      `shelf-type-${Object.keys(availableShelfs).find(
+        (key) => availableShelfs[key].top === selectedShelf
+      )}`
+    );
     bigShelf.appendChild(shelfImg);
     bigShelf.appendChild(booksContainer);
     items.shelfContainer?.appendChild(bigShelf);
@@ -218,7 +250,16 @@ function twelveOrLessBooks(shelf) {
 
 let shelfToFill;
 let appendToNewDiv = false;
-function addBook(obj, fieldData = {bookColor: "#000000", firstSeparatorColor: "red", secondSeparatorColor: "blue", decoration: "none", pageMarker: false}) {
+function addBook(
+  obj,
+  fieldData = {
+    bookColor: "#000000",
+    firstSeparatorColor: "red",
+    secondSeparatorColor: "blue",
+    decoration: "none",
+    pageMarker: false,
+  }
+) {
   const availableBooks = [
     `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="22px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
@@ -604,12 +645,12 @@ function updateApiData(obj) {
       });
     }
     console.log(widgetApiData);
+    // SE_API.store.set("pruebadeapi", widgetApiData);
   } catch (error) {
     console.log(error);
     return false;
   }
   return true;
-  // SE_API.store.set("beniartsTulipanGoalWidgetPreviousGained", widgetApiData);
 }
 
 function initGoal() {
