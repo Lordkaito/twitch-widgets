@@ -4,42 +4,13 @@ let totalBooks = 0;
 let button = document.querySelector(".addShelf");
 button.addEventListener("click", () => {
   const shelfs = document.querySelectorAll(".shelf");
-  console.log(shelfs);
-  addShelf(mainObj, shelfs);
+  addShelf(mainObj);
 });
 
 let addBookk = document.querySelector(".addBook");
 addBookk.addEventListener("click", () => {
   addBook();
 });
-// type apiData = {
-//   maxShelfs: number;
-//   shelfs: Array<Shelf>;
-//   books: Array<Book>;
-// };
-
-// type Shelf = {
-//   id: number;
-//   theme: string;
-//   isFull: boolean;
-//   amount: number;
-//   maxAmount: number;
-//   link: string;
-// };
-
-// type Book = {
-//   id: number;
-//   topColor?: string;
-//   bottomColor?: string;
-//   middleColor?: string;
-//   firstSeparatorColor?: string;
-//   secondSeparatorColor?: string;
-//   type: string;
-//   shelfId: number;
-//   decoration?: string;
-//   pageMarker: boolean;
-//   link: string (maybe directly the svg);
-// };
 
 let defaultApiData = {
   maxShelfs: 0,
@@ -56,6 +27,8 @@ let widgetApiData = {
 window.addEventListener("onWidgetLoad", async function (obj) {
   // let api = await getApiData(obj);
   // init(obj, api, true);
+  console.log("obj on widget load", obj);
+  init(obj);
   fieldData = obj.detail.fieldData;
   // renderInitialBooks(widgetApiData);
 });
@@ -63,6 +36,12 @@ window.addEventListener("onWidgetLoad", async function (obj) {
 const allowedEvents = ["addShelf", "removeShelf", "addBook", "removeBook"];
 
 window.addEventListener("onEventReceived", function (obj) {
+  console.log("obj", obj);
+  if (obj.detail.event.value === "reset") {
+    console.log("clearing");
+    clearApiData();
+    return;
+  }
   const shelfs = document.querySelectorAll(".shelf");
   // possible events: addShelf, removeShelf, addBook, removeBook
   // when we receive an event to add a book, we check if the current shelf is full
@@ -70,11 +49,10 @@ window.addEventListener("onEventReceived", function (obj) {
   // if it isn't, we just add the book to the current shelf
   const { event } = obj.detail;
 
-  if (!allowedEvents.includes(event.value)) return;
+  if (!allowedEvents.includes(event.field)) return;
 
   if (event.field === "addShelf") {
-    console.log('shelfs here', shelfs);
-    addShelf(1, "A", shelfs);
+    addShelf(1, true);
   }
 
   if (event.field === "removeShelf") {
@@ -82,7 +60,7 @@ window.addEventListener("onEventReceived", function (obj) {
   }
 
   if (event.field == "addBook") {
-    addBook(obj /*, fieldData*/);
+    addBook(obj, fieldData, true);
   }
 
   if (event.field === "removeBook") {
@@ -93,16 +71,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("pruebadeapi");
-  // if (data === null) {
-  //   widgetApiData = defaultApiData;
-  // } else {
-  //   widgetApiData = data;
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  //   widgetApiData = defaultApiData;
-  // }
-  widgetApiData = defaultApiData;
+  let data = await SE_API.store.get("pruebadeapi");
+  if (data === null) {
+    widgetApiData = defaultApiData;
+  } else {
+    widgetApiData = data;
+  }
+  if (obj.detail.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+  }
+  // widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -113,33 +91,22 @@ const items = {
   books: document.querySelectorAll(".book"),
 };
 
-function init(obj, apiData, initial = false) {
+async function init(obj) {
+  console.log("obtaining api data");
+  const apiData = await getApiData(obj);
+  console.log("apiData obtained");
+  console.log(apiData);
   apiData.shelfs.map((shelf) => {
-    // for each shelf we create a new image in the widget
-    // each image is inside a div which contains the same id as the shelf
-    const shelfDiv = document.createElement("div");
-    shelfDiv.id = shelf.id;
-    items.shelfContainer?.appendChild(shelfDiv);
+    addShelf(1, false);
   });
 
   apiData.books.map((book) => {
-    // for each book we create a new image in the widget
-    // each book has a sheldId, same as the shelf it belongs to
-    // so we get the shelf div and append the book image to it
-    // and then we position the book image inside the shelf div
-    const bookDiv = document.createElement("div");
-    bookDiv.id = book.id;
-    bookDiv.classList.add("book");
-    items.shelfs[book.shelfId].appendChild(bookDiv);
+    addBook(obj, fieldData, false, book.link);
   });
 }
 
-// function updateApiData(amountToUpdate) {
-//   // SE_API.store.set("pruebadeapi", widgetApiData);
-// }
-
 function clearApiData() {
-  // SE_API.store.set("pruebadeapi", defaultApiData);
+  SE_API.store.set("pruebadeapi", defaultApiData);
   window.location.reload();
 }
 
@@ -174,39 +141,58 @@ const availableShelfs = {
 
 function getPreviousShelf() {
   const shelfs = document.querySelectorAll(".shelf");
-  console.log(shelfs);
 }
 
-function addShelf(shelfOption, shelfTheme, previousShelf) {
+function addShelf(shelfOption, updateApi) {
   shelfOption = 1;
-  shelfTheme = "A";
   try {
-    const selectedShelf = availableShelfs[shelfOption].top;
-    const bigShelf = document.createElement("div");
-    bigShelf.classList.add("bigShelf");
-    bigShelf.id = items.shelfContainer.childNodes.length + 1;
-    const booksContainer = document.createElement("div");
-    booksContainer.classList.add("booksContainer");
+    const lastBigShelf = document.querySelectorAll(".bigShelf");
+    const lastShelf = lastBigShelf[lastBigShelf.length - 1];
     const shelfImg = document.createElement("img");
-    shelfImg.id = items.shelfContainer.childNodes.length + 1;
-    shelfImg.classList.add("shelf");
-    shelfImg.src = selectedShelf;
-    shelfImg.classList.add(
-      `shelf-type-${Object.keys(availableShelfs).find(
-        (key) => availableShelfs[key].top === selectedShelf
-      )}`
-    );
-    bigShelf.appendChild(shelfImg);
-    bigShelf.appendChild(booksContainer);
-    items.shelfContainer?.appendChild(bigShelf);
+    let selectedShelf;
 
-    const shelf = {
-      id: shelfImg.id,
-      theme: "A",
-      amount: 0,
-      link: selectedShelf,
-    };
-    updateApiData({ operation: "addShelf", type: "shelfs", shelf: shelf });
+    if (
+      lastShelf &&
+      lastShelf.querySelector(".shelf").classList.contains("top")
+    ) {
+      selectedShelf = availableShelfs[shelfOption].bottom;
+      const bigShelf = document.createElement("div");
+      bigShelf.classList.add("bigShelf");
+      bigShelf.id = items.shelfContainer.childNodes.length + 1;
+      const booksContainer = document.createElement("div");
+      booksContainer.classList.add("booksContainer");
+      shelfImg.id = items.shelfContainer.childNodes.length + 1;
+      shelfImg.classList.add("shelf");
+      shelfImg.src = selectedShelf;
+      shelfImg.classList.add("bottom");
+      bigShelf.appendChild(shelfImg);
+      bigShelf.appendChild(booksContainer);
+      items.shelfContainer?.appendChild(bigShelf);
+    } else {
+      selectedShelf = availableShelfs[shelfOption].top;
+      const bigShelf = document.createElement("div");
+      bigShelf.classList.add("bigShelf");
+      bigShelf.id = items.shelfContainer.childNodes.length + 1;
+      const booksContainer = document.createElement("div");
+      booksContainer.classList.add("booksContainer");
+      shelfImg.id = items.shelfContainer.childNodes.length + 1;
+      shelfImg.classList.add("shelf");
+      shelfImg.src = selectedShelf;
+      shelfImg.classList.add("top");
+      bigShelf.appendChild(shelfImg);
+      bigShelf.appendChild(booksContainer);
+      items.shelfContainer?.appendChild(bigShelf);
+    }
+
+    if (updateApi) {
+      const shelf = {
+        id: shelfImg.id,
+        theme: "A",
+        amount: 0,
+        link: selectedShelf,
+      };
+      updateApiData({ operation: "addShelf", type: "shelfs", shelf: shelf });
+    }
   } catch (error) {
     console.log(error);
     return false;
@@ -215,7 +201,17 @@ function addShelf(shelfOption, shelfTheme, previousShelf) {
   return true;
 }
 
-function removeShelf(ev) {
+function removeShelf() {
+  const shelfs = document.querySelectorAll(".shelf");
+  const lastShelf = shelfs[shelfs.length - 1];
+  if (lastShelf) {
+    lastShelf.remove();
+    updateApiData({
+      operation: "removeShelf",
+      type: "shelfs",
+      shelfId: lastShelf.id,
+    });
+  }
   console.log("shelf removed");
 }
 
@@ -258,34 +254,14 @@ function addBook(
     secondSeparatorColor: "blue",
     decoration: "none",
     pageMarker: false,
-  }
+  },
+  updateApi,
+  link = null
 ) {
+  const bookId = ++totalBooks;
   const availableBooks = [
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="22px" height="120px"
-    style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-    xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g>
-      <path style="opacity:0.987" fill="${fieldData.bookColor}"
-        d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" />
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.firstSeparatorColor}"
-        d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" />
-    </g>
-    <g>
-      <path style="opacity:0.991" fill="${fieldData.bookColor}"
-        d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" />
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.secondSeparatorColor}"
-        d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" />
-    </g>
-    <g>
-      <path style="opacity:0.987" fill="${fieldData.bookColor}"
-        d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" />
-    </g>
-    </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="61px" height="121px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="61px" height="121px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
       <path style="opacity:0.868" fill="${fieldData.bookColor}" d="M 18.5,-0.5 C 18.8333,-0.5 19.1667,-0.5 19.5,-0.5C 22.9708,4.21433 25.3041,9.54766 26.5,15.5C 25.3947,17.2231 23.7281,18.2231 21.5,18.5C 19.6203,18.2291 18.287,18.8958 17.5,20.5C 16.1266,20.3433 14.7932,20.51 13.5,21C 10.5883,22.232 7.92158,23.732 5.5,25.5C 3.5,21.1667 1.5,16.8333 -0.5,12.5C -0.5,11.8333 -0.5,11.1667 -0.5,10.5C 0.374833,8.43191 1.5415,6.43191 3,4.5C 3.33333,4.83333 3.66667,5.16667 4,5.5C 6.4622,4.35023 8.79554,3.01689 11,1.5C 12.6667,1.5 14.3333,1.5 16,1.5C 16.9947,0.934056 17.828,0.267389 18.5,-0.5 Z"/>
     </g>
@@ -314,7 +290,7 @@ function addBook(
       <path style="opacity:0.886" fill="${fieldData.bookColor}" d="M 54.5,94.5 C 55.731,99.1953 57.731,103.529 60.5,107.5C 60.5,108.5 60.5,109.5 60.5,110.5C 59.7811,112.091 58.7811,113.591 57.5,115C 52.9435,116.419 48.2769,118.253 43.5,120.5C 42.5,120.5 41.5,120.5 40.5,120.5C 40.6106,118.352 39.944,118.019 38.5,119.5C 36.8316,114.831 35.1649,110.164 33.5,105.5C 33.4142,104.504 33.7476,103.671 34.5,103C 41.5766,100.818 48.2433,97.9848 54.5,94.5 Z"/>
     </g>
     </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -338,7 +314,7 @@ function addBook(
         d="M -0.5,100.5 C 9.83333,100.5 20.1667,100.5 30.5,100.5C 30.5,106.167 30.5,111.833 30.5,117.5C 29.6618,117.842 29.3284,118.508 29.5,119.5C 20.1667,119.5 10.8333,119.5 1.5,119.5C 1.57298,117.973 0.906316,116.973 -0.5,116.5C -0.5,111.167 -0.5,105.833 -0.5,100.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -362,7 +338,7 @@ function addBook(
         d="M -0.5,104.5 C 9.83333,104.5 20.1667,104.5 30.5,104.5C 30.5,108.5 30.5,112.5 30.5,116.5C 29.0937,116.973 28.427,117.973 28.5,119.5C 19.8333,119.5 11.1667,119.5 2.5,119.5C 2.18982,117.856 1.18982,116.856 -0.5,116.5C -0.5,112.5 -0.5,108.5 -0.5,104.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -386,7 +362,7 @@ function addBook(
         d="M -0.5,100.5 C 9.83333,100.5 20.1667,100.5 30.5,100.5C 30.5,106.167 30.5,111.833 30.5,117.5C 29.6618,117.842 29.3284,118.508 29.5,119.5C 20.1667,119.5 10.8333,119.5 1.5,119.5C 1.57298,117.973 0.906316,116.973 -0.5,116.5C -0.5,111.167 -0.5,105.833 -0.5,100.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -410,7 +386,7 @@ function addBook(
         d="M -0.5,100.5 C 9.83333,100.5 20.1667,100.5 30.5,100.5C 30.5,106.167 30.5,111.833 30.5,117.5C 29.6618,117.842 29.3284,118.508 29.5,119.5C 20.1667,119.5 10.8333,119.5 1.5,119.5C 1.57298,117.973 0.906316,116.973 -0.5,116.5C -0.5,111.167 -0.5,105.833 -0.5,100.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120px" height="22px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="120px" height="22px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -434,7 +410,7 @@ function addBook(
         d="M 92.5,-0.5 C 95.5,-0.5 98.5,-0.5 101.5,-0.5C 101.5,6.83333 101.5,14.1667 101.5,21.5C 98.5,21.5 95.5,21.5 92.5,21.5C 92.5,14.1667 92.5,6.83333 92.5,-0.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="115px" height="39px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="115px" height="39px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -446,7 +422,7 @@ function addBook(
         d="M 110.5,7.5 C 110.5,14.8333 110.5,22.1667 110.5,29.5C 78.8316,29.6666 47.1649,29.5 15.5,29C 13.3762,27.8783 11.5429,26.3783 10,24.5C 6.74373,17.2413 8.57706,11.7413 15.5,8C 47.1649,7.50002 78.8316,7.33335 110.5,7.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120px" height="31px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="120px" height="31px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -470,7 +446,7 @@ function addBook(
         d="M 101.5,-0.5 C 107.167,-0.5 112.833,-0.5 118.5,-0.5C 118.5,0.166667 118.833,0.5 119.5,0.5C 119.5,10.1667 119.5,19.8333 119.5,29.5C 118.833,29.5 118.5,29.8333 118.5,30.5C 112.833,30.5 107.167,30.5 101.5,30.5C 101.5,20.1667 101.5,9.83333 101.5,-0.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120px" height="31px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="120px" height="31px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -494,7 +470,7 @@ function addBook(
         d="M 105.5,-0.5 C 109.5,-0.5 113.5,-0.5 117.5,-0.5C 117.932,0.709515 118.599,1.70951 119.5,2.5C 119.5,10.8333 119.5,19.1667 119.5,27.5C 118.599,28.2905 117.932,29.2905 117.5,30.5C 113.5,30.5 109.5,30.5 105.5,30.5C 105.5,20.1667 105.5,9.83333 105.5,-0.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -518,7 +494,7 @@ function addBook(
         d="M -0.5,104.5 C 9.83333,104.5 20.1667,104.5 30.5,104.5C 30.5,108.5 30.5,112.5 30.5,116.5C 29.0937,116.973 28.427,117.973 28.5,119.5C 19.8333,119.5 11.1667,119.5 2.5,119.5C 2.18982,117.856 1.18982,116.856 -0.5,116.5C -0.5,112.5 -0.5,108.5 -0.5,104.5 Z" />
     </g>
   </svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
@@ -543,7 +519,6 @@ function addBook(
     </g>
   </svg>`,
   ];
-  console.log(obj, fieldData);
   let shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
   if (shelfs.length === 0) {
     addShelf();
@@ -573,7 +548,6 @@ function addBook(
     let totalLength = currentLength + newDivCurrentLength;
     const book = document.createElement("svg");
     const bookToAdd = totalLength >= 8 ? totalLength - 1 : totalLength;
-    console.log(currentLength, newDivCurrentLength, totalLength);
     book.innerHTML = availableBooks[bookToAdd];
     let newDiv;
     if (totalLength === 6) {
@@ -590,9 +564,11 @@ function addBook(
     if (appendToNewDiv) {
       shelfToFill
         .querySelector(".booksContainer")
-        .querySelector(".horizontal-container").innerHTML += book.innerHTML;
+        .querySelector(".horizontal-container").innerHTML +=
+        link ?? book.innerHTML;
     } else {
-      shelfToFill.querySelector(".booksContainer").innerHTML += book.innerHTML;
+      shelfToFill.querySelector(".booksContainer").innerHTML +=
+        link ?? book.innerHTML;
     }
 
     // type Book = {
@@ -608,17 +584,19 @@ function addBook(
     //   pageMarker: boolean;
     //   link: string (maybe directly the svg);
     // };
-    const bookToSave = {
-      id: ++totalBooks,
-      bookColor: fieldData.bookColor,
-      firstSeparatorColor: fieldData.firstSeparatorColor,
-      secondSeparatorColor: fieldData.secondSeparatorColor,
-      shelfId: Number(shelfToFill.id),
-      decoration: fieldData.decoration,
-      pageMarker: fieldData.pageMarker,
-      link: book.innerHTML,
-    };
-    updateApiData({ operation: "addBook", type: "books", book: bookToSave });
+    if (updateApi) {
+      const bookToSave = {
+        id: bookId,
+        bookColor: fieldData.bookColor,
+        firstSeparatorColor: fieldData.firstSeparatorColor,
+        secondSeparatorColor: fieldData.secondSeparatorColor,
+        shelfId: Number(shelfToFill.id),
+        decoration: fieldData.decoration,
+        pageMarker: fieldData.pageMarker,
+        link: book.innerHTML,
+      };
+      updateApiData({ operation: "addBook", type: "books", book: bookToSave });
+    }
   } catch (error) {
     console.log(error);
     return false;
@@ -626,11 +604,24 @@ function addBook(
   return true;
 }
 
-function removeBook(ev) {
+function removeBook() {
+  const books = document.querySelectorAll(".book");
+  const book = books[books.length - 1];
+  if (book) {
+    console.log(book.parentElement.parentElement.id);
+    updateApiData({
+      operation: "removeBook",
+      type: "books",
+      shelfId: book.parentElement.parentElement.id,
+      bookId: totalBooks,
+    });
+    books[books.length - 1].remove();
+  }
   console.log("book removed");
 }
 
 function updateApiData(obj) {
+  console.log("updating data");
   try {
     if (obj.operation === "addShelf") {
       widgetApiData.shelfs.push(obj.shelf);
@@ -644,8 +635,24 @@ function updateApiData(obj) {
         }
       });
     }
+    if (obj.operation === "removeBook") {
+      widgetApiData.books = widgetApiData.books.filter(
+        (book) => book.id !== obj.bookId
+      );
+      widgetApiData.shelfs.map((shelf) => {
+        if (shelf.id === obj.shelfId) {
+          shelf.amount -= 1;
+          shelf.isFull = shelf.amount === 12 ? true : false;
+        }
+      });
+    }
+    if (obj.operation === "removeShelf") {
+      widgetApiData.shelfs = widgetApiData.shelfs.filter(
+        (shelf) => shelf.id !== obj.shelfId
+      );
+    }
     console.log(widgetApiData);
-    // SE_API.store.set("pruebadeapi", widgetApiData);
+    SE_API.store.set("pruebadeapi", widgetApiData);
   } catch (error) {
     console.log(error);
     return false;
@@ -653,12 +660,14 @@ function updateApiData(obj) {
   return true;
 }
 
-function initGoal() {
-  // this function will be in charge of the initial widget creation
-  // and also everytime the widget is reloaded
-  // we will get the data from the api and then create the widget manually here to avoid issues (or maybe not)
-  // we will have to take every shelf, create one shelf image for each shelf saved in the api
-  // using the link for the image that the shelf has
-  // then we will use the book info to generate the same books that the user had last time
-  // this means displaying them in the same order (using the book id), in the same shelf (using the shelf id)
-}
+// function init(obj) {
+//   const apiData = getApiData(obj)
+//   console.log("initializing widget");
+//   // this function will be in charge of the initial widget creation
+//   // and also everytime the widget is reloaded
+//   // we will get the data from the api and then create the widget manually here to avoid issues (or maybe not)
+//   // we will have to take every shelf, create one shelf image for each shelf saved in the api
+//   // using the link for the image that the shelf has
+//   // then we will use the book info to generate the same books that the user had last time
+//   // this means displaying them in the same order (using the book id), in the same shelf (using the shelf id)
+// }
