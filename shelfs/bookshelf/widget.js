@@ -1,14 +1,14 @@
 let mainObj = {};
 let totalBooks = 0;
 // let fieldData = {};
-let button = document.querySelector(".addShelf");
-button.addEventListener("click", () => {
-  const shelfs = document.querySelectorAll(".shelf");
+let button = document.querySelector('.addShelf');
+button.addEventListener('click', () => {
+  const shelfs = document.querySelectorAll('.shelf');
   addShelf(mainObj);
 });
 
-let addBookk = document.querySelector(".addBook");
-addBookk.addEventListener("click", () => {
+let addBookk = document.querySelector('.addBook');
+addBookk.addEventListener('click', () => {
   addBook();
 });
 
@@ -24,25 +24,25 @@ let widgetApiData = {
   books: [],
 };
 
-window.addEventListener("onWidgetLoad", async function (obj) {
+window.addEventListener('onWidgetLoad', async function (obj) {
   // let api = await getApiData(obj);
   // init(obj, api, true);
-  console.log("obj on widget load", obj);
+  console.log('obj on widget load', obj);
   init(obj);
   fieldData = obj.detail.fieldData;
   // renderInitialBooks(widgetApiData);
 });
 
-const allowedEvents = ["addShelf", "removeShelf", "addBook", "removeBook"];
+const allowedEvents = ['addShelf', 'removeShelf', 'addBook', 'removeBook'];
 
-window.addEventListener("onEventReceived", function (obj) {
-  console.log("obj", obj);
-  if (obj.detail.event.value === "reset") {
-    console.log("clearing");
+window.addEventListener('onEventReceived', function (obj) {
+  console.log('obj', obj);
+  if (obj.detail.event.value === 'reset') {
+    console.log('clearing');
     clearApiData();
     return;
   }
-  const shelfs = document.querySelectorAll(".shelf");
+  const shelfs = document.querySelectorAll('.shelf');
   // possible events: addShelf, removeShelf, addBook, removeBook
   // when we receive an event to add a book, we check if the current shelf is full
   // if it is, we automatically add a new shelf and then add the book to it
@@ -51,19 +51,19 @@ window.addEventListener("onEventReceived", function (obj) {
 
   if (!allowedEvents.includes(event.field)) return;
 
-  if (event.field === "addShelf") {
+  if (event.field === 'addShelf') {
     addShelf(1, true);
   }
 
-  if (event.field === "removeShelf") {
+  if (event.field === 'removeShelf') {
     removeShelf(obj);
   }
 
-  if (event.field == "addBook") {
+  if (event.field == 'addBook') {
     addBook(obj, fieldData, true);
   }
 
-  if (event.field === "removeBook") {
+  if (event.field === 'removeBook') {
     removeBook(obj);
   }
 
@@ -71,13 +71,13 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("pruebadeapi");
+  let data = await SE_API.store.get('pruebadeapi');
   if (data === null) {
     widgetApiData = defaultApiData;
   } else {
     widgetApiData = data;
   }
-  if (obj.detail.fieldData.goalFullType === "session") {
+  if (obj.detail.fieldData.goalFullType === 'session') {
     widgetApiData = defaultApiData;
   }
   // widgetApiData = defaultApiData;
@@ -85,16 +85,16 @@ const getApiData = async (obj) => {
 };
 
 const items = {
-  main: document.getElementById("main"),
-  shelfContainer: document.getElementById("shelfContainer"),
-  shelfs: document.querySelectorAll(".shelf"),
-  books: document.querySelectorAll(".book"),
+  main: document.getElementById('main'),
+  shelfContainer: document.getElementById('shelfContainer'),
+  shelfs: document.querySelectorAll('.shelf'),
+  books: document.querySelectorAll('.book'),
 };
 
 async function init(obj) {
-  console.log("obtaining api data");
+  console.log('obtaining api data');
   const apiData = await getApiData(obj);
-  console.log("apiData obtained");
+  console.log('apiData obtained');
   console.log(apiData);
   apiData.shelfs.map((shelf) => {
     addShelf(1, false);
@@ -106,26 +106,26 @@ async function init(obj) {
 }
 
 function clearApiData() {
-  SE_API.store.set("pruebadeapi", defaultApiData);
+  SE_API.store.set('pruebadeapi', defaultApiData);
   window.location.reload();
 }
 
 const availableShelfs = {
   1: {
-    top: "https://i.ibb.co/wchZ7nc/balda-arriba1.png",
-    bottom: "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
+    top: 'https://i.ibb.co/wchZ7nc/balda-arriba1.png',
+    bottom: 'https://i.ibb.co/xCqtTLZ/balda-abajo1.png',
   },
   2: {
-    top: "https://i.ibb.co/w0WdynV/balda-arriba2.png",
-    bottom: "https://i.ibb.co/r0FwjHH/balda-abajo2.png",
+    top: 'https://i.ibb.co/w0WdynV/balda-arriba2.png',
+    bottom: 'https://i.ibb.co/r0FwjHH/balda-abajo2.png',
   },
   3: {
-    top: "https://i.ibb.co/RyLK0ty/balda-arriba3.png",
-    bottom: "https://i.ibb.co/b2GcbKK/balda-abajo3.png",
+    top: 'https://i.ibb.co/RyLK0ty/balda-arriba3.png',
+    bottom: 'https://i.ibb.co/b2GcbKK/balda-abajo3.png',
   },
   4: {
-    top: "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
-    bottom: "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
+    top: 'https://i.ibb.co/Ydxgkb4/balda-arriba4.png',
+    bottom: 'https://i.ibb.co/GkSMB3F/balda-abajo4.png',
   },
 };
 // "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
@@ -140,45 +140,45 @@ const availableShelfs = {
 // "https://i.ibb.co/ZHStcRd/balda-arriba5.png",
 
 function getPreviousShelf() {
-  const shelfs = document.querySelectorAll(".shelf");
+  const shelfs = document.querySelectorAll('.shelf');
 }
 
 function addShelf(shelfOption, updateApi) {
   shelfOption = 1;
   try {
-    const lastBigShelf = document.querySelectorAll(".bigShelf");
+    const lastBigShelf = document.querySelectorAll('.bigShelf');
     const lastShelf = lastBigShelf[lastBigShelf.length - 1];
-    const shelfImg = document.createElement("img");
+    const shelfImg = document.createElement('img');
     let selectedShelf;
 
     if (
       lastShelf &&
-      lastShelf.querySelector(".shelf").classList.contains("top")
+      lastShelf.querySelector('.shelf').classList.contains('top')
     ) {
       selectedShelf = availableShelfs[shelfOption].bottom;
-      const bigShelf = document.createElement("div");
-      bigShelf.classList.add("bigShelf");
+      const bigShelf = document.createElement('div');
+      bigShelf.classList.add('bigShelf');
       bigShelf.id = items.shelfContainer.childNodes.length + 1;
-      const booksContainer = document.createElement("div");
-      booksContainer.classList.add("booksContainer");
+      const booksContainer = document.createElement('div');
+      booksContainer.classList.add('booksContainer');
       shelfImg.id = items.shelfContainer.childNodes.length + 1;
-      shelfImg.classList.add("shelf");
+      shelfImg.classList.add('shelf');
       shelfImg.src = selectedShelf;
-      shelfImg.classList.add("bottom");
+      shelfImg.classList.add('bottom');
       bigShelf.appendChild(shelfImg);
       bigShelf.appendChild(booksContainer);
       items.shelfContainer?.appendChild(bigShelf);
     } else {
       selectedShelf = availableShelfs[shelfOption].top;
-      const bigShelf = document.createElement("div");
-      bigShelf.classList.add("bigShelf");
+      const bigShelf = document.createElement('div');
+      bigShelf.classList.add('bigShelf');
       bigShelf.id = items.shelfContainer.childNodes.length + 1;
-      const booksContainer = document.createElement("div");
-      booksContainer.classList.add("booksContainer");
+      const booksContainer = document.createElement('div');
+      booksContainer.classList.add('booksContainer');
       shelfImg.id = items.shelfContainer.childNodes.length + 1;
-      shelfImg.classList.add("shelf");
+      shelfImg.classList.add('shelf');
       shelfImg.src = selectedShelf;
-      shelfImg.classList.add("top");
+      shelfImg.classList.add('top');
       bigShelf.appendChild(shelfImg);
       bigShelf.appendChild(booksContainer);
       items.shelfContainer?.appendChild(bigShelf);
@@ -187,11 +187,11 @@ function addShelf(shelfOption, updateApi) {
     if (updateApi) {
       const shelf = {
         id: shelfImg.id,
-        theme: "A",
+        theme: 'A',
         amount: 0,
         link: selectedShelf,
       };
-      updateApiData({ operation: "addShelf", type: "shelfs", shelf: shelf });
+      updateApiData({ operation: 'addShelf', type: 'shelfs', shelf: shelf });
     }
   } catch (error) {
     console.log(error);
@@ -202,61 +202,94 @@ function addShelf(shelfOption, updateApi) {
 }
 
 function removeShelf() {
-  const shelfs = document.querySelectorAll(".shelf");
+  const shelfs = document.querySelectorAll('.shelf');
   const lastShelf = shelfs[shelfs.length - 1];
   if (lastShelf) {
     lastShelf.remove();
     updateApiData({
-      operation: "removeShelf",
-      type: "shelfs",
+      operation: 'removeShelf',
+      type: 'shelfs',
       shelfId: lastShelf.id,
     });
   }
-  console.log("shelf removed");
+  console.log('shelf removed');
 }
 
 function isShelfFull(shelf) {
   if (
     shelf
-      .querySelector(".booksContainer")
-      .querySelector(".horizontal-container") != null
+      .querySelector('.booksContainer')
+      .querySelector('.horizontal-container') != null
   ) {
     return (
-      shelf.querySelector(".booksContainer").childNodes.length +
+      shelf.querySelector('.booksContainer').childNodes.length +
         shelf
-          .querySelector(".booksContainer")
-          .querySelector(".horizontal-container").childNodes.length ===
+          .querySelector('.booksContainer')
+          .querySelector('.horizontal-container').childNodes.length ===
       13
     );
   } else {
-    return shelf.querySelector(".booksContainer").childNodes.length === 12;
+    return shelf.querySelector('.booksContainer').childNodes.length === 12;
   }
 }
 
 function twelveOrLessBooks(shelf) {
-  const mainShelf = shelf.querySelector(".booksContainer");
+  const mainShelf = shelf.querySelector('.booksContainer');
   const horizontalShelf = shelf
-    .querySelector(".booksContainer")
-    .querySelector(".horizontal-container");
+    .querySelector('.booksContainer')
+    .querySelector('.horizontal-container');
   return (
     mainShelf.childNodes.length + (horizontalShelf?.childNodes.length ?? 0) <=
     12
   );
 }
 
-let shelfToFill;
+function customOrder(totalLength, book, positionSpan, horizontal, vertical) {
+      console.log("Total Length: "+ totalLength);
+      if(totalLength > positionSpan - 1 && totalLength <= positionSpan + 4) {
+        book.innerHTML += horizontal[Math.floor(Math.random() * 4)];
+      } else {
+        book.innerHTML += vertical[Math.floor(Math.random() * 8)];
+      }
+}
+
 let appendToNewDiv = false;
+function appendToSpan(totalLength, shelfToFill, book, link, startPosition) {
+  let newDiv;
+  if (totalLength === startPosition) {
+    appendToNewDiv = true;
+    newDiv = document.createElement('span');
+    newDiv.classList.add('horizontal-container');
+    shelfToFill.querySelector('.booksContainer').appendChild(newDiv);
+  }
+
+  if (totalLength >= startPosition + 5) {
+    appendToNewDiv = false;
+  }
+
+  if (appendToNewDiv) {
+    shelfToFill
+      .querySelector('.booksContainer')
+      .querySelector('.horizontal-container').innerHTML +=
+      link ?? book.innerHTML;
+  } else {
+    shelfToFill.querySelector('.booksContainer').innerHTML +=
+      link ?? book.innerHTML;
+  }
+}
+
+let shelfToFill;
 function addBook(
   obj,
   fieldData = {
-    bookColor: "#000000",
-    firstSeparatorColor: "red",
-    secondSeparatorColor: "blue",
-    decoration: "none",
+    bookColor: '#000000',
+    firstSeparatorColor: 'red',
+    secondSeparatorColor: 'blue',
+    decoration: 'none',
     pageMarker: false,
   },
   updateApi,
-  link = null
+  link = null,
 ) {
   const bookId = ++totalBooks;
   const availableBooks = [
@@ -519,10 +552,10 @@ function addBook(
     </g>
   </svg>`,
   ];
-  let shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
+  let shelfs = items.shelfContainer.querySelectorAll('.bigShelf');
   if (shelfs.length === 0) {
     addShelf();
-    shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
+    shelfs = items.shelfContainer.querySelectorAll('.bigShelf');
   }
   for (let i = 0; i < shelfs.length; i++) {
     const shelf = shelfs[i];
@@ -535,42 +568,35 @@ function addBook(
   try {
     if (isShelfFull(shelfToFill)) {
       addShelf();
-      shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
+      shelfs = items.shelfContainer.querySelectorAll('.bigShelf');
       shelfToFill = shelfs[shelfs.length - 1];
     }
     let currentLength =
-      shelfToFill.querySelector(".booksContainer").childNodes.length;
+      shelfToFill.querySelector('.booksContainer').childNodes.length;
     let newDivCurrentLength =
       shelfToFill
-        .querySelector(".booksContainer")
-        .querySelector(".horizontal-container")?.childNodes.length ?? 0;
+        .querySelector('.booksContainer')
+        .querySelector('.horizontal-container')?.childNodes.length ?? 0;
 
     let totalLength = currentLength + newDivCurrentLength;
-    const book = document.createElement("svg");
-    const bookToAdd = totalLength >= 8 ? totalLength - 1 : totalLength;
-    book.innerHTML = availableBooks[bookToAdd];
-    let newDiv;
-    if (totalLength === 6) {
-      appendToNewDiv = true;
-      newDiv = document.createElement("span");
-      newDiv.classList.add("horizontal-container");
-      shelfToFill.querySelector(".booksContainer").appendChild(newDiv);
-    }
-
-    if (totalLength >= 11) {
-      appendToNewDiv = false;
-    }
-
-    if (appendToNewDiv) {
-      shelfToFill
-        .querySelector(".booksContainer")
-        .querySelector(".horizontal-container").innerHTML +=
-        link ?? book.innerHTML;
+    const book = document.createElement('svg');
+    if (parseInt(shelfToFill.id) % 2 === 1) {
+      const bookToAdd = totalLength >= 8 ? totalLength - 1 : totalLength;
+      book.innerHTML = availableBooks[bookToAdd];
+      appendToSpan(totalLength, shelfToFill, book, link, 6);
     } else {
-      shelfToFill.querySelector(".booksContainer").innerHTML +=
-        link ?? book.innerHTML;
+      let horizontal = [],
+          vertical = [];
+      for(let i = 0; i < availableBooks.length; i++){
+        if(i < 10 && i > 5) {
+          horizontal.push(availableBooks[i]);
+        } else {
+          vertical. push(availableBooks[i]);
+        }
+      }
+      customOrder(totalLength,  book, 3, horizontal, vertical);
+      appendToSpan(totalLength, shelfToFill, book, link, 3)
     }
-
     // type Book = {
     //   id: number;
     //   topColor?: string;
@@ -595,7 +621,7 @@ function addBook(
         pageMarker: fieldData.pageMarker,
         link: book.innerHTML,
       };
-      updateApiData({ operation: "addBook", type: "books", book: bookToSave });
+      updateApiData({ operation: 'addBook', type: 'books', book: bookToSave });
     }
   } catch (error) {
     console.log(error);
@@ -605,28 +631,28 @@ function addBook(
 }
 
 function removeBook() {
-  const books = document.querySelectorAll(".book");
+  const books = document.querySelectorAll('.book');
   const book = books[books.length - 1];
   if (book) {
     console.log(book.parentElement.parentElement.id);
     updateApiData({
-      operation: "removeBook",
-      type: "books",
+      operation: 'removeBook',
+      type: 'books',
       shelfId: book.parentElement.parentElement.id,
       bookId: totalBooks,
     });
     books[books.length - 1].remove();
   }
-  console.log("book removed");
+  console.log('book removed');
 }
 
 function updateApiData(obj) {
-  console.log("updating data");
+  console.log('updating data');
   try {
-    if (obj.operation === "addShelf") {
+    if (obj.operation === 'addShelf') {
       widgetApiData.shelfs.push(obj.shelf);
     }
-    if (obj.operation === "addBook") {
+    if (obj.operation === 'addBook') {
       widgetApiData.books.push(obj.book);
       widgetApiData.shelfs.map((shelf) => {
         if (shelf.id === obj.book.shelfId) {
@@ -635,9 +661,9 @@ function updateApiData(obj) {
         }
       });
     }
-    if (obj.operation === "removeBook") {
+    if (obj.operation === 'removeBook') {
       widgetApiData.books = widgetApiData.books.filter(
-        (book) => book.id !== obj.bookId
+        (book) => book.id !== obj.bookId,
       );
       widgetApiData.shelfs.map((shelf) => {
         if (shelf.id === obj.shelfId) {
@@ -646,13 +672,13 @@ function updateApiData(obj) {
         }
       });
     }
-    if (obj.operation === "removeShelf") {
+    if (obj.operation === 'removeShelf') {
       widgetApiData.shelfs = widgetApiData.shelfs.filter(
-        (shelf) => shelf.id !== obj.shelfId
+        (shelf) => shelf.id !== obj.shelfId,
       );
     }
     console.log(widgetApiData);
-    SE_API.store.set("pruebadeapi", widgetApiData);
+    SE_API.store.set('pruebadeapi', widgetApiData);
   } catch (error) {
     console.log(error);
     return false;
