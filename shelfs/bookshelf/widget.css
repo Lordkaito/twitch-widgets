@@ -54,16 +54,20 @@
   margin: 0 1.2rem;
 }
 
+.rotate-marker {
+  transform: rotate(90deg);
+}
+
 .relative {
   position: relative;
 }
 
 .first-absolute-1 {
   position: absolute;
-  top: 3rem;
-  left: -3.1rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-2 {
@@ -72,42 +76,42 @@
 
 .first-absolute-3 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-4 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.2rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-5 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-6 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-7 {
   position: absolute;
-  top: -.3rem;
-  left: 0rem;
+  top: -.6rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-8 {
@@ -116,47 +120,47 @@
   top: 3rem;
   left: -24rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-9 {
   position: absolute;
-  top: 0rem;
-  left: 0rem;
+  top: -.4rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-10 {
   position: absolute;
-  top: 0rem;
-  left: 0rem;
+  top: -.4rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-11 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.2rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-12 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-13 {
   position: absolute;
-  top: -.3rem;
-  left: 0rem;
+  top: -.6rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-14 {
@@ -165,79 +169,79 @@
   top: 3rem;
   left: 9rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-15 {
   position: absolute;
-  top: 0rem;
-  left: 0rem;
+  top: -.4rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-16 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-17 {
   position: absolute;
-  top: 3rem;
-  left: -3.1rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-18 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-19 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-20 {
   position: absolute;
-  top: 3rem;
-  left: -3.1rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-21 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-22 {
   position: absolute;
-  top: 3rem;
-  left: -2.7rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-23 {
   position: absolute;
-  top: 3rem;
-  left: -3.1rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .first-absolute-24 {
@@ -250,186 +254,193 @@
 
 .second-absolute-1 {
   position: absolute;
-  top: 3rem;
-  left: -3rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-2 {
+  display: none;
   position: absolute;
   top: 3rem;
   left: -6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .second-absolute-3 {
   position: absolute;
-  top: 3rem;
-  left: -9rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-4 {
   position: absolute;
-  top: 3rem;
-  left: -12rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-5 {
   position: absolute;
-  top: 3rem;
-  left: -15rem;
+  top: 2.5rem;
+  left: -.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-6 {
   position: absolute;
-  top: 3rem;
-  left: -18rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-7 {
   position: absolute;
-  top: 3rem;
-  left: -21rem;
+  top: -.6rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-8 {
+  display: none;
   position: absolute;
   top: 3rem;
   left: -24rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .second-absolute-9 {
   position: absolute;
-  top: 3rem;
-  left: -27rem;
+  top: -.4rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-10 {
   position: absolute;
-  top: 3rem;
-  left: -30rem;
+  top: -.4rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(0.8);
+  transform: scale(.4);
 }
 
 .second-absolute-11 {
   position: absolute;
-  top: 3rem;
-  left: 0;
+  top: 2.5rem;
+  left: -.2rem;
   z-index: 1;
+  transform: scale(.4);
 }
 
 .second-absolute-12 {
   position: absolute;
-  top: 3rem;
-  left: 3rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-13 {
   position: absolute;
-  top: 3rem;
-  left: 6rem;
+  top: -.6rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-14 {
+  display: none;
   position: absolute;
   top: 3rem;
   left: 9rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .second-absolute-15 {
   position: absolute;
-  top: 3rem;
-  left: 12rem;
+  top: -.5rem;
+  left: 2.5rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-16 {
   position: absolute;
-  top: 3rem;
-  left: 15rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-17 {
   position: absolute;
-  top: 3rem;
-  left: 18rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-18 {
   position: absolute;
-  top: 3rem;
-  left: 21rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-19 {
   position: absolute;
-  top: 3rem;
-  left: 24rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-20 {
   position: absolute;
-  top: 3rem;
-  left: 27rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.4);
 }
 
 .second-absolute-21 {
   position: absolute;
-  top: 3rem;
-  left: 30rem;
+  top: 2.5rem;
+  left: -.3rem;
   z-index: 1;
-  transform: scale(0.8);
+  transform: scale(.4);
 }
 
 .second-absolute-22 {
   position: absolute;
-  top: 3rem;
-  left: -3rem;
+  top: 2.5rem;
+  left: -.4rem;
   z-index: 1;
+  transform: scale(.4);
 }
 
 .second-absolute-23 {
   position: absolute;
-  top: 3rem;
-  left: -6rem;
+  top: 2.5rem;
+  left: -.6rem;
   z-index: 1;
+  transform: scale(.4);
 }
 
 .second-absolute-24 {
+  display: none;
   position: absolute;
   top: 3rem;
   left: -9rem;
@@ -486,7 +497,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-8 {
@@ -495,7 +506,7 @@
   top: 3rem;
   left: -24rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-9 {
@@ -504,7 +515,7 @@
   top: 3rem;
   left: -27rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-10 {
@@ -513,7 +524,7 @@
   top: 3rem;
   left: -30rem;
   z-index: 1;
-  transform: scale(0.8);
+  transform: scale(0.5);
 }
 
 .marker-absolute-11 {
@@ -538,7 +549,7 @@
   top: 3rem;
   left: 6rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-14 {
@@ -547,7 +558,7 @@
   top: 3rem;
   left: 9rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-15 {
@@ -556,7 +567,7 @@
   top: 3rem;
   left: 12rem;
   z-index: 1;
-  transform: scale(.8);
+  transform: scale(.5);
 }
 
 .marker-absolute-16 {

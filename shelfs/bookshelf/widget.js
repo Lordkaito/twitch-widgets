@@ -140,28 +140,6 @@ const hojas = {
   4: "https://i.ibb.co/QQRdYc6/hojas4.png",
 };
 
-const marker = `
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
-  style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g>
-      <path style="opacity:0.945" fill="#8e7f58"
-        d="M 11.5,-0.5 C 16.1667,-0.5 20.8333,-0.5 25.5,-0.5C 25.5,5.83333 25.5,12.1667 25.5,18.5C 22.9954,18.0198 20.6621,17.0198 18.5,15.5C 16.3379,17.0198 14.0046,18.0198 11.5,18.5C 11.5,12.1667 11.5,5.83333 11.5,-0.5 Z" />
-    </g>
-  </svg>`;
-
-const decorators = {
-  1: `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120px" height="31px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g><path style="opacity:0.827" fill="#c1d2a3" d="M 54.5,6.5 C 56.7224,6.17798 58.5557,6.84464 60,8.5C 62.1726,6.09901 64.5059,6.09901 67,8.5C 68.0832,11.95 68.5832,15.45 68.5,19C 67.9757,22.355 65.9757,24.1884 62.5,24.5C 61.3527,24.1822 60.5194,23.5156 60,22.5C 55.1674,25.5067 52.0007,24.1733 50.5,18.5C 50.8178,17.3527 51.4844,16.5194 52.5,16C 51.1955,15.196 50.5288,14.0293 50.5,12.5C 51.4316,10.2345 52.7649,8.23453 54.5,6.5 Z"/></g>
-    <g><path style="opacity:0.829" fill="#c1d2a3" d="M 57.5,13.5 C 58.8333,13.5 60.1667,13.5 61.5,13.5C 61.5,14.8333 61.5,16.1667 61.5,17.5C 60.1667,17.5 58.8333,17.5 57.5,17.5C 57.5,16.1667 57.5,14.8333 57.5,13.5 Z"/></g>
-    </svg>
-    `,
-  2: `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g><path style="opacity:0.844" fill="#fee6bd" d="M 8.5,51.5 C 10.8273,51.2471 12.8273,51.9137 14.5,53.5C 17.6705,50.6647 20.5038,50.9981 23,54.5C 23.3653,60.6827 20.532,65.0161 14.5,67.5C 8.51914,65.053 5.68581,60.7197 6,54.5C 7.04499,53.6266 7.87833,52.6266 8.5,51.5 Z"/></g>
-    </svg>
-    `,
-};
-
 function addShelf(shelfOption, updateApi) {
   shelfOption = 1;
   try {
@@ -271,12 +249,24 @@ function addBook(
     bookColor: "#000000",
     firstSeparatorColor: "red",
     secondSeparatorColor: "blue",
-    decoration: "first",
+    decorationFirst: false,
+    decorationSecond: true,
+    decorationFirstColor: "red",
+    decorationSecondColor: "blue",
     pageMarker: true,
+    markerColor: "yellow",
   },
   updateApi,
   link = null
 ) {
+  const marker = `
+  <svg xmlns='http://www.w3.org/2000/svg' class="rotate-marker" width='24' height='24' viewBox="0 0 24 8"><title>flag_1_fill</title><g id="flag_1_fill" fill='none' fill-rule='nonzero'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path fill='${fieldData.markerColor}' d='M6 3a2 2 0 0 0-2 2v16a1 1 0 1 0 2 0v-5h13.804a1.1 1.1 0 0 0 .89-1.747L17.236 9.5l3.456-4.753A1.1 1.1 0 0 0 19.803 3z'/></g></svg>
+`;
+
+const decorators = {
+  1: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256"><path fill="${fieldData.decorationFirstColor}" d="M210.35 129.36c-.81-.47-1.7-.92-2.62-1.36c.92-.44 1.81-.89 2.62-1.36a40 40 0 1 0-40-69.28c-.81.47-1.65 1-2.48 1.59c.08-1 .13-2 .13-3a40 40 0 0 0-80 0c0 .94 0 1.94.13 3c-.83-.57-1.67-1.12-2.48-1.59a40 40 0 1 0-40 69.28c.81.47 1.7.92 2.62 1.36c-.92.44-1.81.89-2.62 1.36a40 40 0 1 0 40 69.28c.81-.47 1.65-1 2.48-1.59c-.08 1-.13 2-.13 2.95a40 40 0 0 0 80 0c0-.94-.05-1.94-.13-2.95c.83.57 1.67 1.12 2.48 1.59a39.79 39.79 0 0 0 19.94 5.36a40.43 40.43 0 0 0 10.42-1.38a40 40 0 0 0 9.64-73.28ZM128 156a28 28 0 1 1 28-28a28 28 0 0 1-28 28"></path></svg>`,
+  2: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36"><path fill="${fieldData.decorationSecondColor}" d="M35.885 11.833c0-5.45-4.418-9.868-9.867-9.868c-3.308 0-6.227 1.633-8.018 4.129c-1.791-2.496-4.71-4.129-8.017-4.129c-5.45 0-9.868 4.417-9.868 9.868c0 .772.098 1.52.266 2.241C1.751 22.587 11.216 31.568 18 34.034c6.783-2.466 16.249-11.447 17.617-19.959c.17-.721.268-1.469.268-2.242"></path></svg>`,
+};
   const bookId = ++totalBooks;
   const grupoSize = 24; // Tamaño de cada grupo de libros
   const relativeBookId = ((bookId - 1) % grupoSize) + 1;
@@ -575,14 +565,14 @@ function addBook(
 
       if (appendToNewDiv) {
         const bookDiv = document.createElement("div");
-        if (fieldData.decoration === "first") {
+        if (fieldData.decorationFirst) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decoration === "second") {
+        if (fieldData.decorationSecond) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
@@ -619,14 +609,14 @@ function addBook(
         // shelfToFill.querySelector(".booksContainer").innerHTML +=
         //   link ?? book.innerHTML;
         const bookDiv = document.createElement("div");
-        if (fieldData.decoration === "first") {
+        if (fieldData.decorationFirst) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decoration === "second") {
+        if (fieldData.decorationSecond) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
@@ -680,14 +670,14 @@ function addBook(
 
       if (appendToNewDiv) {
         const bookDiv = document.createElement("div");
-        if (fieldData.decoration === "first") {
+        if (fieldData.decorationFirst) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decoration === "second") {
+        if (fieldData.decorationSecond) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
@@ -719,14 +709,14 @@ function addBook(
         // shelfToFill.querySelector(".booksContainer").innerHTML +=
         //   link ?? book.innerHTML;
         const bookDiv = document.createElement("div");
-        if (fieldData.decoration === "first") {
+        if (fieldData.decorationFirst) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decoration === "second") {
+        if (fieldData.decorationSecond) {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
