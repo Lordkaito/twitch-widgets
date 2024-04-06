@@ -71,16 +71,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("pruebadeapi");
-  if (data === null) {
-    widgetApiData = defaultApiData;
-  } else {
-    widgetApiData = data;
-  }
-  if (obj.detail.fieldData.goalFullType === "session") {
-    widgetApiData = defaultApiData;
-  }
-  // widgetApiData = defaultApiData;
+  // let data = await SE_API.store.get("pruebadeapi");
+  // if (data === null) {
+  //   widgetApiData = defaultApiData;
+  // } else {
+  //   widgetApiData = data;
+  // }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData;
+  // }
+  widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -106,7 +106,7 @@ async function init(obj) {
 }
 
 function clearApiData() {
-  SE_API.store.set("pruebadeapi", defaultApiData);
+  // SE_API.store.set("pruebadeapi", defaultApiData);
   window.location.reload();
 }
 
@@ -127,21 +127,40 @@ const availableShelfs = {
     top: "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
     bottom: "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
   },
+  5: {
+    top: "https://i.ibb.co/XDLKGSv/baldanueva-abajo.png",
+    bottom: "https://i.ibb.co/nPJpy0T/baldanueva-arriba.png",
+  },
 };
-// "https://i.ibb.co/xCqtTLZ/balda-abajo1.png",
-// "https://i.ibb.co/r0FwjHH/balda-abajo2.png",
-// "https://i.ibb.co/b2GcbKK/balda-abajo3.png",
-// "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
-// "https://i.ibb.co/60jmB5Y/balda-abajo5.png",
-// "https://i.ibb.co/wchZ7nc/balda-arriba1.png",
-// "https://i.ibb.co/w0WdynV/balda-arriba2.png",
-// "https://i.ibb.co/RyLK0ty/balda-arriba3.png",
-// "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
-// "https://i.ibb.co/ZHStcRd/balda-arriba5.png",
 
-function getPreviousShelf() {
-  const shelfs = document.querySelectorAll(".shelf");
-}
+const hojas = {
+  1: "https://i.ibb.co/4dHnRs0/hojas1.png",
+  2: "https://i.ibb.co/1bjDYnM/hojas2.png",
+  3: "https://i.ibb.co/m933wc6/hojas3.png",
+  4: "https://i.ibb.co/QQRdYc6/hojas4.png",
+};
+
+const marker = `
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px"
+  style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g>
+      <path style="opacity:0.945" fill="#8e7f58"
+        d="M 11.5,-0.5 C 16.1667,-0.5 20.8333,-0.5 25.5,-0.5C 25.5,5.83333 25.5,12.1667 25.5,18.5C 22.9954,18.0198 20.6621,17.0198 18.5,15.5C 16.3379,17.0198 14.0046,18.0198 11.5,18.5C 11.5,12.1667 11.5,5.83333 11.5,-0.5 Z" />
+    </g>
+  </svg>`;
+
+const decorators = {
+  1: `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="120px" height="31px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g><path style="opacity:0.827" fill="#c1d2a3" d="M 54.5,6.5 C 56.7224,6.17798 58.5557,6.84464 60,8.5C 62.1726,6.09901 64.5059,6.09901 67,8.5C 68.0832,11.95 68.5832,15.45 68.5,19C 67.9757,22.355 65.9757,24.1884 62.5,24.5C 61.3527,24.1822 60.5194,23.5156 60,22.5C 55.1674,25.5067 52.0007,24.1733 50.5,18.5C 50.8178,17.3527 51.4844,16.5194 52.5,16C 51.1955,15.196 50.5288,14.0293 50.5,12.5C 51.4316,10.2345 52.7649,8.23453 54.5,6.5 Z"/></g>
+    <g><path style="opacity:0.829" fill="#c1d2a3" d="M 57.5,13.5 C 58.8333,13.5 60.1667,13.5 61.5,13.5C 61.5,14.8333 61.5,16.1667 61.5,17.5C 60.1667,17.5 58.8333,17.5 57.5,17.5C 57.5,16.1667 57.5,14.8333 57.5,13.5 Z"/></g>
+    </svg>
+    `,
+  2: `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="31px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g><path style="opacity:0.844" fill="#fee6bd" d="M 8.5,51.5 C 10.8273,51.2471 12.8273,51.9137 14.5,53.5C 17.6705,50.6647 20.5038,50.9981 23,54.5C 23.3653,60.6827 20.532,65.0161 14.5,67.5C 8.51914,65.053 5.68581,60.7197 6,54.5C 7.04499,53.6266 7.87833,52.6266 8.5,51.5 Z"/></g>
+    </svg>
+    `,
+};
 
 function addShelf(shelfOption, updateApi) {
   shelfOption = 1;
@@ -252,44 +271,18 @@ function addBook(
     bookColor: "#000000",
     firstSeparatorColor: "red",
     secondSeparatorColor: "blue",
-    decoration: "none",
-    pageMarker: false,
+    decoration: "first",
+    pageMarker: true,
   },
   updateApi,
   link = null
 ) {
   const bookId = ++totalBooks;
+  const grupoSize = 24; // Tamaño de cada grupo de libros
+  const relativeBookId = ((bookId - 1) % grupoSize) + 1;
   const availableBooks = [
     `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="61px" height="121px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g>
-      <path style="opacity:0.868" fill="${fieldData.bookColor}" d="M 18.5,-0.5 C 18.8333,-0.5 19.1667,-0.5 19.5,-0.5C 22.9708,4.21433 25.3041,9.54766 26.5,15.5C 25.3947,17.2231 23.7281,18.2231 21.5,18.5C 19.6203,18.2291 18.287,18.8958 17.5,20.5C 16.1266,20.3433 14.7932,20.51 13.5,21C 10.5883,22.232 7.92158,23.732 5.5,25.5C 3.5,21.1667 1.5,16.8333 -0.5,12.5C -0.5,11.8333 -0.5,11.1667 -0.5,10.5C 0.374833,8.43191 1.5415,6.43191 3,4.5C 3.33333,4.83333 3.66667,5.16667 4,5.5C 6.4622,4.35023 8.79554,3.01689 11,1.5C 12.6667,1.5 14.3333,1.5 16,1.5C 16.9947,0.934056 17.828,0.267389 18.5,-0.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:0.966" fill="${fieldData.firstSeparatorColor}" d="M 26.5,15.5 C 27.9538,16.5203 28.2871,17.687 27.5,19C 28.8613,20.5843 29.528,22.4176 29.5,24.5C 28.1667,25.1667 26.8333,25.8333 25.5,26.5C 22.6027,27.129 19.936,28.129 17.5,29.5C 14.0567,30.0592 11.0567,31.3926 8.5,33.5C 6.98023,31.1098 5.98023,28.4432 5.5,25.5C 7.92158,23.732 10.5883,22.232 13.5,21C 14.7932,20.51 16.1266,20.3433 17.5,20.5C 19.153,20.3404 20.4863,19.6737 21.5,18.5C 23.7281,18.2231 25.3947,17.2231 26.5,15.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M 21.5,18.5 C 20.4863,19.6737 19.153,20.3404 17.5,20.5C 18.287,18.8958 19.6203,18.2291 21.5,18.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:0.909" fill="${fieldData.bookColor}" d="M 29.5,24.5 C 37.5564,45.2037 44.8897,65.8704 51.5,86.5C 50.3406,88.2503 48.674,89.2503 46.5,89.5C 41.071,90.7468 36.071,92.7468 31.5,95.5C 30.8333,95.5 30.5,95.8333 30.5,96.5C 27.4742,87.9304 24.1409,79.4304 20.5,71C 20.8333,70.6667 21.1667,70.3333 21.5,70C 19.9831,67.7955 18.6498,65.4622 17.5,63C 17.5,61.6667 17.5,60.3333 17.5,59C 15.5776,57.54 14.9109,55.8733 15.5,54C 12.4784,47.4359 10.145,40.6026 8.5,33.5C 11.9466,32.917 14.9466,31.5837 17.5,29.5C 20.716,29.6545 23.3826,28.6545 25.5,26.5C 26.8333,25.8333 28.1667,25.1667 29.5,24.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.bookColor}" d="M 25.5,26.5 C 23.3826,28.6545 20.716,29.6545 17.5,29.5C 19.936,28.129 22.6027,27.129 25.5,26.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M 17.5,29.5 C 14.9466,31.5837 11.9466,32.917 8.5,33.5C 11.0567,31.3926 14.0567,30.0592 17.5,29.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:0.96" fill="${fieldData.secondSeparatorColor}" d="M 51.5,86.5 C 53.2671,88.7916 54.2671,91.4582 54.5,94.5C 48.2433,97.9848 41.5766,100.818 34.5,103C 33.7476,103.671 33.4142,104.504 33.5,105.5C 32.2655,102.67 31.2655,99.6702 30.5,96.5C 30.5,95.8333 30.8333,95.5 31.5,95.5C 36.929,94.2532 41.929,92.2532 46.5,89.5C 48.674,89.2503 50.3406,88.2503 51.5,86.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M 46.5,89.5 C 41.929,92.2532 36.929,94.2532 31.5,95.5C 36.071,92.7468 41.071,90.7468 46.5,89.5 Z"/>
-    </g>
-    <g>
-      <path style="opacity:0.886" fill="${fieldData.bookColor}" d="M 54.5,94.5 C 55.731,99.1953 57.731,103.529 60.5,107.5C 60.5,108.5 60.5,109.5 60.5,110.5C 59.7811,112.091 58.7811,113.591 57.5,115C 52.9435,116.419 48.2769,118.253 43.5,120.5C 42.5,120.5 41.5,120.5 40.5,120.5C 40.6106,118.352 39.944,118.019 38.5,119.5C 36.8316,114.831 35.1649,110.164 33.5,105.5C 33.4142,104.504 33.7476,103.671 34.5,103C 41.5766,100.818 48.2433,97.9848 54.5,94.5 Z"/>
-    </g>
-    </svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book rotate" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
     `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -550,52 +543,230 @@ function addBook(
     const bookToAdd = totalLength >= 8 ? totalLength - 1 : totalLength;
     book.innerHTML = availableBooks[bookToAdd];
     let newDiv;
-    if (totalLength === 6) {
-      appendToNewDiv = true;
-      newDiv = document.createElement("span");
-      newDiv.classList.add("horizontal-container");
-      shelfToFill.querySelector(".booksContainer").appendChild(newDiv);
-    }
+    if (shelfToFill.id % 2 === 0) {
+      const newAvailableBooks = [
+        availableBooks[6],
+        availableBooks[7],
+        availableBooks[9],
+        availableBooks[2],
+        availableBooks[0],
+        availableBooks[5],
+        availableBooks[4],
+        availableBooks[0],
+        availableBooks[3],
+        availableBooks[2],
+        availableBooks[0],
+        availableBooks[1],
+      ];
+      const book = document.createElement("svg");
+      const bookToAddToNewShelf =
+        totalLength >= 1 ? totalLength - 1 : totalLength;
+      book.innerHTML = newAvailableBooks[bookToAddToNewShelf];
+      if (totalLength === 0) {
+        appendToNewDiv = true;
+        newDiv = document.createElement("span");
+        newDiv.classList.add("horizontal-container");
+        shelfToFill.querySelector(".booksContainer").appendChild(newDiv);
+      }
 
-    if (totalLength >= 11) {
-      appendToNewDiv = false;
-    }
+      if (totalLength >= 4) {
+        appendToNewDiv = false;
+      }
 
-    if (appendToNewDiv) {
-      shelfToFill
-        .querySelector(".booksContainer")
-        .querySelector(".horizontal-container").innerHTML +=
-        link ?? book.innerHTML;
+      if (appendToNewDiv) {
+        const bookDiv = document.createElement("div");
+        if (fieldData.decoration === "first") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[1];
+          svg.classList.add(`first-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.decoration === "second") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[2];
+          svg.classList.add(`second-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.pageMarker) {
+          const svg = document.createElement("svg");
+          svg.innerHTML = marker;
+          svg.classList.add(`marker-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        bookDiv.classList.add("relative");
+        // shelfToFill
+        //   .querySelector(".booksContainer")
+        //   .querySelector(".horizontal-container").innerHTML +=
+        //   link ?? book.innerHTML;
+        if (link != null) {
+          book.innerHTML = link;
+          bookDiv.appendChild(book);
+          shelfToFill
+            .querySelector(".booksContainer")
+            .querySelector(".horizontal-container")
+            .appendChild(bookDiv);
+        } else {
+          bookDiv.appendChild(book);
+          shelfToFill
+            .querySelector(".booksContainer")
+            .querySelector(".horizontal-container")
+            .appendChild(bookDiv);
+        }
+      } else {
+        // shelfToFill.querySelector(".booksContainer").innerHTML +=
+        //   link ?? book.innerHTML;
+        const bookDiv = document.createElement("div");
+        if (fieldData.decoration === "first") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[1];
+          svg.classList.add(`first-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.decoration === "second") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[2];
+          svg.classList.add(`second-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.pageMarker) {
+          const svg = document.createElement("svg");
+          svg.innerHTML = marker;
+          svg.classList.add(`marker-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+        bookDiv.classList.add("relative");
+        if (link != null) {
+          book.innerHTML = link;
+          bookDiv.appendChild(book);
+          shelfToFill.querySelector(".booksContainer").appendChild(bookDiv);
+        } else {
+          bookDiv.appendChild(book);
+          shelfToFill.querySelector(".booksContainer").appendChild(bookDiv);
+        }
+      }
+      if (updateApi) {
+        const bookToSave = {
+          id: bookId,
+          bookColor: fieldData.bookColor,
+          firstSeparatorColor: fieldData.firstSeparatorColor,
+          secondSeparatorColor: fieldData.secondSeparatorColor,
+          shelfId: Number(shelfToFill.id),
+          decoration: fieldData.decoration,
+          pageMarker: fieldData.pageMarker,
+          link: book.innerHTML,
+        };
+        updateApiData({
+          operation: "addBook",
+          type: "books",
+          book: bookToSave,
+        });
+      }
     } else {
-      shelfToFill.querySelector(".booksContainer").innerHTML +=
-        link ?? book.innerHTML;
-    }
+      if (totalLength === 6) {
+        appendToNewDiv = true;
+        newDiv = document.createElement("span");
+        newDiv.classList.add("horizontal-container");
+        shelfToFill.querySelector(".booksContainer").appendChild(newDiv);
+      }
 
-    // type Book = {
-    //   id: number;
-    //   topColor?: string;
-    //   bottomColor?: string;
-    //   middleColor?: string;
-    //   firstSeparatorColor?: string;
-    //   secondSeparatorColor?: string;
-    //   type: string;
-    //   shelfId: number;
-    //   decoration?: string;
-    //   pageMarker: boolean;
-    //   link: string (maybe directly the svg);
-    // };
-    if (updateApi) {
-      const bookToSave = {
-        id: bookId,
-        bookColor: fieldData.bookColor,
-        firstSeparatorColor: fieldData.firstSeparatorColor,
-        secondSeparatorColor: fieldData.secondSeparatorColor,
-        shelfId: Number(shelfToFill.id),
-        decoration: fieldData.decoration,
-        pageMarker: fieldData.pageMarker,
-        link: book.innerHTML,
-      };
-      updateApiData({ operation: "addBook", type: "books", book: bookToSave });
+      if (totalLength >= 11) {
+        appendToNewDiv = false;
+      }
+
+      if (appendToNewDiv) {
+        const bookDiv = document.createElement("div");
+        if (fieldData.decoration === "first") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[1];
+          svg.classList.add(`first-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.decoration === "second") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[2];
+          svg.classList.add(`second-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.pageMarker) {
+          const svg = document.createElement("svg");
+          svg.innerHTML = marker;
+          svg.classList.add(`marker-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+        bookDiv.classList.add("relative");
+        if (link != null) {
+          book.innerHTML = link;
+          bookDiv.appendChild(book);
+          shelfToFill
+            .querySelector(".booksContainer")
+            .querySelector(".horizontal-container")
+            .appendChild(bookDiv);
+        } else {
+          bookDiv.appendChild(book);
+          shelfToFill
+            .querySelector(".booksContainer")
+            .querySelector(".horizontal-container")
+            .appendChild(bookDiv);
+        }
+      } else {
+        // shelfToFill.querySelector(".booksContainer").innerHTML +=
+        //   link ?? book.innerHTML;
+        const bookDiv = document.createElement("div");
+        if (fieldData.decoration === "first") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[1];
+          svg.classList.add(`first-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.decoration === "second") {
+          const svg = document.createElement("svg");
+          svg.innerHTML = decorators[2];
+          svg.classList.add(`second-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+
+        if (fieldData.pageMarker) {
+          const svg = document.createElement("svg");
+          svg.innerHTML = marker;
+          svg.classList.add(`marker-absolute-${relativeBookId}`);
+          bookDiv.appendChild(svg);
+        }
+        bookDiv.classList.add("relative");
+        if (link != null) {
+          book.innerHTML = link;
+          bookDiv.appendChild(book);
+          shelfToFill.querySelector(".booksContainer").appendChild(bookDiv);
+        } else {
+          bookDiv.appendChild(book);
+          shelfToFill.querySelector(".booksContainer").appendChild(bookDiv);
+        }
+      }
+
+      if (updateApi) {
+        const bookToSave = {
+          id: bookId,
+          bookColor: fieldData.bookColor,
+          firstSeparatorColor: fieldData.firstSeparatorColor,
+          secondSeparatorColor: fieldData.secondSeparatorColor,
+          shelfId: Number(shelfToFill.id),
+          decoration: fieldData.decoration,
+          pageMarker: fieldData.pageMarker,
+          link: book.innerHTML,
+        };
+        updateApiData({
+          operation: "addBook",
+          type: "books",
+          book: bookToSave,
+        });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -652,7 +823,7 @@ function updateApiData(obj) {
       );
     }
     console.log(widgetApiData);
-    SE_API.store.set("pruebadeapi", widgetApiData);
+    // SE_API.store.set("pruebadeapi", widgetApiData);
   } catch (error) {
     console.log(error);
     return false;

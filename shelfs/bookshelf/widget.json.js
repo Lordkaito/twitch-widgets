@@ -15,6 +15,7 @@ let fieldData = {
       B: "Shelf B",
       C: "Shelf C",
       D: "Shelf D",
+      E: "Shelf E",
     }
   },
   addBook: {
