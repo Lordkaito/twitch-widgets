@@ -1,16 +1,7 @@
 let mainObj = {};
 let totalBooks = 0;
-// let fieldData = {};
-let button = document.querySelector(".addShelf");
-button.addEventListener("click", () => {
-  const shelfs = document.querySelectorAll(".shelf");
-  addShelf(mainObj);
-});
-
-let addBookk = document.querySelector(".addBook");
-addBookk.addEventListener("click", () => {
-  addBook();
-});
+let totalLength;
+// let fieldData = {}
 
 let defaultApiData = {
   maxShelfs: 0,
@@ -25,24 +16,19 @@ let widgetApiData = {
 };
 
 window.addEventListener("onWidgetLoad", async function (obj) {
-  // let api = await getApiData(obj);
-  // init(obj, api, true);
-  console.log("obj on widget load", obj);
   init(obj);
   fieldData = obj.detail.fieldData;
-  // renderInitialBooks(widgetApiData);
 });
 
 const allowedEvents = ["addShelf", "removeShelf", "addBook", "removeBook"];
 
 window.addEventListener("onEventReceived", function (obj) {
-  console.log("obj", obj);
   if (obj.detail.event.value === "reset") {
-    console.log("clearing");
     clearApiData();
     return;
   }
-  const shelfs = document.querySelectorAll(".shelf");
+  const shelfs = document.querySelectorAll(".bigShelf");
+  if(shelfs.length == 4) return
   // possible events: addShelf, removeShelf, addBook, removeBook
   // when we receive an event to add a book, we check if the current shelf is full
   // if it is, we automatically add a new shelf and then add the book to it
@@ -52,7 +38,7 @@ window.addEventListener("onEventReceived", function (obj) {
   if (!allowedEvents.includes(event.field)) return;
 
   if (event.field === "addShelf") {
-    addShelf(1, true);
+    addShelf(Number(fieldData.shelfType), true);
   }
 
   if (event.field === "removeShelf") {
@@ -71,16 +57,16 @@ window.addEventListener("onEventReceived", function (obj) {
 });
 
 const getApiData = async (obj) => {
-  // let data = await SE_API.store.get("pruebadeapi");
-  // if (data === null) {
-  //   widgetApiData = defaultApiData;
-  // } else {
-  //   widgetApiData = data;
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  //   widgetApiData = defaultApiData;
-  // }
-  widgetApiData = defaultApiData;
+  let data = await SE_API.store.get("pruebadeapi");
+  if (data === null) {
+    widgetApiData = defaultApiData;
+  } else {
+    widgetApiData = data;
+  }
+  if (obj.detail.fieldData.goalFullType === "session") {
+    widgetApiData = defaultApiData;
+  }
+  //widgetApiData = defaultApiData;
   return widgetApiData;
 };
 
@@ -92,22 +78,44 @@ const items = {
 };
 
 async function init(obj) {
-  console.log("obtaining api data");
   const apiData = await getApiData(obj);
-  console.log("apiData obtained");
-  console.log(apiData);
-  apiData.shelfs.map((shelf) => {
-    addShelf(1, false);
-  });
+  try {
+    apiData.shelfs.map((shelf) => {
+      addShelf(shelf.theme, false);
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
-  apiData.books.map((book) => {
-    addBook(obj, fieldData, false, book.link);
-  });
+  try {
+    apiData.books.map((book) => {
+      addBook(
+        obj,
+        {
+          bookColor: book.bookColor,
+          firstSeparatorColor: book.firstSeparatorColor,
+          shelfId: Number(book.shelfId),
+          //need to add these decorators
+          decorationFirst: book.decorationFirst,
+          decorationSecond: book.decorationSecond,
+          decorationFirstColor: book.decorationFirstColor,
+          decorationSecondColor: book.decorationSecondColor,
+          pageMarker: book.pageMarker,
+          markerColor: book.markerColor,
+          link: book.innerHTML,
+        },
+        false,
+        book.link
+      );
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function clearApiData() {
-  // SE_API.store.set("pruebadeapi", defaultApiData);
-  window.location.reload();
+  SE_API.store.set("pruebadeapi", defaultApiData);
+    window.location.reload()
 }
 
 const availableShelfs = {
@@ -127,7 +135,11 @@ const availableShelfs = {
     top: "https://i.ibb.co/Ydxgkb4/balda-arriba4.png",
     bottom: "https://i.ibb.co/GkSMB3F/balda-abajo4.png",
   },
-  5: {
+  5:{
+    top: "https://i.ibb.co/ZHStcRd/balda-arriba5.png",
+    bottom: "https://i.ibb.co/60jmB5Y/balda-abajo5.png",
+  },
+  6: {
     top: "https://i.ibb.co/XDLKGSv/baldanueva-abajo.png",
     bottom: "https://i.ibb.co/nPJpy0T/baldanueva-arriba.png",
   },
@@ -141,7 +153,6 @@ const hojas = {
 };
 
 function addShelf(shelfOption, updateApi) {
-  shelfOption = 1;
   try {
     const lastBigShelf = document.querySelectorAll(".bigShelf");
     const lastShelf = lastBigShelf[lastBigShelf.length - 1];
@@ -176,6 +187,39 @@ function addShelf(shelfOption, updateApi) {
       shelfImg.classList.add("shelf");
       shelfImg.src = selectedShelf;
       shelfImg.classList.add("top");
+      const plants = {
+        leftOne: "https://i.ibb.co/m933wc6/hojas3.png",
+        leftTwo: "https://i.ibb.co/4dHnRs0/hojas1.png",
+        rightOne: "https://i.ibb.co/QQRdYc6/hojas4.png",
+        rightTwo: "https://i.ibb.co/1bjDYnM/hojas2.png",
+      };
+      if (fieldData.left == "first") {
+        const plant = document.createElement("img");
+        plant.src = plants.leftOne;
+        plant.classList.add(`plant-absolute-leftOne`);
+        bigShelf.appendChild(plant);
+      }
+
+      if (fieldData.left == "second") {
+        const plant = document.createElement("img");
+        plant.src = plants.leftTwo;
+        plant.classList.add(`plant-absolute-leftTwo`);
+        bigShelf.appendChild(plant);
+      }
+
+      if (fieldData.right == "first") {
+        const plant = document.createElement("img");
+        plant.src = plants.rightOne;
+        plant.classList.add(`plant-absolute-rightOne`);
+        bigShelf.appendChild(plant);
+      }
+
+      if (fieldData.right == "second") {
+        const plant = document.createElement("img");
+        plant.src = plants.rightTwo;
+        plant.classList.add(`plant-absolute-rightTwo`);
+        bigShelf.appendChild(plant);
+      }
       bigShelf.appendChild(shelfImg);
       bigShelf.appendChild(booksContainer);
       items.shelfContainer?.appendChild(bigShelf);
@@ -184,7 +228,7 @@ function addShelf(shelfOption, updateApi) {
     if (updateApi) {
       const shelf = {
         id: shelfImg.id,
-        theme: "A",
+        theme: fieldData.shelfType,
         amount: 0,
         link: selectedShelf,
       };
@@ -199,7 +243,7 @@ function addShelf(shelfOption, updateApi) {
 }
 
 function removeShelf() {
-  const shelfs = document.querySelectorAll(".shelf");
+  const shelfs = document.querySelectorAll(".bigShelf");
   const lastShelf = shelfs[shelfs.length - 1];
   if (lastShelf) {
     lastShelf.remove();
@@ -209,7 +253,6 @@ function removeShelf() {
       shelfId: lastShelf.id,
     });
   }
-  console.log("shelf removed");
 }
 
 function isShelfFull(shelf) {
@@ -245,17 +288,7 @@ let shelfToFill;
 let appendToNewDiv = false;
 function addBook(
   obj,
-  fieldData = {
-    bookColor: "#000000",
-    firstSeparatorColor: "red",
-    secondSeparatorColor: "blue",
-    decorationFirst: false,
-    decorationSecond: true,
-    decorationFirstColor: "red",
-    decorationSecondColor: "blue",
-    pageMarker: true,
-    markerColor: "yellow",
-  },
+  fieldData,
   updateApi,
   link = null
 ) {
@@ -263,16 +296,16 @@ function addBook(
   <svg xmlns='http://www.w3.org/2000/svg' class="rotate-marker" width='24' height='24' viewBox="0 0 24 8"><title>flag_1_fill</title><g id="flag_1_fill" fill='none' fill-rule='nonzero'><path d='M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z'/><path fill='${fieldData.markerColor}' d='M6 3a2 2 0 0 0-2 2v16a1 1 0 1 0 2 0v-5h13.804a1.1 1.1 0 0 0 .89-1.747L17.236 9.5l3.456-4.753A1.1 1.1 0 0 0 19.803 3z'/></g></svg>
 `;
 
-const decorators = {
-  1: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256"><path fill="${fieldData.decorationFirstColor}" d="M210.35 129.36c-.81-.47-1.7-.92-2.62-1.36c.92-.44 1.81-.89 2.62-1.36a40 40 0 1 0-40-69.28c-.81.47-1.65 1-2.48 1.59c.08-1 .13-2 .13-3a40 40 0 0 0-80 0c0 .94 0 1.94.13 3c-.83-.57-1.67-1.12-2.48-1.59a40 40 0 1 0-40 69.28c.81.47 1.7.92 2.62 1.36c-.92.44-1.81.89-2.62 1.36a40 40 0 1 0 40 69.28c.81-.47 1.65-1 2.48-1.59c-.08 1-.13 2-.13 2.95a40 40 0 0 0 80 0c0-.94-.05-1.94-.13-2.95c.83.57 1.67 1.12 2.48 1.59a39.79 39.79 0 0 0 19.94 5.36a40.43 40.43 0 0 0 10.42-1.38a40 40 0 0 0 9.64-73.28ZM128 156a28 28 0 1 1 28-28a28 28 0 0 1-28 28"></path></svg>`,
-  2: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36"><path fill="${fieldData.decorationSecondColor}" d="M35.885 11.833c0-5.45-4.418-9.868-9.867-9.868c-3.308 0-6.227 1.633-8.018 4.129c-1.791-2.496-4.71-4.129-8.017-4.129c-5.45 0-9.868 4.417-9.868 9.868c0 .772.098 1.52.266 2.241C1.751 22.587 11.216 31.568 18 34.034c6.783-2.466 16.249-11.447 17.617-19.959c.17-.721.268-1.469.268-2.242"></path></svg>`,
-};
+  const decorators = {
+    1: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 256 256"><path fill="${fieldData.decorationFirstColor}" d="M210.35 129.36c-.81-.47-1.7-.92-2.62-1.36c.92-.44 1.81-.89 2.62-1.36a40 40 0 1 0-40-69.28c-.81.47-1.65 1-2.48 1.59c.08-1 .13-2 .13-3a40 40 0 0 0-80 0c0 .94 0 1.94.13 3c-.83-.57-1.67-1.12-2.48-1.59a40 40 0 1 0-40 69.28c.81.47 1.7.92 2.62 1.36c-.92.44-1.81.89-2.62 1.36a40 40 0 1 0 40 69.28c.81-.47 1.65-1 2.48-1.59c-.08 1-.13 2-.13 2.95a40 40 0 0 0 80 0c0-.94-.05-1.94-.13-2.95c.83.57 1.67 1.12 2.48 1.59a39.79 39.79 0 0 0 19.94 5.36a40.43 40.43 0 0 0 10.42-1.38a40 40 0 0 0 9.64-73.28ZM128 156a28 28 0 1 1 28-28a28 28 0 0 1-28 28"></path></svg>`,
+    2: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 36 36"><path fill="${fieldData.decorationSecondColor}" d="M35.885 11.833c0-5.45-4.418-9.868-9.867-9.868c-3.308 0-6.227 1.633-8.018 4.129c-1.791-2.496-4.71-4.129-8.017-4.129c-5.45 0-9.868 4.417-9.868 9.868c0 .772.098 1.52.266 2.241C1.751 22.587 11.216 31.568 18 34.034c6.783-2.466 16.249-11.447 17.617-19.959c.17-.721.268-1.469.268-2.242"></path></svg>`,
+  };
   const bookId = ++totalBooks;
   const grupoSize = 24; // Tamaño de cada grupo de libros
   const relativeBookId = ((bookId - 1) % grupoSize) + 1;
   const availableBooks = [
-    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" class="book rotate" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.secondSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" class="book rotate" id="book-${bookId}" version="1.1" width="22px" height="120px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M 0.5,-0.5 C 7.16667,-0.5 13.8333,-0.5 20.5,-0.5C 20.5,0.166667 20.8333,0.5 21.5,0.5C 21.5,6.16667 21.5,11.8333 21.5,17.5C 14.1667,17.5 6.83333,17.5 -0.5,17.5C -0.5,11.8333 -0.5,6.16667 -0.5,0.5C 0.166667,0.5 0.5,0.166667 0.5,-0.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,17.5 C 6.83333,17.5 14.1667,17.5 21.5,17.5C 21.5,20.1667 21.5,22.8333 21.5,25.5C 14.1667,25.5 6.83333,25.5 -0.5,25.5C -0.5,22.8333 -0.5,20.1667 -0.5,17.5 Z" /></g><g><path style="opacity:0.991" fill="${fieldData.bookColor}" d="M -0.5,25.5 C 6.83333,25.5 14.1667,25.5 21.5,25.5C 21.5,47.8333 21.5,70.1667 21.5,92.5C 14.1667,92.5 6.83333,92.5 -0.5,92.5C -0.5,70.1667 -0.5,47.8333 -0.5,25.5 Z" /></g><g><path style="opacity:1" fill="${fieldData.firstSeparatorColor}" d="M -0.5,92.5 C 6.83333,92.5 14.1667,92.5 21.5,92.5C 21.5,95.5 21.5,98.5 21.5,101.5C 14.1667,101.5 6.83333,101.5 -0.5,101.5C -0.5,98.5 -0.5,95.5 -0.5,92.5 Z" /></g><g><path style="opacity:0.987" fill="${fieldData.bookColor}" d="M -0.5,101.5 C 6.83333,101.5 14.1667,101.5 21.5,101.5C 21.5,106.833 21.5,112.167 21.5,117.5C 20.2905,117.932 19.2905,118.599 18.5,119.5C 13.1667,119.5 7.83333,119.5 2.5,119.5C 1.70951,118.599 0.709515,117.932 -0.5,117.5C -0.5,112.167 -0.5,106.833 -0.5,101.5 Z" /></g></svg>`,
     `<svg xmlns="http://www.w3.org/2000/svg" class="book" id="book-${bookId}" version="1.1" width="31px" height="120px"
     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
     xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -289,7 +322,7 @@ const decorators = {
         d="M -0.5,21.5 C 9.83333,21.5 20.1667,21.5 30.5,21.5C 30.5,46.5 30.5,71.5 30.5,96.5C 20.1667,96.5 9.83333,96.5 -0.5,96.5C -0.5,71.5 -0.5,46.5 -0.5,21.5 Z" />
     </g>
     <g>
-      <path style="opacity:0.984" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:0.984" fill="${fieldData.firstSeparatorColor}"
         d="M -0.5,96.5 C 9.83333,96.5 20.1667,96.5 30.5,96.5C 30.5,97.8333 30.5,99.1667 30.5,100.5C 20.1667,100.5 9.83333,100.5 -0.5,100.5C -0.5,99.1667 -0.5,97.8333 -0.5,96.5 Z" />
     </g>
     <g>
@@ -313,7 +346,7 @@ const decorators = {
         d="M -0.5,20.5 C 9.83333,20.5 20.1667,20.5 30.5,20.5C 30.5,45.5 30.5,70.5 30.5,95.5C 20.1667,95.5 9.83333,95.5 -0.5,95.5C -0.5,70.5 -0.5,45.5 -0.5,20.5 Z" />
     </g>
     <g>
-      <path style="opacity:0.984" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:0.984" fill="${fieldData.firstSeparatorColor}"
         d="M -0.5,95.5 C 9.83333,95.5 20.1667,95.5 30.5,95.5C 30.5,98.5 30.5,101.5 30.5,104.5C 20.1667,104.5 9.83333,104.5 -0.5,104.5C -0.5,101.5 -0.5,98.5 -0.5,95.5 Z" />
     </g>
     <g>
@@ -337,7 +370,7 @@ const decorators = {
         d="M -0.5,21.5 C 9.83333,21.5 20.1667,21.5 30.5,21.5C 30.5,46.5 30.5,71.5 30.5,96.5C 20.1667,96.5 9.83333,96.5 -0.5,96.5C -0.5,71.5 -0.5,46.5 -0.5,21.5 Z" />
     </g>
     <g>
-      <path style="opacity:0.983" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:0.983" fill="${fieldData.firstSeparatorColor}"
         d="M -0.5,96.5 C 9.83333,96.5 20.1667,96.5 30.5,96.5C 30.5,97.8333 30.5,99.1667 30.5,100.5C 20.1667,100.5 9.83333,100.5 -0.5,100.5C -0.5,99.1667 -0.5,97.8333 -0.5,96.5 Z" />
     </g>
     <g>
@@ -361,7 +394,7 @@ const decorators = {
         d="M -0.5,21.5 C 9.83333,21.5 20.1667,21.5 30.5,21.5C 30.5,46.5 30.5,71.5 30.5,96.5C 20.1667,96.5 9.83333,96.5 -0.5,96.5C -0.5,71.5 -0.5,46.5 -0.5,21.5 Z" />
     </g>
     <g>
-      <path style="opacity:0.983" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:0.983" fill="${fieldData.firstSeparatorColor}"
         d="M -0.5,96.5 C 9.83333,96.5 20.1667,96.5 30.5,96.5C 30.5,97.8333 30.5,99.1667 30.5,100.5C 20.1667,100.5 9.83333,100.5 -0.5,100.5C -0.5,99.1667 -0.5,97.8333 -0.5,96.5 Z" />
     </g>
     <g>
@@ -389,7 +422,7 @@ const decorators = {
         d="M 17.5,-0.5 C 20.1667,-0.5 22.8333,-0.5 25.5,-0.5C 25.5,6.83333 25.5,14.1667 25.5,21.5C 22.8333,21.5 20.1667,21.5 17.5,21.5C 17.5,14.1667 17.5,6.83333 17.5,-0.5 Z" />
     </g>
     <g>
-      <path style="opacity:1" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:1" fill="${fieldData.firstSeparatorColor}"
         d="M 92.5,-0.5 C 95.5,-0.5 98.5,-0.5 101.5,-0.5C 101.5,6.83333 101.5,14.1667 101.5,21.5C 98.5,21.5 95.5,21.5 92.5,21.5C 92.5,14.1667 92.5,6.83333 92.5,-0.5 Z" />
     </g>
   </svg>`,
@@ -421,7 +454,7 @@ const decorators = {
         d="M 22.5,-0.5 C 47.5,-0.5 72.5,-0.5 97.5,-0.5C 97.5,9.83333 97.5,20.1667 97.5,30.5C 72.5,30.5 47.5,30.5 22.5,30.5C 22.5,20.1667 22.5,9.83333 22.5,-0.5 Z" />
     </g>
     <g>
-      <path style="opacity:1" fill="${fieldData.secondSeparatorColor}"
+      <path style="opacity:1" fill="${fieldData.firstSeparatorColor}"
         d="M 97.5,-0.5 C 98.8333,-0.5 100.167,-0.5 101.5,-0.5C 101.5,9.83333 101.5,20.1667 101.5,30.5C 100.167,30.5 98.8333,30.5 97.5,30.5C 97.5,20.1667 97.5,9.83333 97.5,-0.5 Z" />
     </g>
     <g>
@@ -504,7 +537,7 @@ const decorators = {
   ];
   let shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
   if (shelfs.length === 0) {
-    addShelf();
+    addShelf(Number(fieldData.shelfType), true);
     shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
   }
   for (let i = 0; i < shelfs.length; i++) {
@@ -517,7 +550,7 @@ const decorators = {
   }
   try {
     if (isShelfFull(shelfToFill)) {
-      addShelf();
+      addShelf(Number(fieldData.shelfType), true);
       shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
       shelfToFill = shelfs[shelfs.length - 1];
     }
@@ -528,8 +561,9 @@ const decorators = {
         .querySelector(".booksContainer")
         .querySelector(".horizontal-container")?.childNodes.length ?? 0;
 
-    let totalLength = currentLength + newDivCurrentLength;
+    totalLength = currentLength + newDivCurrentLength;
     const book = document.createElement("svg");
+    book.classList.add("book-no-margin");
     const bookToAdd = totalLength >= 8 ? totalLength - 1 : totalLength;
     book.innerHTML = availableBooks[bookToAdd];
     let newDiv;
@@ -549,6 +583,7 @@ const decorators = {
         availableBooks[1],
       ];
       const book = document.createElement("svg");
+      book.classList.add("book-no-margin");
       const bookToAddToNewShelf =
         totalLength >= 1 ? totalLength - 1 : totalLength;
       book.innerHTML = newAvailableBooks[bookToAddToNewShelf];
@@ -565,21 +600,21 @@ const decorators = {
 
       if (appendToNewDiv) {
         const bookDiv = document.createElement("div");
-        if (fieldData.decorationFirst) {
+        if (fieldData.decorationFirst == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decorationSecond) {
+        if (fieldData.decorationSecond == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.pageMarker) {
+        if (fieldData.pageMarker == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = marker;
           svg.classList.add(`marker-absolute-${relativeBookId}`);
@@ -609,21 +644,21 @@ const decorators = {
         // shelfToFill.querySelector(".booksContainer").innerHTML +=
         //   link ?? book.innerHTML;
         const bookDiv = document.createElement("div");
-        if (fieldData.decorationFirst) {
+        if (fieldData.decorationFirst == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decorationSecond) {
+        if (fieldData.decorationSecond == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.pageMarker) {
+        if (fieldData.pageMarker == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = marker;
           svg.classList.add(`marker-absolute-${relativeBookId}`);
@@ -644,10 +679,13 @@ const decorators = {
           id: bookId,
           bookColor: fieldData.bookColor,
           firstSeparatorColor: fieldData.firstSeparatorColor,
-          secondSeparatorColor: fieldData.secondSeparatorColor,
           shelfId: Number(shelfToFill.id),
-          decoration: fieldData.decoration,
+          decorationFirst: fieldData.decorationFirst,
+          decorationSecond: fieldData.decorationSecond,
+          decorationFirstColor: fieldData.decorationFirstColor,
+          decorationSecondColor: fieldData.decorationSecondColor,
           pageMarker: fieldData.pageMarker,
+          markerColor: fieldData.markerColor,
           link: book.innerHTML,
         };
         updateApiData({
@@ -670,21 +708,21 @@ const decorators = {
 
       if (appendToNewDiv) {
         const bookDiv = document.createElement("div");
-        if (fieldData.decorationFirst) {
+        if (fieldData.decorationFirst == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decorationSecond) {
+        if (fieldData.decorationSecond == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.pageMarker) {
+        if (fieldData.pageMarker == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = marker;
           svg.classList.add(`marker-absolute-${relativeBookId}`);
@@ -709,21 +747,21 @@ const decorators = {
         // shelfToFill.querySelector(".booksContainer").innerHTML +=
         //   link ?? book.innerHTML;
         const bookDiv = document.createElement("div");
-        if (fieldData.decorationFirst) {
+        if (fieldData.decorationFirst == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[1];
           svg.classList.add(`first-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.decorationSecond) {
+        if (fieldData.decorationSecond == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = decorators[2];
           svg.classList.add(`second-absolute-${relativeBookId}`);
           bookDiv.appendChild(svg);
         }
 
-        if (fieldData.pageMarker) {
+        if (fieldData.pageMarker == "true") {
           const svg = document.createElement("svg");
           svg.innerHTML = marker;
           svg.classList.add(`marker-absolute-${relativeBookId}`);
@@ -745,10 +783,13 @@ const decorators = {
           id: bookId,
           bookColor: fieldData.bookColor,
           firstSeparatorColor: fieldData.firstSeparatorColor,
-          secondSeparatorColor: fieldData.secondSeparatorColor,
           shelfId: Number(shelfToFill.id),
-          decoration: fieldData.decoration,
+          decorationFirst: fieldData.decorationFirst,
+          decorationSecond: fieldData.decorationSecond,
+          decorationFirstColor: fieldData.decorationFirstColor,
+          decorationSecondColor: fieldData.decorationSecondColor,
           pageMarker: fieldData.pageMarker,
+          markerColor: fieldData.markerColor,
           link: book.innerHTML,
         };
         updateApiData({
@@ -766,23 +807,35 @@ const decorators = {
 }
 
 function removeBook() {
-  const books = document.querySelectorAll(".book");
+  const books = document.querySelectorAll(".relative");
   const book = books[books.length - 1];
   if (book) {
-    console.log(book.parentElement.parentElement.id);
-    updateApiData({
-      operation: "removeBook",
-      type: "books",
-      shelfId: book.parentElement.parentElement.id,
-      bookId: totalBooks,
-    });
+    if (
+      book.parentElement.classList.contains("horizontal-container") &&
+      book.parentElement.childElementCount === 1
+    ) {
+      updateApiData({
+        operation: "removeBook",
+        type: "books",
+        shelfId: book.parentElement.parentElement.parentElement.id,
+        bookId: totalBooks,
+      });
+      book.parentElement.remove();
+    } else {
+      updateApiData({
+        operation: "removeBook",
+        type: "books",
+        shelfId: book.parentElement.parentElement.id,
+        bookId: totalBooks,
+      });
+    }
     books[books.length - 1].remove();
   }
-  console.log("book removed");
+  totalLength -= 1;
+  totalBooks -= 1;
 }
 
 function updateApiData(obj) {
-  console.log("updating data");
   try {
     if (obj.operation === "addShelf") {
       widgetApiData.shelfs.push(obj.shelf);
@@ -812,23 +865,10 @@ function updateApiData(obj) {
         (shelf) => shelf.id !== obj.shelfId
       );
     }
-    console.log(widgetApiData);
-    // SE_API.store.set("pruebadeapi", widgetApiData);
+    SE_API.store.set("pruebadeapi", widgetApiData);
   } catch (error) {
     console.log(error);
     return false;
   }
   return true;
 }
-
-// function init(obj) {
-//   const apiData = getApiData(obj)
-//   console.log("initializing widget");
-//   // this function will be in charge of the initial widget creation
-//   // and also everytime the widget is reloaded
-//   // we will get the data from the api and then create the widget manually here to avoid issues (or maybe not)
-//   // we will have to take every shelf, create one shelf image for each shelf saved in the api
-//   // using the link for the image that the shelf has
-//   // then we will use the book info to generate the same books that the user had last time
-//   // this means displaying them in the same order (using the book id), in the same shelf (using the shelf id)
-// }
