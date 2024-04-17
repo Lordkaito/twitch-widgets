@@ -13,7 +13,7 @@ let widgetApiData = {
   maxShelfs: 0,
   shelfs: [],
   books: [],
-};
+}
 
 window.addEventListener("onWidgetLoad", async function (obj) {
   init(obj);
@@ -27,12 +27,6 @@ window.addEventListener("onEventReceived", function (obj) {
     clearApiData();
     return;
   }
-  const shelfs = document.querySelectorAll(".bigShelf");
-  if(shelfs.length == 4) return
-  // possible events: addShelf, removeShelf, addBook, removeBook
-  // when we receive an event to add a book, we check if the current shelf is full
-  // if it is, we automatically add a new shelf and then add the book to it
-  // if it isn't, we just add the book to the current shelf
   const { event } = obj.detail;
 
   if (!allowedEvents.includes(event.field)) return;
@@ -52,12 +46,10 @@ window.addEventListener("onEventReceived", function (obj) {
   if (event.field === "removeBook") {
     removeBook(obj);
   }
-
-  // not sure if the books are random or the user can specify which book to add
 });
 
 const getApiData = async (obj) => {
-  let data = await SE_API.store.get("pruebadeapi");
+  let data = await SE_API.store.get("beniartsBookshelfWidgetApi");
   if (data === null) {
     widgetApiData = defaultApiData;
   } else {
@@ -78,6 +70,10 @@ const items = {
 };
 
 async function init(obj) {
+  if(!obj.detail.overlay.isEditorMode) {
+  	const main = document.querySelector(".main")
+    main.classList.add("myclass")
+  }
   const apiData = await getApiData(obj);
   try {
     apiData.shelfs.map((shelf) => {
@@ -114,7 +110,7 @@ async function init(obj) {
 }
 
 function clearApiData() {
-  SE_API.store.set("pruebadeapi", defaultApiData);
+  SE_API.store.set("beniartsBookshelfWidgetApi", defaultApiData);
     window.location.reload()
 }
 
@@ -153,6 +149,8 @@ const hojas = {
 };
 
 function addShelf(shelfOption, updateApi) {
+  const shelfs = document.querySelectorAll(".bigShelf");
+  if(shelfs.length == 4) return
   try {
     const lastBigShelf = document.querySelectorAll(".bigShelf");
     const lastShelf = lastBigShelf[lastBigShelf.length - 1];
@@ -550,6 +548,7 @@ function addBook(
   }
   try {
     if (isShelfFull(shelfToFill)) {
+      if(document.querySelectorAll(".bigShelf").length == 4) return;
       addShelf(Number(fieldData.shelfType), true);
       shelfs = items.shelfContainer.querySelectorAll(".bigShelf");
       shelfToFill = shelfs[shelfs.length - 1];
@@ -865,7 +864,7 @@ function updateApiData(obj) {
         (shelf) => shelf.id !== obj.shelfId
       );
     }
-    SE_API.store.set("pruebadeapi", widgetApiData);
+    SE_API.store.set("beniartsBookshelfWidgetApi", widgetApiData);
   } catch (error) {
     console.log(error);
     return false;
