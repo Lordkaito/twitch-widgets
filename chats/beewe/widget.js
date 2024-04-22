@@ -1,11 +1,23 @@
-// region INSTANCE 
-// let fieldData = {};
+//region INSTANCE
+/* let fieldData = {
+  displayBadges: true,
+}; */
 let currentEvent = null;
+let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-//let baseUrls = [];
-let coffeeImages = {};
+
+let imagesUrls = {
+  mod: "https://i.ibb.co/h8K2XB2/beewe-mod.png",
+  vip: "https://i.ibb.co/5vzfzrN/beewe-vip.png",
+  subscriber: "https://i.ibb.co/6W3bB1x/beewe-sub.png",
+  viewer: "https://i.ibb.co/ynvRHMJ/beewe-follower.png",
+  streamer: "https://i.ibb.co/cDdrzDD/beewe-streamer.png",
+  moon: "https://i.ibb.co/f89YVpR/luna-blanca.png",
+  shiny: "https://i.ibb.co/Ldx6Ydm/brillito-1.png",
+  bot: "https://i.ibb.co/mJws0WN/beewe-bot.png",
+};
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -22,41 +34,52 @@ const priorities = {
   subscriber: 4,
   viewer: 5,
 };
-
-const blacklisted = (name) => {
-  let username = name.toLowerCase().trim();
-  let blacklist = [];
-  let blackListFieldData = fieldData.usersBlackList.split(",");
-  blackListFieldData.forEach((nick) => {
-    blacklist.push(nick.toLowerCase().trim());
-  });
-  return blacklist.includes(username);
-};
-
-const ignoreMessagesStartingWith = (message) => {
-  let ignoreList = [];
-  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
-  if (ignoreListFieldData !== "") {
-    ignoreListFieldData.forEach((symbol) => {
-      ignoreList.push(symbol.trim());
-    });
+//region CATCH-EVENT
+class mainEvent {
+  constructor(event, listener) {
+    this.event = event;
+    this.listener = listener;
   }
 
-  if (ignoreList.length === 1 && ignoreList[0] === "") {
-    return false;
-  }
-  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
-};
-
-// region MESSAGES
-class Message {
-  constructor(message) {
-    this.message = message;
+  get init() {
+    return this.eventType();
   }
 
+  get isMod() {
+    return this.event.data.tags.mod === "1";
+  }
+
+  get isStreamer() {
+    return (
+      this.event.data.displayName.toLowerCase() ==
+      this.event.data.channel.toLowerCase()
+    );
+  }
+
+  get isSub() {
+    return this.event.data.tags.subscriber === "1";
+  }
+
+  get isVip() {
+    return this.event.data.tags.vip === "1";
+  }
+
+  get isViewer() {
+    return !this.isMod && !this.isStreamer && !this.isSub && !this.isVip;
+  }
+
+  get badges() {
+    return this.event.data.badges;
+  }
+
+  get user() {
+    return this.event.data.displayName;
+  }
+
+  //region GET-ROLE
   get roles() {
-    let priorityRole = [];
-    const tags = this.message.data.tags;
+    const priorityRole = [];
+    const tags = this.event.data.tags;
     let keys = Object.keys(tags);
     keys.forEach((key) => {
       if (roles.includes(key) && tags[key] === "1") {
@@ -65,69 +88,106 @@ class Message {
     });
 
     if (this.isStreamer) {
-      priorityRole = [];
       priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
-      return priorityRole[0];
     }
 
     if (priorityRole.length === 0) {
-      priorityRole = [];
       priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
-      return priorityRole[0];
     }
-
-    let minPriorityRole = [];
-    if (priorityRole.length >= 1) {
-      priorityRole.sort((a, b) => {
-        return a.priority - b.priority;
-      });
-    }
-
-    return minPriorityRole.length === 0 ? priorityRole[0] : minPriorityRole[0];
+    priorityRole.sort((a, b) => a.priority - b.priority);
+    return priorityRole[0];
   }
 
-  async init() {
-    if (this.blacklisted) return;
-    this.roleImages;
-    let idSelector = this.ids;
+  eventType() {
+    if (this.listener === "message") {
+      return this.buildMessageCont();
+    } else {
+      return this.buildEvent();
+    }
+  }
+
+  get emotes() {
+    return this.event.data.emotes;
+  }
+
+  get text() {
+    return this.event.data.text;
+  }
+
+  async buildMessageCont() {
+    //region BUILD-MESSAGE
     return await this.createMainContainerElement();
   }
 
-  get id() {
-    return this.message.data.tags.id;
-  }
-
-  get isMod() {
-    return this.message.data.tags.mod === "1";
-  }
-
-  getRole() {
-    const roles = [];
-    const rolesObj = {
-      mod: { role: "mod", priority: 1 },
-      vip: { role: "vip", priority: 2 },
-      subscriber: { role: "sub", priority: 3 },
-      turbo: { role: "turbo", priority: 4 },
+  async createMainContainerElement() {
+    const colors = {
+      username: "#651e22",
+      userBackground: "#f0e1dc",
+      textColor: "#687233",
+      textBackground: "#ffffff",
+      lineColor: "#45336d",
+      pronsColor: "white",
+      dotsColor: "#b0cd6c",
     };
 
-    Object.entries(this.message.data.tags).forEach(([key, value]) => {
-      if (value === "1" && rolesObj[key]) {
-        roles.push(rolesObj[key]);
-      } else {
-        const viewer = { role: "viewer", priority: 5 };
-        if (roles.includes(viewer)) {
-          return;
-        } else {
-          roles.push(viewer);
-        }
-      }
-    });
+    //region CREATE-MAIN-DIV
+    const theme = fieldData.theme;
+    console.log(theme)
+    const superMainContainer = document.createElement("div");
+    superMainContainer.classList.add("super-main-container");
+    superMainContainer.setAttribute("id", `${this.id}`);
+    const role = this.roles.role;
+    console.log(role)
+    let roleImageURL = imagesUrls[role];
+    
+    let roleText = await this.getUserPronoun() || "he/she";
 
-    if (this.isStreamer) {
-      const streamer = { role: "streamer", priority: 0 };
-      roles.unshift(streamer);
+    function showBadges(thisObj) {
+      return thisObj.badges
+        .map((badge) => {
+          return `<img src="${badge.url}" class="badges-img"/>`;
+        })
+        .join("");
     }
-    return roles;
+    let inlineStyle;
+    if (fieldData.allowPronouns == "false" || roleText == "") {
+      console.log(fieldData)
+      inlineStyle = `display: none;`;
+    } else if (fieldData.allowPronouns == "true" && roleText != "") {
+      console.log(fieldData)
+      inlineStyle = `display: inline; color: ${colors.pronsColor}`;
+    }
+
+    superMainContainer.innerHTML = `
+      <div class="main-container">
+      <img src="${roleImageURL}" class="role-img"/>
+        <div class="message-container">
+          <div class="username-info-container">
+            <div class="username-info">
+              <span class="username-badges" style="${
+                fieldData.displayBadges == "false" ? "display: none;" : ""
+              }">
+                ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
+              </span>
+              <span class="capitalize-user" style="color: ${colors.username}">${
+                this.user}
+              </span>
+              <span class="role-container" style='${inlineStyle}'>
+                ${roleText}
+              </span>
+            </div>
+            <div class="message-icon-container">
+              <div class="rendered-text">
+                <p class="text" style="color: ${colors.textColor}">${
+                  //region INNER-MESSAGE-TEXT
+                  (!(await this.buildMessage()).innerHTML) || "Lorem Ipsiumm Lorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem Ipsiumms"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>`;
+    return superMainContainer;
   }
 
   get roleImages() {
@@ -141,262 +201,12 @@ class Message {
     );
 
     // Asignar la imagen correspondiente
-    let roleImage = document.createElement("svg");
+    let roleImage = document.createElement("img");
     roleImage.classList.add("role");
     if (minPriorityRole.length == 0) {
       minPriorityRole.role = "viewer";
     }
-    roleImage.innerHTML = `<svg height="35px" width="35px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-51.2 -51.2 614.40 614.40" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="10.24"> <g> <path stroke="#fa88d8" stroke-width="100" d="M512,223.537c0-61.46-49.773-111.264-111.264-111.264c-11.768,0-22.922,2.31-33.496,5.644 C366.948,56.657,317.346,7.084,255.985,7.084c-61.32,0-110.993,49.573-111.224,110.833c-10.573-3.334-21.728-5.644-33.496-5.644 C49.774,112.273,0,162.077,0,223.537c0,49.241,32.171,90.479,76.533,105.12c-13.294,18.354-21.276,40.656-21.276,64.985 c0,61.46,49.773,111.274,111.254,111.274c36.86,0,69.222-18.043,89.475-45.646c20.283,27.603,52.645,45.646,89.465,45.646 c61.521,0,111.264-49.813,111.264-111.274c0-24.329-7.993-46.631-21.246-64.985C479.829,314.017,512,272.779,512,223.537z M255.985,337.433c-31.971,0-57.927-25.916-57.927-57.887c0-31.981,25.956-57.897,57.927-57.897c32,0,57.926,25.916,57.926,57.897 C313.912,311.517,287.986,337.433,255.985,337.433z"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g> <path fill="#b909c5" d="M512,223.537c0-61.46-49.773-111.264-111.264-111.264c-11.768,0-22.922,2.31-33.496,5.644 C366.948,56.657,317.346,7.084,255.985,7.084c-61.32,0-110.993,49.573-111.224,110.833c-10.573-3.334-21.728-5.644-33.496-5.644 C49.774,112.273,0,162.077,0,223.537c0,49.241,32.171,90.479,76.533,105.12c-13.294,18.354-21.276,40.656-21.276,64.985 c0,61.46,49.773,111.274,111.254,111.274c36.86,0,69.222-18.043,89.475-45.646c20.283,27.603,52.645,45.646,89.465,45.646 c61.521,0,111.264-49.813,111.264-111.274c0-24.329-7.993-46.631-21.246-64.985C479.829,314.017,512,272.779,512,223.537z M255.985,337.433c-31.971,0-57.927-25.916-57.927-57.887c0-31.981,25.956-57.897,57.927-57.897c32,0,57.926,25.916,57.926,57.897 C313.912,311.517,287.986,337.433,255.985,337.433z"></path> </g> </g></svg>`;
-
     return roleImage;
-  }
-
-  get borderDecorationImg() {
-    const borderDecoration = document.createElement("img");
-    borderDecoration.src = "https://i.postimg.cc/vmrC6rtk/constelacion.png";
-    borderDecoration.classList.add("border-decoration-img");
-    return borderDecoration;
-  }
-
-  get renderedText() {
-    return this.message.data.renderedText;
-  }
-
-  get text() {
-    return this.message.data.text;
-  }
-
-  get emotes() {
-    return this.message.data.emotes;
-  }
-
-  async customEmotes() {
-    let id = fieldData.emotesId;
-    let url;
-    let customEmotesArr;
-    if (id != "") {
-      await fetch(`https://api.7tv.app/v2/users/${id}/emotes`)
-        .then((response) => response.json())
-        .then((data) => (customEmotesArr = data))
-        .catch((error) => console.error(error));
-    }
-    return customEmotesArr;
-  }
-
-  get isSub() {
-    return this.message.data.tags.subscriber == "1";
-  }
-
-  get badges() {
-    return this.message.data.badges;
-  }
-
-  get user() {
-    return this.message.data.displayName;
-  }
-
-  get displayColor() {
-    return this.message.data.displayColor;
-  }
-
-  get isStreamer() {
-    return (
-      this.message.data.displayName.toLowerCase() ==
-      this.message.data.channel.toLowerCase()
-    );
-  }
-
-  async createMainContainerElement() {
-    const mainContainer = document.createElement("div");
-    const superMainContainer = document.createElement("div");
-    const animation = fieldData.animation;
-
-    superMainContainer.classList.add("super-main-container");
-    mainContainer.classList.add("main-container");
-    // mainContainer.classList.add(`${this.roles.role}-main-container`);
-
-    if (fieldData.chatBoxSize == "small") {
-      mainContainer.style.maxWidth = "33.5rem";
-    }
-    // if (this.isMod) mainContainer.classList.add("mods-background");
-
-    mainContainer.appendChild(await this.createUsernameInfoElement());
-    mainContainer.appendChild(await this.createMessageContainerElement());
-    mainContainer.appendChild(this.createBarElement());
-    mainContainer.appendChild(this.createDecorationElement());
-    superMainContainer.appendChild(mainContainer);
-    if (this.isSub) {
-      mainContainer.appendChild(this.lianas);
-    }
-
-    return superMainContainer;
-  }
-
-  get lianas() {
-    const lianas = document.createElement("img");
-    const lianasContainer = document.createElement("div");
-    lianas.src = "https://i.postimg.cc/fbHGMZVB/lianas.png";
-    lianas.classList.add("lianas");
-    lianasContainer.classList.add("lianas-container");
-    lianasContainer.appendChild(lianas);
-    return lianasContainer;
-  }
-
-  createRoleContainer() {
-    const roleContainer = document.createElement("span");
-    roleContainer.classList.add("role-container");
-    roleContainer.appendChild(this.roleImages);
-    return roleContainer;
-  }
-
-  get flower() {
-    const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/bJW42THn/flor-izq.png";
-    flower.classList.add("flower");
-
-    return flower;
-  }
-
-  async createUsernameInfoElement() {
-    const role = this.roles;
-    const usernameInfo = document.createElement("div");
-    const usernameInfoContainer = document.createElement("div");
-    usernameInfoContainer.classList.add("username-info-container");
-    usernameInfo.classList.add("username-info");
-    // usernameInfo.classList.add(role.role);
-    // usernameInfo.appendChild(this.flower);
-    usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(this.createRoleContainer());
-    usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfoContainer.appendChild(await this.createPronounsContainer());
-    return usernameInfoContainer;
-  }
-
-  createUsernameBadgesElement() {
-    const usernameBadges = document.createElement("span");
-    usernameBadges.classList.add("username-badges");
-    this.badges.forEach((badge) => {
-      let badgeImg = document.createElement("img");
-      badgeImg.classList.add("badges-img");
-      badgeImg.src = badge.url;
-      usernameBadges.appendChild(badgeImg);
-    });
-
-    if (fieldData.displayBadges == "false") {
-      usernameBadges.style.display = "none";
-    }
-    return usernameBadges;
-  }
-
-  createCapitalizeUserElement() {
-    let color = this.color;
-    const capitalizeUser = document.createElement("span");
-    capitalizeUser.classList.add("capitalize-user");
-    capitalizeUser.innerText = this.user;
-    return capitalizeUser;
-  }
-
-  async createMessageContainerElement() {
-    const messageContainer = document.createElement("div");
-    messageContainer.classList.add("message-container");
-    messageContainer.appendChild(this.createUserInfoThingyElement());
-    messageContainer.appendChild(
-      await this.createMessageIconContainerElement()
-    );
-    return messageContainer;
-  }
-
-  createUserInfoThingyElement() {
-    const userInfoThingy = document.createElement("div");
-    userInfoThingy.classList.add("user-info-thingy");
-    return userInfoThingy;
-  }
-
-  async createMessageIconContainerElement() {
-    const messageIconContainer = document.createElement("div");
-    messageIconContainer.classList.add("message-icon-container");
-    messageIconContainer.appendChild(await this.createRenderedTextElement());
-    for (let i = 0; i < 2; i++) {
-      messageIconContainer.appendChild(this.flower);
-    }
-    return messageIconContainer;
-  }
-
-  createMessageIconElement() {
-    const messageIconElement = document.createElement("span");
-    messageIconElement.classList.add("icon");
-    // messageIconElement.appendChild(this.imageIconThing);
-    return messageIconElement;
-  }
-
-  async createRenderedTextElement() {
-    const renderedText = document.createElement("div");
-    renderedText.classList.add("rendered-text");
-    // renderedText.classList.add(`${this.roles.role}-text`);
-    renderedText.appendChild(await this.buildMessage());
-    return renderedText;
-  }
-
-  createBarElement() {
-    const bar = document.createElement("div");
-    bar.classList.add("bar");
-    return bar;
-  }
-
-  // not being used for LoveLetterChat2.0
-  createDecorationElement() {
-    const decoration = document.createElement("span");
-    decoration.classList.add("decoration");
-    // decoration.classList.add('ribbon');
-    // decoration.appendChild(this.decorationImg);
-    return decoration;
-  }
-
-  get leafs() {
-    const leafs = document.createElement("img");
-    leafs.src = "https://i.postimg.cc/Y2fmk818/ronro2.png";
-    leafs.classList.add("leafs");
-
-    return leafs;
-  }
-
-  get cactus() {
-    const cactus = document.createElement("img");
-    cactus.src = "https://i.postimg.cc/9X4hF4tT/planta-pron.png";
-    cactus.classList.add("cactus");
-
-    return cactus;
-  }
-
-  //region PRONOUNSES
-
-  async createPronounsContainer() {
-    const pronounsContainer = document.createElement("div");
-    const pronouns = document.createElement("span");
-    pronouns.classList.add("prons");
-    // pronounsContainer.appendChild(this.leafs);
-    pronounsContainer.classList.add("pronouns");
-    if (this.isSub) {
-      pronounsContainer.appendChild(this.cactus);
-    }
-    pronouns.innerText = await this.getUserPronoun();
-    pronouns.innerText == ""
-      ? (pronounsContainer.style.display = "none")
-      : (pronounsContainer.style.display = "block");
-    if (fieldData.allowPronouns == "false") {
-      pronounsContainer.style.display = "none";
-    }
-    // pronouns.classList.add(`${this.roles.role}-prons`)
-
-    pronounsContainer.appendChild(pronouns);
-    return pronounsContainer;
-  }
-
-  themeColor() {
-    let color = fieldData.theme;
-
-    return color;
   }
 
   async getUserPronoun() {
@@ -460,12 +270,41 @@ class Message {
     return pronoun;
   }
 
+  getRole() {
+    const roles = [];
+    const rolesObj = {
+      mod: { role: "mod", priority: 1 },
+      vip: { role: "vip", priority: 2 },
+      subscriber: { role: "sub", priority: 3 },
+      turbo: { role: "turbo", priority: 4 },
+    };
+
+    Object.entries(this.event.data.tags).forEach(([key, value]) => {
+      if (value === "1" && rolesObj[key]) {
+        roles.push(rolesObj[key]);
+      } else {
+        const viewer = { role: "viewer", priority: 5 };
+        if (roles.includes(viewer)) {
+          return;
+        } else {
+          roles.push(viewer);
+        }
+      }
+    });
+
+    if (this.isStreamer) {
+      const streamer = { role: "streamer", priority: 0 };
+      roles.unshift(streamer);
+    }
+    return roles;
+  }
+
   async buildMessage() {
     // get emotes if any
     let emoteNames = [];
     let customEmotesNames = [];
     let customEmotes = await this.customEmotes();
-    if (customEmotes != undefined) {
+    if (customEmotes != undefined && customEmotes.status != "Not Found") {
       customEmotes.map((emote) => {
         customEmotesNames.push(emote.name);
       });
@@ -497,36 +336,40 @@ class Message {
     });
     let textContainer = document.createElement("p");
     textContainer.classList.add("text");
-    if (this.themeColor() == "purple") {
-      textContainer.classList.add("white-text");
-    }
     textContainer.innerHTML = words.join(" ");
     return textContainer;
   }
-}
 
-
-//region FOLLOW
-class Follow {
-  constructor(follow) {
-    this.follow = follow;
+  async customEmotes() {
+    let id = fieldData.emotesId;
+    let url;
+    let customEmotesArr;
+    if (id != "") {
+      await fetch(`https://api.7tv.app/v2/users/${id}/emotes`)
+        .then((response) => response.json())
+        .then((data) => (customEmotesArr = data))
+        .catch((error) => console.error(error));
+    }
+    return customEmotesArr;
   }
 
-  async init() {
-    const followContainer = await this.createMainFollowContainer();
+  buildEvent() {
+    return this.createMainEvent();
+  }
 
-    return followContainer;
+  createMainEvent() {
+    return this.createMainEventContainer();
   }
 
   get name() {
-    const name = this.follow.name;
+    const name = this.event.name;
     const trimmed = this.trimName(name);
 
     return trimmed;
   }
 
   get amount() {
-    return this.follow.amount;
+    return this.event.amount;
   }
 
   trimName(name) {
@@ -534,476 +377,106 @@ class Follow {
     return trimmed;
   }
 
-  async createMainFollowContainer() {
-    const mainContainer = document.createElement("div");
+  get id() {
+    // generate random string
+    const randomString = Math.random().toString(36).substring(2, 15);
+    const startingLetter = "f";
+    return `${startingLetter}${randomString}`;
+  }
 
+  async createMainEventContainer() {
     const { name } = this;
 
-    let followText = fieldData.followText;
-    let text = followText != "" ? followText : "Gracias por el follow!";
-    text = followText != "" ? followText : text;
-    if (followText != "") {
-      followText = followText.replace("(user)", name);
-      text = followText;
-    }
+    let {
+      followText,
+      subText,
+      cheerText,
+      tipText,
+      giftSubText,
+      bulkGiftText,
+      raidText,
+    } = fieldData;
 
-    const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
+    const dictionary = {
+      follower: followText,
+      subscriber: subText,
+      cheer: cheerText,
+      tip: tipText,
+      giftsub: giftSubText,
+      bulkgift: bulkGiftText,
+      raid: raidText,
+    };
 
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
-    nameContainer.classList.add("follow-name");
-    nameContainer.innerText = nameAndText;
-
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
-  }
-}
-
-
-//region BULK-GIFT
-class BulkGift {
-  constructor(bulk) {
-    this.bulk = bulk;
-  }
-
-  async init() {
-    const bulkContainer = await this.createMainBulkContainer();
-
-    return bulkContainer;
-  }
-
-  get sender() {
-    return this.bulk.sender;
-  }
-
-  get amount() {
-    return this.bulk.amount;
-  }
-
-  get isBulkGifted() {
-    return this.bulk.bulkGifted;
-  }
-
-  get name() {
-    const name = this.bulk.name;
-    const trimmed = this.trimName(name);
-
-    return trimmed;
-  }
-
-  trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
-  }
-
-  async createMainBulkContainer() {
-    const mainContainer = document.createElement("div");
-    const mantarayaContainer = document.createElement("div");
-    const sandContainer = document.createElement("div");
-
-    const name = this.name;
-    const isGifted = this.isGifted;
-    const isBulkGifted = this.isBulkGifted;
-    const sender = this.sender.toLowerCase();
     const amount = this.amount;
-
-    let bulkText = fieldData.bulkGiftText;
-    let text = ` ha regalado ${amount} subs!`;
-    if (bulkText == "") {
-      bulkText = ` ha regalado ${amount} subs!`;
-      text = name + bulkText;
-    } else {
-      bulkText = bulkText.replace("(amount)", amount);
-      bulkText = bulkText.replace("(sender)", sender);
-      text = bulkText;
-    }
-
-    const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
-
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
-    nameContainer.classList.add("bulk-name");
-    nameContainer.innerText = nameAndText;
-
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
-  }
-}
-
-//region SUB
-class Sub {
-  constructor(sub) {
-    this.sub = sub;
-    this.originalName = sub.originalEventName;
-    if (this.originalName == currentEvent) {
-      return;
-    }
-  }
-
-  async init() {
-    const subContainer = await this.createMainSubContainer();
-
-    return subContainer;
-  }
-
-  // get message() {
-  //   return this.sub.message;
-  // }
-
-  get isGifted() {
-    let gifted = false;
-    gifted = this.sub.gifted;
-    return gifted;
-  }
-
-  get isBulkGifted() {
-    let isBulkGifted = false;
-    isBulkGifted = this.sub.bulkGifted;
-    return isBulkGifted;
-  }
-
-  get sender() {
-    return this.sub.sender;
-  }
-
-  get amount() {
-    return this.sub.amount;
-  }
-
-  get isBulkGifted() {
-    return this.sub.bulkGifted;
-  }
-
-  get isCommunityGift() {
-    return this.sub.isCommunityGift;
-  }
-
-  get name() {
-    const name = this.sub.name;
-    const trimmed = this.trimName(name);
-
-    return trimmed;
-  }
-
-  trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
-  }
-
-  get isResub() {
-    return this.sub.amount > 1;
-  }
-
-  async createMainSubContainer() {
-    const mainContainer = document.createElement("div");
-
-    const name = this.name;
-    // capitalize name
-    const isGifted = this.isGifted;
-    const isBulkGifted = this.isBulkGifted;
-    const sender =
-      this.sender != undefined ? this.sender.toLowerCase() : undefined;
-    const amount = this.amount;
-
-    let subText = fieldData.subText;
-    let bulkText = fieldData.bulkGiftText;
-    let giftText = fieldData.giftSubText;
-    let text = " Se ha suscrito!";
-    let nameAndText;
-
-    if (!isBulkGifted && isGifted) {
-      if (giftText == "") {
-        giftText = `${sender} gifted a sub to ${name}`;
+    let sender = this.event.sender || this.event.name;
+    let eventText = dictionary[this.event.type];
+    if (this.event.gifted) {
+      eventText = dictionary["giftsub"];
+      let text = ` ha regalado ${amount} subs!`;
+      if (eventText == "") {
+        eventText = ` ha regalado ${amount} subs!`;
+        text = name + eventText;
       } else {
-        giftText = giftText.replace("(sender)", sender);
-        giftText = giftText.replace("(user)", name);
+        eventText = eventText.replace("(amount)", amount);
+        eventText = eventText.replace("(sender)", sender);
+        text = eventText;
       }
-      text = giftText;
-      nameAndText = `${text}`;
-    } else if (this.isResub) {
-      text = name + ` Se ha resuscrito por ${amount} meses!`;
-      nameAndText = `${text}`;
-    } else {
-      text = subText != "" ? subText : name + text;
-      subText = subText.replace("(user)", name);
-      text = subText;
     }
 
-    nameAndText = `${text}`;
-
-    const nameContainer = document.createElement("p");
-
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
+    if (this.event.bulkGifted) {
+      eventText = dictionary["bulkgift"];
+      let text = ` ha regalado ${amount} subs!`;
+      if (eventText == "") {
+        eventText = ` ha regalado ${amount} subs!`;
+        text = name + eventText;
+      } else {
+        eventText = eventText.replace("(amount)", amount);
+        eventText = eventText.replace("(sender)", sender);
+        text = eventText;
+      }
     }
-    nameContainer.classList.add("sub-name");
-    nameContainer.innerText = nameAndText;
 
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
-  }
-}
-
-//region RAID
-
-class Raid {
-  constructor(raid) {
-    this.raid = raid;
-  }
-
-  async init() {
-    const raidContainer = await this.createMainRaidContainer();
-
-    return raidContainer;
-  }
-
-  get name() {
-    const name = this.raid.name;
-    const trimmed = this.trimName(name);
-
-    return trimmed;
-  }
-
-  get amount() {
-    return this.raid.amount;
-  }
-
-  trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
-  }
-
-  async createMainRaidContainer() {
-    const mainContainer = document.createElement("div");
-
-    const { name, amount } = this;
-
-    let raidText = fieldData.raidText;
-    let text = `${name} Nos ha raideado con ${amount} personas`;
-    if (raidText != "") {
-      raidText = raidText.replace("(amount)", amount);
-      raidText = raidText.replace("(sender)", name);
-      text = raidText;
+    let text = eventText != "" ? eventText : `Gracias ${name}!`;
+    text = eventText != "" ? eventText : text;
+    if (eventText != "") {
+      eventText = eventText.replace("(user)", name);
+      eventText = eventText.replace("(amount)", amount);
+      eventText = eventText.replace("(sender)", sender);
+      text = eventText;
     }
 
     const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
-
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
-    nameContainer.classList.add("raid-name");
-    nameContainer.innerText = nameAndText;
-
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
-  }
-}
-
-//region CHEER
-class Cheer {
-  constructor(cheer) {
-    this.cheer = cheer;
-  }
-
-  async init() {
-    const cheerContainer = await this.createMaincheerContainer();
-
-    return cheerContainer;
-  }
-
-  get name() {
-    const name = this.cheer.name;
-    const trimmed = this.trimName(name);
-
-    return trimmed;
-  }
-
-  get amount() {
-    return this.cheer.amount;
-  }
-
-  trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
-  }
-
-  async createMaincheerContainer() {
-    const mainContainer = document.createElement("div");
-
-    const { name } = this;
-    const amount = this.amount;
-
-    let cheerText = fieldData.cheerText;
-    let text = `${name} cheered x${amount}`;
-    if (cheerText != "") {
-      cheerText = cheerText.replace("(amount)", amount);
-      cheerText = cheerText.replace("(user)", name);
-      text = cheerText;
-    }
-    const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
-
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
-    nameContainer.classList.add("cheer-name");
-    nameContainer.innerText = nameAndText;
-
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
-  }
-}
-
-//region TIP
-class Tip {
-  constructor(tip) {
-    this.tip = tip;
-  }
-
-  async init() {
-    const tipContainer = await this.createMainTipContainer();
-
-    return tipContainer;
-  }
-
-  get name() {
-    const name = this.tip.name;
-    const trimmed = this.trimName(name);
-
-    return trimmed;
-  }
-
-  trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
-  }
-
-  get message() {
-    return this.tip.message;
-  }
-
-  get amount() {
-    return this.tip.amount;
-  }
-
-  get currency() {
-    return this.tip.currency;
-  }
-
-  async createMainTipContainer() {
-    const mainContainer = document.createElement("div");
-
-    const { name, amount } = this;
-
-    let tipText = fieldData.tipText;
-    let lowerName = name.toLowerCase();
-    let text = `${lowerName} tipped $` + amount;
-    if (tipText != "") {
-      tipText = tipText.replace("(amount)", amount);
-      tipText = tipText.replace("(user)", lowerName);
-      text = tipText;
+    const newContainer = document.createElement("div");
+    newContainer.classList.add("new-container");
+    newContainer.setAttribute("id", `${this.id}`);
+    const theme = fieldData.theme;
+    let toggleClass = "toggle-circle";
+    let toggleClass2 = "toggle";
+    if (theme === "dark") {
+      toggleClass = "toggle-circle-dark";
+      toggleClass2 = "toggle-dark";
     }
 
-    const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
+    const colors = {
+      username: "#5e8501",
+      userBackground: "#b0cd6c",
+      textColor: "#72a101",
+      textBackground: "#ffefdb",
+      lineColor: "#ffefdb",
+      dotsColor: "#ffefdb",
+      eventsColor: "white",
+    };
 
-    const fungiContainer = document.createElement("div");
-    for (let i = 0; i < 2; i++) {
-      const fungi = document.createElement("img");
-
-      fungi.src = "https://i.postimg.cc/6qZgVvYm/cactus-izq.png";
-
-      fungi.classList.add("fungi");
-      const fungiDivContainer = document.createElement("div");
-
-      fungiDivContainer.classList.add(`fungi-img-container-${i + 1}`);
-      fungiDivContainer.appendChild(fungi);
-      fungiContainer.classList.add("fungi-container");
-      fungiContainer.appendChild(fungiDivContainer);
-      fungiContainer.appendChild(nameContainer);
-    }
-    nameContainer.classList.add("tip-name");
-    nameContainer.innerText = nameAndText;
-
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
-
-    return mainContainer;
+    newContainer.innerHTML = `
+      <div class="event-container">
+        <img class="bote" src="https://i.ibb.co/58bPVGq/botehada.png" />
+        <div class="event-and-name-container">
+          <p class="event-name" style="color: ${colors.eventsColor}">${nameAndText}</p>
+        </div>
+        <img class="joya" src="https://i.ibb.co/nPdC92v/joyahada.png" />
+      </div>
+    `;
+    return newContainer;
   }
 }
 
@@ -1016,7 +489,6 @@ const Widget = {
   globalEmotes: {},
 };
 
-// I'm trash and forgot about this fn
 async function get(URL) {
   return await fetch(URL)
     .then(async (res) => {
@@ -1054,16 +526,11 @@ const GLOBAL_EMOTES = {
     },
   },
 };
-//region ON-WIDGET-LOAD
+
 window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
-  let main = document.querySelector("main");
-
-  if (fieldData.transparency == "false") {
-    main.style.maskImage = "none";
-    main.style.webkitMaskImage = "none";
-  }
+  maxMessages = fieldData.maxMessages;
 });
 
 function stringToArray(string = "", separator = ",") {
@@ -1085,307 +552,120 @@ async function loadGlobalEmotes() {
 }
 
 const removeMessage = (mainContainer) => {
+  console.log("Removing message", mainContainer);
   const elem = mainContainer;
   if (elem) {
     elem.style.animationName = "removeMessage";
     elem.style.animationDuration = "0.7s";
+    elem.style.animationTimingFunction = "ease-in-out";
+    elem.style.animationDelay = "1s";
+    elem.style.animationFillMode = "forwards";
     setTimeout(() => {
       elem.remove();
-    }, 100000000);
+    }, 1500);
   }
-};
-
-const removeEvent = (mainContainer, event) => {
-  const elem = mainContainer;
-  elem.querySelector(".fungi-img-container-2").style.animationName =
-    "hideRightStar";
-  elem.querySelector(".fungi-img-container-2").style.animationDuration = "0.7s";
-  elem.querySelector(".fungi-img-container-2").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(".fungi-img-container-1").style.animationName =
-    "hideLeftStar";
-  elem.querySelector(".fungi-img-container-1").style.animationDuration = "0.7s";
-  elem.querySelector(".fungi-img-container-1").style.animationFillMode =
-    "forwards";
-
-  elem.querySelector(`.${event}`).style.animationName = "hideNames";
-  setTimeout(() => {
-    elem.remove();
-  }, 100000000);
 };
 
 let repeatedEvents = 0;
 let maxEvents = 0;
 let isBulk = false;
 
-let previousEvent = "";
-let previousSender = "";
-let currentSender = "";
-let sameEventsAmount = 0;
-
-const isSameSender = (event) => {
-  if (event.sender != "" && event.sender != null) {
-    if (event.sender == previousSender) {
-      previousSender = event.sender;
-      return true;
-    }
-    previousSender = event.sender;
-  }
-  return false;
+const blacklisted = (name) => {
+  let username = name.toLowerCase().trim();
+  let blacklist = [];
+  let blackListFieldData = fieldData.usersBlackList.split(",");
+  blackListFieldData.forEach((nick) => {
+    blacklist.push(nick.toLowerCase().trim());
+  });
+  return blacklist.includes(username);
 };
 
-const isSameEvent = (listener, event) => {
-  if (listener != "" && listener != null) {
-    if (listener == previousEvent) {
-      previousEvent = listener;
-      return isSameSender(event);
-    }
-    previousEvent = listener;
+const ignoreMessagesStartingWith = (message) => {
+  let ignoreList = [];
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+  if (ignoreListFieldData !== "") {
+    ignoreListFieldData.forEach((symbol) => {
+      ignoreList.push(symbol.trim());
+    });
   }
-  return false;
-};
 
-//region ON-EVENT-LOAD
+  if (ignoreList.length === 1 && ignoreList[0] === "") {
+    return false;
+  }
+  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
+};
 
 window.addEventListener("onEventReceived", async (obj) => {
-  console.log(obj);
   let { listener, event } = obj.detail;
+  if (event.isCommunityGift) return;
 
-  if (listener === "subscriber-latest") {
-    holdedEvent(event);
-    return;
+  if (listener === "message") {
+    let isBlackListed = blacklisted(event.data.displayName);
+    if (isBlackListed) return;
+    let specialSymbols = ignoreMessagesStartingWith(event.data.text);
+    if (specialSymbols) return;
   }
 
   const mainCont = document.querySelector("main");
 
-  switch (listener) {
-    case "message":
-      let isBlackListed = blacklisted(event.data.displayName);
-      // if (isBlackListed) return;
-      let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-      // if (specialSymbols) return;
-      const message = new Message(event);
-      message
-        .init()
-        .then((mainContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeMessage(mainContainer);
-            }, fieldData.deleteMessages * 100000000);
+  const events = new mainEvent(event, listener);
+
+  events.init
+    .then((mainContainer) => {
+      if (fieldData.allowDeleteMessages === "true") {
+        if (fieldData.deleteMessagesOption === "amount") {
+          if (currentAmountOfMessages >= maxMessages) {
+            let messageToRemove = currentMessagesIds.shift();
+            removeMessage(document.querySelector(`#${messageToRemove}`));
+            currentMessagesIds.push(mainContainer.id);
+          } else {
+            currentAmountOfMessages++;
+            currentMessagesIds.push(mainContainer.id);
           }
-          mainCont.appendChild(mainContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    case "follower-latest":
-      const follow = new Follow(event);
-      follow
-        .init()
-        .then((followContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(followContainer, "follow-name");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(followContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    case "subscriber":
-      const sub = new Sub(event);
-      sub
-        .init()
-        .then((subContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(subContainer, "sub-name");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(subContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    case "raid-latest":
-      const raid = new Raid(event);
-      raid
-        .init()
-        .then((raidContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(raidContainer, "raid-name");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(raidContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    case "cheer-latest":
-      const cheer = new Cheer(event);
-      cheer
-        .init()
-        .then((cheerContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(cheerContainer, "cheer-name");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(cheerContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    case "tip-latest":
-      const tip = new Tip(event);
-      tip
-        .init()
-        .then((tipContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(tipContainer, "tip-name");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          mainCont.appendChild(tipContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-    default:
-      console.log(event);
-      const bulk = new BulkGift(event);
-      bulk
-        .init()
-        .then((bulkContainer) => {
-          if (fieldData.allowDeleteMessages === "true") {
-            setTimeout(() => {
-              removeEvent(bulkContainer, "bulk");
-            }, fieldData.deleteMessages * 100000000);
-          }
-          bc;
-          mainCont.appendChild(bulkContainer);
-        })
-        .finally(() => {
-          $("main").scrollTop($("main")[0].scrollHeight);
-        });
-      break;
-  }
+        }
+        if (fieldData.deleteMessagesOption === "timer") {
+          setTimeout(() => {
+            removeMessage(mainContainer);
+          }, fieldData.deleteMessagesTimer * 1000);
+        }
+      }
+      mainCont.appendChild(mainContainer);
+      return mainContainer;
+    })
+    .then((mainContainer) => {
+      addTrebols(mainContainer, listener, event);
+    });
 });
-
-//region HANDLE-EVENTS
-
-let storedEvents = [];
-let eventCounter = 0;
-let eventTimer = null;
-let firstEvent = true;
-
-const dispatchNewEvent = (event) => {
-  if (
-    previousSender === currentSender ||
-    firstEvent === true ||
-    previousSender === ""
-  ) {
-    storedEvents.push(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "subscriber",
-          event: event,
-        },
-      })
-    );
-    previousSender = "";
+//region ADDING-TREBOLS
+async function addTrebols(container, listener, event) {
+  if (listener === "message") {
+    messageContainer = container.querySelector(".message-icon-container");
+    currentHeight = messageContainer.offsetHeight;
   }
 
-  if (eventTimer) {
-    clearTimeout(eventTimer);
+  const contHeight = container.offsetHeight + currentHeight;
+  const linesContainer = document.createElement("div");
+  linesContainer.classList.add("lines-container");
+  let shinyUrl = imagesUrls["shiny"];
+  let moonUrl = imagesUrls["moon"];
+
+  if (listener === "message") {
+    linesContainer.innerHTML = `
+      <span class="dot" style="background-color: ${colors.lineColor}"></span>
+      <img src="${shinyUrl}" class="shiny"/>
+      <div class="line-container" style="${
+        contHeight <= 140 ? "height: 65%" : "height: 75%"
+      };" >
+        <div class="line" style="background-color: ${colors.lineColor}"></div>
+      </div>
+      <span class="dot" style="background-color: ${colors.lineColor}"></span>
+  `;
+  }
+  if (listener !== "message") {
+    linesContainer.innerHTML = `
+      <img src="${moonUrl}" class="moon"/>
+  `;
   }
 
-  eventTimer = setTimeout(() => {
-    if (storedEvents.length > 1) {
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "bulk",
-            event: {
-              amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
-              sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
-            },
-          },
-        })
-      );
-      eventCounter += storedEvents.length;
-      console.log(
-        `se recibieron ${storedEvents.length} eventos, se envia el ultimo`
-      );
-      previousSender = "";
-    } else if (storedEvents.length === 1) {
-      console.log("heresdfadsf");
-      window.dispatchEvent(
-        new CustomEvent("onEventReceived", {
-          detail: {
-            listener: "subscriber",
-            event: {
-              amount: storedEvents.length,
-              avatar: event.avatar,
-              displayName: event.displayName,
-              gifted: event.gifted,
-              sender: storedEvents[0].sender,
-              type: event.type,
-              tier: event.tier,
-              message: event.message,
-              name: event.name,
-              quantity: event.quantity,
-              sessionTop: event.sessionTop,
-              providerId: event.providerId,
-              originalEventName: event.originalEventName,
-            },
-          },
-        })
-      );
-      previousSender = "";
-    }
-    storedEvents = [];
-    eventTimer = null;
-    eventCounter = 0;
-  }, 500);
-  firstEvent = false;
-  previousSender = event.sender;
-};
-
-const holdedEvent = async (event) => {
-  if (event.gifted) {
-    currentSender = event.sender;
-    dispatchNewEvent(event);
-  } else {
-    window.dispatchEvent(
-      new CustomEvent("onEventReceived", {
-        detail: {
-          listener: "subscriber",
-          event: event,
-        },
-      })
-    );
-  }
-};
+  container.appendChild(linesContainer);
+}
