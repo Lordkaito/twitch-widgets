@@ -151,18 +151,6 @@ main {
   animation: growLine 0.5s 1s ease-in-out forwards;
 }
 
-.lines-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 10px;
-  order: 2;
-  /* min-height: 100px; */
-  /* transform: translateY(1rem); */
-}
-
 .shiny {
   height: 15px;
   position: absolute;
@@ -428,6 +416,7 @@ main {
 }
 
 .message-icon-container {
+  width: 99%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -443,6 +432,35 @@ main {
   /* animation: growMessage 0.5s 0.5s ease-in-out forwards; */
 }
 
+.trebol {
+  width: 15px;
+  position: absolute;
+}
+
+.t1 {
+  top: 0;
+  left: -8px;
+  width: 20px;
+}
+
+.t2 {
+  bottom: -8px;
+  overflow: visible;
+  left: -8px;
+  width: 30px;
+}
+
+.t3 {
+  bottom: -5px;
+  width: 15px;
+  right: 25px;
+}
+
+.t4 {
+  bottom: -6px;
+  right: 0;
+  width: 20px;
+}
 /* Diamond class */
 .diamond {
   width: 3.4rem;
@@ -874,8 +892,8 @@ main {
 
 .role-img {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: -23px;
+  top: 17px;
   bottom: 0;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
