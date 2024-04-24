@@ -664,7 +664,7 @@ async function addLianas(container, listener, event) {
       bigLineContainer.appendChild(line);
       const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
       bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 25}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
     });
 
     const lianasContainer = document.querySelectorAll('.username-info-container');
@@ -678,12 +678,17 @@ async function addLianas(container, listener, event) {
   if (listener !== 'message') {
     const parentElement = document.querySelectorAll('.new-container');
     parentElement.forEach((eachParent) => {
+      const eventContainer = eachParent.querySelector('.event-container');
+      eventContainer.innerHTML += `
+        <img class="event-plant plant2" src="${imagesUrls.plant}" alt="plant">
+        <img class="event-plant plant1" src="${imagesUrls.plant}" alt="plant">
+      `;
       console.log(eachParent)
       eachParent.appendChild(bigLineContainer);
       bigLineContainer.appendChild(line);
       const parentheight = eachParent.querySelector('.event-container').offsetHeight;
       bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 25}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
     })
   }
 }
