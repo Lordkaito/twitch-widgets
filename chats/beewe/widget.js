@@ -473,16 +473,16 @@ class mainEvent {
       textBackground: '#ffefdb',
       lineColor: '#ffefdb',
       dotsColor: '#ffefdb',
-      eventsColor: 'white',
+      eventsColor: '#651e22',
     };
-
+    //region EVENT-GENERATION
     newContainer.innerHTML = `
       <div class="event-container">
-        <img class="bote" src="https://i.ibb.co/58bPVGq/botehada.png" />
+        <img class="trebol3-event" src="${imagesUrls.trebol3}" />
         <div class="event-and-name-container">
           <p class="event-name" style="color: ${colors.eventsColor}">${nameAndText}</p>
         </div>
-        <img class="joya" src="https://i.ibb.co/nPdC92v/joyahada.png" />
+        <img class="trebol4-event" src="${imagesUrls.trebol4}" />
       </div>
     `;
     return newContainer;

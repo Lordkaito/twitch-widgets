@@ -456,6 +456,26 @@ main {
   right: 25px;
 }
 
+.trebol3-event {
+  transform: scale(1);
+  position: absolute;
+  background-color: #f0e1dc;
+  border-radius: 100px;
+  padding: 20px;
+  left: -14px;
+  border-left: 5px solid #edc7bc;
+}
+
+.trebol4-event {
+  background-color: #f0e1dc;
+  border-radius: 100px;
+  padding: 30px;
+  transform: scale(0.75);
+  position: absolute;
+  right: -27px;
+  border-right: 5px solid #edc7bc;
+}
+
 .t4 {
   bottom: -6px;
   right: 0;
@@ -579,13 +599,13 @@ main {
   height: 100%;
   border-radius: 20px;
   padding: 1rem 2rem;
-  background: linear-gradient(#cd6dfc, #f87cf4);
-  /* border: 4px solid var(--user-color); */
+  border: 4px solid #edc7bc;
+  border-radius: 100px;
   /* margin: 0.9rem 0 0.9rem 0; */
   /* padding: 1.5rem 0; */
   /* padding-left: 1rem; */
   opacity: 1;
-  background-color: transparent;
+  background-color: #f0e1dc;
   position: relative;
   z-index: 2 !important;
   gap: 1rem;
