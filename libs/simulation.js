@@ -386,9 +386,9 @@ let events = {
           "user-type": "",
           vip: "0",
         },
-        nick: "Lordkaito_",
+        nick: "lordkaito_",
         userId: "675807879",
-        displayName: "thisistumble",
+        displayName: "Lordkaito",
         displayColor: "#FF0000",
         badges: [
           {
