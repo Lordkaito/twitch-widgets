@@ -142,7 +142,8 @@ class mainEvent {
     console.log(role);
     let roleImageURL;
     console.log(this.user)
-    if(this.user === "thisistumble") {
+    let isBot = this.user === "thisistumble";
+    if(isBot) {
       roleImageURL = imagesUrls.bot;
     } else {
       roleImageURL = imagesUrls[role];
@@ -163,9 +164,9 @@ class mainEvent {
     } else if (fieldData.allowPronouns == 'true' && roleText != '') {
       inlineStyle = `display: inline;`;
     }
-
     superMainContainer.innerHTML = `
       <div class="main-container">
+      ${isBot === true ? (`<img src="${imagesUrls.mod}" class="role-img-bot"/>`): null}
       <img src="${roleImageURL}" class="role-img"/>
         <div class="message-container">
           <div class="username-info-container">
@@ -175,9 +176,8 @@ class mainEvent {
               }">
                 ${fieldData.displayBadges == 'true' ? showBadges(this) : ''}
               </span>
-              <span class="capitalize-user" style="color: ${colors.username}">${
-      this.user
-    }
+              <span class="capitalize-user" style="color: ${colors.username}">
+                ${this.user}
               </span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
@@ -185,11 +185,12 @@ class mainEvent {
             </div>
             <div class="message-icon-container">
               <div class="rendered-text">
-                <p class="text" style="color: ${colors.textColor}">${
-      //region INNER-MESSAGE-TEXT
-      !(await this.buildMessage()).innerHTML ||
-      'Lorem Ipsiumm Lorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem Ipsiumms'
-    }
+                <p class="text" style="color: ${colors.textColor}">
+                  ${
+                  //region INNER-MESSAGE-TEXT
+                    !(await this.buildMessage()).innerHTML ||
+                    'Lorem Ipsiumm Lorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem IpsiummLorem Ipsiumms'
+                  }
                 </p>
               </div>
             </div>
@@ -673,7 +674,7 @@ async function addTrebols(container, listener, event) {
       let t1 = document.querySelectorAll('.t1');
       console.log(t1);
       t1.forEach((t1s) => {
-        t1s.style.top = `${nickHeight + 4}px`;
+        t1s.style.top = `${nickHeight + 5}px`;
       });
 
       let t3 = document.querySelectorAll('.t3');
@@ -689,12 +690,4 @@ async function addTrebols(container, listener, event) {
       });
     });
   }
-
-  if (listener !== 'message') {
-    linesContainer.innerHTML = `
-      <img src="${moonUrl}" class="moon"/>
-  `;
-  }
-
-  container.appendChild(linesContainer);
 }

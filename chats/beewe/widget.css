@@ -384,7 +384,7 @@ main {
   text-overflow: ellipsis;
   border-radius: 15px;
   padding: 4px 10px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   order: 3;
 }
 
@@ -428,7 +428,7 @@ main {
   border: 3px solid #edc7bc;
   padding: 1rem 0;
   /* height: 0; */
-  border-radius: 15px;
+  border-radius: 27px;
   /* animation: growMessage 0.5s 0.5s ease-in-out forwards; */
 }
 
@@ -439,7 +439,7 @@ main {
 
 .t1 {
   top: 0;
-  left: -8px;
+  left: -7px;
   width: 20px;
 }
 
@@ -453,7 +453,13 @@ main {
 .t3 {
   bottom: -5px;
   width: 15px;
-  right: 25px;
+  right: 34px;
+}
+
+.t4 {
+  bottom: -6px;
+  right: 7px;
+  width: 20px;
 }
 
 .trebol3-event {
@@ -476,11 +482,6 @@ main {
   border-right: 5px solid #edc7bc;
 }
 
-.t4 {
-  bottom: -6px;
-  right: 0;
-  width: 20px;
-}
 /* Diamond class */
 .diamond {
   width: 3.4rem;
@@ -513,10 +514,14 @@ main {
 
 .text {
   font-size: 1.5rem;
-  text-align: center;
+  padding-top: 1.25rem;
+  padding-left: 0.438rem;
+  padding-bottom: 0.313rem;
+  text-align: left;
   font-weight: 500;
   opacity: 0;
   animation: fadeIn 0.6s 0.7s ease-in-out forwards;
+  /* animation: fadeIn 0.5s 0.5s forwards; */
   /* margin-left: 1rem; */
   width: 100%;
 }
@@ -672,7 +677,7 @@ main {
 .event-name {
   height: 100%;
   top: 0;
-  font-weight: 700;
+  font-weight: 900;
   text-align: center;
   /* display: flex; */
   /* align-items: center; */
@@ -747,7 +752,7 @@ main {
   border-radius: 20px;
   font-weight: 500;
   order: -1;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 /* .role-text {
@@ -912,8 +917,17 @@ main {
 
 .role-img {
   position: absolute;
-  right: -23px;
+  right: -11.313rem;
   top: 17px;
+  bottom: 0;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+}
+
+.role-img-bot {
+  position: absolute;
+  right: -1.313rem;
+  top: 10px;
   bottom: 0;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
