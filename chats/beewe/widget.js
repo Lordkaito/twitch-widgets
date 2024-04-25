@@ -1,7 +1,4 @@
 //region INSTANCE
-/* let fieldData = {
-  displayBadges: true,
-}; */
 let currentEvent = null;
 let flowerCount = 0;
 let currentMessagesIds = [];
@@ -133,15 +130,12 @@ class mainEvent {
 
     //region CREATE-MAIN-DIV
     const theme = fieldData.theme;
-    console.log(theme);
     const superMainContainer = document.createElement('div');
     superMainContainer.classList.add('super-main-container');
     superMainContainer.setAttribute('id', `${this.id}`);
     //region DEFINE-ROLE
     const role = this.roles.role;
-    console.log(role);
     let roleImageURL;
-    console.log(this.user)
     let isBot = this.user === "thisistumble";
     if(isBot) {
       roleImageURL = imagesUrls.bot;
@@ -654,7 +648,11 @@ async function addTrebols(container, listener, event) {
       '.message-icon-container',
     ).offsetHeight;
     let nickHeight = nickContainer.offsetHeight;
-
+    totalHeight.style.height = "0px";
+    totalHeight.style.transition = "height 0.5s ease-in-out";
+    setTimeout(() => {
+      messageContainer.style.height = `${currentHeight + 10}px`;
+    }, 300);
     const trebolsContainer = document.querySelectorAll(
       '.message-icon-container',
     );
