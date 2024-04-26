@@ -11,6 +11,12 @@ let fieldData = {
     value: "(user) just suscribed!",
     group: "Events",
   },
+  botName: {
+    type: "text",
+    label: "Name of your bot:",
+    value: "thisistumble",
+    group: "Customization",
+  },
   followText: {
     type: "text",
     label: "Custom text for FOLLOW (max 40)",

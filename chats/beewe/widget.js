@@ -136,7 +136,7 @@ class mainEvent {
     //region DEFINE-ROLE
     const role = this.roles.role;
     let roleImageURL;
-    let isBot = this.user === "thisistumble";
+    let isBot = this.user === fieldData.botName;
     if(isBot) {
       roleImageURL = imagesUrls.bot;
     } else {
@@ -160,8 +160,8 @@ class mainEvent {
     }
     superMainContainer.innerHTML = `
       <div class="main-container">
-      ${isBot === true ? (`<img src="${imagesUrls.mod}" class="role-img-bot"/>`): null}
-      <img src="${roleImageURL}" class="role-img"/>
+      ${isBot === true ? (`<img src="${imagesUrls.mod}" class="role-img-bot"/>`): ""}
+      ${isBot === true ? (`<img src="${imagesUrls.bot}" class="role-img-bot2"/>`): `<img src="${roleImageURL}" class="role-img"/>`}
         <div class="message-container">
           <div class="username-info-container">
             <div class="username-info">
@@ -648,6 +648,7 @@ async function addTrebols(container, listener, event) {
       '.message-icon-container',
     ).offsetHeight;
     let nickHeight = nickContainer.offsetHeight;
+    //region FIX-RERENDER-MESSAGES
     totalHeight.style.height = "0px";
     totalHeight.style.transition = "height 0.5s ease-in-out";
     setTimeout(() => {
