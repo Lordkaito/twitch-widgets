@@ -426,7 +426,7 @@ main {
   /* align-items: center; */
   background: #ffffff;
   border: 3px solid #edc7bc;
-  padding: 1rem 0;
+  padding: 1.3rem 0;
   /* height: 0; */
   border-radius: 27px;
   /* animation: growMessage 0.5s 0.5s ease-in-out forwards; */
@@ -515,15 +515,16 @@ main {
 .text {
   font-size: 1.5rem;
   padding-top: 1.25rem;
-  padding-bottom: 0.313rem;
-  padding-top: 0.313rem;
-  text-align: center;
+  padding-bottom: 0.413rem;
+  padding-top: 0.413rem;
+  padding-left: 1.713rem;
+  text-align: left;
   font-weight: 500;
   opacity: 0;
   animation: fadeIn 0.6s 0.7s ease-in-out forwards;
   /* animation: fadeIn 0.5s 0.5s forwards; */
   /* margin-left: 1rem; */
-  width: 100%;
+  width: 90%;
 }
 
 .rendered-text {
