@@ -652,12 +652,9 @@ async function addLianas(container, listener, event) {
   bigLineContainer.innerHTML += `
     <img src="${imagesUrls.flower}">
   `;
+  /* totalHeight.style.height = "0px";
+  totalHeight.style.transition = "height 0.5s ease-in-out"; */
   if (listener === 'message') {
-    /* let nickContainer = container.querySelector('.username-info');
-    let totalHeight = container.querySelector(
-      '.message-icon-container',
-    ).offsetHeight;
-    let nickHeight = nickContainer.offsetHeight; */
     const parentElement = document.querySelectorAll('.super-main-container');
     parentElement.forEach((eachParent) => {
       eachParent.appendChild(bigLineContainer);
