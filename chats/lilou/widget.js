@@ -648,25 +648,21 @@ async function addLianas(container, listener, event) {
   let messageContainer, currentHeight, parentElement;
 
   if (listener === 'message') {
-    if (!container.querySelector('.lines-container')) {
-      const bigLineContainer = document.createElement('div');
-      const line = document.createElement('div');
-      line.classList.add('green-line');
-      bigLineContainer.classList.add('lines-container');
-      bigLineContainer.innerHTML += `
-        <img src="${imagesUrls.flower}">
-      `;
+    const bigLineContainer = document.createElement('div');
+    const line = document.createElement('div');
+    line.classList.add('green-line');
+    bigLineContainer.classList.add('lines-container');
+    bigLineContainer.innerHTML += `<img src="${imagesUrls.flower}">`;
 
-      parentElement = document.querySelectorAll('.super-main-container');
-      parentElement.forEach((eachParent) => {
-        eachParent.appendChild(bigLineContainer);
-        bigLineContainer.appendChild(line);
+    parentElement = document.querySelectorAll('.super-main-container');
+    parentElement.forEach((eachParent) => {
+      eachParent.appendChild(bigLineContainer);
+      bigLineContainer.appendChild(line);
 
-        const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
-        bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-        line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      });
-    }
+      const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
+      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+    });
 
     messageContainer = container.querySelector(".message-icon-container");
     let nickContainer = container.querySelector('.username-info');
@@ -687,14 +683,38 @@ async function addLianas(container, listener, event) {
   }
 
   if (listener !== 'message') {
-    const parentElement = container.querySelectorAll('.new-container');
+    parentElement = document.querySelectorAll('.new-container');
+    const bigLineContainer = document.createElement('div');
+    const line = document.createElement('div');
+    line.classList.add('green-line');
+    bigLineContainer.classList.add('lines-container');
+    bigLineContainer.innerHTML += `<img src="${imagesUrls.flower}">`;
     parentElement.forEach((eachParent) => {
+      eachParent.appendChild(bigLineContainer);
+      bigLineContainer.appendChild(line);
+
       const eventContainer = eachParent.querySelector('.event-container');
-      eventContainer.innerHTML += `
-        <img class="event-plant plant2" src="${imagesUrls.plant}" alt="plant">
-        <img class="event-plant plant1" src="${imagesUrls.plant}" alt="plant">
-      `;
-      console.log(eachParent)
+      const parentheight = eventContainer.offsetHeight;
+      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+  
+      if (!eventContainer.querySelector('.event-plant')) {
+        const plantImage1 = document.createElement('img');
+        plantImage1.classList.add('event-plant', 'plant1');
+        plantImage1.src = imagesUrls.plant;
+        plantImage1.alt = 'plant';
+  
+        const plantImage2 = document.createElement('img');
+        plantImage2.classList.add('event-plant', 'plant2');
+        plantImage2.src = imagesUrls.plant;
+        plantImage2.alt = 'plant';
+  
+        eventContainer.appendChild(plantImage1);
+        eventContainer.appendChild(plantImage2);
+      }
     });
-  }
+  }  
+  
 }
+
+
