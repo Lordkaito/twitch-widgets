@@ -160,8 +160,7 @@ class mainEvent {
     }
     superMainContainer.innerHTML = `
       <div class="main-container">
-      ${isBot === true ? (`<img src="${imagesUrls.mod}" class="role-img-bot"/>`): ""}
-      ${isBot === true ? (`<img src="${imagesUrls.bot}" class="role-img-bot2"/>`): `<img src="${roleImageURL}" class="role-img"/>`}
+      ${isBot === true ? (`<img src="${imagesUrls.bot}" class="role-img"/>`): `<img src="${roleImageURL}" class="role-img"/>`}
         <div class="message-container">
           <div class="username-info-container">
             <div class="username-info">
@@ -642,51 +641,50 @@ window.addEventListener('onEventReceived', async (obj) => {
 });
 //region ADDING-TREBOLS
 async function addTrebols(container, listener, event) {
+  let messageContainer, currentHeight;
   if (listener === 'message') {
+    messageContainer = container.querySelector(".message-icon-container");
     let nickContainer = container.querySelector('.username-info');
-    let totalHeight = container.querySelector(
-      '.message-icon-container',
-    ).offsetHeight;
     let nickHeight = nickContainer.offsetHeight;
     //region FIX-RERENDER-MESSAGES
-    totalHeight.style.height = "0px";
-    totalHeight.style.transition = "height 0.5s ease-in-out";
+    currentHeight = messageContainer.offsetHeight;
+    messageContainer.style.height = "0px";
+    messageContainer.style.transition = "height 0.5s ease-in-out";
     setTimeout(() => {
       messageContainer.style.height = `${currentHeight + 10}px`;
     }, 300);
-    const trebolsContainer = document.querySelectorAll(
+    /* console.log(totalHeight); */
+    /* const trebolsContainer = document.querySelectorAll(
       '.message-icon-container',
-    );
-    console.log(trebolsContainer);
+    ); */
+    /* console.log(trebolsContainer); */
     let trebol1Url = imagesUrls['trebol1'];
     let trebol2Url = imagesUrls['trebol2'];
     let trebol3Url = imagesUrls['trebol3'];
     let trebol4Url = imagesUrls['trebol4'];
 
-    trebolsContainer.forEach((element) => {
-      element.innerHTML += `
+    messageContainer.innerHTML += `
       <img class="trebol t1" src="${trebol1Url}" alt="trebol1">
       <img class="trebol t2" src="${trebol2Url}" alt="trebol1">
       <img class="trebol t3" src="${trebol3Url}" alt="trebol1">
       <img class="trebol t4" src="${trebol4Url}" alt="trebol1">
       `;
       let t1 = document.querySelectorAll('.t1');
-      console.log(t1);
+      /* console.log(t1); */
       t1.forEach((t1s) => {
         t1s.style.top = `${nickHeight + 5}px`;
       });
 
       let t3 = document.querySelectorAll('.t3');
-      console.log(t1);
+      /* console.log(t1); */
       t1.forEach((t3s) => {
         t3s.style.top = `${nickHeight + 4}px`;
       });
 
       let t4 = document.querySelectorAll('.t4');
-      console.log(t1);
+      /* console.log(t1); */
       t1.forEach((t4s) => {
         t4s.style.right = "8px";
       });
-    });
   }
 }
