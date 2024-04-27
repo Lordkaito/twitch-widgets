@@ -645,35 +645,49 @@ window.addEventListener('onEventReceived', async (obj) => {
 });
 //region ADDING-LIANAS
 async function addLianas(container, listener, event) {
-  const bigLineContainer = document.createElement('div');
-  const line = document.createElement('div');
-  line.classList.add('green-line');
-  bigLineContainer.classList.add('lines-container');
-  bigLineContainer.innerHTML += `
-    <img src="${imagesUrls.flower}">
-  `;
-  /* totalHeight.style.height = "0px";
-  totalHeight.style.transition = "height 0.5s ease-in-out"; */
-  if (listener === 'message') {
-    const parentElement = document.querySelectorAll('.super-main-container');
-    parentElement.forEach((eachParent) => {
-      eachParent.appendChild(bigLineContainer);
-      bigLineContainer.appendChild(line);
-      const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-    });
+  let messageContainer, currentHeight, parentElement;
 
-    const lianasContainer = document.querySelectorAll('.username-info-container');
+  if (listener === 'message') {
+    if (!container.querySelector('.lines-container')) {
+      const bigLineContainer = document.createElement('div');
+      const line = document.createElement('div');
+      line.classList.add('green-line');
+      bigLineContainer.classList.add('lines-container');
+      bigLineContainer.innerHTML += `
+        <img src="${imagesUrls.flower}">
+      `;
+
+      parentElement = document.querySelectorAll('.super-main-container');
+      parentElement.forEach((eachParent) => {
+        eachParent.appendChild(bigLineContainer);
+        bigLineContainer.appendChild(line);
+
+        const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
+        bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+        line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+      });
+    }
+
+    messageContainer = container.querySelector(".message-icon-container");
+    let nickContainer = container.querySelector('.username-info');
+    let nickHeight = nickContainer.offsetHeight;
+
+    const lianasContainer = container.querySelectorAll('.username-info-container');
     lianasContainer.forEach(container => {
       container.innerHTML += `<img class="plant" src="${imagesUrls.plant}">`;
     });
     console.log(lianasContainer);
 
+    currentHeight = messageContainer.offsetHeight;
+    messageContainer.style.height = "0px";
+    messageContainer.style.transition = "height 0.5s ease-in-out";
+    setTimeout(() => {
+      messageContainer.style.height = `${currentHeight + 10}px`;
+    }, 300);
   }
 
   if (listener !== 'message') {
-    const parentElement = document.querySelectorAll('.new-container');
+    const parentElement = container.querySelectorAll('.new-container');
     parentElement.forEach((eachParent) => {
       const eventContainer = eachParent.querySelector('.event-container');
       eventContainer.innerHTML += `
@@ -681,11 +695,6 @@ async function addLianas(container, listener, event) {
         <img class="event-plant plant1" src="${imagesUrls.plant}" alt="plant">
       `;
       console.log(eachParent)
-      eachParent.appendChild(bigLineContainer);
-      bigLineContainer.appendChild(line);
-      const parentheight = eachParent.querySelector('.event-container').offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-    })
+    });
   }
 }
