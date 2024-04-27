@@ -653,11 +653,6 @@ async function addTrebols(container, listener, event) {
     setTimeout(() => {
       messageContainer.style.height = `${currentHeight + 10}px`;
     }, 300);
-    /* console.log(totalHeight); */
-    /* const trebolsContainer = document.querySelectorAll(
-      '.message-icon-container',
-    ); */
-    /* console.log(trebolsContainer); */
     let trebol1Url = imagesUrls['trebol1'];
     let trebol2Url = imagesUrls['trebol2'];
     let trebol3Url = imagesUrls['trebol3'];
@@ -670,19 +665,16 @@ async function addTrebols(container, listener, event) {
       <img class="trebol t4" src="${trebol4Url}" alt="trebol1">
       `;
       let t1 = document.querySelectorAll('.t1');
-      /* console.log(t1); */
       t1.forEach((t1s) => {
         t1s.style.top = `${nickHeight + 5}px`;
       });
 
       let t3 = document.querySelectorAll('.t3');
-      /* console.log(t1); */
       t1.forEach((t3s) => {
         t3s.style.top = `${nickHeight + 4}px`;
       });
 
       let t4 = document.querySelectorAll('.t4');
-      /* console.log(t1); */
       t1.forEach((t4s) => {
         t4s.style.right = "8px";
       });
