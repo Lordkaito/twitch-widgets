@@ -89,8 +89,9 @@ main {
   display: flex;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  width: 36rem;
-  margin-bottom: 3rem;
+  max-width: 36rem;
+  min-width: 23rem;
+  margin-bottom: 1rem;
   gap: 6rem;
   margin-left: 4rem;
 }
@@ -416,19 +417,17 @@ main {
 }
 
 .message-icon-container {
-  width: 99%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* min-height: 64px; */
-  /* height: 0; */
+  padding: 1rem 0;
   flex-grow: 1;
-  /* align-items: center; */
+  width: 100%;
   background: #ffffff;
   border: 3px solid #edc7bc;
-  /* height: 0; */
-  border-radius: 27px;
-  /* animation: growMessage 0.5s 0.5s ease-in-out forwards; */
+  border-radius: 2rem;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s ease-in-out forwards;
 }
 
 .trebol {
@@ -437,7 +436,7 @@ main {
 }
 
 .t1 {
-  top: 0;
+  top: 3rem;
   left: -7px;
   width: 20px;
 }
@@ -513,17 +512,14 @@ main {
 
 .text {
   font-size: 1.5rem;
-  padding-top: 1.25rem;
-  padding-bottom: 0.413rem;
-  padding-top: 0.413rem;
-  padding-left: 1.713rem;
+  padding: 0 2rem;
   text-align: left;
   font-weight: 500;
   opacity: 0;
+  padding: 0rem 2rem;
   animation: fadeIn 0.6s 0.7s ease-in-out forwards;
   /* animation: fadeIn 0.5s 0.5s forwards; */
   /* margin-left: 1rem; */
-  width: 90%;
 }
 
 .rendered-text {
@@ -631,7 +627,7 @@ main {
 .new-container {
   display: flex;
   width: 41.3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   margin-left: 4rem;
   gap: 6rem;
   animation-name: fadeIn;
@@ -918,10 +914,11 @@ main {
 .role-img {
   position: absolute;
   right: -1.313rem;
-  top: 10px;
+  top: 0.8rem;
   bottom: 0;
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+  z-index: 2;
 }
 
 .role-img-bot2 {
