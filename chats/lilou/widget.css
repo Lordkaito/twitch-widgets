@@ -598,7 +598,7 @@ main {
   align-items: center;
   justify-content: center;
   width: 26rem;
-  min-height: 64px;
+  /* min-height: 64px; */
   height: 100%;
   border-radius: 20px;
   color: #ffefdb;
@@ -660,7 +660,7 @@ main {
 }
 
 .new-container .lines-container {
-  justify-content: center;
+  /* justify-content: center; */
   left: -0.6rem;
 }
 
@@ -704,7 +704,7 @@ main {
   z-index: 1;
   color: var(--event-color);
   letter-spacing: normal;
-  font-size: 1.5rem;
+  font-size: 2rem;
   opacity: 0;
   animation: fadeIn 0.5s 0.7s ease-in-out forwards;
   text-transform: lowercase;

@@ -660,8 +660,8 @@ async function addLianas(container, listener, event) {
       bigLineContainer.appendChild(line);
 
       const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
     });
 
     messageContainer = container.querySelector(".message-icon-container");
@@ -695,8 +695,8 @@ async function addLianas(container, listener, event) {
 
       const eventContainer = eachParent.querySelector('.event-container');
       const parentheight = eventContainer.offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66)) + 66}px`;
+      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
+      line.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
   
       if (!eventContainer.querySelector('.event-plant')) {
         const plantImage1 = document.createElement('img');
