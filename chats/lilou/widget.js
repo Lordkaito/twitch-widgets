@@ -185,7 +185,8 @@ class mainEvent {
               <div class="rendered-text">
                 <p class="text" style="color: ${colors.textColor}">${
       //region INNER-MESSAGE-TEXT
-      !(await this.buildMessage()).innerHTML || 'Lorem Ipsiumm'.repeat(randomNumber)
+      !(await this.buildMessage()).innerHTML ||
+      'Lorem Ipsiumm'.repeat(randomNumber)
     }
                 </p>
               </div>
@@ -645,76 +646,110 @@ window.addEventListener('onEventReceived', async (obj) => {
 });
 //region ADDING-LIANAS
 async function addLianas(container, listener, event) {
-  let messageContainer, currentHeight, parentElement;
-
   if (listener === 'message') {
-    const bigLineContainer = document.createElement('div');
-    const line = document.createElement('div');
-    line.classList.add('green-line');
-    bigLineContainer.classList.add('lines-container');
-    bigLineContainer.innerHTML += `<img src="${imagesUrls.flower}">`;
+    const messageContainer = container.querySelector('.message-icon-container');
 
-    parentElement = document.querySelectorAll('.super-main-container');
-    parentElement.forEach((eachParent) => {
-      eachParent.appendChild(bigLineContainer);
+    const lianasContainers = container.querySelectorAll(
+      '.username-info-container',
+    );
+    lianasContainers.forEach((container) => {
+      if (!container.querySelector('.plant')) {
+        const plantImg = document.createElement('img');
+        plantImg.classList.add('plant');
+        plantImg.src = imagesUrls.plant;
+        container.appendChild(plantImg);
+      }
+    });
+
+    function addFlowerWithDelay(container, line, quantityOfFlowers, index) {
+      if (index <= quantityOfFlowers) {
+        const flowerImg = document.createElement('img');
+        flowerImg.src = imagesUrls.flower;
+        flowerImg.classList.add('flower');
+        flowerImg.style.opacity = '0';
+        container.appendChild(flowerImg);
+
+        setTimeout(() => {
+          flowerImg.style.opacity = '1';
+          line.style.height = `${index * 66}px`;
+        }, index * 500);
+
+        setTimeout(() => {
+          addFlowerWithDelay(container, line, quantityOfFlowers, index + 1);
+        }, 500);
+      }
+    }
+
+    lianasContainers.forEach((lianasContainer) => {
+      const parentContainer = lianasContainer.closest('.super-main-container');
+      const bigLineContainer = document.createElement('div');
+      const line = document.createElement('div');
+      line.classList.add('green-line');
+      bigLineContainer.classList.add('lines-container');
+      parentContainer.appendChild(bigLineContainer);
       bigLineContainer.appendChild(line);
 
-      const parentheight = eachParent.querySelector('.username-info-container').offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
+      const parentHeight =
+        parentContainer.querySelector('.message-container').offsetHeight;
+      let quantityOfFlowers = parentHeight / 66 + 0.58;
+      const rounded = Math.floor(quantityOfFlowers);
+      const calc = quantityOfFlowers < rounded + 0.7;
+      if (calc) {
+        quantityOfFlowers = Math.floor(quantityOfFlowers) + 1;
+      } else {
+        quantityOfFlowers = Math.ceil(quantityOfFlowers) + 1;
+      }
+
+      addFlowerWithDelay(bigLineContainer, line, quantityOfFlowers, 1);
     });
 
-    messageContainer = container.querySelector(".message-icon-container");
-    let nickContainer = container.querySelector('.username-info');
-    let nickHeight = nickContainer.offsetHeight;
-
-    const lianasContainer = container.querySelectorAll('.username-info-container');
-    lianasContainer.forEach(container => {
-      container.innerHTML += `<img class="plant" src="${imagesUrls.plant}">`;
-    });
-    console.log(lianasContainer);
-
-    currentHeight = messageContainer.offsetHeight;
-    messageContainer.style.height = "0px";
-    messageContainer.style.transition = "height 0.5s ease-in-out";
+    const currentHeight = messageContainer.offsetHeight;
+    messageContainer.style.height = '0px';
+    messageContainer.style.transition = 'height 0.5s ease-in-out';
     setTimeout(() => {
       messageContainer.style.height = `${currentHeight + 10}px`;
     }, 300);
   }
 
   if (listener !== 'message') {
-    parentElement = document.querySelectorAll('.new-container');
-    const bigLineContainer = document.createElement('div');
-    const line = document.createElement('div');
-    line.classList.add('green-line');
-    bigLineContainer.classList.add('lines-container');
-    bigLineContainer.innerHTML += `<img src="${imagesUrls.flower}">`;
-    parentElement.forEach((eachParent) => {
-      eachParent.appendChild(bigLineContainer);
-      bigLineContainer.appendChild(line);
-
+    document.querySelectorAll('.new-container').forEach((eachParent) => {
       const eventContainer = eachParent.querySelector('.event-container');
-      const parentheight = eventContainer.offsetHeight;
-      bigLineContainer.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
-      line.style.height = `${parentheight + (66 - (parentheight % 66))+ 23}px`;
-  
+
       if (!eventContainer.querySelector('.event-plant')) {
-        const plantImage1 = document.createElement('img');
-        plantImage1.classList.add('event-plant', 'plant1');
-        plantImage1.src = imagesUrls.plant;
-        plantImage1.alt = 'plant';
-  
-        const plantImage2 = document.createElement('img');
-        plantImage2.classList.add('event-plant', 'plant2');
-        plantImage2.src = imagesUrls.plant;
-        plantImage2.alt = 'plant';
-  
-        eventContainer.appendChild(plantImage1);
-        eventContainer.appendChild(plantImage2);
+        ['plant1', 'plant2'].forEach((className) => {
+          const plantImage = document.createElement('img');
+          plantImage.classList.add('event-plant', className);
+          plantImage.src = imagesUrls.plant;
+          plantImage.alt = 'plant';
+          eventContainer.appendChild(plantImage);
+        });
+      }
+
+      if (!eachParent.querySelector('.lines-container .flower')) {
+        const bigLineContainer = document.createElement('div');
+        const line = document.createElement('div');
+        line.classList.add('green-line');
+        bigLineContainer.classList.add('lines-container');
+        eachParent.appendChild(bigLineContainer);
+        bigLineContainer.appendChild(line);
+
+        const parentheight = eventContainer.offsetHeight;
+        let quantityOfFlowers = Math.ceil(parentheight / 66 + 0.58);
+
+        for (let i = 1; i <= quantityOfFlowers; i++) {
+          setTimeout(() => {
+            const flowerImg = document.createElement('img');
+            flowerImg.src = imagesUrls.flower;
+            flowerImg.classList.add('flower');
+            flowerImg.style.opacity = '0';
+            bigLineContainer.appendChild(flowerImg);
+            setTimeout(() => {
+              flowerImg.style.opacity = '1';
+              line.style.height = `${i * 66}px`;
+            }, 500);
+          }, i * 1000);
+        }
       }
     });
-  }  
-  
+  }
 }
-
-
