@@ -672,11 +672,11 @@ async function addLianas(container, listener, event) {
         setTimeout(() => {
           flowerImg.style.opacity = '1';
           line.style.height = `${index * 66}px`;
-        }, index * 500);
+        }, index * 100);
 
         setTimeout(() => {
           addFlowerWithDelay(container, line, quantityOfFlowers, index + 1);
-        }, 500);
+        }, 100);
       }
     }
 
@@ -747,7 +747,7 @@ async function addLianas(container, listener, event) {
               flowerImg.style.opacity = '1';
               line.style.height = `${i * 66}px`;
             }, 500);
-          }, i * 1000);
+          }, i * 100);
         }
       }
     });
