@@ -7,7 +7,7 @@
   --goal-name-background-color: #fff4f4;
   --goal-name-color: #9e9cef;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
-  --nube-p-color: #735fcd;
+  --nube-p-color: #000;
 }
 
 * {
@@ -104,10 +104,10 @@ main {
   top: -3rem;
   /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
     1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--nube-p-color), -3px 0 var(--nube-p-color),
-    0 3px var(--nube-p-color), 0 -3px var(--nube-p-color),
-    2px 3px var(--nube-p-color), -2px -3px var(--nube-p-color),
-    2px -3px var(--nube-p-color), -2px 3px var(--nube-p-color);
+  text-shadow: 3px 0 #735fcd, -3px 0 #735fcd,
+    0 3px #735fcd, 0 -3px #735fcd,
+    2px 3px #735fcd, -2px -3px #735fcd,
+    2px -3px #735fcd, -2px 3px #735fcd;
 }
 
 .progress-bar {
@@ -298,9 +298,9 @@ main {
 
 .nube1 p {
   position: absolute;
-  top: 3rem;
+  top: 3.3rem;
   bottom: 50%;
-  left: .7rem;
+  left: .6rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
@@ -348,14 +348,14 @@ main {
 
 .nube4 p {
   position: absolute;
-  top: 50%;
+  top: 55%;
   font-size: 1.6rem;
   font-weight: 700;
   text-align: center;
   color: var(--nube-p-color);
   max-width: 6rem;
   line-height: 0.9;
-  left: 1rem;
+  left: .7rem;
 }
 
 .goal-type-amount {
