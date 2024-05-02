@@ -19,30 +19,6 @@
   --event-color: #45336d;
   --hyphen-color: #f3bdf9;
   --event-shadow-color: #b8bcff;
-
-  /* Esto es un recolor del chat de las hojas, solo que habrá que quitar los temas que tiene y hacerlo en el base.
-
-degradado fondo username de: #c19afd a #614e8d
-
-username: #f1e8f9
-
-fondo mensaje, fondo pronombres y cadena izquierda: #45336d
-
-texto pronombres: #d6bbff
-
-texto mensajes: #d6bbff
-
-caja del switch #c199fd
-
-texto eventos #45336d
-
-bolita switch antes: #c199fd bolita switch después: #45336d
-
-⚠ las hojas y las piedras se mantienen del chat lila (no hace falta sistituir sus enlaces)
-
-field de opción de mostrar la plantita (un check)
-
-y field de opción de mostrar las piedras (un check) */
 }
 
 * {
@@ -90,9 +66,9 @@ main {
   animation-duration: 1s;
   animation-fill-mode: forwards;
   width: 44rem;
-  /* margin-bottom: 3rem; */
   gap: 4rem;
   margin-left: 3.4rem;
+  margin-bottom: 3rem;
 }
 
 .main-container {
@@ -103,9 +79,8 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   border-radius: 40px;
-  /* margin: 1.9rem 0 1rem 0; */
-  margin-bottom: 1rem;
   z-index: 2 !important;
+  margin-left: 4rem;
 }
 
 .campanas {
@@ -271,13 +246,13 @@ main {
   gap: 10px;
 }
 
-.ori-container {
+/* .ori-container {
   margin-top: 5px;
   display: grid;
   place-content: center;
   opacity: 0;
   animation: fadeIn 0.6s forwards ease-out;
-}
+} */
 
 .username-info-container {
   display: flex;
@@ -290,6 +265,7 @@ main {
   overflow: hidden;
   order: -1;
   width: 100%;
+  position: relative;
 }
 
 .dots-container {
@@ -335,15 +311,6 @@ main {
 
 .circle-purple {
   stroke: #dcbee1;
-}
-
-.flower {
-  bottom: -0.5rem;
-  left: -1.5rem;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  /* transform: scale(0.5); */
-  /* opacity: 0; */
 }
 
 .leafs-container {
@@ -403,7 +370,7 @@ main {
 }
 
 .plant2 {
-  right: 2rem;  
+  right: 2rem;
   transform: scaleX(-1);
   transform-origin: center;
   z-index: -1 !important;
@@ -447,11 +414,11 @@ main {
   /* height: 0; */
   flex-grow: 1;
   /* align-items: center; */
-  background:  #ffefdb;
-  padding: 1rem 0;
+  background: #ffefdb;
+  /* padding: 1rem 0; */
   /* height: 0; */
   border-radius: 15px;
-/*   animation: growMessage 0.5s 0.5s ease-in-out forwards; */
+  /*   animation: growMessage 0.5s 0.5s ease-in-out forwards; */
 }
 
 .trebol {
@@ -516,7 +483,7 @@ main {
 .text {
   font-size: 1.5rem;
   text-align: left;
-  padding-left: 0.625rem;
+  padding: 1rem 1.5rem;
   font-weight: 500;
   opacity: 0;
   animation: fadeIn 0.6s 0.7s ease-in-out forwards;
@@ -597,7 +564,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26rem;
+  width: 100%;
   /* min-height: 64px; */
   height: 100%;
   border-radius: 20px;
@@ -614,6 +581,7 @@ main {
   z-index: 2 !important;
   gap: 1rem;
   order: 2;
+  margin-left: 4rem;
 }
 
 .event-container p {
@@ -634,8 +602,9 @@ main {
 
 .new-container {
   display: flex;
-  width: 41.3rem;
-  margin-left: 4rem;
+  width: 44rem;
+  margin-left: 3.4rem;
+  margin-bottom: 3rem;
   gap: 6.5rem;
   animation-name: fadeIn;
   animation-duration: 0.5s;
@@ -643,14 +612,16 @@ main {
   animation-timing-function: ease-in-out;
 }
 
-.lines-container {
+/* .line-container {
   display: flex;
+  flex-direction: column;
+  flex-direction: column;
   flex-direction: column;
   background-size: contain;
   align-items: center;
   position: relative;
-  /* animation: growEnredadera 1s ease; */
-}
+} */
+/* animation: growEnredadera 1s ease; */
 
 .green-line {
   background-color: #99ad76;
@@ -937,7 +908,7 @@ main {
   z-index: 2;
   position: absolute;
   right: 0.063rem;
-/*   top: -2.125rem; */
+  /*   top: -2.125rem; */
   top: -34px;
   bottom: 0;
   opacity: 0;
@@ -949,7 +920,6 @@ main {
   position: absolute;
   left: 1.875rem;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
-
 }
 
 .heart2 {
@@ -962,4 +932,62 @@ main {
 .joya {
   opacity: 0;
   animation: fadeIn 0.5s 0.5s ease-in-out forwards;
+}
+
+.line-container {
+  position: absolute;
+  /* background-color: red; */
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.line {
+  /* position: absolute; */
+  width: 4px;
+  height: 0;
+  background-color: #99ad76;
+  border-radius: 40px;
+  bottom: 0;
+  left: 3rem;
+  z-index: -2;
+  /* animation: growLine 0.5s 1s ease-in-out forwards; */
+  transition: height 0.8s;
+}
+
+.flower {
+  opacity: 0;
+  animation: fadeIn 0.6s 1s forwards ease-out;
+}
+
+.flower-container {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.plant-user {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+}
+
+.plant-event-left {
+  position: absolute;
+  bottom: -3.8rem;
+  left: 3.3rem;
+  z-index: -2;
+}
+
+.plant-event-right {
+  position: absolute;
+  bottom: -3.8rem;
+  right: 3.3rem;
+  z-index: -2;
+  transform: scaleX(-1);
 }
