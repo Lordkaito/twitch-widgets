@@ -750,13 +750,13 @@ async function addLines(container, listener, event) {
   let messageContainer, currentHeight;
 
   if (listener === "message") {
-    messageContainer = container.querySelector(".message-icon-container");
-    currentHeight = messageContainer.offsetHeight;
-    messageContainer.style.height = "0px";
-    messageContainer.style.transition = "height 0.5s ease-in-out";
-    setTimeout(() => {
-      messageContainer.style.height = `${currentHeight + 10}px`;
-    }, 300);
+    // messageContainer = container.querySelector(".message-icon-container");
+    // currentHeight = messageContainer.offsetHeight;
+    // messageContainer.style.height = "0px";
+    // messageContainer.style.transition = "height 0.5s ease-in-out";
+    // setTimeout(() => {
+    //   messageContainer.style.height = `${currentHeight + 10}px`;
+    // }, 300);
   }
 
   const contHeight = container.offsetHeight + currentHeight;
@@ -791,9 +791,3 @@ async function addLines(container, listener, event) {
 
   container.appendChild(linesContainer);
 }
-
-// async function checkImgUrl(url) {
-//   return await fetch(url).then((res) => {
-//     return res.ok;
-//   });
-// }
