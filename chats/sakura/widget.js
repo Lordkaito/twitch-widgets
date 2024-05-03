@@ -93,7 +93,7 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/W12nD9TL/arco-iris-4.png";
+    flower.src = "https://i.ibb.co/VJGCWRg/arco-iris-4.png";
     flower.classList.add("flower");
 
     return flower;
@@ -126,6 +126,7 @@ class mainEvent {
       </svg>
     `;
     circle.classList.add("circle");
+    circle.style.stroke = fieldData.colorPickerForCircle;
     theme === "purple" ? circle.classList.add("circle-purple") : null;
     const dots = document.createElement("div");
     dots.classList.add("ori-dots");
@@ -136,33 +137,33 @@ class mainEvent {
     origami.classList.add("origami");
     if (this.isStreamer) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/TYQBTzGP/cuernos-ire.png";
+        flower.src = "https://i.ibb.co/c3J53zT/cuernos-ire.png";
       } else {
-        flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png";
+        flower.src = "https://i.ibb.co/Tc2dbVK/cuernos-ire-1.png";
       }
       flower.classList.add("streamer");
       flower.classList.remove("ori-flower");
     } else if (this.isMod) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/kGqhmcp8/rosatallo-ire.png";
+        flower.src = "https://i.ibb.co/HnRstVn/rosatallo-ire.png";
       } else {
-        flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png";
+        flower.src = "https://i.ibb.co/1qm4L3N/rosatallo-ire-1.png";
       }
       flower.classList.add("mod");
       flower.classList.remove("ori-flower");
     } else if (this.isVip) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/SKYP7j9X/lirios-ire.png";
+        flower.src = "https://i.ibb.co/CMC6Wd3/lirios-ire.png";
       } else {
-        flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png";
+        flower.src = "https://i.ibb.co/7G21Zk4/lirios-ire-1.png";
       }
       flower.classList.add("vip");
       flower.classList.remove("ori-flower");
     } else {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/B6WVhs5m/rosa-ire.png";
+        flower.src = "https://i.ibb.co/qRVzfCP/rosa-ire.png";
       } else {
-        flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png";
+        flower.src = "https://i.ibb.co/Yp61NwG/rosa-ire-1.png";
       }
       flower.classList.add("subscriber");
     }
@@ -213,7 +214,7 @@ class mainEvent {
   get butterfly() {
     const img = document.createElement("img");
     const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
+    img.src = "https://i.ibb.co/rMhRh1y/mariposita.png";
     img.classList.add("butterfly");
     imgContainer.classList.add("butterfly-container");
 
@@ -235,9 +236,9 @@ class mainEvent {
     `;
     const heart = document.createElement("img");
     if (this.isSub || this.isStreamer) {
-      heart.src = "https://i.postimg.cc/8kw965tV/sakurasub.png";
+      heart.src = "https://i.ibb.co/PGTchQm/sakurasub.png";
     } else {
-      heart.src = "https://i.postimg.cc/MKT4bSFf/sakurapleb.png";
+      heart.src = "https://i.ibb.co/cxSTvG0/sakurapleb.png";
     }
 
     const role = this.roles.role;
@@ -245,6 +246,8 @@ class mainEvent {
     roleCont.classList.add("role-container");
     const roleText = document.createElement("span");
     roleText.classList.add("role-text");
+    roleText.style.color = fieldData.colorPickerRoleText;
+    roleText.style.backgroundColor = fieldData.colorPickerRoleBox;
     switch (role) {
       case "mod":
         roleText.innerText = "mod";
@@ -288,6 +291,7 @@ class mainEvent {
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    messageContainer.style.maxWidth = fieldData.maxWidth +"rem";
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -313,6 +317,12 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
+    capitalizeUser.style.color = fieldData.colorPickerNickname;
+    if(fieldData.limitSize == "true") {
+      capitalizeUser.style.maxWidth = 13 + "ch";
+    } else {
+      capitalizeUser.style.maxWidth = 25 + "ch";
+    }
     capitalizeUser.innerText = this.user;
     return capitalizeUser;
   }
@@ -371,9 +381,9 @@ class mainEvent {
 
     let theme = fieldData.theme;
     if (theme === "purple") {
-      roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
+      roleImage.src = "https://i.ibb.co/1QwQDgv/hoja-ire.png";
     } else {
-      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
+      roleImage.src = "https://i.ibb.co/kqcf97G/hojitarosa.png";
     }
     return roleImage;
   }
@@ -443,6 +453,8 @@ class mainEvent {
     const renderedText = document.createElement("div");
     let theme = fieldData.theme;
     renderedText.classList.add("rendered-text");
+    renderedText.style.color = fieldData.colorPickerMessageText;
+    renderedText.style.maxWidth = fieldData.maxWidth + "rem";
     theme === "purple"
       ? renderedText.classList.add("rendered-text-purple")
       : null;
@@ -635,8 +647,9 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/SNx0T8Js/corazoneventos.png";
+    fungi.src = "https://i.ibb.co/cN9bWT1/corazoneventos.png";
     fungi.classList.add("bellota");
+    
     // switch (eventType) {
     //   case "follower":
     //     fungi.classList.add("heart");
@@ -666,14 +679,17 @@ class mainEvent {
     fungiDivContainer.classList.add(`event-leafs-container`);
     fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
+    fungiContainer.style.backgroundColor = fieldData.colorPickerEventContainer;
     theme === "purple"
       ? fungiContainer.classList.add("fungi-container-purple")
       : null;
     const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
+    moon.src = "https://i.ibb.co/RHXdsr1/luna.png";
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
     nameContainer.classList.add("event-name");
+    nameContainer.style.color = fieldData.colorPickerEventText;
+    nameContainer.style.maxWidth = fieldData.maxWidth + "rem";
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
@@ -681,6 +697,7 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
+    fungiContainer.style.maxWidth = fieldData.maxWidth + "rem";
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
@@ -852,11 +869,11 @@ const flowers = (mainContainer, listener, event) => {
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const flowers = {
-    0: "https://i.postimg.cc/Tw6Fr5zT/petalo1.png",
-    1: "https://i.postimg.cc/vBtjXHyf/cosita1.png",
-    2: "https://i.postimg.cc/wjnSjGFy/petalo2.png",
-    3: "https://i.postimg.cc/43tj7QF8/florsaku.png",
-    4: "https://i.postimg.cc/Gt3ffw3N/cosita2.png",
+    0: "https://i.ibb.co/FWF85LN/petalo1.png",
+    1: "https://i.ibb.co/MSQXqqH/cosita1.png",
+    2: "https://i.ibb.co/3YdbQSx/petalo2.png",
+    3: "https://i.ibb.co/1Tg0Zq9/florsaku.png",
+    4: "https://i.ibb.co/JjF0VNv/cosita2.png",
   };
   let flower0 = document.createElement("img");
   flower0.src = flowers[0];
