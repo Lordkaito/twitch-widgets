@@ -1,7 +1,4 @@
-//region INSTANCE
-/* let fieldData = {
-  displayBadges: true,
-}; */
+// let fieldData = {};
 let currentEvent = null
 let flowerCount = 0
 let currentMessagesIds = []
@@ -19,6 +16,7 @@ let imagesUrls = {
   heart: "https://i.ibb.co/crCnQH1/lilou-cora.png",
 }
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2"
+
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api"
 const PRONOUNS_API = {
   user: username => `${PRONOUNS_API_BASE}/users/${username}`,
@@ -33,7 +31,7 @@ const priorities = {
   subscriber: 4,
   viewer: 5,
 }
-//region CATCH-EVENT
+
 class mainEvent {
   constructor(event, listener) {
     this.event = event
@@ -72,7 +70,6 @@ class mainEvent {
     return this.event.data.displayName
   }
 
-  //region GET-ROLE
   get roles() {
     const priorityRole = []
     const tags = this.event.data.tags
@@ -111,39 +108,26 @@ class mainEvent {
   }
 
   async buildMessageCont() {
-    //region BUILD-MESSAGE
     return await this.createMainContainerElement()
   }
 
   async createMainContainerElement() {
     const colors = {
       username: "#ffefdb",
-      userBackground: "#f0e1dc",
+      userBackground: "#ffafb1",
       textColor: "#af6366",
-      textBackground: "#ffffff",
-      lineColor: "#45336d",
-      pronsColor: "white",
+      textBackground: "#ffefdb",
+      lineColor: "#ffefdb",
+      pronsColor: "#af6366",
       dotsColor: "#b0cd6c",
     }
 
-    //region CREATE-MAIN-DIV
-    const theme = fieldData.theme
-    console.log(theme)
     const superMainContainer = document.createElement("div")
     superMainContainer.classList.add("super-main-container")
     superMainContainer.setAttribute("id", `${this.id}`)
-    //region DEFINE-ROLE
     const role = this.roles.role
-    console.log(role)
-    let roleImageURL
-    console.log(this.user)
-    if (this.user === "thisistumble") {
-      roleImageURL = imagesUrls.bot
-    } else {
-      roleImageURL = imagesUrls[role]
-    }
-    //region PRONOUNSE-MODIFICATION
-    let roleText = (await this.getUserPronoun()) || "fae/faer"
+    let roleImageURL = imagesUrls[role]
+    let roleText = await this.getUserPronoun()
 
     function showBadges(thisObj) {
       return thisObj.badges
@@ -156,38 +140,38 @@ class mainEvent {
     if (fieldData.allowPronouns == "false" || roleText == "") {
       inlineStyle = `display: none;`
     } else if (fieldData.allowPronouns == "true" && roleText != "") {
-      inlineStyle = `display: inline;`
+      inlineStyle = `display: inline; background-color: ${colors.lineColor}; color: ${colors.pronsColor}`
     }
+
+    let enredaderaUrl = imagesUrls.enredadera
+    let campanasUrl = imagesUrls.campanas
+
     superMainContainer.innerHTML = `
       <div class="main-container">
-      <img src="${roleImageURL}" class="role-img"/>
         <div class="message-container">
-          <div class="username-info-container">
-            <img src="${imagesUrls.plant}" class="plant-user"/>
+          <div class="username-info-container" style="background-color:${colors.userBackground}">
+          <img src="${imagesUrls.plant}" class="plant-user"/>
             <div class="username-info">
               <span class="username-badges" style="${fieldData.displayBadges == "false" ? "display: none;" : ""}">
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
-              <span class="capitalize-user" style="color: ${colors.username}">
-                ${this.user}
-              </span>
-              <div class="dot"></div>
+              <span class="capitalize-user" style="color: ${colors.username}; max-width: ${
+      fieldData.limitUsernames == "false" ? "none" : "13ch"
+    }">${this.user}</span>
+              <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
               </span>
+              <img src="${roleImageURL}" class="role"/>
             </div>
-            <div class="message-icon-container">
+            <div class="message-icon-container" style="background-color: ${colors.textBackground};">
               <div class="rendered-text">
-                <p class="text" style="color: ${colors.textColor}">${
-      //region INNER-MESSAGE-TEXT
-      (await this.buildMessage()).innerHTML
-    }
-                </p>
+              <p class="text" style="color: ${colors.textColor}">${(await this.buildMessage()).innerHTML}</p>
               </div>
             </div>
           </div>
         </div>
-        </div>`
+    </div>`
     return superMainContainer
   }
 
@@ -446,25 +430,44 @@ class mainEvent {
     }
 
     const colors = {
-      username: "#5e8501",
-      userBackground: "#b0cd6c",
-      textColor: "#72a101",
-      textBackground: "#ffefdb",
-      lineColor: "#ffefdb",
-      dotsColor: "#ffefdb",
-      eventsColor: "white",
+      dark: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#b0cd6c",
+        textBackground: "#34440d",
+        lineColor: "#34440d",
+        dotsColor: "#ffefdb",
+        eventsColor: "#34440d",
+      },
+      light: {
+        username: "#b0cd6c",
+        userBackground: "rgba(176, 205, 108, .2)",
+        textColor: "#ffefdb",
+        textBackground: "rgba(255, 239, 219, .5)",
+        lineColor: "rgba(255, 239, 219, 1)",
+        dotsColor: "#ddff91",
+        eventsColor: "#ffefdb",
+      },
+      regular: {
+        username: "#5e8501",
+        userBackground: "#b0cd6c",
+        textColor: "#72a101",
+        textBackground: "#ffefdb",
+        lineColor: "#ffefdb",
+        dotsColor: "#ffefdb",
+        eventsColor: "#ffefdb",
+      },
     }
 
-    //region EVENT-GENERATION
     newContainer.innerHTML = `
       <div class="event-container">
-        <img class="plant-event-left" src="${imagesUrls.plant}"/>
-        <img class="plant-event-right" src="${imagesUrls.plant}"/>
+        <img class="plant-event-right" src="${imagesUrls.plant}" />
+        <img class="plant-event-left" src="${imagesUrls.plant}" />
         <img class="heart" src="${imagesUrls.heart}" />
         <div class="event-and-name-container">
           <p class="event-name" style="color: ${colors.eventsColor}">${nameAndText}</p>
         </div>
-        <img class="heart2" src="${imagesUrls.heart}" />
+        <img class="heart" src="${imagesUrls.heart}" />
       </div>
     `
     return newContainer
@@ -480,6 +483,7 @@ const Widget = {
   globalEmotes: {},
 }
 
+// I'm trash and forgot about this fn
 async function get(URL) {
   return await fetch(URL)
     .then(async res => {
@@ -543,14 +547,9 @@ async function loadGlobalEmotes() {
 }
 
 const removeMessage = mainContainer => {
-  console.log("Removing message", mainContainer)
   const elem = mainContainer
   if (elem) {
-    elem.style.animationName = "removeMessage"
-    elem.style.animationDuration = "0.7s"
-    elem.style.animationTimingFunction = "ease-in-out"
-    elem.style.animationDelay = "1s"
-    elem.style.animationFillMode = "forwards"
+    elem.style.animation = "removeMessage 0.7s 1s ease-in-out"
     setTimeout(() => {
       elem.remove()
     }, 1500)
@@ -623,11 +622,11 @@ window.addEventListener("onEventReceived", async obj => {
       mainCont.appendChild(mainContainer)
       return mainContainer
     })
-    .then(mainContainer => {
-      addLianas(mainContainer, listener, event)
+    .then(async mainContainer => {
+      await addLianas(mainContainer, listener, event)
     })
 })
-//region ADDING-LIANAS
+
 async function addLianas(container, listener, event) {
   const flowerSize = 66
   const lineContainer = document.createElement("div")
@@ -639,10 +638,10 @@ async function addLianas(container, listener, event) {
   lineContainer.style.width = "40px"
   line.classList.add("line")
   lineContainer.appendChild(line)
-  lineContainer.style.height = `${containerHeight + 50}px`
+  lineContainer.style.height = `${containerHeight + (listener === "message" ? 30 : 10)}px`
   const flowerContainer = document.createElement("div")
   flowerContainer.classList.add("flower-container")
-  for (let i = 0; i <= flowersAmount; i++) {
+  for (let i = 0; i < flowersAmount; i++) {
     const flower = document.createElement("img")
     flower.src = imagesUrls.flower
     flower.classList.add("flower")
@@ -651,25 +650,6 @@ async function addLianas(container, listener, event) {
   lineContainer.appendChild(flowerContainer)
   container.appendChild(lineContainer)
   return
-  // }
-  // if (listener !== "message") {
-  //   const line = document.createElement("div")
-  //   lineContainer.style.width = "40px"
-  //   line.classList.add("line")
-  //   lineContainer.appendChild(line)
-  //   lineContainer.style.height = `${containerHeight + 50}px`
-  //   const flowerContainer = document.createElement("div")
-  //   flowerContainer.classList.add("flower-container")
-  //   for (let i = 0; i <= flowersAmount; i++) {
-  //     const flower = document.createElement("img")
-  //     flower.src = imagesUrls.flower
-  //     flower.classList.add("flower")
-  //     flowerContainer.appendChild(flower)
-  //   }
-  //   lineContainer.appendChild(flowerContainer)
-  //   container.appendChild(lineContainer)
-  //   return
-  // }
 }
 
 function roundFlowerAmount(amount) {
