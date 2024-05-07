@@ -93,7 +93,7 @@ class mainEvent {
 
   get flower() {
     const flower = document.createElement("img");
-    flower.src = "https://i.ibb.co/VJGCWRg/arco-iris-4.png";
+    flower.src = "https://i.postimg.cc/W12nD9TL/arco-iris-4.png";
     flower.classList.add("flower");
 
     return flower;
@@ -137,33 +137,33 @@ class mainEvent {
     origami.classList.add("origami");
     if (this.isStreamer) {
       if (theme === "purple") {
-        flower.src = "https://i.ibb.co/c3J53zT/cuernos-ire.png";
+        flower.src = "https://i.postimg.cc/TYQBTzGP/cuernos-ire.png";
       } else {
-        flower.src = "https://i.ibb.co/Tc2dbVK/cuernos-ire-1.png";
+        flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png";
       }
       flower.classList.add("streamer");
       flower.classList.remove("ori-flower");
     } else if (this.isMod) {
       if (theme === "purple") {
-        flower.src = "https://i.ibb.co/HnRstVn/rosatallo-ire.png";
+        flower.src = "https://i.postimg.cc/kGqhmcp8/rosatallo-ire.png";
       } else {
-        flower.src = "https://i.ibb.co/1qm4L3N/rosatallo-ire-1.png";
+        flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png";
       }
       flower.classList.add("mod");
       flower.classList.remove("ori-flower");
     } else if (this.isVip) {
       if (theme === "purple") {
-        flower.src = "https://i.ibb.co/CMC6Wd3/lirios-ire.png";
+        flower.src = "https://i.postimg.cc/SKYP7j9X/lirios-ire.png";
       } else {
-        flower.src = "https://i.ibb.co/7G21Zk4/lirios-ire-1.png";
+        flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png";
       }
       flower.classList.add("vip");
       flower.classList.remove("ori-flower");
     } else {
       if (theme === "purple") {
-        flower.src = "https://i.ibb.co/qRVzfCP/rosa-ire.png";
+        flower.src = "https://i.postimg.cc/B6WVhs5m/rosa-ire.png";
       } else {
-        flower.src = "https://i.ibb.co/Yp61NwG/rosa-ire-1.png";
+        flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png";
       }
       flower.classList.add("subscriber");
     }
@@ -214,7 +214,7 @@ class mainEvent {
   get butterfly() {
     const img = document.createElement("img");
     const imgContainer = document.createElement("div");
-    img.src = "https://i.ibb.co/rMhRh1y/mariposita.png";
+    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
     img.classList.add("butterfly");
     imgContainer.classList.add("butterfly-container");
 
@@ -236,9 +236,9 @@ class mainEvent {
     `;
     const heart = document.createElement("img");
     if (this.isSub || this.isStreamer) {
-      heart.src = "https://i.ibb.co/PGTchQm/sakurasub.png";
+      heart.src = "https://i.ibb.co/30C0hJx/sakurasub.png";
     } else {
-      heart.src = "https://i.ibb.co/cxSTvG0/sakurapleb.png";
+      heart.src = "https://i.ibb.co/M6GJQ0Q/sakurapleb.png";
     }
 
     const role = this.roles.role;
@@ -381,9 +381,9 @@ class mainEvent {
 
     let theme = fieldData.theme;
     if (theme === "purple") {
-      roleImage.src = "https://i.ibb.co/1QwQDgv/hoja-ire.png";
+      roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
     } else {
-      roleImage.src = "https://i.ibb.co/kqcf97G/hojitarosa.png";
+      roleImage.src = "https://i.postimg.cc/qRQg2VsS/hojitarosa.png";
     }
     return roleImage;
   }
@@ -647,7 +647,7 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.ibb.co/cN9bWT1/corazoneventos.png";
+    fungi.src = "https://i.ibb.co/m5khwq2/corazoneventos.png";
     fungi.classList.add("bellota");
     
     // switch (eventType) {
@@ -684,7 +684,7 @@ class mainEvent {
       ? fungiContainer.classList.add("fungi-container-purple")
       : null;
     const moon = document.createElement("img");
-    moon.src = "https://i.ibb.co/RHXdsr1/luna.png";
+    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
     nameContainer.classList.add("event-name");
@@ -869,11 +869,11 @@ const flowers = (mainContainer, listener, event) => {
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const flowers = {
-    0: "https://i.ibb.co/FWF85LN/petalo1.png",
-    1: "https://i.ibb.co/MSQXqqH/cosita1.png",
-    2: "https://i.ibb.co/3YdbQSx/petalo2.png",
-    3: "https://i.ibb.co/1Tg0Zq9/florsaku.png",
-    4: "https://i.ibb.co/JjF0VNv/cosita2.png",
+    0: "https://i.ibb.co/Jpp6gdx/petalo1.png",
+    1: "https://i.ibb.co/XSPxWNz/cosita1.png",
+    2: "https://i.ibb.co/YZ2vzpX/petalo2.png",
+    3: "https://i.ibb.co/5MGGvff/florsaku.png",
+    4: "https://i.ibb.co/g9thBTY/cosita2.png",
   };
   let flower0 = document.createElement("img");
   flower0.src = flowers[0];
