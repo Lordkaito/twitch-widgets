@@ -235,9 +235,9 @@ class mainEvent {
     `;
     const heart = document.createElement("img");
     if (this.isSub || this.isStreamer) {
-      heart.src = "https://i.postimg.cc/mrMnJgt2/lunasub.png";
+      heart.src = "https://i.ibb.co/wcJyqnJ/lunasub.png";
     } else {
-      heart.src = "https://i.postimg.cc/fLfrWqcG/lunapleb.png";
+      heart.src = "https://i.ibb.co/5Rkc0md/lunapleb.png";
     }
 
     const role = this.roles.role;
@@ -635,7 +635,7 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/zG4MxgDc/estrellaseventos.png";
+    fungi.src = "https://i.ibb.co/4JWsNXM/estrellaseventos.png";
     fungi.classList.add("bellota");
     // switch (eventType) {
     //   case "follower":
@@ -852,7 +852,7 @@ const flowers = (mainContainer, listener, event) => {
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const constelation = document.createElement("img");
-  constelation.src = "https://i.postimg.cc/2S1MdwYW/estrellitalado.png";
+  constelation.src = "https://i.ibb.co/gvLft22/estrellitalado.png";
 
   const isStreamer = () => {
     if (listener !== "message") return false;
