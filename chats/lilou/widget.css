@@ -859,6 +859,8 @@ main {
   opacity: 0;
   animation: fadeIn 0.6s 1s forwards ease-out;
   height: 66px;
+  transform: scale(.9);
+  transform: translateY(-.5rem);
 }
 
 .flower-container {

@@ -627,18 +627,56 @@ window.addEventListener("onEventReceived", async obj => {
     })
 })
 
+async function containerHeight(number) {
+  const charsPerLine = 22
+  const lines = Math.ceil(number / charsPerLine)
+  const height = lines * 25 /* 25px per line */
+  return height
+}
+
+const mountEventText = event => {
+  const { name, type } = event
+  const { followText, subText, cheerText, tipText, giftSubText, bulkGiftText, raidText } = fieldData
+  switch (type) {
+    case "follower":
+      return followText.replace("(user)", name)
+    case "subscriber":
+      if (event.gifted) {
+        return giftSubText.replace("(user)", name)
+      }
+
+      if (event.bulkGifted) {
+        return bulkGiftText.replace("(user)", name)
+      }
+
+      return subText.replace("(user)", name)
+    case "cheer":
+      return cheerText.replace("(user)", name)
+    case "tip":
+      return tipText.replace("(user)", name)
+    case "raid":
+      return raidText.replace("(user)", name)
+  }
+}
+
 async function addLianas(container, listener, event) {
-  const flowerSize = 66
+  let chars = event.data?.text?.length ?? mountEventText(event).length
+  let amountToSum = 85
+  if (chars < 23) {
+    chars = 23
+    amountToSum = 85
+  }
+  const flowerSize = 59
   const lineContainer = document.createElement("div")
   lineContainer.classList.add("line-container")
-  const containerHeight = container.offsetHeight
-  const flowersAmount = roundFlowerAmount(containerHeight / flowerSize)
-  // if (listener === "message") {
+  const flowersAmount = roundFlowerAmount(
+    (await containerHeight(chars)) / flowerSize + (chars > 200 ? 0 : chars < 23 ? 2 : 1)
+  )
   const line = document.createElement("div")
   lineContainer.style.width = "40px"
   line.classList.add("line")
   lineContainer.appendChild(line)
-  lineContainer.style.height = `${containerHeight + (listener === "message" ? 30 : 10)}px`
+  lineContainer.style.height = `${(await containerHeight(chars)) + amountToSum}px`
   const flowerContainer = document.createElement("div")
   flowerContainer.classList.add("flower-container")
   for (let i = 0; i < flowersAmount; i++) {
@@ -653,5 +691,9 @@ async function addLianas(container, listener, event) {
 }
 
 function roundFlowerAmount(amount) {
-  return Math.floor(amount) + (amount % 1 >= 0.7 ? 1 : 0)
+  const rounded = Math.floor(amount)
+  if (amount % 1 >= 0.6) {
+    return rounded + 1
+  }
+  return rounded
 }
