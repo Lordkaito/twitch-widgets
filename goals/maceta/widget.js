@@ -108,8 +108,15 @@ function init(obj, apiData, initial = false) {
   }
 
   items = {
-    progressBar: document.querySelector(".progress-bar"),
-    trapezoid: document.querySelector(".trapezoid"),
+    waveContainer: document.querySelector(".wave-container"),
+    flexContainer: document.querySelector(".flex"),
+    flex2: document.querySelector(".flex2"),
+    progressNums: document.querySelector(".progress-nums"),
+    tierra: document.querySelector(".tierra"),
+    brote: document.querySelector(".brote"),
+    tallo1: document.querySelector(".tallo1"),
+    tallo2: document.querySelector(".tallo2"),
+    tallo3: document.querySelector(".tallo3"),
   }
 
   let text = {
@@ -124,8 +131,6 @@ function init(obj, apiData, initial = false) {
   if (mainObj.fieldData.goalType === "tip") {
     // items.objective.innerText = mainObj.fieldData.goalObjectiveQuantity + mainObj.fieldData.currency
   }
-
-  // items.goalTypeText.innerText = text[goalType]
 
   step = getStep(14, mainObj.fieldData.goalObjectiveQuantity)
 
@@ -149,55 +154,76 @@ function getStep(height, objective) {
   return height / objective
 }
 
-function getGachoStep(diff, objective) {
-  return diff / objective
-}
-const clipAtMaxHeight = {
-  topLeft: 6,
-  topRight: 94,
-  bottomRight: 85,
-  bottomLeft: 15,
-}
-
-const clipAtMinHeight = {
-  topLeft: 0,
-  topRight: 90,
-  bottomRight: 88,
-  bottomLeft: 12,
-}
-
 function handleGrow(amount, callback, initial = false) {
   let amountToUpdate = widgetApiData[goalType].amount + amount + mainObj.fieldData.goalStartQuantity
   if (initial === true) {
     amountToUpdate = amount
   }
 
-  const RoT = (clipAtMaxHeight, clipAtMinHeight, amountToUpdate) => {
-    const percentage = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
-    const currentClip = {
-      topLeft: (percentage * clipAtMaxHeight.topLeft) / 100,
-      topRight: (percentage * clipAtMaxHeight.topRight) / 100,
-      bottomRight: (percentage * clipAtMaxHeight.bottomRight) / 100,
-      bottomLeft: (percentage * clipAtMaxHeight.bottomLeft) / 100,
-    }
-    return currentClip
+  const updateWaveContainerTopPosition = percentage => {
+    const maxTop = 14
+    const minTop = -1
+    const currentTop = ((maxTop - minTop) * percentage) / 100 + minTop
+    items.waveContainer.style.bottom = `${currentTop}rem`
+  }
+
+  const updateFlexTwoHeight = percentage => {
+    const maxHeight = 200
+    const minHeight = 0
+    const currentHeight = ((maxHeight - minHeight) * percentage) / 100 + minHeight
+    items.flex2.style.height = `${currentHeight}px`
+  }
+
+  const updateProgressNums = percentage => {
+    items.progressNums.innerText = `${percentage}%`
   }
 
   let completedGoal = checkIfCompleted(amountToUpdate)
   if (!completedGoal) {
-    items.trapezoid.style.height = `${amountToUpdate * step}rem`
-    items.trapezoid.style.clipPath = `polygon(
-      ${RoT(clipAtMaxHeight, clipAtMinHeight, amountToUpdate).topLeft}% 0,
-      ${RoT(clipAtMaxHeight, clipAtMinHeight, amountToUpdate).topRight}% 0,
-      85% 100%,
-      15% 100%`
-    // if (goalType === "tip") {
-    //   items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
-    // } else {
-    //   items.progressionText.innerHTML = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
-    // }
+    const percentage = getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity)
+    updateWaveContainerTopPosition(percentage)
+    updateFlexTwoHeight(percentage)
+    updateProgressNums(percentage)
+    if (percentage >= 25 && percentage < 50) {
+      items.brote.style.opacity = 1
+    }
+    if (percentage >= 50 && percentage < 75) {
+      items.brote.style.opacity = 0
+      items.tierra.style.opacity = 0
+      items.tallo1.style.opacity = 1
+    }
+    if (percentage >= 75 && percentage < 100) {
+      items.tallo2.style.opacity = 1
+    }
+    if (percentage >= 100) {
+      items.tallo3.style.opacity = 1
+    }
   } else {
-    items.trapezoid.style.height = "14rem"
+    updateWaveContainerTopPosition(100)
+    updateFlexTwoHeight(100)
+    updateProgressNums(getPercentage(amountToUpdate, mainObj.fieldData.goalObjectiveQuantity))
+    const opacityTallo1 = window.getComputedStyle(items.tallo1).getPropertyValue("opacity")
+    const opacityTallo2 = window.getComputedStyle(items.tallo2).getPropertyValue("opacity")
+    const opacityTallo3 = window.getComputedStyle(items.tallo3).getPropertyValue("opacity")
+    const opacityBrote = window.getComputedStyle(items.brote).getPropertyValue("opacity")
+    const opacityTierra = window.getComputedStyle(items.tierra).getPropertyValue("opacity")
+    console.log(
+      opacityTallo1,
+      opacityTallo2,
+      opacityTallo3,
+      opacityBrote,
+      opacityTierra,
+      typeof opacityTallo1,
+      typeof opacityTallo2,
+      typeof opacityTallo3,
+      typeof opacityBrote,
+      typeof opacityTierra
+    )
+    if (opacityBrote === "1") items.brote.style.opacity = 0
+    if (opacityTierra === "1") items.tierra.style.opacity = 0
+    if (opacityTallo1 === "0") items.tallo1.style.opacity = 1
+    if (opacityTallo2 === "0") items.tallo2.style.opacity = 1
+    if (opacityTallo3 === "0") items.tallo3.style.opacity = 1
   }
   if (callback !== null || mainObj.fieldData.goalFullType === "session") {
     callback(amountToUpdate - mainObj.fieldData.goalStartQuantity)

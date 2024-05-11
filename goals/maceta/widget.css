@@ -22,12 +22,8 @@
   letter-spacing: 0.125rem;
 }
 
-.playing {
-  opacity: 1 !important;
-}
-
 main {
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 800px;
   max-height: 1080px;
   height: 1080px;
@@ -39,163 +35,18 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* height: 40rem; */
+  height: 240px;
+  width: 318px;
   position: relative;
 }
 
-#round {
-  width: 1.25rem;
-  height: 42rem;
-  padding: 1.5rem 0.4rem 4rem 0.4rem;
-  background-color: var(--round-background-color);
-  border-radius: 50px;
-  border: 4px solid var(--round-border-color);
-  display: grid;
-  place-content: center;
+.container-wave {
   overflow: hidden;
-  background-image: url("https://i.ibb.co/PTHwySh/ositosmillie.png");
-  background-repeat: no-repeat;
-  background-position: bottom -2rem right -3.5rem;
-}
-
-.gifReg {
-  position: absolute;
-  left: -31rem;
-  top: -16.5rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.reg {
-  width: 694px;
-  height: 432px;
-  transform: scale(0.85);
-}
-
-.progress-bar-container {
-  width: 10px;
-  height: 33rem;
-  overflow: hidden;
-  top: -2rem;
-}
-
-.progression {
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  line-height: 1.75;
-  color: var(--progression-color);
-  font-size: 0.8rem;
-  height: 100%;
-  z-index: 4;
-  top: 15rem;
-  left: 1.25rem;
-}
-
-.progressNums {
-  /* opacity: 0; */
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  color: var(--progressNums-color);
-  font-size: 2.3rem;
-  z-index: 4;
-  margin-bottom: 1rem;
-  top: -3rem;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 #735fcd, -3px 0 #735fcd, 0 3px #735fcd, 0 -3px #735fcd, 2px 3px #735fcd, -2px -3px #735fcd,
-    2px -3px #735fcd, -2px 3px #735fcd;
-}
-
-.progress-bar {
-  display: flex;
-  width: 0px;
-  background-color: var(--progress-bar-background-color);
-  height: 33rem;
-  width: 70px;
-  transition: height 0.2s ease-in-out;
   position: relative;
-  background-position: bottom;
-}
-
-.img-progress {
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform: scaleY(-1);
-}
-
-.hidden-container {
-  position: absolute;
-  height: 100%;
-}
-
-.img-container {
-  position: absolute;
-  z-index: 2;
-  bottom: -15.7rem;
-  left: -1.3rem;
-  transition: left 0.2s;
-}
-
-.img-container img {
-  height: 195px;
-  width: 126px;
-  transform: scale(0.85);
-}
-.progression-img {
-  position: absolute;
-  top: 0.6rem;
-  z-index: 3;
-}
-
-.goal-name {
-  position: absolute;
-  top: 3.9rem;
-  left: 3rem;
-  width: 14rem;
-  height: 3.5rem;
-  background-color: var(--goal-name-background-color);
-  border-radius: 40px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  text-transform: uppercase;
-  color: var(--goal-name-color);
-  display: none;
-}
-
-.goal-name p {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.125rem;
-}
-
-.left-ear {
-  position: absolute;
-  top: -1.2rem;
-  left: 1rem;
-  transform: scaleX(-1);
-  z-index: -1;
-}
-
-.right-ear {
-  position: absolute;
-  top: -1.2rem;
-  right: 1rem;
-  z-index: -1;
-}
-
-.tail {
-  position: absolute;
-  right: 2rem;
-  bottom: 1rem;
-  z-index: -1;
+  width: 230px;
+  height: 300px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .widget {
@@ -203,192 +54,116 @@ main {
   height: 1000px;
 }
 
-#image {
+.wave-container {
   position: absolute;
-  top: -14rem;
-  left: -1.4rem;
-  transition: top 0.2s ease-in-out;
-}
-
-.gancho {
-  position: absolute;
-  top: 0rem;
-  left: -2rem;
-  margin-top: 2.5rem;
-}
-
-.ganchos {
-  position: absolute;
-  transition: top 0.2s ease-in-out;
-  top: 0rem; /* this is the position for 100% */
-  left: 0.15rem; /* this is the position for 100% */
-  top: 30rem;
-}
-
-.gancho-detras {
-  position: absolute;
-  z-index: 1;
-}
-
-.gancho-delante {
-  position: absolute;
-  z-index: 2;
-}
-
-.nube1-container,
-.nube2-container {
-  position: absolute;
-  opacity: 0;
-}
-
-.soporte {
-  position: relative;
-  z-index: 2;
-  top: -2.5rem;
-  left: -0.05rem;
-}
-
-.peluche {
-  position: absolute;
-  z-index: 1;
-  top: 3.5rem;
-  left: -3rem;
-  opacity: 1;
-  /* transform: translate(.8); */
-}
-
-.peluche2,
-.peluche3,
-.peluche4 {
-  opacity: 0;
-}
-
-.nube1 {
-  top: 52.5%;
-  left: 18rem;
-}
-
-.nube1 img {
-  transform: scale(1);
-}
-
-.nube2 img {
-  transform: scale(0.8);
-}
-
-.nube3 img {
-  transform: scale(0.8);
-}
-
-.nube2 {
-  top: 24.5rem;
-  left: 18rem;
-}
-
-.nube3 {
-  top: 29.5rem;
-  left: 18rem;
-}
-
-.nube {
-  position: absolute;
-}
-
-.nube1 p {
-  position: absolute;
-  top: 3.3rem;
-  bottom: 50%;
-  left: 0.6rem;
-  font-size: 1.7rem;
-  font-weight: 700;
-  letter-spacing: 0.125rem;
-  color: var(--nube-p-color);
-
-  min-width: 4.6rem;
-  text-align: center;
-}
-
-.nube2 p {
-  position: absolute;
-  border: 1px solid red;
-  top: 1.8rem;
-  left: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--nube-p-color);
-
-  min-width: 3.5rem;
-  text-align: center;
-}
-
-.nube3 p {
-  position: absolute;
-  top: 1rem;
-  left: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.125rem;
-  color: var(--nube-p-color);
-
-  min-width: 3.5rem;
-  text-align: center;
-}
-
-.nube4 {
-  top: 42.5%;
-  left: 31.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  flex-direction: column;
-}
-
-.nube4 p {
-  position: absolute;
-  top: 55%;
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--nube-p-color);
-  max-width: 6rem;
-  line-height: 0.9;
-  left: 0.7rem;
-}
-
-.goal-type-amount {
-  position: absolute !important;
-  top: 4rem !important;
-  left: 0.6rem;
-  width: 100px;
-  height: 50px;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.trapezoid {
-  border: 1px solid red;
-  position: absolute;
-  /* height: 14rem; */
-  width: 22rem;
-  clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
-  background: #7947475e;
   bottom: 0;
+  right: 0;
+  animation: moveWave 3s linear infinite;
+  z-index: -1;
+  transition: bottom 0.2s ease-in-out;
 }
 
+.wave {
+  left: 0;
+  top: 0;
+  position: relative;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: -1;
+}
+
+@keyframes moveWave {
+  0% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(45%);
+  }
+}
+
+.flex {
+  height: 240px;
+  width: 318px;
+  position: relative;
+  /* background-color: red; */
+}
+
+.flex2 {
+  /* content: ""; */
+  position: absolute;
+  bottom: 0;
+  border: 0;
+  margin: auto;
+  width: 100%;
+  /* height: 12rem; */
+  background: aqua;
+  z-index: -1;
+  transition: height 0.2s ease-in-out;
+}
+
+.flex2::before {
+  content: "";
+  position: absolute;
+  bottom: -1rem;
+  border: 0;
+  margin: auto;
+  width: 318px;
+  height: 250px;
+  background-image: url("https://i.ibb.co/kGBfXL0/cristalmaceta.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 5;
+}
+
+.maceta {
+  transform: scale(1.05);
+}
+
+.tierra,
+.brote,
+.tallo1,
+.tallo2,
+.tallo3 {
+  position: absolute;
+  top: -19rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.brote {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.tierra {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.tallo1 {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.tallo2 {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.tallo3 {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.progress-nums {
+  position: absolute;
+  text-align: center;
+  color: var(--progressNums-color);
+  font-size: 4rem;
+  top: 7rem;
+  z-index: 5;
+  /* text-shadow: 3px 0 #735fcd, -3px 0 #735fcd, 0 3px #735fcd, 0 -3px #735fcd, 2px 3px #735fcd, -2px -3px #735fcd,
+    2px -3px #735fcd, -2px 3px #735fcd; */
+}
