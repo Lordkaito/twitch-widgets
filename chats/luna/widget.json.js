@@ -212,14 +212,4 @@ let fieldData = {
       purple: "Purple",
     },
   },
-  showPronouns: {
-    type: "dropdown",
-    label: "What to show:",
-    value: "true",
-    group: "Customization",
-    options: {
-      true: "Pronouns",
-      false: "Roles",
-    },
-  }
 };

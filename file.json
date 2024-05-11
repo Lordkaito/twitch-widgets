@@ -1,80 +1,149 @@
 {
-  "emotesId": {
+  "emotesId": { "type": "text", "label": "Set your 7TV ID:", "value": "", "group": "Customization" },
+  "widgetHeight": {
+    "label": "Widget height (recommended 1080)",
     "type": "text",
-    "label": "Set your 7TV ID:",
-    "value": "",
-    "group": "Customization"
-  },
-  "goalObjectiveQuantity": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 10,
     "group": "Customization",
-    "min": 1,
-    "max": 100000,
-    "step": 1
+    "value": "1080"
   },
-  "goalStartQuantity": {
-  "goalStartQuantity": {
-    "type": "number",
-    "label": "Goal start:",
-    "value": 0,
+  "messageMaxWidth": {
+    "label": "Max width for messages(sized on REM)",
+    "type": "text",
     "group": "Customization",
-    "min": 1,
-    "max": 100000,
-    "step": 1
+    "value": "22"
   },
-  "goalType": {
-  "goalType": {
+  "limitSize": {
+    "label": "Limit size nickname on/off:",
     "type": "dropdown",
-    "label": "Goal type:",
-    "value": "tip",
-    "label": "Goal type:",
-    "value": "tip",
-    "group": "Customization",
-    "options": {
-      "subscriber": "Sub",
-      "follower": "Follow",
-      "cheer": "Cheer",
-      "tip": "Tip"
-    }
-    "options": {
-      "subscriber": "Sub",
-      "follower": "Follow",
-      "cheer": "Cheer",
-      "tip": "Tip"
-    }
-  },
-  "goalFullType": {
-  "goalFullType": {
-    "type": "dropdown",
-    "label": "Goal full type:",
-    "value": "allTime",
-    "label": "Goal full type:",
-    "value": "allTime",
-    "group": "Customization",
-    "options": { "allTime": "All time", "session": "Stream" }
-    "options": { "allTime": "All time", "session": "Stream" }
-  },
-  "startFromCero": {
-  "startFromCero": {
-    "type": "dropdown",
-    "label": "Start from 0:",
-    "label": "Start from 0:",
     "value": "false",
     "group": "Customization",
     "options": { "true": "Yes", "false": "No" }
   },
+  "colorPickerNickname": {
+    "type": "colorpicker",
+    "label": "Select color for nickname users:",
+    "group": "Customization",
+    "value": "#e7ccff"
+  },
+  "colorPickerRoleText": {
+    "type": "colorpicker",
+    "label": "Select color for role text:",
+    "group": "Customization",
+    "value": "#5e77da"
+  },
+  "colorPickerRoleBox": {
+    "type": "colorpicker",
+    "label": "Select color for role box:",
+    "group": "Customization",
+    "value": "#fffff"
+  },
+  "colorPickerForCircle": {
+    "type": "colorpicker",
+    "label": "Select color for circle badge detail:",
+    "group": "Customization",
+    "value": "#ffefdb"
+  },
+  "colorPickerMessageText": {
+    "type": "colorpicker",
+    "label": "Select color for messages text:",
+    "group": "Customization",
+    "value": "#ffefdb"
+  },
+  "colorPickerEventText": {
+    "type": "colorpicker",
+    "label": "Select color for events text:",
+    "group": "Customization",
+    "value": "#5e77da"
+  },
+  "colorPickerEventContainer": {
+    "type": "colorpicker",
+    "label": "Select color for nickname users:",
+    "group": "Customization",
+    "value": "#b6baea"
+  },
+  "colorPickerConstallationLines": {
+    "type": "colorpicker",
+    "label": "Select color for nickname users:",
+    "group": "Customization",
+    "value": "#ffefdb"
+  },
+  "deleteMessages": {
+    "label": "Time to delete messages (max 60):",
+    "type": "number",
+    "group": "Customization",
+    "value": 60,
+    "min": 1,
+    "max": 60,
+    "step": 1
+  },
+  "deleteMessagesOption": {
+    "label": "How to delete messages:",
+    "type": "dropdown",
+    "group": "Customization",
+    "value": "amount",
+    "options": { "timer": "Timer", "amount": "Messages amount" }
+  },
+  "maxMessages": {
+    "label": "Max messages to show:",
+    "type": "number",
+    "group": "Customization",
+    "value": 3,
+    "min": 1,
+    "max": 100,
+    "step": 1
+  },
+  "deleteMessagesTimer": {
+    "label": "Delete messages timer (in seconds):",
+    "type": "number",
+    "group": "Customization",
+    "value": 2,
+    "min": 1,
+    "max": 60,
+    "step": 1
+  },
+  "allowDeleteMessages": {
+    "type": "dropdown",
+    "label": "Delete messages on/off:",
+    "value": "true",
+    "group": "Customization",
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "displayBadges": {
+    "type": "dropdown",
+    "label": "Show badges:",
+    "value": "false",
+    "group": "Customization",
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "allowPronouns": {
+    "type": "dropdown",
+    "label": "Show pronouns:",
+    "value": "true",
+    "group": "Customization",
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "usersBlackList": {
+    "type": "text",
+    "label": "Users blacklist (separated by comma)",
+    "value": "",
+    "group": "Customization"
+  },
+  "specialCharsBlackList": {
+    "type": "text",
+    "label": "Special chars (separated by comma)",
+    "value": "",
+    "group": "Customization"
+  },
   "subText": {
     "type": "text",
     "label": "Custom text for SUB (max 40)",
-    "value": "Supermegalongname gifted a sub to supermegalongnameeeeeeeeeeeeeeeeeex2!",
+    "value": "(user) just suscribed!",
     "group": "Events"
   },
   "followText": {
     "type": "text",
     "label": "Custom text for FOLLOW (max 40)",
-    "value": "just followed!",
+    "value": "(user) just followed!",
     "group": "Events"
   },
   "cheerText": {
@@ -107,73 +176,18 @@
     "value": "(sender) sent (amount) raiders!",
     "group": "Events"
   },
-  "widgetHeight": {
-    "label": "Widget height (recommended 1080)",
-    "type": "text",
-    "group": "Customization",
-    "value": "1080"
-  },
-  "deleteMessages": {
-    "label": "Time to delete messages (max 60):",
-    "type": "number",
-    "group": "Customization",
-    "value": 60,
-    "min": 1,
-    "max": 60,
-    "step": 1
-  },
-  "displayBadges": {
-    "type": "dropdown",
-    "label": "Show badges:",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "allowPronouns": {
-    "type": "dropdown",
-    "label": "Show pronouns:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
   "theme": {
     "type": "dropdown",
-    "label": "Theme",
-    "value": "blue",
+    "label": "Theme:",
+    "value": "pink",
     "group": "Customization",
-    "options": { "blue": "Blue", "pink": "Pink" }
+    "options": { "pink": "Pink", "purple": "Purple" }
   },
-  "completeGoalText": {
-    "type": "text",
-    "label": "Custom text for goal completed (max 40)",
-    "value": "Goal completed!",
-    "group": "Events"
-  },
-  "wateringCanSide": {
+  "showPronouns": {
     "type": "dropdown",
-    "label": "Watering can side:",
-    "value": "right",
+    "label": "What to show:",
+    "value": "true",
     "group": "Customization",
-    "options": { "left": "Left", "right": "Right" }
-  },
-  "currency": {
-    "type": "text",
-    "label": "Currency:",
-    "value": "bits",
-    "group": "Customization"
-  },
-  "animationDelay": {
-    "type": "number",
-    "label": "Animation delay (s):",
-    "value": 5,
-    "group": "Customization",
-    "step": 1
-  },
-  "animationTime": {
-    "type": "number",
-    "label": "Animation time (s):",
-    "value": 1,
-    "group": "Customization",
-    "step": 1
+    "options": { "true": "Pronouns", "false": "Roles" }
   }
 }

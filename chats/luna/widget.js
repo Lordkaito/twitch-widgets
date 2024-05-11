@@ -1,595 +1,571 @@
 // let fieldData = {};
-let currentEvent = null;
-let flowerCount = 0;
-let currentMessagesIds = [];
-let currentAmountOfMessages = 0;
-let maxMessages;
-const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
+let currentEvent = null
+let flowerCount = 0
+let currentMessagesIds = []
+let currentAmountOfMessages = 0
+let maxMessages
+const SE_API_BASE = "https://api.streamelements.com/kappa/v2"
 
-const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
+const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api"
 const PRONOUNS_API = {
-  user: (username) => `${PRONOUNS_API_BASE}/users/${username},
+  user: username => `${PRONOUNS_API_BASE}/users/${username},
   pronouns: ${PRONOUNS_API_BASE}/pronouns`,
-};
+}
 
-const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
+const roles = ["streamer", "mod", "vip", "subscriber", "viewer"]
 const priorities = {
   streamer: 1,
   mod: 2,
   vip: 3,
   subscriber: 4,
   viewer: 5,
-};
+}
 
 class mainEvent {
   constructor(event, listener) {
-    this.event = event;
-    this.listener = listener;
+    this.event = event
+    this.listener = listener
   }
 
   get init() {
-    return this.eventType();
+    return this.eventType()
   }
 
   get isMod() {
-    return this.event.data.tags.mod === "1";
+    return this.event.data.tags.mod === "1"
   }
 
   get isStreamer() {
-    return (
-      this.event.data.displayName.toLowerCase() ==
-      this.event.data.channel.toLowerCase()
-    );
+    return this.event.data.displayName.toLowerCase() == this.event.data.channel.toLowerCase()
   }
 
   get isSub() {
-    return this.event.data.tags.subscriber === "1";
+    return this.event.data.tags.subscriber === "1"
   }
 
   get isVip() {
-    return this.event.data.tags.vip === "1";
+    return this.event.data.tags.vip === "1"
   }
 
   get isViewer() {
-    return !this.isMod && !this.isStreamer && !this.isSub && !this.isVip;
+    return !this.isMod && !this.isStreamer && !this.isSub && !this.isVip
   }
 
   get badges() {
-    return this.event.data.badges;
+    return this.event.data.badges
   }
 
   get user() {
-    return this.event.data.displayName;
+    return this.event.data.displayName
   }
 
   get roles() {
-    const priorityRole = [];
-    const tags = this.event.data.tags;
-    let keys = Object.keys(tags);
-    keys.forEach((key) => {
+    const priorityRole = []
+    const tags = this.event.data.tags
+    let keys = Object.keys(tags)
+    keys.forEach(key => {
       if (roles.includes(key) && tags[key] === "1") {
-        priorityRole.push({ role: key, priority: priorities[key] });
+        priorityRole.push({ role: key, priority: priorities[key] })
       }
-    });
+    })
 
     if (this.isStreamer) {
-      priorityRole.push({ role: "streamer", priority: priorities["streamer"] });
+      priorityRole.push({ role: "streamer", priority: priorities["streamer"] })
     }
 
     if (priorityRole.length === 0) {
-      priorityRole.push({ role: "viewer", priority: priorities["viewer"] });
+      priorityRole.push({ role: "viewer", priority: priorities["viewer"] })
     }
-    priorityRole.sort((a, b) => a.priority - b.priority);
-    return priorityRole[0];
+    priorityRole.sort((a, b) => a.priority - b.priority)
+    return priorityRole[0]
   }
 
   eventType() {
     if (this.listener === "message") {
-      return this.buildMessageCont();
+      return this.buildMessageCont()
     } else {
-      return this.buildEvent();
+      return this.buildEvent()
     }
   }
 
   get flower() {
-    const flower = document.createElement("img");
-    flower.src = "https://i.postimg.cc/W12nD9TL/arco-iris-4.png";
-    flower.classList.add("flower");
+    const flower = document.createElement("img")
+    flower.src = "https://i.postimg.cc/W12nD9TL/arco-iris-4.png"
+    flower.classList.add("flower")
 
-    return flower;
+    return flower
   }
 
   get emotes() {
-    return this.event.data.emotes;
+    return this.event.data.emotes
   }
 
   get text() {
-    return this.event.data.text;
+    return this.event.data.text
   }
 
   async buildMessageCont() {
-    return await this.createMainContainerElement();
+    return await this.createMainContainerElement()
   }
 
   get userColor() {
-    return this.event.data.displayColor;
+    return this.event.data.displayColor
   }
 
   get origami() {
-    const origami = document.createElement("div");
-    const circle = document.createElement("div");
-    let theme = fieldData.theme;
+    const origami = document.createElement("div")
+    const circle = document.createElement("div")
+    let theme = fieldData.theme
     circle.innerHTML = `
       <svg class="circulo" viewBox="0 0 100 100">
         <circle class="circulo-animado" cx="50" cy="50" r="45">
         </circle>
       </svg>
-    `;
-    circle.classList.add("circle");
-    circle.style.stroke = fieldData.colorPickerForCircle;
-    theme === "purple" ? circle.classList.add("circle-purple") : null;
-    const dots = document.createElement("div");
-    dots.classList.add("ori-dots");
-    const oriContainer = document.createElement("div");
-    oriContainer.classList.add("ori-container");
-    const ori = document.createElement("img");
-    const flower = document.createElement("img");
-    origami.classList.add("origami");
+    `
+    circle.classList.add("circle")
+    circle.style.stroke = fieldData.colorPickerForCircle
+    theme === "purple" ? circle.classList.add("circle-purple") : null
+    const dots = document.createElement("div")
+    dots.classList.add("ori-dots")
+    const oriContainer = document.createElement("div")
+    oriContainer.classList.add("ori-container")
+    const ori = document.createElement("img")
+    const flower = document.createElement("img")
+    origami.classList.add("origami")
     if (this.isStreamer) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/TYQBTzGP/cuernos-ire.png";
+        flower.src = "https://i.postimg.cc/TYQBTzGP/cuernos-ire.png"
       } else {
-        flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png";
+        flower.src = "https://i.postimg.cc/cLMTW5t8/cuernos-ire.png"
       }
-      flower.classList.add("streamer");
-      flower.classList.remove("ori-flower");
+      flower.classList.add("streamer")
+      flower.classList.remove("ori-flower")
     } else if (this.isMod) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/kGqhmcp8/rosatallo-ire.png";
+        flower.src = "https://i.postimg.cc/kGqhmcp8/rosatallo-ire.png"
       } else {
-        flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png";
+        flower.src = "https://i.postimg.cc/HL6rTpk7/rosatallo-ire.png"
       }
-      flower.classList.add("mod");
-      flower.classList.remove("ori-flower");
+      flower.classList.add("mod")
+      flower.classList.remove("ori-flower")
     } else if (this.isVip) {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/SKYP7j9X/lirios-ire.png";
+        flower.src = "https://i.postimg.cc/SKYP7j9X/lirios-ire.png"
       } else {
-        flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png";
+        flower.src = "https://i.postimg.cc/MT4XjdR6/lirios-ire.png"
       }
-      flower.classList.add("vip");
-      flower.classList.remove("ori-flower");
+      flower.classList.add("vip")
+      flower.classList.remove("ori-flower")
     } else {
       if (theme === "purple") {
-        flower.src = "https://i.postimg.cc/B6WVhs5m/rosa-ire.png";
+        flower.src = "https://i.postimg.cc/B6WVhs5m/rosa-ire.png"
       } else {
-        flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png";
+        flower.src = "https://i.postimg.cc/LXhnXrJQ/rosa-ire.png"
       }
-      flower.classList.add("subscriber");
+      flower.classList.add("subscriber")
     }
 
-    const container = document.createElement("div");
-    container.classList.add("container");
+    const container = document.createElement("div")
+    container.classList.add("container")
 
     for (let i = 0; i < 2; i++) {
-      const dot = document.createElement("div");
-      theme === "purple" ? dot.classList.add("dot-purple") : null;
-      dot.classList.add(`dot-${i + 1}`);
-      dots.appendChild(dot);
+      const dot = document.createElement("div")
+      theme === "purple" ? dot.classList.add("dot-purple") : null
+      dot.classList.add(`dot-${i + 1}`)
+      dots.appendChild(dot)
     }
 
-    circle.appendChild(flower);
+    circle.appendChild(flower)
 
     // container.appendChild(circle);
-    container.appendChild(dots);
-    container.appendChild(oriContainer);
+    container.appendChild(dots)
+    container.appendChild(oriContainer)
 
-    origami.appendChild(container);
-    return origami;
+    origami.appendChild(container)
+    return origami
   }
 
   get id() {
     // generate random string
-    const randomString = Math.random().toString(36).substring(2, 15);
-    const startingLetter = "f";
-    return `${startingLetter}${randomString}`;
+    const randomString = Math.random().toString(36).substring(2, 15)
+    const startingLetter = "f"
+    return `${startingLetter}${randomString}`
   }
 
   async createMainContainerElement() {
-    const mainContainer = document.createElement("div");
-    const superMainContainer = document.createElement("div");
+    const mainContainer = document.createElement("div")
+    const superMainContainer = document.createElement("div")
 
-    superMainContainer.classList.add("super-main-container");
+    superMainContainer.classList.add("super-main-container")
     // superMainContainer.appendChild(this.flowers);
-    superMainContainer.setAttribute("id", `${this.id}`);
-    mainContainer.classList.add("main-container");
+    superMainContainer.setAttribute("id", `${this.id}`)
+    mainContainer.classList.add("main-container")
 
-    mainContainer.appendChild(await this.createUsernameInfoElement());
-    mainContainer.appendChild(await this.createMessageContainerElement());
-    superMainContainer.appendChild(mainContainer);
+    mainContainer.appendChild(await this.createUsernameInfoElement())
+    mainContainer.appendChild(await this.createMessageContainerElement())
+    superMainContainer.appendChild(mainContainer)
 
-    return superMainContainer;
+    return superMainContainer
   }
 
   get butterfly() {
-    const img = document.createElement("img");
-    const imgContainer = document.createElement("div");
-    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png";
-    img.classList.add("butterfly");
-    imgContainer.classList.add("butterfly-container");
+    const img = document.createElement("img")
+    const imgContainer = document.createElement("div")
+    img.src = "https://i.postimg.cc/RVSHXtvv/mariposita.png"
+    img.classList.add("butterfly")
+    imgContainer.classList.add("butterfly-container")
 
-    return imgContainer;
+    return imgContainer
   }
 
   async createUsernameInfoElement() {
-    const usernameInfo = document.createElement("div");
-    const usernameInfoContainer = document.createElement("div");
-    const hyphen = document.createElement("span");
-    hyphen.classList.add("hyphen");
-    usernameInfoContainer.classList.add("username-info-container");
-    const circle = document.createElement("div");
+    const usernameInfo = document.createElement("div")
+    const usernameInfoContainer = document.createElement("div")
+    const hyphen = document.createElement("span")
+    hyphen.classList.add("hyphen")
+    usernameInfoContainer.classList.add("username-info-container")
+    const circle = document.createElement("div")
     circle.innerHTML = `
       <svg class="circulo" viewBox="0 0 100 100">
         <circle class="circulo-animado" cx="50" cy="50" r="45">
         </circle>
       </svg>
-    `;
-    const heart = document.createElement("img");
+    `
+    const heart = document.createElement("img")
     if (this.isSub || this.isStreamer) {
-      heart.src = "https://i.ibb.co/wcJyqnJ/lunasub.png";
+      heart.src = "https://i.ibb.co/wcJyqnJ/lunasub.png"
     } else {
-      heart.src = "https://i.ibb.co/5Rkc0md/lunapleb.png";
+      heart.src = "https://i.ibb.co/5Rkc0md/lunapleb.png"
     }
 
-    const role = this.roles.role;
-    const roleCont = document.createElement("div");
-    roleCont.classList.add("role-container");
-    const roleText = document.createElement("span");
-    roleText.classList.add("role-text");
-    roleText.style.color = fieldData.colorPickerRoleText;
+    const role = this.roles.role
+    const roleCont = document.createElement("div")
+    roleCont.classList.add("role-container")
+    const roleText = document.createElement("span")
+    roleText.classList.add("role-text")
+    roleText.style.color = fieldData.colorPickerRoleText
     switch (role) {
       case "mod":
-        roleText.innerText = "mod";
-        break;
+        roleText.innerText = "mod"
+        break
       case "vip":
-        roleText.innerText = "vip";
-        break;
+        roleText.innerText = "vip"
+        break
       case "subscriber":
-        roleText.innerText = "sub";
-        break;
+        roleText.innerText = "sub"
+        break
       case "streamer":
-        roleText.innerText = "streamer";
-        break;
+        roleText.innerText = "streamer"
+        break
       default:
-        roleText.innerText = "";
-        roleText.style.display = "none";
-        break;
+        roleText.innerText = ""
+        roleText.style.display = "none"
+        break
     }
 
     if (fieldData.showPronouns === "true") {
-      roleText.innerText = await this.getUserPronoun();
+      roleText.innerText = await this.getUserPronoun()
     }
 
     if (fieldData.showPronouns === "none") {
-      roleText.innerText = "";
-      roleText.style.display = "none";
+      roleText.innerText = ""
+      roleText.style.display = "none"
     }
-    roleCont.appendChild(roleText);
-    heart.classList.add("heart");
-    circle.classList.add("circle");
-    circle.appendChild(heart);
-    usernameInfoContainer.appendChild(circle);
-    usernameInfo.classList.add("username-info");
-    usernameInfo.appendChild(this.createUsernameBadgesElement());
-    usernameInfo.appendChild(this.createCapitalizeUserElement());
-    usernameInfoContainer.appendChild(usernameInfo);
-    usernameInfoContainer.appendChild(roleCont);
-    return usernameInfoContainer;
+    roleCont.appendChild(roleText)
+    heart.classList.add("heart")
+    circle.classList.add("circle")
+    circle.appendChild(heart)
+    usernameInfoContainer.appendChild(circle)
+    usernameInfo.classList.add("username-info")
+    usernameInfo.appendChild(this.createUsernameBadgesElement())
+    usernameInfo.appendChild(this.createCapitalizeUserElement())
+    usernameInfoContainer.appendChild(usernameInfo)
+    usernameInfoContainer.appendChild(roleCont)
+    return usernameInfoContainer
   }
 
   async createMessageContainerElement() {
-    const messageContainer = document.createElement("div");
-    messageContainer.classList.add("message-container");
-    messageContainer.style.maxWidth = fieldData.messageMaxWidth + "rem";
-    messageContainer.appendChild(
-      await this.createMessageIconContainerElement()
-    );
-    return messageContainer;
+    const messageContainer = document.createElement("div")
+    messageContainer.classList.add("message-container")
+    messageContainer.style.maxWidth = fieldData.messageMaxWidth + "rem"
+    messageContainer.appendChild(await this.createMessageIconContainerElement())
+    return messageContainer
   }
 
   createUsernameBadgesElement() {
-    const usernameBadges = document.createElement("span");
-    usernameBadges.classList.add("username-badges");
-    this.badges.forEach((badge) => {
-      let badgeImg = document.createElement("img");
-      badgeImg.classList.add("badges-img");
-      badgeImg.src = badge.url;
-      usernameBadges.appendChild(badgeImg);
-    });
+    const usernameBadges = document.createElement("span")
+    usernameBadges.classList.add("username-badges")
+    this.badges.forEach(badge => {
+      let badgeImg = document.createElement("img")
+      badgeImg.classList.add("badges-img")
+      badgeImg.src = badge.url
+      usernameBadges.appendChild(badgeImg)
+    })
 
     if (fieldData.displayBadges == "false") {
-      usernameBadges.style.display = "none";
+      usernameBadges.style.display = "none"
     }
-    return usernameBadges;
+    return usernameBadges
   }
 
   createCapitalizeUserElement() {
-    const capitalizeUser = document.createElement("span");
-    capitalizeUser.classList.add("capitalize-user");
-    capitalizeUser.style.color = fieldData.colorPickerNickname;
-    if(fieldData.limitSize == "true") {
-      capitalizeUser.style.maxWidth = 13 + "ch";
+    const capitalizeUser = document.createElement("span")
+    capitalizeUser.classList.add("capitalize-user")
+    capitalizeUser.style.color = fieldData.colorPickerNickname
+    if (fieldData.limitSize == "true") {
+      capitalizeUser.style.maxWidth = 13 + "ch"
     } else {
-      capitalizeUser.style.maxWidth = 25 + "ch";
+      capitalizeUser.style.maxWidth = 25 + "ch"
     }
-    capitalizeUser.innerText = this.user;
-    return capitalizeUser;
+    capitalizeUser.innerText = this.user
+    return capitalizeUser
   }
 
   createRoleContainer() {
-    const roleContainer = document.createElement("span");
-    roleContainer.classList.add("role-container");
-    roleContainer.style.backgroundColor = fieldData.colorPickerRoleBox;
-    roleContainer.appendChild(this.roleImages);
-    return roleContainer;
+    const roleContainer = document.createElement("span")
+    roleContainer.classList.add("role-container")
+    roleContainer.style.backgroundColor = fieldData.colorPickerRoleBox
+    roleContainer.appendChild(this.roleImages)
+    return roleContainer
   }
 
   async createPronounsContainer() {
-    const pronounsContainer = document.createElement("div");
-    const pronouns = document.createElement("span");
-    let theme = fieldData.theme;
-    pronouns.classList.add("prons");
-    pronounsContainer.classList.add("pronouns");
-    theme === "purple"
-      ? pronounsContainer.classList.add("pronouns-purple")
-      : null;
-    pronouns.innerText = await this.getUserPronoun();
-    pronouns.innerText == ""
-      ? (pronounsContainer.style.display = "none")
-      : (pronounsContainer.style.display = "block");
+    const pronounsContainer = document.createElement("div")
+    const pronouns = document.createElement("span")
+    let theme = fieldData.theme
+    pronouns.classList.add("prons")
+    pronounsContainer.classList.add("pronouns")
+    theme === "purple" ? pronounsContainer.classList.add("pronouns-purple") : null
+    pronouns.innerText = await this.getUserPronoun()
+    pronouns.innerText == "" ? (pronounsContainer.style.display = "none") : (pronounsContainer.style.display = "block")
     if (fieldData.allowPronouns == "false") {
-      pronounsContainer.style.display = "none";
+      pronounsContainer.style.display = "none"
     }
 
-    pronounsContainer.appendChild(pronouns);
-    return pronounsContainer;
+    pronounsContainer.appendChild(pronouns)
+    return pronounsContainer
   }
 
   async createMessageIconContainerElement() {
-    const messageIconContainer = document.createElement("div");
-    messageIconContainer.classList.add("message-icon-container");
-    messageIconContainer.appendChild(await this.createRenderedTextElement());
-    return messageIconContainer;
+    const messageIconContainer = document.createElement("div")
+    messageIconContainer.classList.add("message-icon-container")
+    messageIconContainer.appendChild(await this.createRenderedTextElement())
+    return messageIconContainer
   }
 
   get roleImages() {
-    const roles = this.getRole();
+    const roles = this.getRole()
 
     // Buscar el rol con la menor prioridad
     const minPriorityRole = roles.reduce(
-      (minRole, currentRole) =>
-        currentRole.priority < minRole.priority ? currentRole : minRole,
+      (minRole, currentRole) => (currentRole.priority < minRole.priority ? currentRole : minRole),
       roles[0] // Establecer el primer elemento como valor inicial
-    );
+    )
 
     // Asignar la imagen correspondiente
-    let roleImage = document.createElement("img");
-    roleImage.classList.add("role");
+    let roleImage = document.createElement("img")
+    roleImage.classList.add("role")
     if (minPriorityRole.length == 0) {
-      minPriorityRole.role = "viewer";
+      minPriorityRole.role = "viewer"
     }
 
-    let theme = fieldData.theme;
+    let theme = fieldData.theme
     if (theme === "purple") {
-      roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
+      roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png"
     } else {
-      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
+      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`
     }
-    return roleImage;
+    return roleImage
   }
 
   async getUserPronoun() {
-    let pronoun = null;
-    let username = this.user.toLowerCase();
+    let pronoun = null
+    let username = this.user.toLowerCase()
 
-    const response = await fetch(`${PRONOUNS_API_BASE}/users/${username}`);
-    const data = await response.json();
+    const response = await fetch(`${PRONOUNS_API_BASE}/users/${username}`)
+    const data = await response.json()
     if (data[0] == undefined) {
-      return "";
+      return ""
     }
-    pronoun = data[0].pronoun_id;
+    pronoun = data[0].pronoun_id
 
     // pronoun = await pronoun_api;
     switch (pronoun) {
       case "aeaer":
-        pronoun = "ae/aer";
-        break;
+        pronoun = "ae/aer"
+        break
       case "eem":
-        pronoun = "e/em";
-        break;
+        pronoun = "e/em"
+        break
       case "faefaer":
-        pronoun = "fae/faer";
-        break;
+        pronoun = "fae/faer"
+        break
       case "hehim":
-        pronoun = "he/him";
-        break;
+        pronoun = "he/him"
+        break
       case "heshe":
-        pronoun = "he/she";
-        break;
+        pronoun = "he/she"
+        break
       case "hethem":
-        pronoun = "he/they";
-        break;
+        pronoun = "he/they"
+        break
       case "itits":
-        pronoun = "it/its";
-        break;
+        pronoun = "it/its"
+        break
       case "perper":
-        pronoun = "per/per";
-        break;
+        pronoun = "per/per"
+        break
       case "sheher":
-        pronoun = "she/her";
-        break;
+        pronoun = "she/her"
+        break
       case "shethem":
-        pronoun = "she/they";
-        break;
+        pronoun = "she/they"
+        break
       case "theythem":
-        pronoun = "they/them";
-        break;
+        pronoun = "they/them"
+        break
       case "vever":
-        pronoun = "ve/ver";
-        break;
+        pronoun = "ve/ver"
+        break
       case "xexem":
-        pronoun = "xe/xem";
-        break;
+        pronoun = "xe/xem"
+        break
       case "ziehir":
-        pronoun = "zie/hir";
-        break;
+        pronoun = "zie/hir"
+        break
       default:
-        break;
+        break
     }
-    return pronoun;
+    return pronoun
   }
 
   async createRenderedTextElement() {
-    const renderedText = document.createElement("div");
-      renderedText.style.maxWidth = fieldData.messageMaxWidth + "rem";
-    let theme = fieldData.theme;
-    renderedText.classList.add("rendered-text");
-    renderedText.style.color = fieldData.colorPickerMessageText;
-    theme === "purple"
-      ? renderedText.classList.add("rendered-text-purple")
-      : null;
-    renderedText.classList.add(`${this.roles.role}-text`);
-    renderedText.appendChild(await this.buildMessage());
-    return renderedText;
+    const renderedText = document.createElement("div")
+    renderedText.style.maxWidth = fieldData.messageMaxWidth + "rem"
+    let theme = fieldData.theme
+    renderedText.classList.add("rendered-text")
+    renderedText.style.color = fieldData.colorPickerMessageText
+    theme === "purple" ? renderedText.classList.add("rendered-text-purple") : null
+    renderedText.classList.add(`${this.roles.role}-text`)
+    renderedText.appendChild(await this.buildMessage())
+    return renderedText
   }
 
   getRole() {
-    const roles = [];
+    const roles = []
     const rolesObj = {
       mod: { role: "mod", priority: 1 },
       vip: { role: "vip", priority: 2 },
       subscriber: { role: "sub", priority: 3 },
       turbo: { role: "turbo", priority: 4 },
-    };
+    }
 
     Object.entries(this.event.data.tags).forEach(([key, value]) => {
       if (value === "1" && rolesObj[key]) {
-        roles.push(rolesObj[key]);
+        roles.push(rolesObj[key])
       } else {
-        const viewer = { role: "viewer", priority: 5 };
+        const viewer = { role: "viewer", priority: 5 }
         if (roles.includes(viewer)) {
-          return;
+          return
         } else {
-          roles.push(viewer);
+          roles.push(viewer)
         }
       }
-    });
+    })
 
     if (this.isStreamer) {
-      const streamer = { role: "streamer", priority: 0 };
-      roles.unshift(streamer);
+      const streamer = { role: "streamer", priority: 0 }
+      roles.unshift(streamer)
     }
-    return roles;
+    return roles
   }
 
   async buildMessage() {
     // get emotes if any
-    let emoteNames = [];
-    let customEmotesNames = [];
-    let customEmotes = await this.customEmotes();
+    let emoteNames = []
+    let customEmotesNames = []
+    let customEmotes = await this.customEmotes()
     if (customEmotes != undefined && customEmotes.status != "Not Found") {
-      customEmotes.map((emote) => {
-        customEmotesNames.push(emote.name);
-      });
+      customEmotes.map(emote => {
+        customEmotesNames.push(emote.name)
+      })
     }
 
     if (this.emotes.length > 0) {
-      emoteNames = this.emotes.map((emote) => emote.name);
+      emoteNames = this.emotes.map(emote => emote.name)
     }
 
-    const rawMessage = this.text;
-    const words = rawMessage.split(" ");
+    const rawMessage = this.text
+    const words = rawMessage.split(" ")
 
     words.map((word, index) => {
       if (emoteNames.includes(word)) {
-        let url;
-        if (!url)
-          url = this.emotes.find((emote) => emote.name === word).urls[4];
-        if (!url)
-          url = this.emotes.find((emote) => emote.name === word).urls[1];
-        words[index] = <img src="${url}" class="emotes"/>;
+        let url
+        if (!url) url = this.emotes.find(emote => emote.name === word).urls[4]
+        if (!url) url = this.emotes.find(emote => emote.name === word).urls[1]
+        words[index] = `<img src="${url}" class="emotes" />`
       } else if (customEmotesNames.includes(word)) {
-        let url;
-        if (!url)
-          url = customEmotes.find((emote) => emote.name === word).urls[3][1];
-        if (!url)
-          url = customEmotes.find((emote) => emote.name === word).urls[0][1];
-        words[index] = <img src="${url}" class="emotes"/>;
+        let url
+        if (!url) url = customEmotes.find(emote => emote.name === word).urls[3][1]
+        if (!url) url = customEmotes.find(emote => emote.name === word).urls[0][1]
+        words[index] = `<img src="${url}" class="emotes" />`
       }
-    });
-    let textContainer = document.createElement("p");
-    textContainer.classList.add("text");
-    textContainer.innerHTML = words.join(" ");
-    return textContainer;
+    })
+    let textContainer = document.createElement("p")
+    textContainer.classList.add("text")
+    textContainer.innerHTML = words.join(" ")
+    return textContainer
   }
 
   async customEmotes() {
-    let id = fieldData.emotesId;
-    let url;
-    let customEmotesArr;
+    let id = fieldData.emotesId
+    let url
+    let customEmotesArr
     if (id != "") {
       await fetch(`https://api.7tv.app/v2/users/${id}/emotes`)
-        .then((response) => response.json())
-        .then((data) => (customEmotesArr = data))
-        .catch((error) => console.error(error));
+        .then(response => response.json())
+        .then(data => (customEmotesArr = data))
+        .catch(error => console.error(error))
     }
-    return customEmotesArr;
+    return customEmotesArr
   }
 
   themeColor() {
-    let color = fieldData.theme;
+    let color = fieldData.theme
 
-    return color;
+    return color
   }
 
   buildEvent() {
-    return this.createMainEvent();
+    return this.createMainEvent()
   }
 
   createMainEvent() {
-    return this.createMainEventContainer();
+    return this.createMainEventContainer()
   }
 
   get name() {
-    const name = this.event.name;
-    const trimmed = this.trimName(name);
+    const name = this.event.name
+    const trimmed = this.trimName(name)
 
-    return trimmed;
+    return trimmed
   }
 
   get amount() {
-    return this.event.amount;
+    return this.event.amount
   }
 
   trimName(name) {
-    const trimmed = name.slice(0, 20);
-    return trimmed;
+    const trimmed = name.slice(0, 20)
+    return trimmed
   }
 
   async createMainEventContainer() {
-    const mainContainer = document.createElement("div");
+    const mainContainer = document.createElement("div")
 
-    const { name } = this;
+    const { name } = this
 
-    let {
-      followText,
-      subText,
-      cheerText,
-      tipText,
-      giftSubText,
-      bulkGiftText,
-      raidText,
-    } = fieldData;
+    let { followText, subText, cheerText, tipText, giftSubText, bulkGiftText, raidText } = fieldData
 
     const dictionary = {
       follower: followText,
@@ -599,108 +575,85 @@ class mainEvent {
       giftsub: giftSubText,
       bulkgift: bulkGiftText,
       raid: raidText,
-    };
+    }
 
-    const eventType = this.event.type;
+    const eventType = this.event.type
 
-    const amount = this.amount;
-    let sender = this.event.sender || this.event.name;
-    let eventText = dictionary[this.event.type];
+    const amount = this.amount
+    let sender = this.event.sender || this.event.name
+    let eventText = dictionary[this.event.type]
     if (this.event.gifted) {
-      eventText = dictionary["giftsub"];
-      let text = ` ha regalado ${amount} subs!`;
+      eventText = dictionary["giftsub"]
+      let text = ` ha regalado ${amount} subs!`
       if (eventText == "") {
-        eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        eventText = ` ha regalado ${amount} subs!`
+        text = name + eventText
       } else {
-        eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
-        text = eventText;
+        eventText = eventText.replace("(amount)", amount)
+        eventText = eventText.replace("(sender)", sender)
+        text = eventText
       }
     }
 
     if (this.event.bulkGifted) {
-      eventText = dictionary["bulkgift"];
-      let text = ` ha regalado ${amount} subs!`;
+      eventText = dictionary["bulkgift"]
+      let text = ` ha regalado ${amount} subs!`
       if (eventText == "") {
-        eventText = ` ha regalado ${amount} subs!`;
-        text = name + eventText;
+        eventText = ` ha regalado ${amount} subs!`
+        text = name + eventText
       } else {
-        eventText = eventText.replace("(amount)", amount);
-        eventText = eventText.replace("(sender)", sender);
-        text = eventText;
+        eventText = eventText.replace("(amount)", amount)
+        eventText = eventText.replace("(sender)", sender)
+        text = eventText
       }
     }
 
-    let text = eventText != "" ? eventText : `Gracias ${name}!`;
-    text = eventText != "" ? eventText : text;
+    let text = eventText != "" ? eventText : `Gracias ${name}!`
+    text = eventText != "" ? eventText : text
     if (eventText != "") {
-      eventText = eventText.replace("(user)", name);
-      eventText = eventText.replace("(amount)", amount);
-      eventText = eventText.replace("(sender)", sender);
-      text = eventText;
+      eventText = eventText.replace("(user)", name)
+      eventText = eventText.replace("(amount)", amount)
+      eventText = eventText.replace("(sender)", sender)
+      text = eventText
     }
 
-    const nameAndText = `${text}`;
-    const nameContainer = document.createElement("p");
+    const nameAndText = `${text}`
+    const nameContainer = document.createElement("p")
 
-    const fungiContainer = document.createElement("div");
-    fungiContainer.style.maxWidth = fieldData.eventMaxWidth + "rem";
-    const fungi = document.createElement("img");
+    const fungiContainer = document.createElement("div")
+    fungiContainer.style.maxWidth = fieldData.messageMaxWidth + "rem"
+    const fungi = document.createElement("img")
 
-    fungi.src = "https://i.ibb.co/4JWsNXM/estrellaseventos.png";
-    fungi.classList.add("bellota");
-    // switch (eventType) {
-    //   case "follower":
-    //     fungi.classList.add("heart");
-    //     break;
-    //   case "subscriber":
-    //     fungi.src = "https://i.postimg.cc/5tVtGNpD/strll.png";
-    //     fungi.classList.add("star");
-    //     break;
-    //   case "cheer":
-    //     fungi.src = "https://i.postimg.cc/9FwFQqnv/bitt.png";
-    //     fungi.classList.add("bit");
-    //     break;
-    //   case "tip":
-    //     fungi.src = "https://i.postimg.cc/SNHR6G9S/monedd.png";
-    //     fungi.classList.add("coin");
-    //     break;
-    //   case "raid":
-    //     fungi.src = "https://i.postimg.cc/Jn7zr6fq/flrr.png";
-    //     fungi.classList.add("raid");
-    //     break;
-    // }
+    fungi.src = "https://i.ibb.co/4JWsNXM/estrellaseventos.png"
+    fungi.classList.add("bellota")
 
-    fungi.classList.add("fungi");
-    const fungiDivContainer = document.createElement("div");
+    fungi.classList.add("fungi")
+    const fungiDivContainer = document.createElement("div")
 
-    let theme = fieldData.theme;
-    fungiDivContainer.classList.add(event-leafs-container);
-    fungiDivContainer.appendChild(fungi);
-    fungiContainer.classList.add("fungi-container");
-    fungiContainer.style.backgroundColor = fieldData.colorPickerEventContainer;
-    theme === "purple"
-      ? fungiContainer.classList.add("fungi-container-purple")
-      : null;
-    const moon = document.createElement("img");
-    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png";
-    moon.classList.add("moon");
-    fungiContainer.appendChild(moon);
-    nameContainer.classList.add("event-name");
-    nameContainer.style.color = fieldData.colorPickerEventText;
-    nameContainer.innerText = nameAndText;
+    let theme = fieldData.theme
+    fungiDivContainer.classList.add("event-leafs-container")
+    fungiDivContainer.appendChild(fungi)
+    fungiContainer.classList.add("fungi-container")
+    fungiContainer.style.backgroundColor = fieldData.colorPickerEventContainer
+    theme === "purple" ? fungiContainer.classList.add("fungi-container-purple") : null
+    const moon = document.createElement("img")
+    moon.src = "https://i.postimg.cc/zfPDcV64/luna.png"
+    moon.classList.add("moon")
+    fungiContainer.appendChild(moon)
+    nameContainer.classList.add("event-name")
+    nameContainer.style.color = fieldData.colorPickerEventText
+    nameContainer.innerText = nameAndText
 
-    const eventAndNameContainer = document.createElement("div");
-    eventAndNameContainer.classList.add("event-and-name-container");
-    eventAndNameContainer.appendChild(fungiDivContainer);
-    eventAndNameContainer.appendChild(nameContainer);
-    fungiContainer.appendChild(eventAndNameContainer);
-    mainContainer.setAttribute("id", `${this.id}`);
-    mainContainer.classList.add("event-container");
-    mainContainer.appendChild(fungiContainer);
+    const eventAndNameContainer = document.createElement("div")
+    eventAndNameContainer.classList.add("event-and-name-container")
+    eventAndNameContainer.appendChild(fungiDivContainer)
+    eventAndNameContainer.appendChild(nameContainer)
+    fungiContainer.appendChild(eventAndNameContainer)
+    mainContainer.setAttribute("id", `${this.id}`)
+    mainContainer.classList.add("event-container")
+    mainContainer.appendChild(fungiContainer)
 
-    return mainContainer;
+    return mainContainer
   }
 }
 
@@ -711,270 +664,268 @@ const Widget = {
   pronounsCache: {},
   channel: {},
   globalEmotes: {},
-};
+}
 
 // I'm trash and forgot about this fn
 async function get(URL) {
   return await fetch(URL)
-    .then(async (res) => {
-      if (!res.ok) return null;
-      return res.json();
+    .then(async res => {
+      if (!res.ok) return null
+      return res.json()
     })
-    .catch((error) => null);
+    .catch(error => null)
 }
 
 const GLOBAL_EMOTES = {
   ffz: {
     api: "https://api2.frankerfacez.com/v1/set/global",
-    transformer: (response) => {
-      const { default_sets, sets } = response;
-      const emoteNames = [];
+    transformer: response => {
+      const { default_sets, sets } = response
+      const emoteNames = []
       for (const set of default_sets) {
-        const { emoticons } = sets[set];
+        const { emoticons } = sets[set]
         for (const emote of emoticons) {
-          emoteNames.push(emote.name);
+          emoteNames.push(emote.name)
         }
       }
-      return emoteNames;
+      return emoteNames
     },
   },
   bttv: {
     api: "https://api.betterttv.net/3/cached/emotes/global",
-    transformer: (response) => {
-      return response.map((emote) => emote.code);
+    transformer: response => {
+      return response.map(emote => emote.code)
     },
   },
   "7tv": {
     api: "https://api.7tv.app/v2/emotes/global",
-    transformer: (response) => {
-      return response.map((emote) => emote.name);
+    transformer: response => {
+      return response.map(emote => emote.name)
     },
   },
-};
+}
 
-window.addEventListener("onWidgetLoad", async (obj) => {
-  Widget.channel = obj.detail.channel;
-  fieldData = obj.detail.fieldData;
-  maxMessages = fieldData.maxMessages;
-  let main = document.querySelector("main");
-});
+window.addEventListener("onWidgetLoad", async obj => {
+  Widget.channel = obj.detail.channel
+  fieldData = obj.detail.fieldData
+  maxMessages = fieldData.maxMessages
+  let main = document.querySelector("main")
+})
 
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
-    const trimmed = value.trim();
-    if (trimmed !== "") acc.push(trimmed);
-    return acc;
-  }, []);
+    const trimmed = value.trim()
+    if (trimmed !== "") acc.push(trimmed)
+    return acc
+  }, [])
 }
 
 async function loadGlobalEmotes() {
   for (const [key, value] of Object.entries(GLOBAL_EMOTES)) {
-    const { api, transformer } = value;
-    const response = await get(api);
+    const { api, transformer } = value
+    const response = await get(api)
     if (response != null) {
-      Widget.globalEmotes[key] = transformer(response);
+      Widget.globalEmotes[key] = transformer(response)
     }
   }
 }
 
-const removeMessage = (mainContainer) => {
-  const elem = mainContainer;
+const removeMessage = mainContainer => {
+  const elem = mainContainer
   if (elem) {
-    elem.style.animationName = "removeMessage";
-    elem.style.animationDuration = "0.7s";
+    elem.style.animationName = "removeMessage"
+    elem.style.animationDuration = "0.7s"
     setTimeout(() => {
-      elem.remove();
-    }, 1000);
+      elem.remove()
+    }, 1000)
   }
-};
+}
 
-let repeatedEvents = 0;
-let maxEvents = 0;
-let isBulk = false;
+let repeatedEvents = 0
+let maxEvents = 0
+let isBulk = false
 
-const blacklisted = (name) => {
-  let username = name.toLowerCase().trim();
-  let blacklist = [];
-  let blackListFieldData = fieldData.usersBlackList.split(",");
-  blackListFieldData.forEach((nick) => {
-    blacklist.push(nick.toLowerCase().trim());
-  });
-  return blacklist.includes(username);
-};
+const blacklisted = name => {
+  let username = name.toLowerCase().trim()
+  let blacklist = []
+  let blackListFieldData = fieldData.usersBlackList.split(",")
+  blackListFieldData.forEach(nick => {
+    blacklist.push(nick.toLowerCase().trim())
+  })
+  return blacklist.includes(username)
+}
 
-const ignoreMessagesStartingWith = (message) => {
-  let ignoreList = [];
-  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",");
+const ignoreMessagesStartingWith = message => {
+  let ignoreList = []
+  let ignoreListFieldData = fieldData.specialCharsBlackList.split(",")
   if (ignoreListFieldData !== "") {
-    ignoreListFieldData.forEach((symbol) => {
-      ignoreList.push(symbol.trim());
-    });
+    ignoreListFieldData.forEach(symbol => {
+      ignoreList.push(symbol.trim())
+    })
   }
 
   if (ignoreList.length === 1 && ignoreList[0] === "") {
-    return false;
+    return false
   }
-  return ignoreList.some((symbol) => message.toLowerCase().startsWith(symbol));
-};
+  return ignoreList.some(symbol => message.toLowerCase().startsWith(symbol))
+}
 
-window.addEventListener("onEventReceived", async (obj) => {
-  let { listener, event } = obj.detail;
-  if (event.isCommunityGift) return;
+window.addEventListener("onEventReceived", async obj => {
+  let { listener, event } = obj.detail
+  if (event.isCommunityGift) return
 
   if (listener === "message") {
-    let isBlackListed = blacklisted(event.data.displayName);
-    if (isBlackListed) return;
-    let specialSymbols = ignoreMessagesStartingWith(event.data.text);
-    if (specialSymbols) return;
+    let isBlackListed = blacklisted(event.data.displayName)
+    if (isBlackListed) return
+    let specialSymbols = ignoreMessagesStartingWith(event.data.text)
+    if (specialSymbols) return
   }
 
-  const mainCont = document.querySelector("main");
+  const mainCont = document.querySelector("main")
 
-  const events = new mainEvent(event, listener);
+  const events = new mainEvent(event, listener)
 
   events.init
-    .then((mainContainer) => {
+    .then(mainContainer => {
       if (fieldData.deleteMessagesOption === "amount") {
         if (currentAmountOfMessages >= maxMessages) {
-          let messageToRemove = currentMessagesIds.shift();
-          removeMessage(document.querySelector(`#${messageToRemove}`));
-          currentMessagesIds.push(mainContainer.id);
+          let messageToRemove = currentMessagesIds.shift()
+          removeMessage(document.querySelector(`#${messageToRemove}`))
+          currentMessagesIds.push(mainContainer.id)
         } else {
-          currentAmountOfMessages++;
-          currentMessagesIds.push(mainContainer.id);
+          currentAmountOfMessages++
+          currentMessagesIds.push(mainContainer.id)
         }
       }
       if (fieldData.deleteMessagesOption === "timer") {
         setTimeout(() => {
-          removeMessage(mainContainer);
-        }, fieldData.deleteMessagesTimer * 1000);
+          removeMessage(mainContainer)
+        }, fieldData.deleteMessagesTimer * 1000)
       }
-      mainCont.appendChild(mainContainer);
-      return mainContainer;
+      mainCont.appendChild(mainContainer)
+      return mainContainer
     })
-    .then((mainContainer) => {
-      mainContainer.appendChild(flowers(mainContainer, listener, event));
-    });
-});
+    .then(mainContainer => {
+      mainContainer.appendChild(flowers(mainContainer, listener, event))
+    })
+})
 
 const flowers = (mainContainer, listener, event) => {
-  const flowersContainer = document.createElement("div");
-  flowersContainer.classList.add("flowers-container");
-  addFlowers(mainContainer, flowersContainer, listener, event);
-  const flowers = flowersContainer.querySelectorAll(".flower");
-  return flowersContainer;
-};
+  const flowersContainer = document.createElement("div")
+  flowersContainer.classList.add("flowers-container")
+  addFlowers(mainContainer, flowersContainer, listener, event)
+  const flowers = flowersContainer.querySelectorAll(".flower")
+  return flowersContainer
+}
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
-  const constelation = document.createElement("img");
-  constelation.src = "https://i.ibb.co/P4z9zDT/estrellitalado.png";
+  const constelation = document.createElement("img")
+  constelation.src = "https://i.ibb.co/P4z9zDT/estrellitalado.png"
 
   const isStreamer = () => {
-    if (listener !== "message") return false;
-    return (
-      event.data.displayName.toLowerCase() === event.data.channel.toLowerCase()
-    );
-  };
+    if (listener !== "message") return false
+    return event.data.displayName.toLowerCase() === event.data.channel.toLowerCase()
+  }
   const isSub = () => {
-    if (listener !== "message") return false;
-    return event.data.tags.subscriber === "1";
-  };
+    if (listener !== "message") return false
+    return event.data.tags.subscriber === "1"
+  }
   const isVip = () => {
-    if (listener !== "message") return false;
-    return event.data.tags.vip === "1";
-  };
+    if (listener !== "message") return false
+    return event.data.tags.vip === "1"
+  }
   const isMod = () => {
-    if (listener !== "message") return false;
-    return event.data.tags.mod === "1";
-  };
+    if (listener !== "message") return false
+    return event.data.tags.mod === "1"
+  }
 
-  const isViewer = !isStreamer() && !isSub();
+  const isViewer = !isStreamer() && !isSub()
 
-  const subConstelationContainer = document.createElement("div");
-  subConstelationContainer.classList.add("sub-constelation-container");
-  const subLine1 = document.createElement("div");
-  const subLine1Container = document.createElement("div");
-  subLine1Container.classList.add("sub-line1-container");
-  subLine1.classList.add("sub-line1");
-  subLine1.style.backgroundColor = fieldData.colorPickerConstallationLines;
-  subLine1Container.appendChild(subLine1);
-  const subPoint2 = document.createElement("div");
-  subPoint2.classList.add("sub-point2");
-  subPoint2.style.backgroundColor = fieldData.colorPickerConstallationLines;
-  const subLine3 = document.createElement("div");
-  const subLine3Container = document.createElement("div");
-  subLine3Container.classList.add("sub-line3-container");
-  subLine3.classList.add("sub-line3");
-  subLine3.style.backgroundColor = fieldData.colorPickerConstallationLines;
-  subLine3Container.appendChild(subLine3);
-  const subPoint4 = document.createElement("div");
-  subPoint4.classList.add("sub-point4");
-  subPoint4.style.backgroundColor = fieldData.colorPickerConstallationLines;
-  const subLine5 = document.createElement("div");
-  const subLine5Container = document.createElement("div");
-  subLine5Container.classList.add("sub-line5-container");
-  subLine5.classList.add("sub-line5");
-  subLine5.style.backgroundColor = fieldData.colorPickerConstallationLines;
-  subLine5Container.appendChild(subLine5);
+  const subConstelationContainer = document.createElement("div")
+  subConstelationContainer.classList.add("sub-constelation-container")
+  const subLine1 = document.createElement("div")
+  const subLine1Container = document.createElement("div")
+  subLine1Container.classList.add("sub-line1-container")
+  subLine1.classList.add("sub-line1")
+  subLine1.style.backgroundColor = fieldData.colorPickerConstallationLines
+  subLine1Container.appendChild(subLine1)
+  const subPoint2 = document.createElement("div")
+  subPoint2.classList.add("sub-point2")
+  subPoint2.style.backgroundColor = fieldData.colorPickerConstallationLines
+  const subLine3 = document.createElement("div")
+  const subLine3Container = document.createElement("div")
+  subLine3Container.classList.add("sub-line3-container")
+  subLine3.classList.add("sub-line3")
+  subLine3.style.backgroundColor = fieldData.colorPickerConstallationLines
+  subLine3Container.appendChild(subLine3)
+  const subPoint4 = document.createElement("div")
+  subPoint4.classList.add("sub-point4")
+  subPoint4.style.backgroundColor = fieldData.colorPickerConstallationLines
+  const subLine5 = document.createElement("div")
+  const subLine5Container = document.createElement("div")
+  subLine5Container.classList.add("sub-line5-container")
+  subLine5.classList.add("sub-line5")
+  subLine5.style.backgroundColor = fieldData.colorPickerConstallationLines
+  subLine5Container.appendChild(subLine5)
 
-  const noSubConstelationContainer = document.createElement("div");
-  noSubConstelationContainer.classList.add("no-sub-constelation-container");
+  const noSubConstelationContainer = document.createElement("div")
+  noSubConstelationContainer.classList.add("no-sub-constelation-container")
 
-  const noSubPoint1 = document.createElement("div");
-  noSubPoint1.classList.add("no-sub-point1");
+  const noSubPoint1 = document.createElement("div")
+  noSubPoint1.classList.add("no-sub-point1")
 
-  const noSubLine2 = document.createElement("div");
-  const noSubLine2Container = document.createElement("div");
-  noSubLine2Container.classList.add("no-sub-line2-container");
-  noSubLine2.classList.add("no-sub-line2");
-  noSubLine2Container.appendChild(noSubLine2);
+  const noSubLine2 = document.createElement("div")
+  const noSubLine2Container = document.createElement("div")
+  noSubLine2Container.classList.add("no-sub-line2-container")
+  noSubLine2.classList.add("no-sub-line2")
+  noSubLine2Container.appendChild(noSubLine2)
 
-  const noSubLine4 = document.createElement("div");
-  const noSubLine4Container = document.createElement("div");
-  noSubLine4Container.classList.add("no-sub-line4-container");
-  noSubLine4.classList.add("no-sub-line4");
-  noSubLine4Container.appendChild(noSubLine4);
+  const noSubLine4 = document.createElement("div")
+  const noSubLine4Container = document.createElement("div")
+  noSubLine4Container.classList.add("no-sub-line4-container")
+  noSubLine4.classList.add("no-sub-line4")
+  noSubLine4Container.appendChild(noSubLine4)
 
-  const noSubPoint5 = document.createElement("div");
-  noSubPoint5.classList.add("no-sub-point5");
+  const noSubPoint5 = document.createElement("div")
+  noSubPoint5.classList.add("no-sub-point5")
 
-  const noSubLine6 = document.createElement("div");
-  const noSubLine6Container = document.createElement("div");
-  noSubLine6Container.classList.add("no-sub-line6-container");
-  noSubLine6.classList.add("no-sub-line6");
-  noSubLine6Container.appendChild(noSubLine6);
+  const noSubLine6 = document.createElement("div")
+  const noSubLine6Container = document.createElement("div")
+  noSubLine6Container.classList.add("no-sub-line6-container")
+  noSubLine6.classList.add("no-sub-line6")
+  noSubLine6Container.appendChild(noSubLine6)
 
-  const noSubPoint7 = document.createElement("div");
-  noSubPoint7.classList.add("no-sub-point7");
+  const noSubPoint7 = document.createElement("div")
+  noSubPoint7.classList.add("no-sub-point7")
 
   if (listener !== "message") {
-    constelation.classList.add("constelation-event");
-    subConstelationContainer.appendChild(subLine1Container);
-    subConstelationContainer.appendChild(constelation);
-    subConstelationContainer.appendChild(subLine3Container);
-    subConstelationContainer.appendChild(subPoint4);
-    flowersContainer.appendChild(subConstelationContainer);
-    return;
+    constelation.classList.add("constelation-event")
+    subConstelationContainer.appendChild(subLine1Container)
+    subConstelationContainer.appendChild(constelation)
+    subConstelationContainer.appendChild(subLine3Container)
+    subConstelationContainer.appendChild(subPoint4)
+    flowersContainer.appendChild(subConstelationContainer)
+    return
   }
 
   if (isViewer) {
-    constelation.classList.add("constelation-viewer");
-    noSubConstelationContainer.appendChild(noSubPoint1);
-    noSubConstelationContainer.appendChild(noSubLine2Container);
-    noSubConstelationContainer.appendChild(constelation);
-    noSubConstelationContainer.appendChild(noSubLine4Container);
-    noSubConstelationContainer.appendChild(noSubPoint5);
-    noSubConstelationContainer.appendChild(noSubLine6Container);
-    noSubConstelationContainer.appendChild(noSubPoint7);
-    flowersContainer.appendChild(noSubConstelationContainer);
+    constelation.classList.add("constelation-viewer")
+    noSubConstelationContainer.appendChild(noSubPoint1)
+    noSubConstelationContainer.appendChild(noSubLine2Container)
+    noSubConstelationContainer.appendChild(constelation)
+    noSubConstelationContainer.appendChild(noSubLine4Container)
+    noSubConstelationContainer.appendChild(noSubPoint5)
+    noSubConstelationContainer.appendChild(noSubLine6Container)
+    noSubConstelationContainer.appendChild(noSubPoint7)
+    flowersContainer.appendChild(noSubConstelationContainer)
   } else {
-    constelation.classList.add("constelation-sub");
-    subConstelationContainer.appendChild(constelation);
-    subConstelationContainer.appendChild(subLine1Container);
-    subConstelationContainer.appendChild(subPoint2);
-    subConstelationContainer.appendChild(subLine3Container);
-    subConstelationContainer.appendChild(subPoint4);
-    subConstelationContainer.appendChild(subLine5Container);
-    flowersContainer.appendChild(subConstelationContainer);
+    constelation.classList.add("constelation-sub")
+    subConstelationContainer.appendChild(constelation)
+    subConstelationContainer.appendChild(subLine1Container)
+    subConstelationContainer.appendChild(subPoint2)
+    subConstelationContainer.appendChild(subLine3Container)
+    subConstelationContainer.appendChild(subPoint4)
+    subConstelationContainer.appendChild(subLine5Container)
+    flowersContainer.appendChild(subConstelationContainer)
   }
-};
+}

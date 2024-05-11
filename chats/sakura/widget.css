@@ -144,11 +144,10 @@ main {
 }
 
 .circle {
-  /* height: 45; */
   width: 45px;
   position: relative;
   fill: transparent;
-  stroke: #ffefdb;
+  stroke: {{colorPickerForCircle}};
   stroke-width: 5;
   stroke-dasharray: 0;
   stroke-dashoffset: 0;

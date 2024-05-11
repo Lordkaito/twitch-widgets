@@ -126,7 +126,6 @@ class mainEvent {
       </svg>
     `;
     circle.classList.add("circle");
-    circle.style.stroke = fieldData.colorPickerForCircle;
     theme === "purple" ? circle.classList.add("circle-purple") : null;
     const dots = document.createElement("div");
     dots.classList.add("ori-dots");
