@@ -394,7 +394,6 @@ main {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  overflow: hidden;
 }
 
 @keyframes growUsernameInfo {
@@ -669,7 +668,6 @@ main {
 .event-name {
   /* max-width: 300px; */
   height: 100%;
-  width: 200px;
   top: 0;
   text-align: center;
   display: flex;

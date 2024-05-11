@@ -8,8 +8,8 @@ const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
-  user: (username) => `${PRONOUNS_API_BASE}/users/${username}`,
-  pronouns: `${PRONOUNS_API_BASE}/pronouns`,
+  user: (username) => ${PRONOUNS_API_BASE}/users/${username},
+  pronouns: ${PRONOUNS_API_BASE}/pronouns,
 };
 
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
@@ -126,6 +126,7 @@ class mainEvent {
       </svg>
     `;
     circle.classList.add("circle");
+    circle.style.stroke = fieldData.colorPickerForCircle;
     theme === "purple" ? circle.classList.add("circle-purple") : null;
     const dots = document.createElement("div");
     dots.classList.add("ori-dots");
@@ -173,7 +174,7 @@ class mainEvent {
     for (let i = 0; i < 2; i++) {
       const dot = document.createElement("div");
       theme === "purple" ? dot.classList.add("dot-purple") : null;
-      dot.classList.add(`dot-${i + 1}`);
+      dot.classList.add(dot-${i + 1});
       dots.appendChild(dot);
     }
 
@@ -191,7 +192,7 @@ class mainEvent {
     // generate random string
     const randomString = Math.random().toString(36).substring(2, 15);
     const startingLetter = "f";
-    return `${startingLetter}${randomString}`;
+    return ${startingLetter}${randomString};
   }
 
   async createMainContainerElement() {
@@ -200,7 +201,7 @@ class mainEvent {
 
     superMainContainer.classList.add("super-main-container");
     // superMainContainer.appendChild(this.flowers);
-    superMainContainer.setAttribute("id", `${this.id}`);
+    superMainContainer.setAttribute("id", ${this.id});
     mainContainer.classList.add("main-container");
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
@@ -245,6 +246,7 @@ class mainEvent {
     roleCont.classList.add("role-container");
     const roleText = document.createElement("span");
     roleText.classList.add("role-text");
+    roleText.style.color = fieldData.colorPickerRoleText;
     switch (role) {
       case "mod":
         roleText.innerText = "mod";
@@ -288,6 +290,7 @@ class mainEvent {
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    messageContainer.style.maxWidth = fieldData.messageMaxWidth + "rem";
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -313,6 +316,12 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
+    capitalizeUser.style.color = fieldData.colorPickerNickname;
+    if(fieldData.limitSize == "true") {
+      capitalizeUser.style.maxWidth = 13 + "ch";
+    } else {
+      capitalizeUser.style.maxWidth = 25 + "ch";
+    }
     capitalizeUser.innerText = this.user;
     return capitalizeUser;
   }
@@ -320,6 +329,7 @@ class mainEvent {
   createRoleContainer() {
     const roleContainer = document.createElement("span");
     roleContainer.classList.add("role-container");
+    roleContainer.style.backgroundColor = fieldData.colorPickerRoleBox;
     roleContainer.appendChild(this.roleImages);
     return roleContainer;
   }
@@ -373,7 +383,7 @@ class mainEvent {
     if (theme === "purple") {
       roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
     } else {
-      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
+      roleImage.src = https://i.postimg.cc/qRQg2VsS/hojitarosa.png;
     }
     return roleImage;
   }
@@ -382,7 +392,7 @@ class mainEvent {
     let pronoun = null;
     let username = this.user.toLowerCase();
 
-    const response = await fetch(`${PRONOUNS_API_BASE}/users/${username}`);
+    const response = await fetch(${PRONOUNS_API_BASE}/users/${username});
     const data = await response.json();
     if (data[0] == undefined) {
       return "";
@@ -441,12 +451,14 @@ class mainEvent {
 
   async createRenderedTextElement() {
     const renderedText = document.createElement("div");
+      renderedText.style.maxWidth = fieldData.messageMaxWidth + "rem";
     let theme = fieldData.theme;
     renderedText.classList.add("rendered-text");
+    renderedText.style.color = fieldData.colorPickerMessageText;
     theme === "purple"
       ? renderedText.classList.add("rendered-text-purple")
       : null;
-    renderedText.classList.add(`${this.roles.role}-text`);
+    renderedText.classList.add(${this.roles.role}-text);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
   }
@@ -505,14 +517,14 @@ class mainEvent {
           url = this.emotes.find((emote) => emote.name === word).urls[4];
         if (!url)
           url = this.emotes.find((emote) => emote.name === word).urls[1];
-        words[index] = `<img src="${url}" class="emotes"/>`;
+        words[index] = <img src="${url}" class="emotes"/>;
       } else if (customEmotesNames.includes(word)) {
         let url;
         if (!url)
           url = customEmotes.find((emote) => emote.name === word).urls[3][1];
         if (!url)
           url = customEmotes.find((emote) => emote.name === word).urls[0][1];
-        words[index] = `<img src="${url}" class="emotes"/>`;
+        words[index] = <img src="${url}" class="emotes"/>;
       }
     });
     let textContainer = document.createElement("p");
@@ -526,7 +538,7 @@ class mainEvent {
     let url;
     let customEmotesArr;
     if (id != "") {
-      await fetch(`https://api.7tv.app/v2/users/${id}/emotes`)
+      await fetch(https://api.7tv.app/v2/users/${id}/emotes)
         .then((response) => response.json())
         .then((data) => (customEmotesArr = data))
         .catch((error) => console.error(error));
@@ -620,7 +632,7 @@ class mainEvent {
       }
     }
 
-    let text = eventText != "" ? eventText : `Gracias ${name}!`;
+    let text = eventText != "" ? eventText : Gracias ${name}!;
     text = eventText != "" ? eventText : text;
     if (eventText != "") {
       eventText = eventText.replace("(user)", name);
@@ -629,10 +641,11 @@ class mainEvent {
       text = eventText;
     }
 
-    const nameAndText = `${text}`;
+    const nameAndText = ${text};
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
+    fungiContainer.style.maxWidth = fieldData.eventMaxWidth + "rem";
     const fungi = document.createElement("img");
 
     fungi.src = "https://i.ibb.co/4JWsNXM/estrellaseventos.png";
@@ -663,9 +676,10 @@ class mainEvent {
     const fungiDivContainer = document.createElement("div");
 
     let theme = fieldData.theme;
-    fungiDivContainer.classList.add(`event-leafs-container`);
+    fungiDivContainer.classList.add(event-leafs-container);
     fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
+    fungiContainer.style.backgroundColor = fieldData.colorPickerEventContainer;
     theme === "purple"
       ? fungiContainer.classList.add("fungi-container-purple")
       : null;
@@ -674,6 +688,7 @@ class mainEvent {
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
     nameContainer.classList.add("event-name");
+    nameContainer.style.color = fieldData.colorPickerEventText;
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
@@ -681,7 +696,7 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
-    mainContainer.setAttribute("id", `${this.id}`);
+    mainContainer.setAttribute("id", ${this.id});
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
 
@@ -822,7 +837,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       if (fieldData.deleteMessagesOption === "amount") {
         if (currentAmountOfMessages >= maxMessages) {
           let messageToRemove = currentMessagesIds.shift();
-          removeMessage(document.querySelector(`#${messageToRemove}`));
+          removeMessage(document.querySelector(#${messageToRemove}));
           currentMessagesIds.push(mainContainer.id);
         } else {
           currentAmountOfMessages++;
@@ -852,7 +867,7 @@ const flowers = (mainContainer, listener, event) => {
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const constelation = document.createElement("img");
-  constelation.src = "https://i.ibb.co/gvLft22/estrellitalado.png";
+  constelation.src = "https://i.ibb.co/P4z9zDT/estrellitalado.png";
 
   const isStreamer = () => {
     if (listener !== "message") return false;
@@ -881,20 +896,25 @@ const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const subLine1Container = document.createElement("div");
   subLine1Container.classList.add("sub-line1-container");
   subLine1.classList.add("sub-line1");
+  subLine1.style.backgroundColor = fieldData.colorPickerConstallationLines;
   subLine1Container.appendChild(subLine1);
   const subPoint2 = document.createElement("div");
   subPoint2.classList.add("sub-point2");
+  subPoint2.style.backgroundColor = fieldData.colorPickerConstallationLines;
   const subLine3 = document.createElement("div");
   const subLine3Container = document.createElement("div");
   subLine3Container.classList.add("sub-line3-container");
   subLine3.classList.add("sub-line3");
+  subLine3.style.backgroundColor = fieldData.colorPickerConstallationLines;
   subLine3Container.appendChild(subLine3);
   const subPoint4 = document.createElement("div");
   subPoint4.classList.add("sub-point4");
+  subPoint4.style.backgroundColor = fieldData.colorPickerConstallationLines;
   const subLine5 = document.createElement("div");
   const subLine5Container = document.createElement("div");
   subLine5Container.classList.add("sub-line5-container");
   subLine5.classList.add("sub-line5");
+  subLine5.style.backgroundColor = fieldData.colorPickerConstallationLines;
   subLine5Container.appendChild(subLine5);
 
   const noSubConstelationContainer = document.createElement("div");
