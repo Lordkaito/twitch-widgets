@@ -8,8 +8,8 @@ const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
 const PRONOUNS_API = {
-  user: (username) => ${PRONOUNS_API_BASE}/users/${username},
-  pronouns: ${PRONOUNS_API_BASE}/pronouns,
+  user: (username) => `${PRONOUNS_API_BASE}/users/${username},
+  pronouns: ${PRONOUNS_API_BASE}/pronouns`,
 };
 
 const roles = ["streamer", "mod", "vip", "subscriber", "viewer"];
@@ -174,7 +174,7 @@ class mainEvent {
     for (let i = 0; i < 2; i++) {
       const dot = document.createElement("div");
       theme === "purple" ? dot.classList.add("dot-purple") : null;
-      dot.classList.add(dot-${i + 1});
+      dot.classList.add(`dot-${i + 1}`);
       dots.appendChild(dot);
     }
 
@@ -192,7 +192,7 @@ class mainEvent {
     // generate random string
     const randomString = Math.random().toString(36).substring(2, 15);
     const startingLetter = "f";
-    return ${startingLetter}${randomString};
+    return `${startingLetter}${randomString}`;
   }
 
   async createMainContainerElement() {
@@ -201,7 +201,7 @@ class mainEvent {
 
     superMainContainer.classList.add("super-main-container");
     // superMainContainer.appendChild(this.flowers);
-    superMainContainer.setAttribute("id", ${this.id});
+    superMainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("main-container");
 
     mainContainer.appendChild(await this.createUsernameInfoElement());
@@ -383,7 +383,7 @@ class mainEvent {
     if (theme === "purple") {
       roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
     } else {
-      roleImage.src = https://i.postimg.cc/qRQg2VsS/hojitarosa.png;
+      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
     }
     return roleImage;
   }
@@ -392,7 +392,7 @@ class mainEvent {
     let pronoun = null;
     let username = this.user.toLowerCase();
 
-    const response = await fetch(${PRONOUNS_API_BASE}/users/${username});
+    const response = await fetch(`${PRONOUNS_API_BASE}/users/${username}`);
     const data = await response.json();
     if (data[0] == undefined) {
       return "";
@@ -458,7 +458,7 @@ class mainEvent {
     theme === "purple"
       ? renderedText.classList.add("rendered-text-purple")
       : null;
-    renderedText.classList.add(${this.roles.role}-text);
+    renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
   }
@@ -538,7 +538,7 @@ class mainEvent {
     let url;
     let customEmotesArr;
     if (id != "") {
-      await fetch(https://api.7tv.app/v2/users/${id}/emotes)
+      await fetch(`https://api.7tv.app/v2/users/${id}/emotes`)
         .then((response) => response.json())
         .then((data) => (customEmotesArr = data))
         .catch((error) => console.error(error));
@@ -632,7 +632,7 @@ class mainEvent {
       }
     }
 
-    let text = eventText != "" ? eventText : Gracias ${name}!;
+    let text = eventText != "" ? eventText : `Gracias ${name}!`;
     text = eventText != "" ? eventText : text;
     if (eventText != "") {
       eventText = eventText.replace("(user)", name);
@@ -641,7 +641,7 @@ class mainEvent {
       text = eventText;
     }
 
-    const nameAndText = ${text};
+    const nameAndText = `${text}`;
     const nameContainer = document.createElement("p");
 
     const fungiContainer = document.createElement("div");
@@ -696,7 +696,7 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
-    mainContainer.setAttribute("id", ${this.id});
+    mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
 
@@ -837,7 +837,7 @@ window.addEventListener("onEventReceived", async (obj) => {
       if (fieldData.deleteMessagesOption === "amount") {
         if (currentAmountOfMessages >= maxMessages) {
           let messageToRemove = currentMessagesIds.shift();
-          removeMessage(document.querySelector(#${messageToRemove}));
+          removeMessage(document.querySelector(`#${messageToRemove}`));
           currentMessagesIds.push(mainContainer.id);
         } else {
           currentAmountOfMessages++;
