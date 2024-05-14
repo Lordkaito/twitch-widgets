@@ -183,11 +183,8 @@
     "group": "Customization",
     "options": { "pink": "Pink", "purple": "Purple" }
   },
-  "showPronouns": {
-    "type": "dropdown",
-    "label": "What to show:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Pronouns", "false": "Roles" }
-  }
+  "firstStep": { "type": "number", "label": "First step:", "value": 1500, "group": "Customization", "min": 1 },
+  "secondStep": { "type": "number", "label": "First step:", "value": 1750, "group": "Customization", "min": 1 },
+  "resetGoalData": { "type": "button", "label": "Reset goal", "value": "reset", "group": "Customization" },
+  "currency": { "type": "text", "label": "Currency:", "value": "$", "group": "Customization" }
 }
