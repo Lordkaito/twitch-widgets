@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "formulahendry.auto-rename-tag",
+    "WallabyJs.console-ninja",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "nhoizey.gremlins",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "albert.TabOut",
+  ]
+}
