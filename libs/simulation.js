@@ -386,7 +386,7 @@ let events = {
           "user-type": "",
           vip: "0",
         },
-        nick: "Lordkaito_",
+        nick: "lordkaito_",
         userId: "675807879",
         displayName: "Lordkaito_",
         displayColor: "#FF0000",
@@ -411,7 +411,7 @@ let events = {
           // }
         ],
         channel: "lordkaito_",
-        text: "adhg",
+        text: "ewf d fasd f a",
         isAction: false,
         emotes: ["HypeShock"],
         msgId: "726779f6-da00-4d26-8111-7a14f253c94b",
