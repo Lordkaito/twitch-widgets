@@ -487,6 +487,7 @@ main {
   animation-fill-mode: forwards;
   padding: 0 1rem;
   width: 43rem;
+  min-height: 64px;
   gap: 20px;
   margin-top: 1rem;
   margin-bottom: 1rem;
