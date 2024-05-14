@@ -11,18 +11,24 @@ let fieldData = {
     value: "GOAL COMPLETED!",
     group: "Customization",
   },
+  goalName: {
+    type: "text",
+    label: "Goal name:",
+    value: "Goal text",
+    group: "Customization",
+  },
   goalTypeText: {
     type: "text",
-    label: "Goal text:",
+    label: "Goal type:",
     value: "sub goal",
     group: "Customization",
   },
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 1,
+    value: 10000,
     group: "Customization",
-    step: 0.01,
+    step: 1,
   },
   goalStartQuantity: {
     type: "number",
@@ -34,7 +40,7 @@ let fieldData = {
   goalType: {
     type: "dropdown",
     label: "Goal type:",
-    value: "follower",
+    value: "tip",
     group: "Customization",
     options: {
       subscriber: "Sub",
@@ -42,42 +48,6 @@ let fieldData = {
       cheer: "Cheer",
       tip: "Tip",
     },
-  },
-  goalTree: {
-    type: "dropdown",
-    label: "Goal theme:",
-    value: "bonsai",
-    group: "Customization",
-    options: {
-      monstera: "Monstera",
-      sabila: "Sabila",
-      bonsai: "Bonsai",
-      enrredadera: "Enrredadera",
-    },
-  },
-  barColor: {
-    type: "colorpicker",
-    label: "Bar color:",
-    value: "#3cc300",
-    group: "Customization",
-  },
-  porcentageBarColor: {
-    type: "colorpicker",
-    label: "Porcentage color:",
-    value: "#6fc300",
-    group: "Customization",
-  },
-  textGoalColor: {
-    type: "colorpicker",
-    label: "Text color:",
-    value: "#dff300",
-    group: "Customization",
-  },
-  numsGoalColor: {
-    type: "colorpicker",
-    label: "Numbers color:",
-    value: "#d6cbd0",
-    group: "Customization",
   },
   goalFullType: {
     type: "dropdown",

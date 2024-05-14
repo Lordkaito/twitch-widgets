@@ -20,7 +20,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 100,
+    value: 10,
     group: "Customization",
     step: 1,
   },
@@ -46,7 +46,7 @@ let fieldData = {
   goalTree: {
     type: "dropdown",
     label: "Goal theme:",
-    value: "jazmin_rosa",
+    value: "lavanda",
     group: "Customization",
     options: {
       jazmin_amarilla: "Jazmin Amarilla",

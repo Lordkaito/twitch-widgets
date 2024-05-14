@@ -1,22 +1,12 @@
 {
-  "emotesId": {
-    "type": "text",
-    "label": "Set your 7TV ID:",
-    "value": "",
-    "group": "Customization"
-  },
+  "emotesId": { "type": "text", "label": "Set your 7TV ID:", "value": "", "group": "Customization" },
   "completeGoalText": {
     "type": "text",
     "label": "Goal text (max 40):",
     "value": "GOAL COMPLETED!",
     "group": "Customization"
   },
-  "goalTypeText": {
-    "type": "text",
-    "label": "Goal text:",
-    "value": "Next Goal",
-    "group": "Customization"
-  },
+  "goalTypeText": { "type": "text", "label": "Goal type:", "value": "sub goal", "group": "Customization" },
   "goalObjectiveQuantity": {
     "type": "number",
     "label": "Goal objective:",
@@ -24,108 +14,13 @@
     "group": "Customization",
     "step": 1
   },
-  "goalObjectiveQuantity2": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 200,
-    "group": "Customization",
-    "step": 1
-  },
-  "goalObjectiveQuantity3": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 300,
-    "group": "Customization",
-    "step": 1
-  },
-  "goalObjectiveQuantity4": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 400,
-    "group": "Customization",
-    "step": 1
-  },
-  "goalObjectiveQuantity5": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 500,
-    "group": "Customization",
-    "step": 1
-  },
-  "goalObjectiveQuantity6": {
-    "type": "number",
-    "label": "Goal objective:",
-    "value": 600,
-    "group": "Customization",
-    "step": 1
-  },
-  "goalStartQuantity": {
-    "type": "number",
-    "label": "Goal start:",
-    "value": 0,
-    "group": "Customization",
-    "step": 1
-  },
+  "goalStartQuantity": { "type": "number", "label": "Goal start:", "value": 10, "group": "Customization", "step": 1 },
   "goalType": {
     "type": "dropdown",
     "label": "Goal type:",
     "value": "tip",
     "group": "Customization",
-    "options": {
-      "subscriber": "Sub",
-      "follower": "Follow",
-      "cheer": "Cheer",
-      "tip": "Tip"
-    }
-  },
-  "goalBox": {
-    "type": "dropdown",
-    "label": "Goal theme:",
-    "value": "heart",
-    "group": "Customization",
-    "options": { "heart": "Heart" }
-  },
-  "barColor": {
-    "type": "colorpicker",
-    "label": "Bar color:",
-    "value": "#3cc300",
-    "group": "Customization"
-  },
-  "porcentageBarColor": {
-    "type": "colorpicker",
-    "label": "Porcentage color:",
-    "value": "#6fc300",
-    "group": "Customization"
-  },
-  "textGoalTitleColor": {
-    "type": "colorpicker",
-    "label": "Text color:",
-    "value": "#ffe4c2",
-    "group": "Customization"
-  },
-  "backgroundGoalTitleColor": {
-    "type": "colorpicker",
-    "label": "Text color:",
-    "value": "#cf4055",
-    "group": "Customization"
-  },
-  "goalColor": {
-    "type": "colorpicker",
-    "label": "Text color:",
-    "value": "#cf4055",
-    "group": "Customization"
-  },
-  "backgroundGoalColor": {
-    "type": "colorpicker",
-    "label": "Text color:",
-    "value": "#f38e99",
-    "group": "Customization"
-  },
-  "numsGoalColor": {
-    "type": "colorpicker",
-    "label": "Numbers color:",
-    "value": "#d6cbd0",
-    "group": "Customization"
+    "options": { "subscriber": "Sub", "follower": "Follow", "cheer": "Cheer", "tip": "Tip" }
   },
   "goalFullType": {
     "type": "dropdown",
@@ -147,30 +42,8 @@
     "group": "Customization",
     "value": "1080"
   },
-  "firstStep": {
-    "type": "number",
-    "label": "First step:",
-    "value": 1500,
-    "group": "Customization",
-    "min": 1
-  },
-  "secondStep": {
-    "type": "number",
-    "label": "First step:",
-    "value": 1750,
-    "group": "Customization",
-    "min": 1
-  },
-  "resetGoalData": {
-    "type": "button",
-    "label": "Reset goal",
-    "value": "reset",
-    "group": "Customization"
-  },
-  "currency": {
-    "type": "text",
-    "label": "Currency:",
-    "value": "$",
-    "group": "Customization"
-  }
+  "firstStep": { "type": "number", "label": "First step:", "value": 1500, "group": "Customization", "min": 1 },
+  "secondStep": { "type": "number", "label": "First step:", "value": 1750, "group": "Customization", "min": 1 },
+  "resetGoalData": { "type": "button", "label": "Reset goal", "value": "reset", "group": "Customization" },
+  "currency": { "type": "text", "label": "Currency:", "value": "$", "group": "Customization" }
 }

@@ -5,6 +5,36 @@ let fieldData = {
     value: "",
     group: "Customization",
   },
+  subMultiplier: {
+    type: "number",
+    label: "Subscriber multiplier:",
+    value: 0.5,
+    group: "Customization",
+  },
+  giftSubMultiplier: {
+    type: "number",
+    label: "Gifted sub multiplier:",
+    value: 1,
+    group: "Customization",
+  },
+  followMultiplier: {
+    type: "number",
+    label: "Follower multiplier:",
+    value: 0.5,
+    group: "Customization"
+  },
+  cheerMultiplier: {
+    type: "number",
+    label: "Cheer multiplier:",
+    value: 1,
+    group: "Customization"
+  },
+  tipMultiplier: {
+    type: "number",
+    label: "Tip multiplier:",
+    value: 2,
+    group: "Customization"
+  },
   completeGoalText: {
     type: "text",
     label: "Goal text (max 40):",
@@ -27,7 +57,7 @@ let fieldData = {
   goalStartQuantity: {
     type: "number",
     label: "Goal start:",
-    value: 10,
+    value: 0,
     group: "Customization",
     step: 1,
   },

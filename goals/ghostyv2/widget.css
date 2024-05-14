@@ -1,48 +1,36 @@
 :root {
   --round-background-color: #fff;
   --round-border-color: white;
-  --progression-color: #fff5e7;
-  --progressNums-color: #fff5e7;
-  --progressNums-border-color:#c78dc8;
-  
-  --progress-bar-background-color: #70648a;
+  --progression-color: white;
+  --progressNums-color: #3b557d;
+  --progress-bar-background-color: #ff9bd9;
   --goal-name-background-color: #fff4f4;
-  --goal-name-color: #7bc8d3;
-  --goal-stroke-color: #fff5e7;
+  --goal-name-color: #9e5f8f;
   --goal-name-box-shadow-color: rgba(0, 0, 0, 0.8);
   --nube-p-color: #f59b61;
-  --star-p-color: #fff5e7;
-  --star-p-border-color: transparente;
+  --star-p-color: #ffff;
+  --star-p-border-color: #8facf5;
+  --quantity-p-border-color: #ff8ed3;
+  --background-container-1: #72a9fc;
+  --background-container-2: #ffb7e2;
+  --bgProgressBar: #16122d;
+  --borderNumsColor: #590448;
+  --borderBarColor: #ffe7c8;
+  --numbersColor: #ffffff;
+  --gradient-1: #8950b2;
+  --gradient-2: #ff97a3;
 }
 
-/* color crema base: #fff5e7
 
-se podrá editar:
+/* borde numeros: #590448
 
-el color de la barra de progreso (la transparente no, va en el color base pero transparente)
+numeros: #ffffff
 
-el color de la cantidad de porcentaje
+borde barra: #ffe7c8
 
-el color del nombre del goal (que se podrá editar el texto tb)
+fondo: #16122d
 
-el color de las cantidades de 100/200 */
-
-.img-goal{
-position: absolute;
-transform: scale(0.4);
-top: -0.5625rem;
-left: -0.25rem;
-}
-
-.container-img{
-  /* position: absolute; */
-  top: 30.9rem;
-  left: 22rem;
-}
-
-.subcontainer-img{
-  position: relative;
-}
+degradado: de #8950b2 a #ff97a3 */
 
 * {
   font-family: "Fredoka", sans-serif;
@@ -56,52 +44,6 @@ left: -0.25rem;
   letter-spacing: 0.125rem;
 }
 
-/* Circle */
-.prueba{
-  position: relative;
-}
-
-svg {
-  width: 200px;
-  height: 200px;
-}
-
-circle {
-  fill: none;
-  stroke-width: 10;
-  stroke-dasharray: 540;
-  stroke-dashoffset: 540;
-}
-
-.circle-outside {
-  transition: all 4s ease-out; /* Modifica esta línea */
-}
-
-
-.circle-inside {
-  position: absolute;
-  z-index: -1;
-  stroke: rgba(255, 255, 255, .3);
-  stroke-dasharray: 945;
-}
-
-svg {
-  transform: rotate(124deg);
-}
-.progress-text {
-  position: absolute;
-  top: 82.8%;
-  left: 51.6%;
-  /* color: var(--progressNums-color); */
-  transform: translate(-50%, -50%);
-  font-size: 20px;
-}
-.progress {
-  text-align: center;
-}
-/* Circle */
-
-
 .playing {
   opacity: 1 !important;
 }
@@ -113,22 +55,57 @@ main {
   height: 1080px;
   display: grid;
   place-content: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  height: 40rem;
   position: relative;
-  /* background: linear-gradient(to top,#ff9bd9 , #ffff,#d2fecd ); */
-  background: url('https://i.postimg.cc/9FpVr2zt/fondogoalpi.png');
-  background-position: center;
-  border-radius: 0px 0px 20px 20px;
+  width: 38rem;
 }
+
+.container-progress {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 38rem;
+}
+
+.progress{
+  position: relative;
+  width: 100%;
+  height: 45px;
+  background-color: var(--bgProgressBar);
+  border-radius: 4rem;
+  overflow: hidden;
+  margin: 5px 0;
+  border: 6px solid var(--borderBarColor);
+}
+
+.progress::before{
+  content: '';
+  position: absolute;
+  width: var(--wth);
+  height: 100%;
+  background: linear-gradient(to right, var(--gradient-2), var(--gradient-1));
+  transition: width .2s ease-in-out;
+}
+
+/* #goalImage{
+  position: absolute;
+  right: -7rem;
+  top: -.5rem;
+  width: 76px;
+  height: 44px;
+} */
+
+/* #catImage{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: -13px;
+  left: -10px;
+  z-index: 200;
+  transition: left .2s ease-in-out;
+} */
 
 #round {
   width: 1.25rem;
@@ -136,7 +113,7 @@ main {
   padding: 1.5rem 0.4rem 4rem 0.4rem;
   /* background: linear-gradient(to top,#ff9bd9, #ffff); */
   border-radius: 50px;
-  border: 4px solid var(--round-border-color);
+  border: 6px solid var(--round-border-color);
   display: grid;
   place-content: center;
   overflow: hidden;
@@ -180,22 +157,15 @@ main {
 }
 
 .progressNums {
-  /* opacity: 0; */
   position: absolute;
-  text-align: center;
+  text-align: right;
+  width: 100%;
   vertical-align: middle;
-  color: var(--progressNums-color);
-  border-color: var(--progressNums-border-color);
-  font-size: 2.3rem;
+  color: var(--progression-color);
+  font-size: 1.5rem;
   z-index: 4;
-  margin-bottom: 1rem;
-  top: -3rem;
-  /* text-shadow: -1px -1px 0 var(--nube-p-color), 1px -1px 0 var(--nube-p-color), -1px 1px 0 var(--nube-p-color),
-    1px 1px 0 var(--nube-p-color); */
-  text-shadow: 3px 0 var(--progressNums-border-color), -3px 0 var(--progressNums-border-color),
-    0 3px var(--progressNums-border-color), 0 -3px var(--progressNums-border-color),
-    2px 3px var(--progressNums-border-color), -2px -3px var(--progressNums-border-color),
-    2px -3px var(--progressNums-border-color), -2px 3px var(--progressNums-border-color);
+  top: 1.4rem;
+  left: -2rem;
 }
 
 .progress-bar {
@@ -244,26 +214,33 @@ main {
 
 .goal-name {
   position: absolute;
-  top: 3.9rem;
-  left: 3rem;
-  width: 14rem;
-  height: 3.5rem;
-  background-color: var(--goal-name-background-color);
+  top: 4.5rem;
+  left: 4.5rem;
+  /* width: 14rem; */
+  /* height: 3.8rem; */
+  text-shadow: 1.7px 0 var(--gradient-1),
+  -1.7px 0 var(--gradient-1), 0 1.7px var(--gradient-1),
+  0 -1.7px var(--gradient-1), 2px 1.7px var(--gradient-1),
+  -2px -1.7px var(--gradient-1),
+  2px -1.7px var(--gradient-1), -2px 1.7px var(--gradient-1);
+  /* background-color: var(--goal-name-box-shadow-color); */
   border-radius: 40px;
-  text-align: center;
+  /* text-align: center; */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1;
   text-transform: uppercase;
-  color: var(--goal-name-color);
-  display: none;
+  color: var(--goal-name-background-color);
+  /* display: none; */
 }
 
 .goal-name p {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
+  word-wrap: break-word;
+  max-width: 35rem;
 }
 
 .left-ear {
@@ -341,8 +318,8 @@ main {
 .peluche {
   position: absolute;
   z-index: 1;
-  top: 5rem;
-  left: -1.4rem;
+  top: 4.5rem;
+  left: -1rem;
   opacity: 1;
   /* transform: translate(.8); */
 }
@@ -355,7 +332,7 @@ main {
 
 .nube1 {
   top: 52.5%;
-  left: 17.6rem;
+  left: 18rem;
 }
 
 .nube1 img {
@@ -387,12 +364,19 @@ main {
 .nube1 p {
   position: absolute;
   top: 1.3rem;
-  left: 18.6rem;
+  left: 1.2rem;
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
-color: var(--star-p-color);
-  text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
+  color: var(--star-p-color);
+  text-shadow: 1.7px 0 var(--quantity-p-border-color),
+    -1.7px 0 var(--quantity-p-border-color),
+    0 1.7px var(--quantity-p-border-color),
+    0 -1.7px var(--quantity-p-border-color),
+    2px 1.7px var(--quantity-p-border-color),
+    -2px -1.7px var(--quantity-p-border-color),
+    2px -1.7px var(--quantity-p-border-color),
+    -2px 1.7px var(--quantity-p-border-color);
   min-width: 4.6rem;
   text-align: center;
 }
@@ -424,28 +408,40 @@ color: var(--star-p-color);
 }
 
 .nube4 {
-  /* top: 50%;
-  left: 36rem; */
+  top: 42.5%;
+  left: 28.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* gap: 30px; */
-  /* flex-direction: column; */
+  gap: 30px;
+  flex-direction: column;
 }
 
 .nube4 p {
-  /* position: absolute; */
+  position: absolute;
 
-  top: 6rem;
-  font-size: 1.8rem;
+  top: 30%;
+  font-size: 1.6rem;
   font-weight: 700;
 
-  text-align: left;
-  /* color: var(--star-p-color); */
-  text-shadow: 1.7px 0 var(--star-p-border-color), -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color), 0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color), -2px -1.7px var(--star-p-border-color), 2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
-  width: 500px;
-  /* line-height: 1.7; */
-  left: 5rem;
+  text-align: center;
+  color: var(--star-p-color);
+  text-shadow: 1.7px 0 var(--star-p-border-color),
+    -1.7px 0 var(--star-p-border-color), 0 1.7px var(--star-p-border-color),
+    0 -1.7px var(--star-p-border-color), 2px 1.7px var(--star-p-border-color),
+    -2px -1.7px var(--star-p-border-color),
+    2px -1.7px var(--star-p-border-color), -2px 1.7px var(--star-p-border-color);
+  max-width: 6rem;
+  line-height: 0.9;
+  left: 1.5rem;
+}
+
+.goal-type-amount {
+  position: absolute !important;
+  top: 4rem !important;
+  left: 0.6rem;
+  width: 100px;
+  height: 50px;
 }
 
 @keyframes fadeOut {
