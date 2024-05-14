@@ -1,83 +1,26 @@
 {
-  "emotesId": {
-    "type": "text",
-    "label": "Set your 7TV ID:",
-    "value": "",
-    "group": "Customization"
-  },
+  "emotesId": { "type": "text", "label": "Set your 7TV ID:", "value": "", "group": "Customization" },
   "completeGoalText": {
     "type": "text",
     "label": "Goal text (max 40):",
     "value": "GOAL COMPLETED!",
     "group": "Customization"
   },
-  "goalTypeText": {
-    "type": "text",
-    "label": "Goal text:",
-    "value": "sub goal",
-    "group": "Customization"
-  },
+  "goalTypeText": { "type": "text", "label": "Goal type:", "value": "sub goal", "group": "Customization" },
   "goalObjectiveQuantity": {
     "type": "number",
     "label": "Goal objective:",
-    "value": 10,
+    "value": 100,
     "group": "Customization",
     "step": 1
   },
-  "goalStartQuantity": {
-    "type": "number",
-    "label": "Goal start:",
-    "value": 0,
-    "group": "Customization",
-    "step": 1
-  },
+  "goalStartQuantity": { "type": "number", "label": "Goal start:", "value": 10, "group": "Customization", "step": 1 },
   "goalType": {
     "type": "dropdown",
     "label": "Goal type:",
-    "value": "subscriber",
+    "value": "tip",
     "group": "Customization",
-    "options": {
-      "subscriber": "Sub",
-      "follower": "Follow",
-      "cheer": "Cheer",
-      "tip": "Tip"
-    }
-  },
-  "goalTree": {
-    "type": "dropdown",
-    "label": "Goal theme:",
-    "value": "lavanda",
-    "group": "Customization",
-    "options": {
-      "jazmin_amarilla": "Jazmin Amarilla",
-      "jazmin_rosa": "Jazmin Rosa",
-      "campanillas_invierno": "Campanillas de invierno",
-      "lavanda": "Lavanda"
-    }
-  },
-  "barColor": {
-    "type": "colorpicker",
-    "label": "Bar color:",
-    "value": "#3cc300",
-    "group": "Customization"
-  },
-  "porcentageBarColor": {
-    "type": "colorpicker",
-    "label": "Porcentage color:",
-    "value": "#6fc300",
-    "group": "Customization"
-  },
-  "textGoalColor": {
-    "type": "colorpicker",
-    "label": "Text color:",
-    "value": "#dff300",
-    "group": "Customization"
-  },
-  "numsGoalColor": {
-    "type": "colorpicker",
-    "label": "Numbers color:",
-    "value": "#d6cbd0",
-    "group": "Customization"
+    "options": { "subscriber": "Sub", "follower": "Follow", "cheer": "Cheer", "tip": "Tip" }
   },
   "goalFullType": {
     "type": "dropdown",
@@ -99,30 +42,8 @@
     "group": "Customization",
     "value": "1080"
   },
-  "firstStep": {
-    "type": "number",
-    "label": "First step:",
-    "value": 1500,
-    "group": "Customization",
-    "min": 1
-  },
-  "secondStep": {
-    "type": "number",
-    "label": "First step:",
-    "value": 1750,
-    "group": "Customization",
-    "min": 1
-  },
-  "resetGoalData": {
-    "type": "button",
-    "label": "Reset goal",
-    "value": "reset",
-    "group": "Customization"
-  },
-  "currency": {
-    "type": "text",
-    "label": "Currency:",
-    "value": "$",
-    "group": "Customization"
-  }
+  "firstStep": { "type": "number", "label": "First step:", "value": 1500, "group": "Customization", "min": 1 },
+  "secondStep": { "type": "number", "label": "First step:", "value": 1750, "group": "Customization", "min": 1 },
+  "resetGoalData": { "type": "button", "label": "Reset goal", "value": "reset", "group": "Customization" },
+  "currency": { "type": "text", "label": "Currency:", "value": "$", "group": "Customization" }
 }
