@@ -46,10 +46,9 @@ main {
   flex-direction: column;
   height: 40rem;
   position: relative;
-  /* background: linear-gradient(to top,#ff9bd9 , #ffff,#d2fecd ); */
   background: url('https://i.postimg.cc/QM13B65y/chibisbloss.png');
   background-color: #ddbdc7;
-  background-position: bottom;
+  background-position: bottom -3.5rem right -5.5rem;
   background-repeat: no-repeat;
   border-radius: 0px 0px 20px 20px;
 }
@@ -349,7 +348,7 @@ color: var(--star-p-color);
 
 .nube4 {
   top: 42.5%;
-  left: 30rem;
+  left: 29rem;
   display: flex;
   align-items: center;
   justify-content: center;
