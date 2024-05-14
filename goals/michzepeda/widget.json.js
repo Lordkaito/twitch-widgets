@@ -8,7 +8,7 @@ let fieldData = {
   goalObjectiveQuantity: {
     type: "number",
     label: "Goal objective:",
-    value: 10,
+    value: 100,
     group: "Customization",
     min: 1,
     max: 100000,
@@ -58,7 +58,7 @@ let fieldData = {
   completeGoalText: {
     type: "text",
     label: "Custom text for goal completed",
-    value: "Goal completed!",
+    value: "Goal completed! PogChamp",
     group: "Events",
   },
   goalText: {
