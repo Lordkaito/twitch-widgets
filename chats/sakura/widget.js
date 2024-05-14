@@ -235,9 +235,9 @@ class mainEvent {
     `;
     const heart = document.createElement("img");
     if (this.isSub || this.isStreamer) {
-      heart.src = "https://i.postimg.cc/8kw965tV/sakurasub.png";
+      heart.src = "https://i.ibb.co/30C0hJx/sakurasub.png";
     } else {
-      heart.src = "https://i.postimg.cc/MKT4bSFf/sakurapleb.png";
+      heart.src = "https://i.ibb.co/M6GJQ0Q/sakurapleb.png";
     }
 
     const role = this.roles.role;
@@ -245,6 +245,8 @@ class mainEvent {
     roleCont.classList.add("role-container");
     const roleText = document.createElement("span");
     roleText.classList.add("role-text");
+    roleText.style.color = fieldData.colorPickerRoleText;
+    roleText.style.backgroundColor = fieldData.colorPickerRoleBox;
     switch (role) {
       case "mod":
         roleText.innerText = "mod";
@@ -288,6 +290,7 @@ class mainEvent {
   async createMessageContainerElement() {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
+    messageContainer.style.maxWidth = fieldData.maxWidth +"rem";
     messageContainer.appendChild(
       await this.createMessageIconContainerElement()
     );
@@ -313,6 +316,12 @@ class mainEvent {
   createCapitalizeUserElement() {
     const capitalizeUser = document.createElement("span");
     capitalizeUser.classList.add("capitalize-user");
+    capitalizeUser.style.color = fieldData.colorPickerNickname;
+    if(fieldData.limitSize == "true") {
+      capitalizeUser.style.maxWidth = 13 + "ch";
+    } else {
+      capitalizeUser.style.maxWidth = 25 + "ch";
+    }
     capitalizeUser.innerText = this.user;
     return capitalizeUser;
   }
@@ -373,7 +382,7 @@ class mainEvent {
     if (theme === "purple") {
       roleImage.src = "https://i.postimg.cc/t4TwJBCN/hoja-ire.png";
     } else {
-      roleImage.src = `https://i.postimg.cc/qRQg2VsS/hojitarosa.png`;
+      roleImage.src = "https://i.postimg.cc/qRQg2VsS/hojitarosa.png";
     }
     return roleImage;
   }
@@ -443,6 +452,8 @@ class mainEvent {
     const renderedText = document.createElement("div");
     let theme = fieldData.theme;
     renderedText.classList.add("rendered-text");
+    renderedText.style.color = fieldData.colorPickerMessageText;
+    renderedText.style.maxWidth = fieldData.maxWidth + "rem";
     theme === "purple"
       ? renderedText.classList.add("rendered-text-purple")
       : null;
@@ -635,8 +646,9 @@ class mainEvent {
     const fungiContainer = document.createElement("div");
     const fungi = document.createElement("img");
 
-    fungi.src = "https://i.postimg.cc/SNx0T8Js/corazoneventos.png";
+    fungi.src = "https://i.ibb.co/m5khwq2/corazoneventos.png";
     fungi.classList.add("bellota");
+    
     // switch (eventType) {
     //   case "follower":
     //     fungi.classList.add("heart");
@@ -666,6 +678,7 @@ class mainEvent {
     fungiDivContainer.classList.add(`event-leafs-container`);
     fungiDivContainer.appendChild(fungi);
     fungiContainer.classList.add("fungi-container");
+    fungiContainer.style.backgroundColor = fieldData.colorPickerEventContainer;
     theme === "purple"
       ? fungiContainer.classList.add("fungi-container-purple")
       : null;
@@ -674,6 +687,8 @@ class mainEvent {
     moon.classList.add("moon");
     fungiContainer.appendChild(moon);
     nameContainer.classList.add("event-name");
+    nameContainer.style.color = fieldData.colorPickerEventText;
+    nameContainer.style.maxWidth = fieldData.maxWidth + "rem";
     nameContainer.innerText = nameAndText;
 
     const eventAndNameContainer = document.createElement("div");
@@ -681,6 +696,7 @@ class mainEvent {
     eventAndNameContainer.appendChild(fungiDivContainer);
     eventAndNameContainer.appendChild(nameContainer);
     fungiContainer.appendChild(eventAndNameContainer);
+    fungiContainer.style.maxWidth = fieldData.maxWidth + "rem";
     mainContainer.setAttribute("id", `${this.id}`);
     mainContainer.classList.add("event-container");
     mainContainer.appendChild(fungiContainer);
@@ -852,11 +868,11 @@ const flowers = (mainContainer, listener, event) => {
 
 const addFlowers = (mainContainer, flowersContainer, listener, event) => {
   const flowers = {
-    0: "https://i.postimg.cc/Tw6Fr5zT/petalo1.png",
-    1: "https://i.postimg.cc/vBtjXHyf/cosita1.png",
-    2: "https://i.postimg.cc/wjnSjGFy/petalo2.png",
-    3: "https://i.postimg.cc/43tj7QF8/florsaku.png",
-    4: "https://i.postimg.cc/Gt3ffw3N/cosita2.png",
+    0: "https://i.ibb.co/Jpp6gdx/petalo1.png",
+    1: "https://i.ibb.co/XSPxWNz/cosita1.png",
+    2: "https://i.ibb.co/YZ2vzpX/petalo2.png",
+    3: "https://i.ibb.co/5MGGvff/florsaku.png",
+    4: "https://i.ibb.co/g9thBTY/cosita2.png",
   };
   let flower0 = document.createElement("img");
   flower0.src = flowers[0];
