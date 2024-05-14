@@ -111,28 +111,6 @@ main {
   transform-origin: top;
 }
 
-@keyframes tingle {
-  0% {
-    transform: scale(0.8) rotate(0deg);
-  }
-
-  25% {
-    transform: scale(0.8) rotate(5deg);
-  }
-
-  50% {
-    transform: scale(0.8) rotate(-5deg);
-  }
-
-  75% {
-    transform: scale(0.8) rotate(5deg);
-  }
-
-  100% {
-    transform: scale(0.8) rotate(0deg);
-  }
-}
-
 .line {
   width: 3px;
   height: 0;
@@ -151,6 +129,7 @@ main {
   justify-content: flex-start;
   flex-direction: column;
   gap: 10px;
+  animation: fadeIn 0.3s ease-in-out forwards;
   /* min-height: 100px; */
   /* transform: translateY(1rem); */
 }
@@ -504,12 +483,24 @@ main {
   word-wrap: break-word;
   display: inline-block;
   max-width: 25.5rem;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
   width: 100%;
   color: var(--message-color);
   white-space: normal;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s forwards;
+  animation: fadeIn 0.5s 0.5s forwards, max 1s 0.5s forwards;
   position: relative;
+}
+
+@keyframes max {
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 700px;
+  }
 }
 
 .rendered-text-purple {
@@ -585,6 +576,7 @@ main {
   z-index: 2 !important;
   gap: 1rem;
   order: 2;
+  animation: fadeIn 0.5s 0.3s ease-in-out forwards;
 }
 
 .band {

@@ -130,7 +130,7 @@ main {
   flex-direction: column;
   gap: 10px;
   opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
+  animation: fadeIn 0.3s ease-in-out forwards;
   /* min-height: 100px; */
   /* transform: translateY(1rem); */
 }
@@ -307,7 +307,7 @@ main {
   opacity: 0;
   animation: fadeIn 0.5s 0.5s linear forwards;
   margin: 0.2rem;
-  transform: scale(.8);
+  transform: scale(0.8);
 }
 
 .username-info .dot {
@@ -460,12 +460,24 @@ main {
   word-wrap: break-word;
   display: inline-block;
   max-width: 25.5rem;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
   width: 100%;
   color: var(--message-color);
   white-space: normal;
   opacity: 0;
-  animation: fadeIn 0.5s 0.5s forwards;
+  animation: fadeIn 0.5s 0.5s forwards, max 1s 0.5s forwards;
   position: relative;
+}
+
+@keyframes max {
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 700px;
+  }
 }
 
 .rendered-text-purple {
@@ -536,7 +548,7 @@ main {
   /* padding: 1.5rem 0; */
   /* padding-left: 1rem; */
   opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
+  animation: fadeIn 0.5s 0.3s ease-in-out forwards;
   background-color: transparent;
   position: relative;
   z-index: 2 !important;
