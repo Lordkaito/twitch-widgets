@@ -386,7 +386,7 @@ let events = {
           "user-type": "",
           vip: "0",
         },
-        nick: "lordkaito_",
+        nick: "Lordkaito_",
         userId: "675807879",
         displayName: "Lordkaito_",
         displayColor: "#FF0000",

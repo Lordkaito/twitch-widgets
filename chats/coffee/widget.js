@@ -4,73 +4,16 @@ let flowerCount = 0;
 let currentMessagesIds = [];
 let currentAmountOfMessages = 0;
 let maxMessages;
-let baseUrls = [
-  {
-    name: "coffee",
-    // coffee
-    urls: {
-      1: "https://i.postimg.cc/rmb727j1/cafeee.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979745419314/cafeee.png?ex=658dc6c3&is=657b51c3&hm=f5548e4d32654f16cc6a3913b784877d7b03ceee7aa096061f8e9bb1e058caac&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    name: "mod",
-    // mod
-    urls: {
-      1: "https://i.postimg.cc/fb86BV0g/cafe-mod.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978239684768/cafe-mod.png?ex=658dc6c3&is=657b51c3&hm=6fd529a403fe19470e6c61d3bce1a4fb7fc955a0b7314711603e6dd3b7364346&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // vip
-    name: "vip",
-    urls: {
-      1: "https://i.postimg.cc/c4YG01Vr/cafe-vip.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979514744913/cafe-vip.png?ex=658dc6c3&is=657b51c3&hm=e7bacd2a0e159c776379b3e6042be46c7c1e29c4dea9a817cdbf251675cf30d7&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // sub
-    name: "sub",
-    urls: {
-      1: "https://i.postimg.cc/jSb050bv/cafe-sub.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978738786304/cafe-sub.png?ex=658dc6c3&is=657b51c3&hm=d2d030a73a9a173e55d2d35ed076fffabba5014265878921f3ca7e61a5830f3a&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // streamer
-    name: "streamer",
-    urls: {
-      1: "https://i.postimg.cc/W1wRqWpV/cafe-streamer.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933978495529010/cafe-streamer.png?ex=658dc6c3&is=657b51c3&hm=c9ae7e9012eb74382fbc5e4b10ccd7924e59bbc2f8663d689995fbf242bddf93&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // viewer
-    name: "viewer",
-    urls: {
-      1: "https://i.postimg.cc/q7JPssg3/cafe-viewer.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184933979091128402/cafe-viewer.png?ex=658dc6c3&is=657b51c3&hm=cbf651c0d0d2ecbd316c37eb42619fd66621f889092c204bc02fa7f1e94b1d43&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // moon
-    name: "moon",
-    urls: {
-      1: "https://i.postimg.cc/pr4pk3pG/luna-hojas.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184923223993880747/luna-hojas.png?ex=658dbcbf&is=657b47bf&hm=cc09d00f6b0818cb442f2719ae7a423e7d32588eccdefb84ceceafd59844e708&=&format=webp&quality=lossless",
-    },
-  },
-  {
-    // shiny
-    name: "shiny",
-    urls: {
-      1: "https://i.postimg.cc/HsrM59Vv/brillito-hojas.png",
-      2: "https://media.discordapp.net/attachments/1184922970498539520/1184923221770899566/brillito-hojas.png?ex=658dbcbe&is=657b47be&hm=65906d9eb65f4bf97246c5165bd10fea576eb2daa9f98a489ff74efb48376105&=&format=webp&quality=lossless",
-    },
-  },
-];
-let coffeeImages = {};
+let coffeeImages = {
+  mod: "https://i.ibb.co/dDGHN7f/cafe-mod.png",
+  vip: "https://i.ibb.co/Rgh2fv8/cafe-vip.png",
+  subscriber: "https://i.ibb.co/R3rWBvj/cafe-sub.png",
+  streamer: "https://i.ibb.co/ryR8mt6/cafe-streamer.png",
+  viewer: "https://i.ibb.co/1K3n4W7/cafe-viewer.png",
+  moon: "https://i.ibb.co/Mnqf824/luna-hojas.png",
+  shiny: "https://i.ibb.co/qgBCyfh/brillito-hojas.png",
+  coffee: "https://i.ibb.co/F4nVq2k/cafeee.png",
+};
 const SE_API_BASE = "https://api.streamelements.com/kappa/v2";
 
 const PRONOUNS_API_BASE = "https://pronouns.alejo.io/api";
@@ -189,7 +132,6 @@ class mainEvent {
     superMainContainer.setAttribute("id", `${this.id}`);
     const role = this.roles.role;
     let roleImageURL = coffeeImages[role];
-    console.log(roleImageURL, "asdfasdfadsfasdfasdfasdf");
     let roleText = await this.getUserPronoun();
 
     function showBadges(thisObj) {
@@ -206,18 +148,6 @@ class mainEvent {
       inlineStyle = `display: inline; background-color: ${colors.coffee.lineColor}; color: ${colors.coffee.pronsColor}`;
     }
 
-    const isValidChocoUrl = await checkImgUrl(
-      "https://i.postimg.cc/LXrQbL4v/chocoo.png"
-    );
-    let chocoUrl;
-    if (!isValidChocoUrl) {
-      // replace this
-      chocoUrl =
-        "https://media.discordapp.net/attachments/1184922970498539520/1184933979091128402/cafe-viewer.png?ex=658dc6c3&is=657b51c3&hm=cbf651c0d0d2ecbd316c37eb42619fd66621f889092c204bc02fa7f1e94b1d43&=&format=webp&quality=lossless";
-    } else {
-      chocoUrl = "https://i.postimg.cc/LXrQbL4v/chocoo.png";
-    }
-
     let coffeeUrl = coffeeImages.coffee;
 
     superMainContainer.innerHTML = `
@@ -232,9 +162,9 @@ class mainEvent {
               }">
                 ${fieldData.displayBadges == "true" ? showBadges(this) : ""}
               </span>
-              <span class="capitalize-user" style="color: ${
+			  <span class="capitalize-user" style="color: ${
                 colors.coffee.username
-              }">${this.user}</span>
+              }; max-width: ${fieldData.limitUsernames == "false"? "none" : "13ch"}">${this.user}</span>
               <span class="dot" style='${inlineStyle}'></span>
               <span class="role-container" style='${inlineStyle}'>
                 ${roleText}
@@ -606,26 +536,7 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   Widget.channel = obj.detail.channel;
   fieldData = obj.detail.fieldData;
   maxMessages = fieldData.maxMessages;
-  await checkAllUrls();
 });
-
-async function checkAllUrls() {
-  for (item in baseUrls) {
-    console.log(baseUrls[item].urls[1]);
-    const isValidUrl = await checkImgUrl(baseUrls[item].urls[1]);
-    const isValidUrl2 = await checkImgUrl(baseUrls[item].urls[2]);
-    if (isValidUrl) {
-      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[1];
-      console.log("coffee images", coffeeImages);
-    } else if (isValidUrl2) {
-      coffeeImages[baseUrls[item].name] = baseUrls[item].urls[2];
-      console.log("coffee images 2", coffeeImages);
-    } else {
-      coffeeImages[baseUrls[item].name] = null;
-      console.log("coffee images 3", coffeeImages);
-    }
-  }
-}
 
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
@@ -745,13 +656,13 @@ async function addLines(container, listener, event) {
   let messageContainer, currentHeight;
 
   if (listener === "message") {
-    messageContainer = container.querySelector(".message-icon-container");
-    currentHeight = messageContainer.offsetHeight;
-    messageContainer.style.height = "0px";
-    messageContainer.style.transition = "height 0.5s ease-in-out";
-    setTimeout(() => {
-      messageContainer.style.height = `${currentHeight + 10}px`;
-    }, 300);
+    // messageContainer = container.querySelector(".message-icon-container");
+    // currentHeight = messageContainer.offsetHeight;
+    // messageContainer.style.height = "0px";
+    // messageContainer.style.transition = "height 0.5s ease-in-out";
+    // setTimeout(() => {
+    //   messageContainer.style.height = `${currentHeight + 10}px`;
+    // }, 300);
   }
 
   const contHeight = container.offsetHeight + currentHeight;
@@ -782,10 +693,4 @@ async function addLines(container, listener, event) {
   }
 
   container.appendChild(linesContainer);
-}
-
-async function checkImgUrl(url) {
-  return await fetch(url).then((res) => {
-    return res.ok;
-  });
 }
