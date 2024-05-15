@@ -21,17 +21,20 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-left: 2rem;
 }
 
 .shelf {
   height: 20px;
   order: 2;
-  width: 25rem;
+  width: 26rem;
 }
 
 .bigShelf {
+  position: relative;
   margin-top: 40px;
   display: flex;
+  width: 26rem;
   flex-direction: column;
 }
 
@@ -39,11 +42,650 @@
   display: flex;
   align-items: end;
   height: 130px;
-  margin: 0 .3rem;
+  margin: 0 .8rem;
 }
 
 .horizontal-container {
   display: flex;
   flex-direction: column;
   justify-content: end;
+}
+
+.rotate {
+  transform: rotate(-18deg);
+  /* width: 200px; */
+  margin: 0 1.2rem;
+}
+
+.rotate-marker {
+  transform: rotate(90deg);
+}
+
+.relative {
+  position: relative;
+}
+
+.first-absolute-1 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-2 {
+  display: none;
+}
+
+.first-absolute-3 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.4rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-4 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-5 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-6 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.4rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-7 {
+  position: absolute;
+  top: -0.6rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-8 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -24rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-9 {
+  position: absolute;
+  top: -0.4rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-10 {
+  position: absolute;
+  top: -0.4rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-11 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.2rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-12 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-13 {
+  position: absolute;
+  top: -0.6rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-14 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 9rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-15 {
+  position: absolute;
+  top: -0.4rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-16 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-17 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-18 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-19 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-20 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-21 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-22 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.4rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-23 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.first-absolute-24 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -9rem;
+  z-index: 1;
+}
+
+.second-absolute-1 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.55rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-2 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.second-absolute-3 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-4 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-5 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-6 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.4rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-7 {
+  position: absolute;
+  top: -0.6rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-8 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -24rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.second-absolute-9 {
+  position: absolute;
+  top: -0.4rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-10 {
+  position: absolute;
+  top: -0.4rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-11 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.2rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-12 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-13 {
+  position: absolute;
+  top: -0.6rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-14 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 9rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.second-absolute-15 {
+  position: absolute;
+  top: -0.3rem;
+  left: 2.5rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-16 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-17 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.55rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-18 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-19 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-20 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.55rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-21 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-22 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.3rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-23 {
+  position: absolute;
+  top: 2.5rem;
+  left: -0.55rem;
+  z-index: 1;
+  transform: scale(0.4);
+}
+
+.second-absolute-24 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -9rem;
+  z-index: 1;
+}
+
+.marker-absolute-1 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-2 {
+  display: none;
+}
+
+.marker-absolute-3 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-4 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-5 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-6 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-7 {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-8 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -24rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-9 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -27rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-10 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -30rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-11 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-12 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-13 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 6rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-14 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 9rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-15 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: 12rem;
+  z-index: 1;
+  transform: scale(0.5);
+}
+
+.marker-absolute-16 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-17 {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-18 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-19 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-20 {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-21 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-22 {
+  position: absolute;
+  top: -0.3rem;
+  right: -.5rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-23 {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.6rem;
+  z-index: 1;
+  transform: scale(0.9);
+}
+
+.marker-absolute-24 {
+  display: none;
+  position: absolute;
+  top: 3rem;
+  left: -9rem;
+  z-index: 1;
+}
+
+.plant-absolute-leftOne {
+  position: absolute;
+  bottom: -13.55rem;
+  left: -5rem;
+  height: 20rem;
+  z-index: 1;
+  transform: scale(0.5);
+  z-index: 2;
+}
+
+.plant-absolute-leftTwo {
+  position: absolute;
+  bottom: -13.55rem;
+  left: 0;
+  height: 20rem;
+  z-index: 1;
+  transform: scale(0.5);
+  z-index: 2;
+}
+
+.plant-absolute-rightOne {
+  position: absolute;
+  bottom: -13.55rem;
+  right: -5rem;
+  height: 20rem;
+  z-index: 1;
+  transform: scale(0.5);
+  z-index: 2;
+}
+
+.plant-absolute-rightTwo {
+  position: absolute;
+  bottom: -17.25rem;
+  height: 25rem;
+  right: 0;
+  z-index: 1;
+  transform: scale(0.5);
+  z-index: 2;
+}
+
+.book-no-margin {
+  display: flex;
+  align-items: flex-end;
 }

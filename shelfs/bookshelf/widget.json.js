@@ -1,21 +1,110 @@
 let fieldData = {
+  left: {
+    type: "dropdown",
+    label: "Plant left",
+    value: "first",
+    group: "Plants",
+    options: {
+      first: "First",
+      second: "Second",
+      none: "None",
+    },
+  },
+  right: {
+    type: "dropdown",
+    label: "Plant right",
+    value: "first",
+    group: "Plants",
+    options: {
+      first: "First",
+      second: "Second",
+      none: "None",
+    },
+  },
+  shelfType: {
+    type: "dropdown",
+    label: "Shelf theme",
+    group: "Shelfs",
+    options: {
+      1: "First",
+      2: "Second",
+      3: "Third",
+      4: "Fourth",
+      5: "Fifth",
+      6: "Sixth",
+    },
+  },
+  addShelf: {
+    type: "button",
+    value: "addShelf",
+    label: "Add shelf",
+    group: "Shelfs",
+  },
+  removeShelf: {
+    type: "button",
+    value: "removeShelf",
+    label: "Remove shelf",
+    group: "Shelfs",
+  },
+  decorationFirst: {
+    type: "dropdown",
+    value: "false",
+    label: "Flower decoration",
+    group: "Books",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  decorationSecond: {
+    type: "dropdown",
+    value: "true",
+    label: "Heart decoration",
+    group: "Books",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  pageMarker: {
+    type: "dropdown",
+    value: "false",
+    label: "Page marker",
+    group: "Books",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
+  },
+  decorationFirstColor: {
+    type: "colorpicker",
+    value: "",
+    label: "Flower decoration color",
+    group: "Books",
+  },
+  decorationSecondColor: {
+    type: "colorpicker",
+    value: "",
+    label: "Heart decoration color",
+    group: "Books",
+  },
+  markerColor: {
+    type: "colorpicker",
+    value: "",
+    label: "Page marker color",
+    group: "Books",
+  },
   bookColor: {
-    type: "color",
-    value: "#000000",
+    type: "colorpicker",
+    value: "",
     label: "Book color",
     group: "Books",
   },
-  selectedShelf: {
-    type: "dropdown",
-    value: "A",
-    label: "Selected shelf",
-    group: "Shelfs",
-    options: {
-      A: "Shelf A",
-      B: "Shelf B",
-      C: "Shelf C",
-      D: "Shelf D",
-    }
+  firstSeparatorColor: {
+    type: "colorpicker",
+    value: "",
+    label: "First separator color",
+    group: "Books",
   },
   addBook: {
     type: "button",
@@ -29,16 +118,10 @@ let fieldData = {
     label: "Remove book",
     group: "Books",
   },
-  addShelf: {
+  resetGoalData: {
     type: "button",
-    value: "addShelf",
-    label: "Add shelf",
-    group: "Shelfs",
-  },
-  removeShelf: {
-    type: "button",
-    value: "removeShelf",
-    label: "Remove shelf",
-    group: "Shelfs",
+    label: "Reset widget",
+    value: "reset",
+    group: "Reset",
   },
 };
