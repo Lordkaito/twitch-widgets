@@ -1,0 +1,107 @@
+* {
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+
+main {
+  overflow: hidden;
+  height: 100%;
+  max-height: 1080px;
+  width: 100%;
+  display: grid;
+  place-content: center;
+}
+
+.widget {
+  width: 800px;
+  height: 1000px;
+}
+
+.tasks-container {
+  background-color: #fef1c7;
+  height: 30rem;
+  width: 30rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  overflow: hidden;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  background-color: #ffd9a2;
+  padding: 1rem 0;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #915348;
+}
+
+.tasks-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.task {
+  width: calc(100% - 2rem);
+  min-height: 3rem;
+  height: auto;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+  color: #775a41;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.task p {
+  height: fit-content;
+}
+
+.task-title {
+  font-size: 1.3rem;
+  width: 100%;
+}
+
+.progress {
+  width: calc(100% - 2rem);
+  height: 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 0.25rem;
+  display: flex;
+  margin: 2rem 0;
+  justify-self: flex-end;
+}
+
+.progress-bar {
+  height: 0.5rem;
+  background-color: #ff8c00;
+  border-radius: 0.25rem;
+  width: 50%;
+}
+
+input {
+  align-self: center;
+}
+
+.flex-wrap {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
