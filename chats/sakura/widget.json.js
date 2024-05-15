@@ -11,6 +11,22 @@ let fieldData = {
     group: "Customization",
     value: "1080",
   },
+  maxWidth: {
+    label: "Widget max width(in rem)",
+    type: "text",
+    group: "Customization",
+    value: "25"
+  },
+  limitSize: {
+    label: "Limit size nickname on/off:",
+    type: "dropdown",
+    value: "false",
+    group: "Customization",
+    options: {
+      true: "Yes",
+      false: "No",
+    }, 
+  },
   deleteMessages: {
     label: "Time to delete messages (max 60):",
     type: "number",
@@ -19,6 +35,48 @@ let fieldData = {
     min: 1,
     max: 60,
     step: 1,
+  },
+  colorPickerNickname: {
+    type: "colorpicker",
+    label: "Select color for nickname users:",
+    group: "Customization",
+    value: "#FFD2DE",
+  },
+  colorPickerRoleText: {
+    type: "colorpicker",
+    label: "Select color for role text:",
+    group: "Customization",
+    value: "#FEA8B4",
+  },
+  colorPickerRoleBox: {
+    type: "colorpicker",
+    label: "Select color for role box:",
+    group: "Customization",
+    value: "#FFEFDB",
+  },
+  colorPickerForCircle: {
+    type: "colorpicker",
+    label: "Select color for circle badge detail:",
+    group: "Customization",
+    value: "#FFEFDB",
+  },
+  colorPickerMessageText: {
+    type: "colorpicker",
+    label: "Select color for messages text:",
+    group: "Customization",
+    value: "#FFEFDB",
+  },
+  colorPickerEventText: {
+    type: "colorpicker",
+    label: "Select color for events text:",
+    group: "Customization",
+    value: "#FFEFDB",
+  },
+  colorPickerEventContainer: {
+    type: "colorpicker",
+    label: "Select color for nickname users:",
+    group: "Customization",
+    value: "#FEA8B4",
   },
   deleteMessagesOption: {
     label: "How to delete messages:",
