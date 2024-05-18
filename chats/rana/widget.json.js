@@ -11,6 +11,12 @@ let fieldData = {
     group: "Customization",
     value: "1080",
   },
+  maxTextWidth: {
+    label: "Max text width(in REM):",
+    type: "text",
+    group: "Customization",
+    value: "100",
+  },
   deleteMessages: {
     label: "Time to delete messages (max 60):",
     type: "number",

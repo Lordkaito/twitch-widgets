@@ -172,7 +172,6 @@ class mainEvent {
     superMainContainer.setAttribute('id', `${this.id}`);
     mainContainer.classList.add('main-container');
 
-    //region MARGARITA-IF-SUB
     if (role.role === 'streamer') {
         const margarita = document.createElement('img');
         margarita.classList.add('margarita');
@@ -181,7 +180,6 @@ class mainEvent {
     }
     mainContainer.style.background = themes[theme].messageBackground;
 
-    //region HEIGHT-ROLE
     mainContainer.appendChild(await this.createMessageContainerElement());
     division2.appendChild(this.roleImages);
     division.appendChild(await this.createUsernameInfoElement());
@@ -319,7 +317,7 @@ class mainEvent {
     let division2 = document.querySelector('.separation2');
     /* division2.appendChild(roleImage); */
     roleImage.classList.add('role');
-    //region INSTANCE FIRST MSG
+
     let firstMsg = this.event.data.tags['first-msg'];
     if (firstMsg == 1) {
       roleImage.src = themes[theme].firstMessageImg;
@@ -327,7 +325,7 @@ class mainEvent {
       if (minPriorityRole.length == 0) {
         minPriorityRole.role = 'viewer';
       }
-      //region ADD-ROLE-IMG
+
       switch (minPriorityRole.role) {
         case 'streamer':
           roleImage.src = themes[theme].baseImg;
@@ -414,6 +412,7 @@ class mainEvent {
   async createRenderedTextElement() {
     const renderedText = document.createElement('div');
     renderedText.classList.add('rendered-text');
+    renderedText.style.maxWidth = `${fieldData.maxTextWidth}rem`
     renderedText.classList.add(`${this.roles.role}-text`);
     renderedText.appendChild(await this.buildMessage());
     return renderedText;
@@ -486,6 +485,7 @@ class mainEvent {
 
     let textContainer = document.createElement('p');
     textContainer.classList.add('text');
+    textContainer.style.maxWidth = `${fieldData.maxTextWidth}rem`;
     textContainer.style.color = themes[theme].messageText;
 
     textContainer.innerHTML = words.join(' ');
@@ -598,7 +598,6 @@ class mainEvent {
       text = eventText;
     }
 
-    //region REPLACE
     if (this.event.count > 1) {
       dictionary.subscriber.length;
       let textLength = text.length - 1;
