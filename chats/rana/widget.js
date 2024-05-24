@@ -178,7 +178,7 @@ class mainEvent {
         margarita.src = themes[theme].margaSub;
         mainContainer.appendChild(margarita);
     }
-    mainContainer.style.background = themes[theme].messageBackground;
+    mainContainer.style.background = fieldData.colorPickerEventContainer;
 
     mainContainer.appendChild(await this.createMessageContainerElement());
     division2.appendChild(this.roleImages);
@@ -210,7 +210,7 @@ class mainEvent {
 
     usernameInfoContainer.classList.add('username-info-container');
     usernameInfo.classList.add('username-info');
-    usernameInfo.style.backgroundColor = themes[theme].userBackground;
+    usernameInfo.style.backgroundColor = fieldData.colorPickerUsernameContainer;
 
     usernameInfo.appendChild(this.createUsernameBadgesElement());
     usernameInfo.appendChild(this.createCapitalizeUserElement());
@@ -253,10 +253,9 @@ class mainEvent {
     const capitalizeUser = document.createElement('span');
 
     capitalizeUser.classList.add('capitalize-user');
-    capitalizeUser.style.color = themes[theme].username;
+    capitalizeUser.style.color = fieldData.colorPickerNickname;
     capitalizeUser.innerText = this.user;
-    capitalizeUser.style.maxWidth =
-      fieldData.limitUsernames == 'false' ? 'none' : '13ch';
+    capitalizeUser.style.maxWidth = fieldData.limitUsernames == 'false' ? 'none' : '13ch';
 
     return capitalizeUser;
   }
@@ -276,8 +275,8 @@ class mainEvent {
 
     pronouns.classList.add('prons');
     pronounsContainer.classList.add('pronouns');
-    pronounsContainer.style.backgroundColor = themes[theme].pronounsBackground;
-    pronouns.style.color = themes[theme].pronounsText;
+    pronounsContainer.style.backgroundColor = fieldData.colorPickerRoleBox;
+    pronouns.style.color = fieldData.colorPickerRoleText;
 
     pronouns.innerText = await this.getUserPronoun();
     pronouns.innerText == ''
@@ -486,7 +485,7 @@ class mainEvent {
     let textContainer = document.createElement('p');
     textContainer.classList.add('text');
     textContainer.style.maxWidth = `${fieldData.maxTextWidth}rem`;
-    textContainer.style.color = themes[theme].messageText;
+    textContainer.style.color = fieldData.colorPickerMessageText;
 
     textContainer.innerHTML = words.join(' ');
 
@@ -618,6 +617,7 @@ class mainEvent {
     flower.src = themes[theme].margaSub;
 
     ranaBellContainer.classList.add(`rana-bell`);
+    ranaBellContainer.style.backgroundColor = fieldData.colorPickerForCircle;
     ranaBellContainer.appendChild(fungi);
     bellContainer.classList.add('rana-event-container');
     bellContainer.appendChild(flower);
@@ -626,6 +626,8 @@ class mainEvent {
     bellContainer.appendChild(nameContainer);
     nameContainer.classList.add('event-name');
     nameContainer.innerText = nameAndText;
+    nameContainer.style.backgroundColor = fieldData.colorPickerEventContainer;
+    nameContainer.style.color = fieldData.colorPickerEventText;
 
     mainContainer.classList.add('event-container');
     mainContainer.setAttribute('id', `${this.id}`);
