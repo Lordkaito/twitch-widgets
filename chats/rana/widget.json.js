@@ -15,7 +15,7 @@ let fieldData = {
     label: "Max text width(in REM):",
     type: "text",
     group: "Customization",
-    value: "100",
+    value: "30",
   },
   colorPickerNickname: {
     type: "colorpicker",
@@ -39,7 +39,7 @@ let fieldData = {
     type: "colorpicker",
     label: "Select color for circle badge detail:",
     group: "Customization",
-    value: "#bad2af",
+    value: "#87a27a",
   },
   colorPickerMessageText: {
     type: "colorpicker",
@@ -53,11 +53,17 @@ let fieldData = {
     group: "Customization",
     value: "#fef5e9",
   },
-  colorPickerEventContainer: {
+  colorPickerMessageContainer: {
     type: "colorpicker",
     label: "Select color for nickname users:",
     group: "Customization",
     value: "#bad2af",
+  },
+  colorPickerEventContainer: {
+    type: "colorpicker",
+    label: "Select color for nickname users:",
+    group: "Customization",
+    value: "#87a27a",
   },
   colorPickerUsernameContainer: {
     type: "colorpicker",

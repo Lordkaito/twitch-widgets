@@ -2,7 +2,7 @@
   --message-color: #553a2f;
   --message-background-color: #fdefc8;
   --message-border-color: #7bb87e;
-  --user-color: #fdefc8;
+  --user-color: #87a27a;
   --user-background-color: #ee9ab1;
   --user-border-color: #e6e6e6;
   --pronouns-color: #ee9ab1;
@@ -11,7 +11,7 @@
   --pronouns-shadow-color: rgba(120, 120, 120, 0.38);
   --mods-background-color: #d1cfb4;
   --mods-message-border: #fff3eb;
-  --event-background-color: rgba(155, 179, 142, 0.5);
+  --event-background-color: #87a27a;
   --event-shadow-color: #a38c79;
   --event-color: #fef9fd;
 }
@@ -73,8 +73,8 @@ main {
   animation-name: slideMessage;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  padding: 0 1rem;
   margin-bottom: 0.5rem;
+  max-width: 38.5rem;
 }
 
 .separation2 {
@@ -294,14 +294,13 @@ main {
 .event-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
-  max-width: 37rem;
-  padding: 2rem 1rem 2rem 1rem;
+  padding: 2rem 0;
   animation-fill-mode: forwards;
   animation-duration: 0.8s;
-  left: 1.875rem;
-  width: 37.5rem;
+  max-width: 38.5rem;
+  width: 100%;
 }
 
 .widget {
@@ -342,6 +341,7 @@ main {
   bottom: -12px;
   right: -8px;
   z-index: 3;
+  transform: scale(.7);
 }
 
 .event-leafs-container-1,
