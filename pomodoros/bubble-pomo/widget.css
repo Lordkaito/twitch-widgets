@@ -1,0 +1,17 @@
+.main {
+  height: 100%;
+}
+.widget {
+  width: 800px;
+  height: 1000px;
+}
+
+.pomo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  border: 1px solid red;
+  font-size: 4rem;
+}

@@ -1,39 +1,129 @@
+const randomId = () => Math.random().toString(36).substr(2, 9)
+// later we will use the widgetapidata to generate the list of tasks
+const defaultApiData = []
+
+let tasks = []
+const getApiData = async () => {
+  let data = await SE_API.store.get("testTasks")
+  if (data === null) {
+    tasks = defaultApiData
+  } else {
+    tasks = data
+  }
+  // if (obj.detail.fieldData.goalFullType === "session") {
+  //   widgetApiData = defaultApiData
+  // }
+}
+
+const saveTask = task => {
+  const taskToSave = {
+    id: task.id,
+    task: task.task,
+    completed: task.completed,
+    username: task.username,
+    streamerTask: task.streamerTask,
+  }
+
+  tasks.push(taskToSave)
+
+  SE_API.store.set("testTasks", tasks)
+}
+
+const deleteTask = (id, username) => {
+  const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
+  SE_API.store.set("testTasks", removedTask)
+}
+
+const removeTaskFromList = (id, username) => {
+  const taskList = document.querySelector(".tasks-list")
+  const task = document.getElementById(id)
+
+  taskList.removeChild(task)
+  deleteTask(id, username)
+}
+
 const addTaskToList = task => {
   if (task === "") return
-  const taskItem = `<div class="flex-wrap">
-  <div class="task">
-    <input type="checkbox">
-    <p class="task-title">${task}</p>
-  </div>
+  const taskItem = `
+  <div class="flex-wrap" id=${task.id}>
+    <div class="task">
+      <input type="checkbox">
+      <p class="task-title">${task.task}</p>
+    </div>
   </div>`
   const taskList = document.querySelector(".tasks-list")
 
   taskList.innerHTML += taskItem
+  taskList.scrollTo({
+    top: taskList.scrollHeight,
+    behavior: "smooth",
+  })
+  // setTimeout(() => {
+  //   taskList.scrollTo({
+  //     top: -taskList.scrollHeight,
+  //     behavior: "smooth",
+  //   })
+  // }, 5000)
 }
 
 const checkForCommand = event => {
   if (!event.renderedText) return
-  const command = fieldData.command
-  if (event.renderedText.startsWith(command)) {
-    const args = event.renderedText.split(" ").slice(1).join(" ");
+  const addTaskCommand = fieldData.command
+  const removeTaskCommand = "!removeTask"
+  if (event.renderedText.startsWith(addTaskCommand)) {
+    const args = {
+      task: event.renderedText.split(" ").slice(1).join(" "),
+      username: event.data.displayName,
+      streamerTask: event.isTest,
+      completed: false,
+      id: randomId(),
+      command: event.renderedText.split(" ")[0],
+    }
+    return args
+  }
+
+  if (event.renderedText.startsWith(removeTaskCommand)) {
+    const task = tasks.find(
+      task => task.username === event.data.displayName && task.task === event.renderedText.split(" ").slice(1).join(" ")
+    )
+    const args = {
+      streamerTask: event.isTest,
+      id: task.id,
+      command: event.renderedText.split(" ")[0],
+    }
     return args
   }
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
+  await getApiData()
   fieldData = obj.detail.fieldData
+  tasks.map(task => addTaskToList(task))
 })
 
 window.addEventListener("onEventReceived", async obj => {
+  if(obj.detail.event.value === "reset") {
+  	clearApiData()
+    return;
+  }
   let { listener, event } = obj.detail
   if (event.isCommunityGift) return
 
   const mainCont = document.querySelector("main")
   const task = checkForCommand(event)
   if (!task) return
-  addTaskToList(task)
+  if (task.command === fieldData.command) {
+    addTaskToList(task)
+    saveTask(task)
+  } else {
+    removeTaskFromList(task.id, event.data.displayName)
+  }
 })
 
+const clearApiData = () => {
+  SE_API.store.set("testTasks", defaultApiData)
+  window.location.reload()
+}
 function stringToArray(string = "", separator = ",") {
   return string.split(separator).reduce((acc, value) => {
     const trimmed = value.trim()
