@@ -25,7 +25,8 @@ main {
 }
 
 .tasks-container {
-  background-color: #fef1c7;
+  background-color: #f8e0ff;
+  border: 2px solid #ffefe6;
   height: 30rem;
   width: 30rem;
   border-radius: 20px;
@@ -39,13 +40,13 @@ main {
 .title {
   width: 100%;
   text-align: center;
-  background-color: #ffd9a2;
+  background-color: #df9bf0;
   padding: 1rem 0;
 }
 
 h1 {
   font-size: 2rem;
-  color: #915348;
+  color: #ffefe6;
 }
 
 .tasks-list {
@@ -82,6 +83,7 @@ h1 {
 .task-title {
   font-size: 1.3rem;
   width: 100%;
+  color: #a35fb4;
 }
 
 .progress {
@@ -109,4 +111,177 @@ input {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+}
+
+.completed {
+  color: #cc88dd;
+  text-decoration: line-through;
+  text-decoration-thickness: 0.2rem;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  letter-spacing: 0.125rem;
+}
+*/
+
+.main-goal {
+  overflow: hidden;
+  max-height: 1080px;
+  /* position: absolute; */
+  bottom: 0;
+  width: 20rem;
+  display: grid;
+  place-content: center;
+  /* margin-bottom: 4rem; */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  height: 150px;
+  width: 20rem;
+  position: relative;
+}
+
+#round {
+  width: 20rem;
+  height: 70px;
+  /* padding: 0.4rem 1.5rem; */
+  /* background-color: #ddb78a; */
+  border-radius: 50px;
+  /* border: 5px solid #ffeab6; */
+  display: grid;
+  place-content: center;
+  position: relative;
+}
+
+.progress-bar-container {
+  width: 20rem;
+  height: 10px;
+  border-radius: 8px;
+  background-color: #f2c1fe;
+  /* position: relative; */
+  overflow: hidden;
+}
+
+.progression {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 25px;
+  color: #f3bdf9;
+  font-size: 1.2rem;
+  margin: auto;
+  bottom: -0.3rem;
+  right: 1.5rem;
+  z-index: 4;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
+}
+
+.heart {
+  position: absolute;
+  bottom: 0rem;
+  right: 1.5rem;
+}
+
+.progress-bar {
+  display: flex;
+  width: 0px;
+  background-color: #df9bf0;
+  height: 70px;
+  transition: width 0.2s;
+  position: relative;
+}
+
+.img-progress {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.hidden-container {
+  position: absolute;
+  height: 100%;
+}
+
+.img-container {
+  position: absolute;
+  z-index: 2;
+  top: 4rem;
+  /* left: 1rem; */
+  transition: left 0.2s;
+}
+
+.img-container img {
+  height: 40px;
+}
+.progression-img {
+  position: absolute;
+  /* right: -2rem; */
+  top: 0.6rem;
+  z-index: 3;
+}
+
+.goal-name {
+  position: absolute;
+  top: 1rem;
+  /* left: 2rem; */
+  height: 3.5rem;
+  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  text-transform: uppercase;
+  color: #d79fe6;
+}
+
+.goal-name p {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.125rem;
+}
+
+.left-ear {
+  position: absolute;
+  top: -1.2rem;
+  left: 1rem;
+  transform: scaleX(-1);
+  z-index: -1;
+}
+
+.right-ear {
+  position: absolute;
+  top: -1.2rem;
+  right: 1rem;
+  z-index: -1;
+}
+
+.tail {
+  position: absolute;
+  right: 2rem;
+  bottom: 1rem;
+  z-index: -1;
+}
+
+.widget {
+  border: 1px solid red;
+  width: 800px;
+  height: 1000px;
 }
