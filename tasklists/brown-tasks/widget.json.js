@@ -94,5 +94,11 @@ let fieldData = {
     label: "Currency:",
     value: "$",
     group: "Customization",
+  },
+  width: {
+    type: "number",
+    label: "Width:",
+    value: 50,
+    group: "Customization"
   }
 };

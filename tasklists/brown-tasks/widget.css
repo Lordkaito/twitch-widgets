@@ -26,14 +26,13 @@ main {
 
 .tasks-container {
   background-color: #f8e0ff;
-  border: 2px solid #ffefe6;
+  border: 3px solid #ffefe6;
   height: 30rem;
   width: 30rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   overflow: hidden;
 }
 
@@ -58,6 +57,7 @@ h1 {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 400px;
+  padding-top: 0.5rem;
 }
 
 .tasks-list div:nth-last-child() {
@@ -74,6 +74,7 @@ h1 {
   color: #775a41;
   display: flex;
   justify-content: flex-start;
+  margin: 0.5rem 0;
 }
 
 .task p {
@@ -83,6 +84,11 @@ h1 {
 .task-title {
   font-size: 1.3rem;
   width: 100%;
+  color: #a35fb4;
+}
+
+.task-title span {
+  font-size: 1.3rem;
   color: #a35fb4;
 }
 
@@ -124,40 +130,28 @@ input {
   visibility: hidden;
 }
 
-/* {
-  font-family: "Quicksand", sans-serif;
-  font-size: 0.875rem;
-  font-weight: 700;
-  overflow-wrap: break-word;
-  margin: 0;
-  padding: 0;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  letter-spacing: 0.125rem;
-}
-*/
-
 .main-goal {
   overflow: hidden;
   max-height: 1080px;
-  /* position: absolute; */
+  position: relative;
+  top: 2rem;
+  height: 201px;
   bottom: 0;
-  width: 20rem;
+  width: 30rem;
   display: grid;
   place-content: center;
-  /* margin-bottom: 4rem; */
 }
 
 .container {
   display: flex;
   align-items: center;
   height: 150px;
-  width: 20rem;
+  width: 25rem;
   position: relative;
 }
 
 #round {
-  width: 20rem;
+  width: 25rem;
   height: 70px;
   /* padding: 0.4rem 1.5rem; */
   /* background-color: #ddb78a; */
@@ -169,7 +163,7 @@ input {
 }
 
 .progress-bar-container {
-  width: 20rem;
+  width: 25rem;
   height: 10px;
   border-radius: 8px;
   background-color: #f2c1fe;
@@ -222,13 +216,13 @@ input {
 .img-container {
   position: absolute;
   z-index: 2;
-  top: 4rem;
-  /* left: 1rem; */
+  top: 2.5rem;
+  left: -1rem;
   transition: left 0.2s;
 }
 
 .img-container img {
-  height: 40px;
+  height: 60px;
 }
 .progression-img {
   position: absolute;
@@ -239,7 +233,7 @@ input {
 
 .goal-name {
   position: absolute;
-  top: 1rem;
+  top: 0rem;
   /* left: 2rem; */
   height: 3.5rem;
   /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
@@ -279,10 +273,4 @@ input {
   right: 2rem;
   bottom: 1rem;
   z-index: -1;
-}
-
-.widget {
-  border: 1px solid red;
-  width: 800px;
-  height: 1000px;
 }

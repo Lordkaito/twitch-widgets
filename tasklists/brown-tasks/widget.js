@@ -1,28 +1,48 @@
 let totalTasks = 0
 let completedTasks
 let goalApiData = {}
-let defaultGoalApiData = {
-  completed: 0,
-  total: 0,
+let defaultWidgetApiData = {
+  tasks: [],
+  completedTasks: 0,
+  totalTasks: 0,
 }
+let widgetApiData = {}
 let tasks = []
 
-const progression = document.querySelector("#progression")
+const button = document.querySelector(".click")
+button.addEventListener("click", () => {
+  addTaskToList({
+    task: "test jasdhfkj adhsfkjh djkf hkjsd fhjksd hfjkas dfhjk dkfj askdjf kajsdhf klajsd fa ",
+    username: "test",
+    streamerTask: false,
+    completed: false,
+    id: randomId(),
+  })
+})
 
+const progression = document.querySelector("#progression")
+const imgGoal = document.querySelector(".img-container")
+const title = document.querySelector(".title h1")
+const tasksContainer = document.querySelector(".tasks-container")
+const mainGoal = document.querySelector(".main-goal")
+const container = document.querySelector(".container")
+const round = document.querySelector("#round")
+const progressBarContainer = document.querySelector(".progress-bar-container")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 // later we will use the widgetapidata to generate the list of tasks
-const defaultApiData = []
 
 const getApiData = async () => {
-  let data = await SE_API.store.get("testTasks")
-  if (data === null) {
-    tasks = defaultApiData
-  } else {
-    tasks = data
-  }
+  // let data = await SE_API.store.get("newTest")
+  // if (data === null) {
+  //   // tasks = defaultApiData
+  //   widgetApiData = defaultWidgetApiData
+  // } else {
+  //   widgetApiData = data
+  //   tasks = widgetApiData.tasks
+  // }
   // if (obj.detail.fieldData.goalFullType === "session") {
   // }
-  // widgetApiData = defaultApiData
+  widgetApiData = defaultWidgetApiData
 }
 
 const saveTask = task => {
@@ -35,7 +55,8 @@ const saveTask = task => {
       streamerTask: task.streamerTask,
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
-    SE_API.store.set("testTasks", tasks)
+    widgetApiData.tasks = tasks
+    // SE_API.store.set("newTest", widgetApiData)
     return
   }
   const taskToSave = {
@@ -45,10 +66,10 @@ const saveTask = task => {
     username: task.username,
     streamerTask: task.streamerTask,
   }
-
   tasks.push(taskToSave)
+  widgetApiData.tasks = tasks
 
-  SE_API.store.set("testTasks", tasks)
+  // SE_API.store.set("newTest", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -61,11 +82,11 @@ const removeTaskFromList = (id, username) => {
 
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
-  SE_API.store.set("testTasks", removedTask)
+  widgetApiData.tasks = removedTask
+  // SE_API.store.set("newTest", removedTask)
 }
 
 const addTaskToList = task => {
-  console.log(task, "task being added")
   if (task === "") return
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
@@ -77,7 +98,9 @@ const addTaskToList = task => {
     <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
     <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
   </svg>
-      <p class="task-title ${task.completed ? "completed" : ""}">${task.task}</p>
+      <p class="task-title ${task.completed ? "completed" : ""}">
+      <span class="username-glow">${task.username}</span>: ${task.task}
+      </p>
     </div>
   </div>`
   const taskList = document.querySelector(".tasks-list")
@@ -149,15 +172,23 @@ const checkForCommand = event => {
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
+  title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
+  const width = obj.detail.fieldData.width
+  const eightyPercent = width * 0.8
+  tasksContainer.style.width = `${width ?? 30}rem`
+  mainGoal.style.width = `${width ?? 25}rem`
+  container.style.width = `${eightyPercent ?? 25}rem`
+  round.style.width = `${eightyPercent ?? 25}rem`
+  progressBarContainer.style.width = `${eightyPercent ?? 25}rem`
   await getApiData()
-  await loadGoal()
+  tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
-  console.log(tasks, "tasks loaded")
   tasks.map(task => addTaskToList(task))
   const taskList = document.querySelector(".tasks-list")
   const allInvisible = taskList.querySelectorAll(".invisible")
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
+  await loadGoal()
 })
 
 window.addEventListener("onEventReceived", async obj => {
@@ -167,13 +198,12 @@ window.addEventListener("onEventReceived", async obj => {
     return
   }
 
-  let { listener, event } = obj.detail
+  let { event } = obj.detail
   if (event.isCommunityGift) return
-  console.log("asdasd")
 
   const mainCont = document.querySelector("main")
   const task = checkForCommand(event)
-  if (!task) return
+  if (!task || task.task === "") return
   switch (task.command) {
     case fieldData.command:
       addTaskToList(task)
@@ -195,7 +225,7 @@ window.addEventListener("onEventReceived", async obj => {
 })
 
 const clearApiData = () => {
-  SE_API.store.set("testTasks", defaultApiData)
+  // SE_API.store.set("newTest", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -216,35 +246,20 @@ const getStep = (container, objective) => {
 }
 
 const loadGoal = async () => {
-  const data = await getGoalApiData()
-  console.log(goalApiData)
-  progression.textContent = `${data.completed ?? 0}/${data.total ?? 0} DONE`
+  progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
+  progressBar.style.width = `${completedTasks * getStep(progressContainer, totalTasks)}px`
+  imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 10}px`
 }
 
 const updateGoal = step => {
   progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
   progressBar.style.width = `${completedTasks * step}px`
+  imgGoal.style.left = `${completedTasks * step - 10}px`
   saveGoalData()
 }
 
 const saveGoalData = async () => {
-  goalApiData.completed = completedTasks
-  goalApiData.total = totalTasks
-  console.log(goalApiData, "data saved")
-  SE_API.store.set("testGoalTasks", goalApiData)
-  console.log(await getGoalApiData())
-}
-
-const getGoalApiData = async () => {
-  let data = await SE_API.store.get("testGoalTasks")
-  if (data === null) {
-    goalApiData = defaultGoalApiData
-  } else {
-    goalApiData = data
-  }
-  console.log(data, "data loaded")
-  return goalApiData
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  // }
-  // goalApiData = defaultGoalApiData
+  widgetApiData.completedTasks = completedTasks
+  widgetApiData.totalTasks = totalTasks
+  // SE_API.store.set("testGoalTasks", widgetApiData)
 }
