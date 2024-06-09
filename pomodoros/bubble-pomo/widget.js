@@ -6,6 +6,12 @@ const hoursSeparator = document.querySelector(".hours-separator")
 const minutesSeparator = document.querySelector(".minutes-separator")
 const pomosCounter = document.querySelector(".pomos-left")
 const pomoContainer = document.querySelector(".pomo-counter")
+const textObjective = document.querySelector(".text-objective")
+const circle1 = document.querySelector(".circle-1")
+const circle2 = document.querySelector(".circle-2")
+const circle3 = document.querySelector(".circle-3")
+const circle4 = document.querySelector(".circle-4")
+const circle5 = document.querySelector(".circle-5")
 // let fieldData = {}
 let currentPomo = 0
 let maxPomos
@@ -42,11 +48,16 @@ window.addEventListener("onWidgetLoad", obj => {
   hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
   minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
   secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
-  pomosCounter.textContent = currentPomo + "|" + maxPomos
+  pomosCounter.textContent = currentPomo + " | " + maxPomos
   if (showPomo) {
     pomoContainer.style.visibility = "visible"
   } else {
     pomoContainer.style.visibility = "hidden"
+  }
+  if (isRunning) {
+    textObjective.textContent = "WORK"
+  } else {
+    textObjective.textContent = "BREAK"
   }
 })
 
@@ -56,7 +67,7 @@ window.addEventListener("onEventReceived", obj => {
     startPomo()
   }
 
-  if(obj.detail.event.value === "stop") {
+  if (obj.detail.event.value === "stop") {
     isRunning = false
     // clear all intervals existing
     clearInterval(secondsTimer)
@@ -72,15 +83,20 @@ hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
 let isRunning = false
 const startPomo = () => {
   if (isRunning) return
+  startHours = fieldData.hoursLeft
+  startMinutes = fieldData.minutesLeft
+  startSeconds = fieldData.secondsLeft
+  hoursContainer.textContent = startHours.toString().padStart(2, "0")
+  minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
+  secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
   isRunning = true
-  console.log(startHours, startMinutes, startSeconds)
   if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
     startHours = fieldDataHours
     startMinutes = fieldDataMinutes
     startSeconds = fieldDataSeconds
   }
-  pomosCounter.textContent = currentPomo + "|" + maxPomos
-  if (startHours <= 0 && !goUp) {
+  pomosCounter.textContent = currentPomo + " | " + maxPomos
+  if (startHours <= 0) {
     hoursContainer.style.display = "none"
     hoursSeparator.style.display = "none"
   }
@@ -102,6 +118,11 @@ const updateHours = () => {
   }
 
   if (startHours <= 0 && !goUp) {
+    hoursContainer.style.display = "none"
+    hoursSeparator.style.display = "none"
+  }
+
+  if (startHours === 0) {
     hoursContainer.style.display = "none"
     hoursSeparator.style.display = "none"
   }
@@ -132,6 +153,7 @@ const updateMinutes = () => {
 }
 
 const updateSeconds = () => {
+  if (isRunning) textObjective.textContent = "WORK"
   if (goUp) {
     startSeconds++
   } else {
@@ -172,10 +194,41 @@ const updateSeconds = () => {
     : startHours === 0 && startMinutes === 0 && startSeconds === 60
   if (isOver && maxPomos > currentPomo) {
     currentPomo++
-    pomosCounter.textContent = currentPomo + "|" + maxPomos
+    pomosCounter.textContent = currentPomo + " | " + maxPomos
+  }
+  if (currentPomo >= 1) {
+    circle1.style.visibility = "visible"
+  }
+
+  if (currentPomo >= 2) {
+    circle2.style.visibility = "visible"
+  }
+
+  if (currentPomo >= 3) {
+    circle3.style.visibility = "visible"
+  }
+
+  if (currentPomo >= 4) {
+    circle4.style.visibility = "visible"
+  }
+
+  if (currentPomo >= 5) {
+    circle5.style.visibility = "visible"
   }
   if (isOver) {
+    if (fieldData.sound === "soundOne") {
+      firstAudio.play()
+      const audio = new Audio(firstAudio.src)
+      audio.play()
+    }
+
+    if (fieldData.sound === "soundTwo") {
+      const audio = new Audio(secondAudio.src)
+      audio.play()
+    }
+
     isRunning = false
+    textObjective.textContent = "BREAK"
     clearInterval(secondsTimer)
   }
 }

@@ -19,6 +19,7 @@
 }
 
 .pomo-container {
+  transform: scale(.7);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -41,10 +42,10 @@
 .title-counter {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   font-size: 3rem;
   gap: 2rem;
-  font-weight: 500;
+  font-weight: 600;
   & p {
     font-size: 3rem;
     padding: 1rem 0;
@@ -67,18 +68,24 @@
 .objective-heart {
   display: flex;
   align-items: center;
-  justify-content: space-around;
   gap: 2rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #8f4ba0;
   width: 100%;
   & p {
     font-size: 3rem;
     padding: 1rem 0;
   }
+
+  & span {
+    margin-left: 5rem;
+  }
 }
 
 .pomo-counter {
+  transform: scale(0.7);
+  /* position: absolute; */
+  /* left: 20rem; */
   width: 400px;
   height: 200px;
   display: grid;
@@ -87,4 +94,57 @@
   border-radius: 70px;
   border: 3px solid white;
   margin-top: 4rem;
+}
+
+.main-cont {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #8f4ba0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  font-weight: 600;
+}
+
+.circle-1 {
+  position: absolute;
+  bottom: 1rem;
+  left: 5.5rem;
+  visibility: hidden;
+}
+
+.circle-2 {
+  position: absolute;
+  bottom: 1rem;
+  right: 5.5rem;
+  visibility: hidden;
+}
+
+.circle-3 {
+  position: absolute;
+  bottom: 4rem;
+  left: 4rem;
+  visibility: hidden;
+}
+
+.circle-4 {
+  position: absolute;
+  bottom: 4rem;
+  right: 4rem;
+  visibility: hidden;
+}
+
+.circle-5 {
+  position: absolute;
+  bottom: 4rem;
+  left: 7rem;
+  visibility: hidden;
 }

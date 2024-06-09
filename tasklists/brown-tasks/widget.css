@@ -60,16 +60,27 @@ h1 {
   overflow-x: hidden;
   max-height: 400px;
   padding-top: 0.5rem;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.tasks-list::-webkit-scrollbar {
-  display: none;
 }
 
 .tasks-list div:nth-last-child() {
   margin-bottom: 5rem;
+}
+
+/* width */
+.tasks-list::-webkit-scrollbar {
+  width: 10px;
+  padding-right: 1rem;
+}
+
+/* Track */
+.tasks-list::-webkit-scrollbar-track {
+  background: #f8e0ff;
+}
+
+/* Handle */
+.tasks-list::-webkit-scrollbar-thumb {
+  background: #df9bf0;
+  border-radius: 10px;
 }
 
 .task {
@@ -90,13 +101,13 @@ h1 {
 }
 
 .task-title {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   width: 100%;
   color: #a35fb4;
 }
 
 .task-title span {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   color: #a35fb4;
 }
 

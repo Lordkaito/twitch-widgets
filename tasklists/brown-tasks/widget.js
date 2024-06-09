@@ -89,8 +89,8 @@ const addTaskToList = task => {
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+    stroke="#a35fb4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
     class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
@@ -196,7 +196,7 @@ const checkForCommand = event => {
 window.addEventListener("onWidgetLoad", async obj => {
   title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
   const width = obj.detail.fieldData.width
-  const eightyPercent = width * 0.8
+  const eightyPercent = width * 0.85
   tasksContainer.style.width = `${width ?? 30}rem`
   mainGoal.style.width = `${width ?? 25}rem`
   container.style.width = `${eightyPercent ?? 25}rem`

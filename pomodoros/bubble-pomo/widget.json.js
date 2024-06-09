@@ -6,7 +6,7 @@ let fieldData = {
   },
   minutesLeft: {
     type: "number",
-    value: 0,
+    value: 59,
     label: "Starting minutes",
   },
   secondsLeft: {
@@ -16,12 +16,12 @@ let fieldData = {
   },
   targetHours: {
     type: "number",
-    value: 0,
+    value: 1,
     label: "Finish hours",
   },
   targetMinutes: {
     type: "number",
-    value: 1,
+    value: 0,
     label: "Finish minutes",
   },
   targetSeconds: {
@@ -49,7 +49,7 @@ let fieldData = {
   },
   maxPomos: {
     type: "number",
-    value: 4,
+    value: 5,
     label: "Max pomos",
   },
   startButton: {
