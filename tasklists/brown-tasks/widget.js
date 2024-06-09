@@ -29,20 +29,18 @@ const container = document.querySelector(".container")
 const round = document.querySelector("#round")
 const progressBarContainer = document.querySelector(".progress-bar-container")
 const randomId = () => Math.random().toString(36).substr(2, 9)
-// later we will use the widgetapidata to generate the list of tasks
 
 const getApiData = async () => {
-  // let data = await SE_API.store.get("newTest")
-  // if (data === null) {
-  //   // tasks = defaultApiData
-  //   widgetApiData = defaultWidgetApiData
-  // } else {
-  //   widgetApiData = data
-  //   tasks = widgetApiData.tasks
-  // }
-  // if (obj.detail.fieldData.goalFullType === "session") {
-  // }
-  widgetApiData = defaultWidgetApiData
+  let data = await SE_API.store.get("newTest")
+  if (data === null) {
+    // tasks = defaultApiData
+    widgetApiData = defaultWidgetApiData
+  } else {
+    widgetApiData = data
+    tasks = widgetApiData.tasks
+  }
+
+  // widgetApiData = defaultWidgetApiData
 }
 
 const saveTask = task => {
@@ -56,7 +54,7 @@ const saveTask = task => {
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
     widgetApiData.tasks = tasks
-    // SE_API.store.set("newTest", widgetApiData)
+    SE_API.store.set("newTest", widgetApiData)
     return
   }
   const taskToSave = {
@@ -69,7 +67,7 @@ const saveTask = task => {
   tasks.push(taskToSave)
   widgetApiData.tasks = tasks
 
-  // SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -83,7 +81,7 @@ const removeTaskFromList = (id, username) => {
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
   widgetApiData.tasks = removedTask
-  // SE_API.store.set("newTest", removedTask)
+  SE_API.store.set("newTest", removedTask)
 }
 
 const addTaskToList = task => {
@@ -110,12 +108,6 @@ const addTaskToList = task => {
     top: taskList.scrollHeight,
     behavior: "smooth",
   })
-  // setTimeout(() => {
-  //   taskList.scrollTo({
-  //     top: -taskList.scrollHeight,
-  //     behavior: "smooth",
-  //   })
-  // }, 5000)
 }
 
 const completeTask = task => {
@@ -129,8 +121,11 @@ const completeTask = task => {
 const checkForCommand = event => {
   if (!event.renderedText) return
   const addTaskCommand = fieldData.command
-  const removeTaskCommand = "!removeTask"
-  const completeTaskCommand = "!complete"
+  const removeTaskCommand = fieldData.removeCommand
+  const completeTaskCommand = fieldData.completeCommand
+  const scrollUpCommand = fieldData.scrollUpCommand
+  const scrollDownCommand = fieldData.scrollDownCommand
+  const removeFromCommand = fieldData.removeFromCommand
   if (event.renderedText.startsWith(addTaskCommand)) {
     const args = {
       task: event.renderedText.split(" ").slice(1).join(" "),
@@ -138,7 +133,7 @@ const checkForCommand = event => {
       streamerTask: event.isTest,
       completed: false,
       id: randomId(),
-      command: event.renderedText.split(" ")[0],
+      command: addTaskCommand,
     }
     return args
   }
@@ -150,7 +145,24 @@ const checkForCommand = event => {
     const args = {
       streamerTask: event.isTest,
       id: task.id,
-      command: event.renderedText.split(" ")[0],
+      command: removeTaskCommand,
+    }
+    return args
+  }
+
+  if (event.renderedText.startsWith(removeFromCommand)) {
+    const splitTask = event.renderedText.split(" ")
+    const userToRemoveFrom = splitTask[1]
+    const taskText = splitTask[2]
+    const task = tasks.find(
+      task => task.username === userToRemoveFrom && task.task === taskText
+    )
+    console.log(task, tasks, userToRemoveFrom, event.renderedText.split(" ").slice(2).join(" "))
+    const args = {
+      streamerTask: event.isTest,
+      id: task.id,
+      command: removeFromCommand,
+      user: userToRemoveFrom,
     }
     return args
   }
@@ -162,12 +174,22 @@ const checkForCommand = event => {
     const args = {
       streamerTask: event.isTest,
       id: task.id,
-      command: event.renderedText.split(" ")[0],
+      command: completeTaskCommand,
       completed: true,
       task: task.task,
       username: task.username,
     }
     return args
+  }
+
+  if (event.renderedText.startsWith(scrollUpCommand)) {
+    smoothScroll(document.querySelector(".tasks-list"), 0, 5000)
+    return
+  }
+
+  if (event.renderedText.startsWith(scrollDownCommand)) {
+    smoothScroll(document.querySelector(".tasks-list"), document.querySelector(".tasks-list").scrollHeight, 5000)
+    return
   }
 }
 
@@ -192,6 +214,7 @@ window.addEventListener("onWidgetLoad", async obj => {
 })
 
 window.addEventListener("onEventReceived", async obj => {
+  let hasPower = false
   const taskList = document.querySelector(".tasks-list")
   if (obj.detail.event.value === "reset") {
     clearApiData()
@@ -199,9 +222,16 @@ window.addEventListener("onEventReceived", async obj => {
   }
 
   let { event } = obj.detail
+  const isMod = event.data?.tags?.mod === "1" ?? false
+  const isStreamer = event.data?.displayName === event.data?.channel ?? false
+  const givePowerToMods = fieldData.givePowerToMods === "true"
+  if (isMod && givePowerToMods || isStreamer) hasPower = true
   if (event.isCommunityGift) return
+  if (event.type === "channelPoints") {
+    redeemChannelPoints(event)
+    return
+  }
 
-  const mainCont = document.querySelector("main")
   const task = checkForCommand(event)
   if (!task || task.task === "") return
   switch (task.command) {
@@ -216,6 +246,9 @@ window.addEventListener("onEventReceived", async obj => {
     case fieldData.removeCommand:
       removeTaskFromList(task.id, event.data.displayName)
       break
+    case fieldData.removeFromCommand:
+      if (hasPower) removeTaskFromList(task.id, task.user)
+      break
   }
   const allInvisible = taskList.querySelectorAll(".invisible")
   totalTasks = taskList.childElementCount
@@ -225,7 +258,7 @@ window.addEventListener("onEventReceived", async obj => {
 })
 
 const clearApiData = () => {
-  // SE_API.store.set("newTest", defaultWidgetApiData)
+  SE_API.store.set("newTest", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -261,5 +294,42 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  // SE_API.store.set("testGoalTasks", widgetApiData)
+  SE_API.store.set("testGoalTasks", widgetApiData)
+}
+
+const redeemChannelPoints = event => {
+  if (event.data.title === fieldData.pointsTitle) {
+    const user = event.data.username
+    const task = tasks.filter(task => task.username === user)
+    glowUser(task)
+  }
+}
+
+const glowUser = tasksArray => {
+  console.log(tasksArray)
+  tasksArray.map(task => {
+    const taskToGlow = document.getElementById(task.id)
+    const username = taskToGlow.querySelector(".username-glow")
+    username.style.color = fieldData.glowColor
+    username.style.textShadow = `0 0 10px ${fieldData.glowShadowColor}`
+  })
+}
+
+function smoothScroll(element, target, duration) {
+  const start = element.scrollTop
+  const distance = target - start
+  let startTime = null
+
+  function scroll(timestamp) {
+    if (!startTime) startTime = timestamp
+    const elapsed = timestamp - startTime
+    const progress = Math.min(elapsed / duration, 1)
+    element.scrollTop = start + distance * progress
+
+    if (progress < 1) {
+      requestAnimationFrame(scroll)
+    }
+  }
+
+  requestAnimationFrame(scroll)
 }

@@ -6,55 +6,86 @@ const hoursSeparator = document.querySelector(".hours-separator")
 const minutesSeparator = document.querySelector(".minutes-separator")
 const pomosCounter = document.querySelector(".pomos-left")
 const pomoContainer = document.querySelector(".pomo-counter")
+// let fieldData = {}
+let currentPomo = 0
+let maxPomos
+let startHours
+let startMinutes
+let startSeconds
+let showPomo
+let goUp
+let targetHour
+let targetMinute
+let targetSeconds
+let fieldDataHours
+let fieldDataMinutes
+let fieldDataSeconds
 
 button.addEventListener("click", () => {
   startPomo()
-  if(showPomo) {
+})
+
+window.addEventListener("onWidgetLoad", obj => {
+  fieldData = obj.detail.fieldData
+  startHours = fieldData.hoursLeft
+  startMinutes = fieldData.minutesLeft
+  startSeconds = fieldData.secondsLeft
+  maxPomos = fieldData.maxPomos
+  showPomo = fieldData.showPomo
+  targetHour = fieldData.targetHours
+  targetMinute = fieldData.targetMinutes
+  targetSeconds = fieldData.targetSeconds
+  fieldDataHours = fieldData.targetHours
+  fieldDataMinutes = fieldData.targetMinutes
+  fieldDataSeconds = fieldData.targetSeconds
+  goUp = fieldData.goUp === "true"
+  hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
+  minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
+  secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
+  pomosCounter.textContent = currentPomo + "|" + maxPomos
+  if (showPomo) {
     pomoContainer.style.visibility = "visible"
   } else {
     pomoContainer.style.visibility = "hidden"
   }
 })
-let hoursLeft = 59 /// this will be set to the fieldData value later
-let minutesLeft = 23
-let secondsLeft = 58
 
-const targetHour = 1
-const targetMinute = 10
-const targetSeconds = 0
-const isTargetTime = targetHour === hoursLeft && targetMinute === minutesLeft && targetSeconds === secondsLeft
+window.addEventListener("onEventReceived", obj => {
+  console.log(obj.detail)
+  if (obj.detail.event.value === "start") {
+    startPomo()
+  }
 
-secondsContainer.textContent = secondsLeft.toString().padStart(2, "0")
-minutesContainer.textContent = minutesLeft.toString().padStart(2, "0")
-hoursContainer.textContent = hoursLeft.toString().padStart(2, "0")
-const maxPomos = 4 // this will be set to the fieldData value later
-let currentPomo = 0
+  if(obj.detail.event.value === "stop") {
+    isRunning = false
+    // clear all intervals existing
+    clearInterval(secondsTimer)
+  }
+})
 
-const fieldDataHours = 1
-const fieldDataMinutes = 20
-const fieldDataSeconds = 0
+const isTargetTime = targetHour === startHours && targetMinute === startMinutes && targetSeconds === targetSeconds
+
+secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
+minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
+hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
+
 let isRunning = false
-const goUp = true
-const showPomo = false
-
-// the padStart method adds a zero to the left of the number if it is less than 10
-let hoursTimer, minutesTimer, secondsTimer
 const startPomo = () => {
   if (isRunning) return
   isRunning = true
-  console.log(hoursLeft, minutesLeft, secondsLeft)
-  if (hoursLeft === 0 && minutesLeft === 0 && secondsLeft === 60) {
-    hoursLeft = fieldDataHours
-    minutesLeft = fieldDataMinutes
-    secondsLeft = fieldDataSeconds
+  console.log(startHours, startMinutes, startSeconds)
+  if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
+    startHours = fieldDataHours
+    startMinutes = fieldDataMinutes
+    startSeconds = fieldDataSeconds
   }
-  pomosCounter.textContent = `${currentPomo}|${maxPomos}`
-  if (hoursLeft <= 0 && !goUp) {
+  pomosCounter.textContent = currentPomo + "|" + maxPomos
+  if (startHours <= 0 && !goUp) {
     hoursContainer.style.display = "none"
     hoursSeparator.style.display = "none"
   }
 
-  if (minutesLeft === 60 && goUp) {
+  if (startMinutes === 60 && goUp) {
     hoursContainer.style.display = "block"
     hoursSeparator.style.display = "block"
   }
@@ -62,85 +93,86 @@ const startPomo = () => {
 }
 
 const updateHours = () => {
-  if (hoursLeft === 0 && !goUp) return
+  if (startHours === 0 && !goUp) return
 
   if (goUp) {
-    console.log("asdjfads")
-    hoursLeft++
+    startHours++
   } else {
-    hoursLeft--
+    startHours--
   }
 
-  if (hoursLeft <= 0 && !goUp) {
+  if (startHours <= 0 && !goUp) {
     hoursContainer.style.display = "none"
     hoursSeparator.style.display = "none"
   }
 
-  if (minutesLeft === 0 && goUp) {
+  if (startMinutes === 0 && goUp) {
     hoursContainer.style.display = "block"
     hoursSeparator.style.display = "block"
   }
-  hoursContainer.textContent = hoursLeft.toString().padStart(2, "0")
+  hoursContainer.textContent = startHours.toString().padStart(2, "0")
 }
 
 const updateMinutes = () => {
-  if (minutesLeft <= 0 && !goUp) return
+  if (startMinutes <= 0 && !goUp) return
   if (goUp) {
-    minutesLeft++
+    startMinutes++
   } else {
-    minutesLeft--
+    startMinutes--
   }
 
-  if (minutesLeft <= 0 && hoursLeft > 0) {
-    minutesLeft = 60
+  if (startMinutes <= 0 && startHours > 0) {
+    startMinutes = 60
   }
 
-  if(minutesLeft === 60 && goUp) {
-    minutesLeft = 0
+  if (startMinutes === 60 && goUp) {
+    startMinutes = 0
   }
-  minutesContainer.textContent = minutesLeft.toString().padStart(2, "0")
+  minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
 }
 
 const updateSeconds = () => {
   if (goUp) {
-    secondsLeft++
+    startSeconds++
   } else {
-    secondsLeft--
+    startSeconds--
   }
 
-  if (secondsLeft === 59 && !goUp) {
+  if (startSeconds === 59 && !goUp) {
     updateMinutes()
   }
 
-  if (minutesLeft <= 0 && !goUp) {
+  if (startMinutes <= 0 && !goUp) {
     updateHours()
   }
 
-  if (secondsLeft === 60 && goUp) {
+  if (startSeconds === 60 && goUp) {
     updateMinutes()
   }
 
-  if (minutesLeft === 0 && secondsLeft === 60 && goUp) {
+  if (startMinutes === 0 && startSeconds === 60 && goUp) {
     updateHours()
   }
 
-  if (secondsLeft <= 0 && !goUp) {
-    secondsLeft = 60
+  if (startSeconds <= 0 && !goUp) {
+    startSeconds = 60
   }
 
-  if (secondsLeft === 60 && goUp) {
-    secondsLeft = 0
+  if (startSeconds === 60 && goUp) {
+    startSeconds = 0
   }
 
-  if (secondsLeft === 60) {
+  if (startSeconds === 60) {
     secondsContainer.textContent = "00"
   } else {
-    secondsContainer.textContent = secondsLeft.toString().padStart(2, "0")
+    secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
   }
-  const isOver = goUp ? isTargetTime : hoursLeft === 0 && minutesLeft === 0 && secondsLeft === 60
+  const isOver = goUp
+    ? targetHour == startHours && targetMinute == startMinutes && targetSeconds == startSeconds
+    : startHours === 0 && startMinutes === 0 && startSeconds === 60
   if (isOver && maxPomos > currentPomo) {
     currentPomo++
-    pomosCounter.textContent = `${currentPomo}|${maxPomos}`
+    pomosCounter.textContent = currentPomo + "|" + maxPomos
   }
   if (isOver) {
     isRunning = false

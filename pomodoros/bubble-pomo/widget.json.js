@@ -1,98 +1,60 @@
 let fieldData = {
-  emotesId: {
-    type: "text",
-    label: "Set your 7TV ID:",
-    value: "",
-    group: "Customization",
-  },
-  completeGoalText: {
-    type: "text",
-    label: "Goal text (max 40):",
-    value: "GOAL COMPLETED!",
-    group: "Customization",
-  },
-  goalTypeText: {
-    type: "text",
-    label: "Goal type:",
-    value: "sub goal",
-    group: "Customization",
-  },
-  goalObjectiveQuantity: {
+  hoursLeft: {
     type: "number",
-    label: "Goal objective:",
-    value: 100,
-    group: "Customization",
-    step: 1,
+    value: 0,
+    label: "Starting hours",
   },
-  goalStartQuantity: {
+  minutesLeft: {
     type: "number",
-    label: "Goal start:",
-    value: 10,
-    group: "Customization",
-    step: 1,
+    value: 0,
+    label: "Starting minutes",
   },
-  goalType: {
-    type: "dropdown",
-    label: "Goal type:",
-    value: "tip",
-    group: "Customization",
-    options: {
-      subscriber: "Sub",
-      follower: "Follow",
-      cheer: "Cheer",
-      tip: "Tip",
-    },
+  secondsLeft: {
+    type: "number",
+    value: 55,
+    label: "Starting seconds",
   },
-  goalFullType: {
-    type: "dropdown",
-    label: "Goal full type:",
-    value: "allTime",
-    group: "Customization",
-    options: {
-      allTime: "All time",
-      session: "Stream",
-    },
+  targetHours: {
+    type: "number",
+    value: 0,
+    label: "Finish hours",
   },
-  startFromCero: {
+  targetMinutes: {
+    type: "number",
+    value: 1,
+    label: "Finish minutes",
+  },
+  targetSeconds: {
+    type: "number",
+    value: 0,
+    label: "Finish seconds",
+  },
+  goUp: {
     type: "dropdown",
-    label: "Start from 0:",
-    value: "false",
-    group: "Customization",
+    value: "true",
+    label: "Count up",
     options: {
       true: "Yes",
-      false: "No",
+      False: "No",
     },
   },
-  widgetHeight: {
-    label: "Widget height (recommended 1080)",
-    type: "text",
-    group: "Customization",
-    value: "1080",
+  showPomo: {
+    type: "dropdown",
+    value: "true",
+    label: "Show pomo",
+    options: {
+      true: "Yes",
+      False: "No",
+    },
   },
-  firstStep: {
+  maxPomos: {
     type: "number",
-    label: "First step:",
-    value: 1500,
-    group: "Customization",
-    min: 1,
+    value: 4,
+    label: "Max pomos",
   },
-  secondStep: {
-    type: "number",
-    label: "First step:",
-    value: 1750,
-    group: "Customization",
-    min: 1,
-  },
-  resetGoalData: {
+  startButton: {
     type: "button",
-    label: "Reset goal",
-    value: "reset",
-    group: "Customization",
+    value: "start",
+    label: "start",
   },
-  currency: {
-    type: "text",
-    label: "Currency:",
-    value: "$",
-    group: "Customization",
-  }
-};
+}

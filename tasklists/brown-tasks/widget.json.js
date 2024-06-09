@@ -99,6 +99,12 @@ let fieldData = {
     type: "number",
     label: "Width:",
     value: 50,
-    group: "Customization"
-  }
-};
+    group: "Customization",
+  },
+  pointsTitle: {
+    type: "text",
+    label: "Points title:",
+    value: "Lurk",
+    group: "Customization",
+  },
+}
