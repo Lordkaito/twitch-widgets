@@ -47,7 +47,7 @@ h1 {
   font-size: 2rem;
   color: #ffefe6;
   text-align: left;
-  margin: 0 1rem;
+  margin: 0 2rem;
 }
 
 .tasks-list {
@@ -60,6 +60,7 @@ h1 {
   overflow-x: hidden;
   max-height: 400px;
   padding-top: 0.5rem;
+  margin-right: 2rem;
 }
 
 .tasks-list div:nth-last-child() {
@@ -69,7 +70,7 @@ h1 {
 /* width */
 .tasks-list::-webkit-scrollbar {
   width: 10px;
-  padding-right: 1rem;
+  margin-right: 1rem;
 }
 
 /* Track */
@@ -89,7 +90,8 @@ h1 {
   height: auto;
   align-items: center;
   gap: 1rem;
-  padding-left: 1rem;
+  padding-left: 3rem;
+  padding-right: 1rem;
   color: #775a41;
   display: flex;
   justify-content: flex-start;
@@ -101,13 +103,13 @@ h1 {
 }
 
 .task-title {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   width: 100%;
   color: #a35fb4;
 }
 
 .task-title span {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: #a35fb4;
 }
 
@@ -143,6 +145,11 @@ input {
   opacity: 0.7;
   text-decoration: line-through;
   text-decoration-thickness: 0.2rem;
+}
+
+.task-completed {
+  color: #cc88dd;
+  opacity: 0.7;
 }
 
 .invisible {

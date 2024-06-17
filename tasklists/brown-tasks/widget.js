@@ -89,7 +89,7 @@ const addTaskToList = task => {
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
     stroke="#a35fb4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
     class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -97,7 +97,7 @@ const addTaskToList = task => {
     <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
   </svg>
       <p class="task-title ${task.completed ? "completed" : ""}">
-      <span class="username-glow">${task.username}</span>: ${task.task}
+      <span class="username-glow ${task.completed ? "completed" : ""}">${task.username}</span><span>: ${task.task}</span>
       </p>
     </div>
   </div>`
@@ -196,12 +196,12 @@ const checkForCommand = event => {
 window.addEventListener("onWidgetLoad", async obj => {
   title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
   const width = obj.detail.fieldData.width
-  const eightyPercent = width * 0.85
+  const ninetyPercent = width * 0.90
   tasksContainer.style.width = `${width ?? 30}rem`
-  mainGoal.style.width = `${width ?? 25}rem`
-  container.style.width = `${eightyPercent ?? 25}rem`
-  round.style.width = `${eightyPercent ?? 25}rem`
-  progressBarContainer.style.width = `${eightyPercent ?? 25}rem`
+  mainGoal.style.width = `${width - 2}rem`
+  container.style.width = `${ninetyPercent - 2}rem`
+  round.style.width = `${ninetyPercent - 2}rem`
+  progressBarContainer.style.width = `${ninetyPercent - 2}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData

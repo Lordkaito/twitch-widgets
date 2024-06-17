@@ -98,7 +98,7 @@ let fieldData = {
   width: {
     type: "number",
     label: "Width:",
-    value: 50,
+    value: 30,
     group: "Customization",
   },
   pointsTitle: {
