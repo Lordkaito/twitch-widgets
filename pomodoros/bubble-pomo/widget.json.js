@@ -57,4 +57,19 @@ let fieldData = {
     value: "start",
     label: "start",
   },
+  breakHours: {
+    type: "number",
+    value: 0,
+    label: "Break hours",
+  },
+  breakMinutes: {
+    type: "number",
+    value: 5,
+    label: "Break minutes",
+  },
+  breakSeconds: {
+    type: "number",
+    value: 0,
+    label: "Break seconds",
+  },
 }

@@ -76,6 +76,7 @@ h1 {
 /* Track */
 .tasks-list::-webkit-scrollbar-track {
   background: #f8e0ff;
+  margin-top: 2rem;
 }
 
 /* Handle */
@@ -299,4 +300,9 @@ input {
   right: 2rem;
   bottom: 1rem;
   z-index: -1;
+}
+
+.glow {
+  color: {{glowColor}}!important;
+  text-shadow: 0 0 10px {{glowShadowColor}};
 }
