@@ -15,7 +15,7 @@ const button = document.querySelector(".click")
 const completeButton = document.querySelector(".complete")
 button.addEventListener("click", () => {
   addTaskToList({
-    task: "test jasdhfkj adhsfkjh djkf hkjsd fhjksd hfjkas dfhjk dkfj askdjf kajsdhf klajsd fa ",
+    task: "test ",
     username: "test",
     streamerTask: false,
     completed: false,
@@ -103,17 +103,17 @@ const addTaskToList = task => {
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-    stroke="#a35fb4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-    class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
-    <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
-  </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+        stroke="${task.completed ? fieldData.completeColor : "#a35fb4"}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
+        <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+      </svg>
       <p class="task-title ${task.completed ? "completed" : ""}">
-      <span class="username-glow ${shouldGlow ? "glow" : ""} ${task.completed ? "completed" : ""}">${
-    task.username
-  }</span><span>: ${task.task}</span>
+        <span class="username-glow ${shouldGlow ? "glow" : ""}">
+          ${task.username}</span><span>: ${task.task}
+        </span>
       </p>
     </div>
   </div>`
@@ -128,6 +128,9 @@ const addTaskToList = task => {
 
 const completeTask = task => {
   const taskToComplete = document.getElementById(task.id)
+  const svg = taskToComplete.querySelector("svg")
+  // replace with fieldData.completeColor
+  svg.style.stroke = "#cc88dd"
   const checkIcon = taskToComplete.querySelector(".invisible")
   const completeTask = taskToComplete.querySelector(".task-title")
   completeTask.classList.add("completed")
@@ -222,12 +225,11 @@ window.addEventListener("onWidgetLoad", async obj => {
   streamerName = obj.detail.fieldData.username
   title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
   const width = obj.detail.fieldData.width
-  const ninetyPercent = width * 0.9
   tasksContainer.style.width = `${width ?? 30}rem`
-  mainGoal.style.width = `${width - 2}rem`
-  container.style.width = `${ninetyPercent - 2}rem`
-  round.style.width = `${ninetyPercent - 2}rem`
-  progressBarContainer.style.width = `${ninetyPercent - 2}rem`
+  mainGoal.style.width = `${width}rem`
+  // container.style.width = `${ninetyPercent - 2}rem`
+  // round.style.width = `${ninetyPercent - 2}rem`
+  progressBarContainer.style.width = `${width - 4}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
@@ -268,28 +270,33 @@ window.addEventListener("onEventReceived", async obj => {
 
   const task = checkForCommand(event)
   if (!task || task.task === "") return
+  let success = false
   switch (task.command) {
     case fieldData.command:
       if (isStreamer) task.username = fieldData.username
       addTaskToList(task)
       saveTask(task)
+      success = true
       break
     case fieldData.completeCommand:
       completeTask(task)
       saveTask(task)
+      success = true
       break
     case fieldData.removeCommand:
       removeTaskFromList(task.id, event.data.displayName)
+      success = true
       break
     case fieldData.removeFromCommand:
       if (hasPower) removeTaskFromList(task.id, task.user)
+      success = true
       break
   }
   const allInvisible = taskList.querySelectorAll(".invisible")
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
   const step = getStep(progressContainer, totalTasks)
-  updateGoal(step)
+  if(success) updateGoal(step)
 })
 
 const clearApiData = () => {
@@ -331,7 +338,7 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  // SE_API.store.set("testGoalTasks", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 const saveGlowedUsers = async () => {

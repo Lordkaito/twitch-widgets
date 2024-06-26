@@ -83,7 +83,7 @@
 }
 
 .pomo-counter {
-  transform: scale(0.7);
+  transform: scale(0.7) translate(-100px, 0);
   /* position: absolute; */
   /* left: 20rem; */
   width: 400px;
@@ -92,7 +92,7 @@
   place-content: center;
   background-color: #df9bf0;
   border-radius: 70px;
-  border: 3px solid white;
+  border: 4px solid white;
   margin-top: 4rem;
 }
 

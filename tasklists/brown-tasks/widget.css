@@ -8,6 +8,7 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   letter-spacing: 0.125rem;
+  box-sizing: border-box;
 }
 
 main {
@@ -28,11 +29,11 @@ main {
   background-color: #f8e0ff;
   border: 3px solid #ffefe6;
   height: 30rem;
-  width: 30rem;
+  width: 100%;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   overflow: hidden;
 }
 
@@ -44,14 +45,14 @@ main {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.25rem;
   color: #ffefe6;
   text-align: left;
-  margin: 0 2rem;
+  margin: 0 30px;
 }
 
 .tasks-list {
-  width: 100%;
+  width: calc(100% - 30px);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -59,8 +60,7 @@ h1 {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 400px;
-  padding-top: 0.5rem;
-  margin-right: 2rem;
+  padding-top: 1rem;
 }
 
 .tasks-list div:nth-last-child() {
@@ -70,7 +70,7 @@ h1 {
 /* width */
 .tasks-list::-webkit-scrollbar {
   width: 10px;
-  margin-right: 1rem;
+  padding-right: 1rem;
 }
 
 /* Track */
@@ -86,12 +86,12 @@ h1 {
 }
 
 .task {
-  width: calc(100% - 2rem);
+  width: 100%;
   min-height: 3rem;
   height: auto;
   align-items: center;
   gap: 1rem;
-  padding-left: 3rem;
+  padding-left: 30px;
   padding-right: 1rem;
   color: #775a41;
   display: flex;
@@ -137,11 +137,12 @@ input {
 
 .flex-wrap {
   display: flex;
-  width: 100%;
+  width: calc(100% - 2rem);
   flex-wrap: wrap;
 }
 
 .completed {
+  // replace with fieldData.completedColor
   color: #cc88dd;
   opacity: 0.7;
   text-decoration: line-through;
@@ -149,6 +150,7 @@ input {
 }
 
 .task-completed {
+  // replace with fieldData.completedColor
   color: #cc88dd;
   opacity: 0.7;
 }
@@ -161,7 +163,7 @@ input {
   overflow: hidden;
   max-height: 1080px;
   position: relative;
-  top: 2rem;
+  top: calc(2rem - 10px);
   height: 212px;
   bottom: 0;
   width: 30rem;
@@ -173,12 +175,12 @@ input {
   display: flex;
   align-items: center;
   height: 150px;
-  width: 25rem;
+  width: 100%;
   position: relative;
 }
 
 #round {
-  width: 25rem;
+  width: 100%;
   height: 70px;
   /* padding: 0.4rem 1.5rem; */
   /* background-color: #ddb78a; */
@@ -249,8 +251,9 @@ input {
 }
 
 .img-container img {
-  height: 60px;
+  height: 70px;
 }
+
 .progression-img {
   position: absolute;
   /* right: -2rem; */
@@ -261,9 +264,8 @@ input {
 .goal-name {
   position: absolute;
   top: 0rem;
-  /* left: 2rem; */
+  margin-left: 5px;
   height: 3.5rem;
-  /* text-shadow: rgba(56, 56, 56, 0.65) 0.1em 0.1em 0.5em; */
   border-radius: 40px;
   text-align: center;
   display: flex;
@@ -275,7 +277,7 @@ input {
 }
 
 .goal-name p {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: 0.125rem;
 }
@@ -301,8 +303,8 @@ input {
   bottom: 1rem;
   z-index: -1;
 }
-
+/* 
 .glow {
   color: {{glowColor}}!important;
   text-shadow: 0 0 10px {{glowShadowColor}};
-}
+} */
