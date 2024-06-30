@@ -40,17 +40,17 @@ const progressBarContainer = document.querySelector(".progress-bar-container")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 
 const getApiData = async () => {
-  let data = await SE_API.store.get("newTest")
-  if (data === null) {
-    // tasks = defaultApiData
-    widgetApiData = defaultWidgetApiData
-  } else {
-    console.log(data, "data")
-    widgetApiData = data
-    tasks = widgetApiData.tasks
-  }
+  // let data = await SE_API.store.get("newTest")
+  // if (data === null) {
+  //   // tasks = defaultApiData
+  //   widgetApiData = defaultWidgetApiData
+  // } else {
+  //   console.log(data, "data")
+  //   widgetApiData = data
+  //   tasks = widgetApiData.tasks
+  // }
 
-  // widgetApiData = defaultWidgetApiData
+  widgetApiData = defaultWidgetApiData
 }
 
 const saveTask = task => {
@@ -64,7 +64,7 @@ const saveTask = task => {
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
     widgetApiData.tasks = tasks
-    SE_API.store.set("newTest", widgetApiData)
+    // SE_API.store.set("newTest", widgetApiData)
     return
   }
   const taskToSave = {
@@ -77,7 +77,7 @@ const saveTask = task => {
   tasks.push(taskToSave)
   widgetApiData.tasks = tasks
 
-  SE_API.store.set("newTest", widgetApiData)
+  // SE_API.store.set("newTest", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -91,7 +91,7 @@ const removeTaskFromList = (id, username) => {
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
   widgetApiData.tasks = removedTask
-  SE_API.store.set("newTest", removedTask)
+  // SE_API.store.set("newTest", removedTask)
 }
 
 const addTaskToList = task => {
@@ -104,16 +104,17 @@ const addTaskToList = task => {
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-        stroke="${task.completed ? fieldData.completeColor : "#a35fb4"}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        stroke="${
+          task.completed ? fieldData.completeColor : "#a35fb4"
+        }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
         <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
       </svg>
       <p class="task-title ${task.completed ? "completed" : ""}">
-        <span class="username-glow ${shouldGlow ? "glow" : ""}">
-          ${task.username}</span><span>: ${task.task}
-        </span>
+        <span class="username-glow ${shouldGlow ? "glow" : ""}">${task.username.toLowerCase()}</span>
+        <span>: ${task.task.toLowerCase()}</span>
       </p>
     </div>
   </div>`
@@ -135,6 +136,11 @@ const completeTask = task => {
   const completeTask = taskToComplete.querySelector(".task-title")
   completeTask.classList.add("completed")
   checkIcon.classList.remove("invisible")
+}
+
+const getTask = (task, username) => {
+  console.log(task, "task in get task")
+  return tasks.find(item => item.task === task && item.username === username && !item.completed)
 }
 
 const checkForCommand = event => {
@@ -184,9 +190,15 @@ const checkForCommand = event => {
   }
 
   if (event.renderedText.startsWith(completeTaskCommand)) {
+    console.log(tasks, "tasks")
     const task = tasks.find(
       task => task.username === event.data.displayName && task.task === event.renderedText.split(" ").slice(1).join(" ")
     )
+    const taskToFind = event.renderedText.split(" ").slice(1).join(" ")
+    const firstIncompleteTask = getTask(taskToFind, event.data.displayName)
+
+    console.log(task, "task")
+    console.log(firstIncompleteTask, "otherTask")
     const args = {
       streamerTask: event.isTest,
       id: task.id,
@@ -218,7 +230,7 @@ const checkTimeForUserGlow = () => {
   // remove from widgetApiData.glowedUsers all the users that have been glowed for more than 24 hours
   const usersToGlow = widgetApiData.glowedUsers.filter(user => currentDate - user.date < millisecondsIn24Hours)
   widgetApiData.glowedUsers = usersToGlow
-  SE_API.store.set("newTest", widgetApiData)
+  // SE_API.store.set("newTest", widgetApiData)
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
@@ -228,8 +240,8 @@ window.addEventListener("onWidgetLoad", async obj => {
   tasksContainer.style.width = `${width ?? 30}rem`
   mainGoal.style.width = `${width}rem`
   // container.style.width = `${ninetyPercent - 2}rem`
-  // round.style.width = `${ninetyPercent - 2}rem`
-  progressBarContainer.style.width = `${width - 4}rem`
+  round.style.width = `${width}rem`
+  progressBarContainer.style.width = `${width - 5}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
@@ -296,11 +308,11 @@ window.addEventListener("onEventReceived", async obj => {
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
   const step = getStep(progressContainer, totalTasks)
-  if(success) updateGoal(step)
+  if (success) updateGoal(step)
 })
 
 const clearApiData = () => {
-  SE_API.store.set("newTest", defaultWidgetApiData)
+  // SE_API.store.set("newTest", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -323,7 +335,11 @@ const getStep = (container, objective) => {
 const loadGoal = async () => {
   progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
   progressBar.style.width = `${completedTasks * getStep(progressContainer, totalTasks)}px`
+  console.log(completedTasks, totalTasks, "step")
   imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 10}px`
+  if (completedTasks === totalTasks) {
+    imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 40}px`
+  }
 }
 
 const updateGoal = step => {
@@ -338,13 +354,13 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  SE_API.store.set("newTest", widgetApiData)
+  // SE_API.store.set("newTest", widgetApiData)
 }
 
 const saveGlowedUsers = async () => {
   widgetApiData.glowedUsers = glowedUsers
   console.log(widgetApiData, "widgetApiData", glowedUsers, "saving")
-  SE_API.store.set("newTest", widgetApiData)
+  // SE_API.store.set("newTest", widgetApiData)
 }
 
 const redeemChannelPoints = async event => {
@@ -362,6 +378,7 @@ const redeemChannelPoints = async event => {
 
   if (event.data.title === fieldData.randomTaskTitle) {
     let randomTasks = []
+    const username = event.data.username
     let fieldDataRandomTasks = fieldData.randomTasks.split(",")
     fieldDataRandomTasks.forEach(task => {
       randomTasks.push(task.trim())
@@ -369,18 +386,18 @@ const redeemChannelPoints = async event => {
 
     // take a random task from the randomrasks list
     const randomTask = randomTasks[Math.floor(Math.random() * randomTasks.length)]
-
+    const taskId = randomId()
     addTaskToList({
       task: randomTask,
-      username: streamerName,
+      username: username,
       completed: false,
-      id: randomId(),
+      id: taskId,
     })
     saveTask({
       task: randomTask,
-      username: streamerName,
+      username: username,
       completed: false,
-      id: randomId(),
+      id: taskId,
     })
   }
 }
