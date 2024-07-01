@@ -19,7 +19,7 @@
 }
 
 .pomo-container {
-  transform: scale(.7);
+  transform: scale(.8);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -116,35 +116,35 @@
 
 .circle-1 {
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   left: 5.5rem;
   visibility: hidden;
 }
 
 .circle-2 {
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   right: 5.5rem;
   visibility: hidden;
 }
 
 .circle-3 {
   position: absolute;
-  bottom: 4rem;
+  bottom: 5rem;
   left: 4rem;
   visibility: hidden;
 }
 
 .circle-4 {
   position: absolute;
-  bottom: 4rem;
+  bottom: 5rem;
   right: 4rem;
   visibility: hidden;
 }
 
 .circle-5 {
   position: absolute;
-  bottom: 4rem;
+  bottom: 5rem;
   left: 7rem;
   visibility: hidden;
 }

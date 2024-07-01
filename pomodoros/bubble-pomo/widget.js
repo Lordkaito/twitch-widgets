@@ -26,6 +26,8 @@ let targetSeconds
 let fieldDataHours
 let fieldDataMinutes
 let fieldDataSeconds
+let isRunning = false
+let isRunningBreak = false
 
 button.addEventListener("click", () => {
   startPomo()
@@ -49,7 +51,14 @@ window.addEventListener("onWidgetLoad", obj => {
   minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
   secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
   pomosCounter.textContent = currentPomo + " | " + maxPomos
-  if (showPomo) {
+  if (!isRunning && hoursContainer.textContent === "00") {
+    hoursContainer.style.display = "none"
+    hoursSeparator.style.display = "none"
+  } else {
+    hoursContainer.style.display = "block"
+    hoursSeparator.style.display = "block"
+  }
+  if (showPomo === "true") {
     pomoContainer.style.visibility = "visible"
   } else {
     pomoContainer.style.visibility = "hidden"
@@ -80,8 +89,6 @@ secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
 minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
 hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
 
-let isRunning = false
-let isRunningBreak = false
 const startPomo = () => {
   if (isRunning || isRunningBreak) return
   textObjective.textContent = "WORK"
@@ -115,18 +122,24 @@ const startPomo = () => {
 
 const startBreak = () => {
   if (isRunningBreak) return
-  startHours = fieldData.breakHours
-  startMinutes = fieldData.breakMinutes
-  startSeconds = fieldData.breakSeconds
+  if (goUp) {
+    startHours = 0
+    startMinutes = 0
+    startSeconds = 0
+  } else {
+    startHours = fieldData.breakHours
+    startMinutes = fieldData.breakMinutes
+    startSeconds = fieldData.breakSeconds
+  }
   hoursContainer.textContent = startHours.toString().padStart(2, "0")
   minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
   secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
   isRunningBreak = true
-  if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
-    startHours = fieldDataHours
-    startMinutes = fieldDataMinutes
-    startSeconds = fieldDataSeconds
-  }
+  // if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
+  //   startHours = fieldDataHours
+  //   startMinutes = fieldDataMinutes
+  //   startSeconds = fieldDataSeconds
+  // }
   pomosCounter.textContent = currentPomo + " | " + maxPomos
   if (startHours <= 0) {
     hoursContainer.style.display = "none"
@@ -185,8 +198,13 @@ const updateMinutes = () => {
 }
 
 const updateSeconds = () => {
-  const breakIsOVer = startHours === 0 && startMinutes === 0 && startSeconds === 0 && isRunningBreak
-  if (breakIsOVer) {
+  const breakIsOver = goUp
+    ? startHours === fieldData.breakHours &&
+      startMinutes === fieldData.breakMinutes &&
+      startSeconds === fieldData.breakSeconds &&
+      isRunningBreak
+    : startHours === 0 && startMinutes === 0 && startSeconds === 0 && isRunningBreak
+  if (breakIsOver) {
     clearInterval(breakSecondsTimer)
     isRunningBreak = false
     startPomo()
@@ -194,45 +212,22 @@ const updateSeconds = () => {
   if (isRunning) textObjective.textContent = "WORK"
   if (isRunningBreak) {
     textObjective.textContent = "BREAK"
-    startSeconds == 0 ? (startSeconds = 60) : startSeconds
   }
-  if (goUp && !isRunningBreak) {
+  if (goUp) {
     startSeconds++
   } else {
     startSeconds--
   }
 
-  if (isRunningBreak) {
-    if (startSeconds === 59) {
-      updateMinutes()
-    }
-
-    if (startMinutes === 0 && startSeconds === 60) {
-      updateHours()
-    }
-
-    // if (startSeconds === 60) {
-    //   startSeconds = 0
-    // }
-  } else {
-    if ((startSeconds === 59 && !goUp) || (startSeconds === 60 && goUp)) {
-      updateMinutes()
-    }
-
-    if ((startMinutes <= 0 && !goUp) || (startMinutes === 0 && startSeconds === 60 && goUp)) {
-      updateHours()
-    }
+  if ((startSeconds === 59 && !goUp) || (startSeconds === 60 && goUp)) {
+    updateMinutes()
   }
 
-  // if (startSeconds === 60 && goUp) {
-  //   updateMinutes()
-  // }
+  if ((startMinutes <= 0 && !goUp) || (startMinutes === 0 && startSeconds === 60 && goUp)) {
+    updateHours()
+  }
 
-  // if (startMinutes === 0 && startSeconds === 60 && goUp) {
-  //   updateHours()
-  // }
-
-  if (startSeconds <= 0 && !goUp) {
+  if (startSeconds == 0 && !goUp) {
     startSeconds = 60
   }
 
@@ -273,7 +268,6 @@ const updateSeconds = () => {
     circle5.style.visibility = "visible"
   }
   if (workIsOver) {
-    console.log("work is over")
     if (currentPomo < maxPomos) {
       startBreak()
     }

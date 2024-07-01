@@ -6,12 +6,12 @@ let fieldData = {
   },
   minutesLeft: {
     type: "number",
-    value: 59,
+    value: 0,
     label: "Starting minutes",
   },
   secondsLeft: {
     type: "number",
-    value: 55,
+    value: 2,
     label: "Starting seconds",
   },
   targetHours: {
@@ -31,7 +31,7 @@ let fieldData = {
   },
   goUp: {
     type: "dropdown",
-    value: "true",
+    value: "false",
     label: "Count up",
     options: {
       true: "Yes",
@@ -64,12 +64,12 @@ let fieldData = {
   },
   breakMinutes: {
     type: "number",
-    value: 5,
+    value: 0,
     label: "Break minutes",
   },
   breakSeconds: {
     type: "number",
-    value: 0,
+    value: 5,
     label: "Break seconds",
   },
 }
