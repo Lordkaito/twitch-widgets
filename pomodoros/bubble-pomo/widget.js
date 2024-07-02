@@ -1,289 +1,143 @@
-const button = document.querySelector(".click")
-const hoursContainer = document.querySelector(".hours-container")
-const minutesContainer = document.querySelector(".minutes-container")
-const secondsContainer = document.querySelector(".seconds-container")
-const hoursSeparator = document.querySelector(".hours-separator")
-const minutesSeparator = document.querySelector(".minutes-separator")
-const pomosCounter = document.querySelector(".pomos-left")
-const pomoContainer = document.querySelector(".pomo-counter")
-const textObjective = document.querySelector(".text-objective")
-const circle1 = document.querySelector(".circle-1")
-const circle2 = document.querySelector(".circle-2")
-const circle3 = document.querySelector(".circle-3")
-const circle4 = document.querySelector(".circle-4")
-const circle5 = document.querySelector(".circle-5")
-// let fieldData = {}
-let currentPomo = 0
-let maxPomos
-let startHours
-let startMinutes
-let startSeconds
-let showPomo
-let goUp
-let targetHour
-let targetMinute
-let targetSeconds
-let fieldDataHours
-let fieldDataMinutes
-let fieldDataSeconds
-let isRunning = false
-let isRunningBreak = false
+let workHours
+let workMinutes
+let workSeconds
+let breakHours
+let breakMinutes
+let breakSeconds
+let interval
+let workTime,
+  breakTime,
+  maxPomos,
+  countDirection,
+  currentPomo = 0,
+  isWorkPeriod = true,
+  secondsRemaining
+let showHours = true
+let circle1, circle2, circle3, circle4, circle5
+let pomosLeft
 
-button.addEventListener("click", () => {
-  startPomo()
-})
+const button = document.querySelector(".click")
+button.addEventListener("click", startPomodoro)
 
 window.addEventListener("onWidgetLoad", obj => {
   fieldData = obj.detail.fieldData
-  startHours = fieldData.hoursLeft
-  startMinutes = fieldData.minutesLeft
-  startSeconds = fieldData.secondsLeft
-  maxPomos = fieldData.maxPomos
-  showPomo = fieldData.showPomo
-  targetHour = fieldData.targetHours
-  targetMinute = fieldData.targetMinutes
-  targetSeconds = fieldData.targetSeconds
-  fieldDataHours = fieldData.targetHours
-  fieldDataMinutes = fieldData.targetMinutes
-  fieldDataSeconds = fieldData.targetSeconds
-  goUp = fieldData.goUp === "true"
-  hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
-  minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
-  secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
-  pomosCounter.textContent = currentPomo + " | " + maxPomos
-  if (!isRunning && hoursContainer.textContent === "00") {
-    hoursContainer.style.display = "none"
-    hoursSeparator.style.display = "none"
-  } else {
-    hoursContainer.style.display = "block"
-    hoursSeparator.style.display = "block"
-  }
-  if (showPomo === "true") {
-    pomoContainer.style.visibility = "visible"
-  } else {
-    pomoContainer.style.visibility = "hidden"
-  }
-  if (isRunning) {
-    textObjective.textContent = "WORK"
-  } else {
-    textObjective.textContent = "BREAK"
-  }
+  console.log(fieldData)
+  workHours = parseInt(fieldData.targetHours) || 0
+  workMinutes = parseInt(fieldData.targetMinutes) || 0
+  workSeconds = parseInt(fieldData.targetSeconds) || 0
+  breakHours = parseInt(fieldData.breakHours) || 0
+  breakMinutes = parseInt(fieldData.breakMinutes) || 0
+  breakSeconds = parseInt(fieldData.breakSeconds) || 0
+  maxPomos = parseInt(fieldData.maxPomos.value) || 5 // Asegúrate de convertir a entero
+  countDirection = fieldData.goUp === "true" ? "up" : "down"
+  workTime = workHours * 3600 + workMinutes * 60 + workSeconds
+  breakTime = breakHours * 3600 + breakMinutes * 60 + breakSeconds
+  secondsRemaining = countDirection === "down" ? workTime : 0
+  showHours = workHours > 0 || breakHours > 0
+  circle1 = document.querySelector(".circle-1")
+  circle2 = document.querySelector(".circle-2")
+  circle3 = document.querySelector(".circle-3")
+  circle4 = document.querySelector(".circle-4")
+  circle5 = document.querySelector(".circle-5")
+  pomosLeft = document.querySelector(".pomos-left")
+  pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+  displayTime()
 })
 
 window.addEventListener("onEventReceived", obj => {
-  console.log(obj.detail)
   if (obj.detail.event.value === "start") {
-    startPomo()
+    startPomodoro()
   }
 
   if (obj.detail.event.value === "stop") {
-    isRunning = false
-    // clear all intervals existing
-    clearInterval(secondsTimer)
+    clearInterval(interval)
   }
 })
 
-const isTargetTime = targetHour === startHours && targetMinute === startMinutes && targetSeconds === targetSeconds
+function startPomodoro() {
+  workTime = workHours * 3600 + workMinutes * 60 + workSeconds
+  breakTime = breakHours * 3600 + breakMinutes * 60 + breakSeconds
 
-secondsContainer.textContent = startSeconds?.toString().padStart(2, "0") ?? "00"
-minutesContainer.textContent = startMinutes?.toString().padStart(2, "0") ?? "00"
-hoursContainer.textContent = startHours?.toString().padStart(2, "0") ?? "00"
-
-const startPomo = () => {
-  if (isRunning || isRunningBreak) return
-  textObjective.textContent = "WORK"
-  if (currentPomo >= maxPomos) {
-    currentPomo = 0
-  }
-  startHours = fieldData.hoursLeft
-  startMinutes = fieldData.minutesLeft
-  startSeconds = fieldData.secondsLeft
-  hoursContainer.textContent = startHours.toString().padStart(2, "0")
-  minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
-  secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
-  isRunning = true
-  if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
-    startHours = fieldDataHours
-    startMinutes = fieldDataMinutes
-    startSeconds = fieldDataSeconds
-  }
-  pomosCounter.textContent = currentPomo + " | " + maxPomos
-  if (startHours <= 0) {
-    hoursContainer.style.display = "none"
-    hoursSeparator.style.display = "none"
-  }
-
-  if (startMinutes === 60 && goUp) {
-    hoursContainer.style.display = "block"
-    hoursSeparator.style.display = "block"
-  }
-  secondsTimer = setInterval(updateSeconds, 1000)
+  maxPomos = parseInt(fieldData.maxPomos.value) || 5 // Asegúrate de convertir a entero
+  countDirection = fieldData.goUp === "true" ? "up" : "down"
+  currentPomo = 0
+  isWorkPeriod = true
+  secondsRemaining = countDirection === "down" ? workTime : 0
+  showHours = workHours > 0 || breakHours > 0
+  updateTimer()
+  clearInterval(interval)
+  interval = setInterval(updateTimer, 1000)
 }
 
-const startBreak = () => {
-  if (isRunningBreak) return
-  if (goUp) {
-    startHours = 0
-    startMinutes = 0
-    startSeconds = 0
+function updateTimer() {
+  if (countDirection === "down") {
+    secondsRemaining--
   } else {
-    startHours = fieldData.breakHours
-    startMinutes = fieldData.breakMinutes
-    startSeconds = fieldData.breakSeconds
-  }
-  hoursContainer.textContent = startHours.toString().padStart(2, "0")
-  minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
-  secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
-  isRunningBreak = true
-  // if (startHours === 0 && startMinutes === 0 && startSeconds === 60) {
-  //   startHours = fieldDataHours
-  //   startMinutes = fieldDataMinutes
-  //   startSeconds = fieldDataSeconds
-  // }
-  pomosCounter.textContent = currentPomo + " | " + maxPomos
-  if (startHours <= 0) {
-    hoursContainer.style.display = "none"
-    hoursSeparator.style.display = "none"
+    secondsRemaining++
   }
 
-  if (startMinutes === 60 && goUp) {
-    hoursContainer.style.display = "block"
-    hoursSeparator.style.display = "block"
+  if (secondsRemaining < 0) {
+    handlePeriodEnd()
+  } else if (
+    countDirection === "up" &&
+    ((isWorkPeriod && secondsRemaining >= workTime) || (!isWorkPeriod && secondsRemaining >= breakTime))
+  ) {
+    handlePeriodEnd()
   }
-  breakSecondsTimer = setInterval(updateSeconds, 1000)
+
+  displayTime()
 }
 
-const updateHours = () => {
-  if (startHours === 0 && !goUp) return
-
-  if (goUp) {
-    startHours++
-  } else {
-    startHours--
-  }
-
-  if (startHours <= 0 && !goUp) {
-    hoursContainer.style.display = "none"
-    hoursSeparator.style.display = "none"
-  }
-
-  if (startHours === 0) {
-    hoursContainer.style.display = "none"
-    hoursSeparator.style.display = "none"
-  }
-
-  if (startMinutes === 0 && goUp) {
-    hoursContainer.style.display = "block"
-    hoursSeparator.style.display = "block"
-  }
-  hoursContainer.textContent = startHours.toString().padStart(2, "0")
-}
-
-const updateMinutes = () => {
-  if (startMinutes <= 0 && !goUp) return
-  if (goUp && !isRunningBreak) {
-    startMinutes++
-  } else {
-    startMinutes--
-  }
-
-  if (startMinutes <= 0 && startHours > 0) {
-    startMinutes = 60
-  }
-
-  if (startMinutes === 60 && goUp) {
-    startMinutes = 0
-  }
-  minutesContainer.textContent = startMinutes.toString().padStart(2, "0")
-}
-
-const updateSeconds = () => {
-  const breakIsOver = goUp
-    ? startHours === fieldData.breakHours &&
-      startMinutes === fieldData.breakMinutes &&
-      startSeconds === fieldData.breakSeconds &&
-      isRunningBreak
-    : startHours === 0 && startMinutes === 0 && startSeconds === 0 && isRunningBreak
-  if (breakIsOver) {
-    clearInterval(breakSecondsTimer)
-    isRunningBreak = false
-    startPomo()
-  }
-  if (isRunning) textObjective.textContent = "WORK"
-  if (isRunningBreak) {
-    textObjective.textContent = "BREAK"
-  }
-  if (goUp) {
-    startSeconds++
-  } else {
-    startSeconds--
-  }
-
-  if ((startSeconds === 59 && !goUp) || (startSeconds === 60 && goUp)) {
-    updateMinutes()
-  }
-
-  if ((startMinutes <= 0 && !goUp) || (startMinutes === 0 && startSeconds === 60 && goUp)) {
-    updateHours()
-  }
-
-  if (startSeconds == 0 && !goUp) {
-    startSeconds = 60
-  }
-
-  if (startSeconds === 60 && goUp) {
-    startSeconds = 0
-  }
-
-  if (startSeconds === 60) {
-    secondsContainer.textContent = "00"
-  } else {
-    secondsContainer.textContent = startSeconds.toString().padStart(2, "0")
-  }
-  const workIsOver = goUp
-    ? targetHour == startHours && targetMinute == startMinutes && targetSeconds == startSeconds
-    : startHours === 0 && startMinutes === 0 && startSeconds === 60
-
-  if (workIsOver && maxPomos > currentPomo) {
+function handlePeriodEnd() {
+  if (isWorkPeriod) {
     currentPomo++
-    pomosCounter.textContent = currentPomo + " | " + maxPomos
-  }
-  if (currentPomo >= 1) {
-    circle1.style.visibility = "visible"
-  }
-
-  if (currentPomo >= 2) {
-    circle2.style.visibility = "visible"
-  }
-
-  if (currentPomo >= 3) {
-    circle3.style.visibility = "visible"
-  }
-
-  if (currentPomo >= 4) {
-    circle4.style.visibility = "visible"
-  }
-
-  if (currentPomo >= 5) {
-    circle5.style.visibility = "visible"
-  }
-  if (workIsOver) {
-    if (currentPomo < maxPomos) {
-      startBreak()
+    if (currentPomo >= maxPomos) {
+      clearInterval(interval)
+      secondsRemaining = 0 // Setea segundos a 0 cuando se completa el último pomodoro
+      displayTime()
+      pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+      return
     }
-    if (fieldData.sound === "soundOne") {
-      firstAudio.play()
-      const audio = new Audio(firstAudio.src)
-      audio.play()
-    }
-
-    if (fieldData.sound === "soundTwo") {
-      const audio = new Audio(secondAudio.src)
-      audio.play()
-    }
-
-    isRunning = false
-    textObjective.textContent = "BREAK"
-    clearInterval(secondsTimer)
+    secondsRemaining = countDirection === "down" ? breakTime : 0
+    isWorkPeriod = false
+  } else {
+    secondsRemaining = countDirection === "down" ? workTime : 0
+    isWorkPeriod = true
   }
+  pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+}
+
+function displayTime() {
+  let hours = Math.floor(secondsRemaining / 3600)
+  let minutes = Math.floor((secondsRemaining % 3600) / 60)
+  let seconds = secondsRemaining % 60
+  if (secondsRemaining < 0) {
+    hours = 0
+    minutes = 0
+    seconds = 0
+  }
+  if (showHours) {
+    document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+      2,
+      "0"
+    )}:${String(seconds).padStart(2, "0")}`
+  } else {
+    document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`
+  }
+  // Mostrar círculos de iteraciones completadas
+  showCompletedPomos(currentPomo)
+}
+
+function showCompletedPomos(count) {
+  const circles = [circle1, circle2, circle3, circle4, circle5]
+  circles.forEach((circle, index) => {
+    if (index < count) {
+      circle.style.visibility = "visible"
+    } else {
+      circle.style.visibility = "hidden"
+    }
+  })
 }

@@ -16,7 +16,7 @@ let fieldData = {
   },
   targetHours: {
     type: "number",
-    value: 1,
+    value: 0,
     label: "Finish hours",
   },
   targetMinutes: {
@@ -26,12 +26,12 @@ let fieldData = {
   },
   targetSeconds: {
     type: "number",
-    value: 0,
+    value: 2,
     label: "Finish seconds",
   },
   goUp: {
     type: "dropdown",
-    value: "false",
+    value: "true",
     label: "Count up",
     options: {
       true: "Yes",
