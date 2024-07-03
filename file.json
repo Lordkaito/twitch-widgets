@@ -17,5 +17,29 @@
   "breakHours": { "type": "number", "value": 0, "label": "Break hours" },
   "breakMinutes": { "type": "number", "value": 0, "label": "Break minutes" },
   "breakSeconds": { "type": "number", "value": 5, "label": "Break seconds" },
-  "stopButton": { "type": "button", "value": "stop", "label": "stop" }
+  "stopButton": { "type": "button", "value": "stop", "label": "stop" },
+  "countdownColor": { "type": "colorpicker", "value": "#fff", "label": "Counter color", "group": "Colors" },
+  "pomoNameColor": { "type": "colorpicker", "value": "#fff", "label": "Pomo text color", "group": "Colors" },
+  "pomoNumbersColor": { "type": "colorpicker", "value": "#fff", "label": "Pomo amount color", "group": "Colors" },
+  "pomoCounterLineColor": {
+    "type": "colorpicker",
+    "value": "#fff",
+    "label": "Separator line color",
+    "group": "Colors"
+  },
+  "objectiveTextColor": { "type": "colorpicker", "value": "#8f4ba0", "label": "Work/break color", "group": "Colors" },
+  "pomoCounterBackgroundColor": {
+    "type": "colorpicker",
+    "value": "#df9bf0",
+    "label": "Pomo counter background color",
+    "group": "Colors"
+  },
+  "pomoCounterBorderColor": {
+    "type": "colorpicker",
+    "value": "#fff",
+    "label": "Pomo counter border color",
+    "group": "Colors"
+  },
+  "circleColor": { "type": "colorpicker", "value": "#8f4ba0", "label": "Circles color", "group": "Colors" },
+  "pomoShadowColor": { "type": "colorpicker", "value": "#8f4ba0", "label": "Counter shadow color", "group": "Colors" }
 }

@@ -26,7 +26,7 @@
   height: 350px;
   width: 250px;
   font-weight: bold;
-  color: white;
+  color: red;
   font-size: 3rem;
   background: url("https://i.ibb.co/LvCHdDs/vasograndelila.png") no-repeat center;
   background-size: contain;
@@ -49,7 +49,7 @@
   & p {
     font-size: 3rem;
     padding: 1rem 0;
-    color: white;
+    color: red;
   }
   & span {
     font-size: 3rem;
@@ -84,15 +84,13 @@
 
 .pomo-counter {
   transform: scale(0.7) translate(-100px, 0);
-  /* position: absolute; */
-  /* left: 20rem; */
   width: 400px;
   height: 200px;
   display: grid;
   place-content: center;
   background-color: #df9bf0;
   border-radius: 70px;
-  border: 4px solid white;
+  border: 4px solid {{pomoCounterBorderColor}};
   margin-top: 4rem;
 }
 
@@ -105,7 +103,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: #8f4ba0;
+  background-color: {{circleColor}};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +143,10 @@
 .circle-5 {
   position: absolute;
   bottom: 5rem;
-  left: 7rem;
+  left: 6.9rem;
   visibility: hidden;
+}
+
+#timer {
+  text-shadow: 0 0 10px {{pomoShadowColor}};
 }

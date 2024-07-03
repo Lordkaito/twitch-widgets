@@ -11,24 +11,6 @@ let widgetApiData = {}
 let tasks = []
 let glowedUsers = []
 
-const button = document.querySelector(".click")
-const completeButton = document.querySelector(".complete")
-button.addEventListener("click", () => {
-  addTaskToList({
-    task: "test ",
-    username: "test",
-    streamerTask: false,
-    completed: false,
-    id: 1,
-  })
-})
-
-completeButton.addEventListener("click", () => {
-  completeTask({
-    id: 1,
-  })
-})
-
 const progression = document.querySelector("#progression")
 const imgGoal = document.querySelector(".img-container")
 const title = document.querySelector(".title h1")
@@ -40,17 +22,17 @@ const progressBarContainer = document.querySelector(".progress-bar-container")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 
 const getApiData = async () => {
-  // let data = await SE_API.store.get("newTest")
-  // if (data === null) {
-  //   // tasks = defaultApiData
-  //   widgetApiData = defaultWidgetApiData
-  // } else {
-  //   console.log(data, "data")
-  //   widgetApiData = data
-  //   tasks = widgetApiData.tasks
-  // }
+  let data = await SE_API.store.get("newTest")
+  if (data === null) {
+    // tasks = defaultApiData
+    widgetApiData = defaultWidgetApiData
+  } else {
+    console.log(data, "data")
+    widgetApiData = data
+    tasks = widgetApiData.tasks
+  }
 
-  widgetApiData = defaultWidgetApiData
+  // widgetApiData = defaultWidgetApiData
 }
 
 const saveTask = task => {
@@ -64,7 +46,7 @@ const saveTask = task => {
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
     widgetApiData.tasks = tasks
-    // SE_API.store.set("newTest", widgetApiData)
+    SE_API.store.set("newTest", widgetApiData)
     return
   }
   const taskToSave = {
@@ -77,7 +59,7 @@ const saveTask = task => {
   tasks.push(taskToSave)
   widgetApiData.tasks = tasks
 
-  // SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -91,7 +73,7 @@ const removeTaskFromList = (id, username) => {
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
   widgetApiData.tasks = removedTask
-  // SE_API.store.set("newTest", removedTask)
+  SE_API.store.set("newTest", removedTask)
 }
 
 const addTaskToList = task => {
@@ -113,8 +95,8 @@ const addTaskToList = task => {
         <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
       </svg>
       <p class="task-title ${task.completed ? "completed" : ""}">
-        <span class="username-glow ${shouldGlow ? "glow" : ""}">${task.username.toLowerCase()}</span>
-        <span>: ${task.task.toLowerCase()}</span>
+        <span class="username-glow ${shouldGlow ? "glow" : ""}">${String(task.username.toLowerCase()).trim()}:</span>
+        <span>${task.task.toLowerCase()}</span>
       </p>
     </div>
   </div>`
@@ -230,7 +212,7 @@ const checkTimeForUserGlow = () => {
   // remove from widgetApiData.glowedUsers all the users that have been glowed for more than 24 hours
   const usersToGlow = widgetApiData.glowedUsers.filter(user => currentDate - user.date < millisecondsIn24Hours)
   widgetApiData.glowedUsers = usersToGlow
-  // SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
@@ -241,7 +223,7 @@ window.addEventListener("onWidgetLoad", async obj => {
   mainGoal.style.width = `${width}rem`
   // container.style.width = `${ninetyPercent - 2}rem`
   round.style.width = `${width}rem`
-  progressBarContainer.style.width = `${width - 5}rem`
+  progressBarContainer.style.width = `${width - 6}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
@@ -312,7 +294,7 @@ window.addEventListener("onEventReceived", async obj => {
 })
 
 const clearApiData = () => {
-  // SE_API.store.set("newTest", defaultWidgetApiData)
+  SE_API.store.set("newTest", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -344,8 +326,8 @@ const loadGoal = async () => {
 
 const updateGoal = step => {
   progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
-  if (totalTasks === 0) return
-  if (completedTasks === 0) return
+  // if (totalTasks === 0) return
+  // if (completedTasks === 0) return
   progressBar.style.width = `${completedTasks * step}px`
   imgGoal.style.left = `${completedTasks * step - 30}px`
   saveGoalData()
@@ -354,13 +336,13 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  // SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 const saveGlowedUsers = async () => {
   widgetApiData.glowedUsers = glowedUsers
   console.log(widgetApiData, "widgetApiData", glowedUsers, "saving")
-  // SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("newTest", widgetApiData)
 }
 
 const redeemChannelPoints = async event => {

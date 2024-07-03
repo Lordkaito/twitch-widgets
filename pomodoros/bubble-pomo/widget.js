@@ -15,13 +15,13 @@ let workTime,
 let showHours = true
 let circle1, circle2, circle3, circle4, circle5
 let pomosLeft
+// let fieldData // Variable para almacenar los datos del campo
 
 const button = document.querySelector(".click")
 button.addEventListener("click", startPomodoro)
 
 window.addEventListener("onWidgetLoad", obj => {
   fieldData = obj.detail.fieldData
-  console.log(fieldData)
   workHours = parseInt(fieldData.targetHours) || 0
   workMinutes = parseInt(fieldData.targetMinutes) || 0
   workSeconds = parseInt(fieldData.targetSeconds) || 0
@@ -40,8 +40,9 @@ window.addEventListener("onWidgetLoad", obj => {
   circle4 = document.querySelector(".circle-4")
   circle5 = document.querySelector(".circle-5")
   pomosLeft = document.querySelector(".pomos-left")
-  pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+  pomosLeft.textContent = currentPomo + " | " + maxPomos
   displayTime()
+  updateObjectiveText()
 })
 
 window.addEventListener("onEventReceived", obj => {
@@ -64,23 +65,32 @@ function startPomodoro() {
   isWorkPeriod = true
   secondsRemaining = countDirection === "down" ? workTime : 0
   showHours = workHours > 0 || breakHours > 0
-  updateTimer()
+
   clearInterval(interval)
-  interval = setInterval(updateTimer, 1000)
+  if (countDirection === "down") {
+    interval = setInterval(updateTimerDown, 1000)
+  } else {
+    interval = setInterval(updateTimerUp, 1000)
+  }
+  updateObjectiveText() // Actualizar el texto al iniciar
 }
 
-function updateTimer() {
-  if (countDirection === "down") {
-    secondsRemaining--
-  } else {
-    secondsRemaining++
-  }
+function updateTimerDown() {
+  secondsRemaining--
 
   if (secondsRemaining < 0) {
     handlePeriodEnd()
-  } else if (
-    countDirection === "up" &&
-    ((isWorkPeriod && secondsRemaining >= workTime) || (!isWorkPeriod && secondsRemaining >= breakTime))
+  }
+
+  displayTime()
+}
+
+function updateTimerUp() {
+  secondsRemaining++
+
+  if (
+    (isWorkPeriod && secondsRemaining > workTime) || // Cambiar de >= a >
+    (!isWorkPeriod && secondsRemaining > breakTime) // Cambiar de >= a >
   ) {
     handlePeriodEnd()
   }
@@ -89,22 +99,29 @@ function updateTimer() {
 }
 
 function handlePeriodEnd() {
+  const audio1 = document.querySelector("#firstAudio")
+  const audio2 = document.querySelector("#secondAudio")
+
   if (isWorkPeriod) {
     currentPomo++
     if (currentPomo >= maxPomos) {
       clearInterval(interval)
       secondsRemaining = 0 // Setea segundos a 0 cuando se completa el último pomodoro
       displayTime()
-      pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+      pomosLeft.textContent = currentPomo + " | " + maxPomos
+      audio1.play()
       return
     }
     secondsRemaining = countDirection === "down" ? breakTime : 0
     isWorkPeriod = false
+    audio1.play() // Reproducir audio 1 al terminar el periodo de trabajo
   } else {
     secondsRemaining = countDirection === "down" ? workTime : 0
     isWorkPeriod = true
+    audio2.play() // Reproducir audio 2 al terminar el periodo de descanso
   }
-  pomosLeft.textContent = `${currentPomo} | ${maxPomos}`
+  updateObjectiveText() // Actualizar el texto al cambiar de periodo
+  pomosLeft.textContent = currentPomo + " | " + maxPomos
 }
 
 function displayTime() {
@@ -117,12 +134,12 @@ function displayTime() {
     seconds = 0
   }
   if (showHours) {
-    document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
       2,
       "0"
     )}:${String(seconds).padStart(2, "0")}`
   } else {
-    document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(
       2,
       "0"
     )}`
@@ -140,4 +157,9 @@ function showCompletedPomos(count) {
       circle.style.visibility = "hidden"
     }
   })
+}
+
+function updateObjectiveText() {
+  const textObjective = document.querySelector(".text-objective")
+  textObjective.textContent = isWorkPeriod ? "WORK" : "BREAK"
 }

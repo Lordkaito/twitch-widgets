@@ -1,7 +1,7 @@
 * {
   font-family: "Fredoka", sans-serif;
   font-size: 0.875rem;
-  font-weight: 700;
+  font-weight: 500;
   overflow-wrap: break-word;
   margin: 0;
   padding: 0;
@@ -243,7 +243,7 @@ input {
   position: absolute;
   z-index: 2;
   top: 2.5rem;
-  left: -1rem;
+  left: calc(-1rem - 30px);
   transition: left 0.2s;
   /* margin-left: 35px; */
 }
@@ -300,8 +300,8 @@ input {
   bottom: 1rem;
   z-index: -1;
 }
-/* 
+
 .glow {
   color: {{glowColor}}!important;
   text-shadow: 0 0 10px {{glowShadowColor}};
-} */
+}
