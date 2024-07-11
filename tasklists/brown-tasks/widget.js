@@ -11,14 +11,20 @@ let widgetApiData = {}
 let tasks = []
 let glowedUsers = []
 
+const taskList = document.querySelector(".tasks-list")
+const allInvisible = taskList.querySelectorAll(".invisible")
 const progression = document.querySelector("#progression")
 const imgGoal = document.querySelector(".img-container")
 const title = document.querySelector(".title h1")
+const titleContainer = document.querySelector(".title")
 const tasksContainer = document.querySelector(".tasks-container")
 const mainGoal = document.querySelector(".main-goal")
 const container = document.querySelector(".container")
 const round = document.querySelector("#round")
 const progressBarContainer = document.querySelector(".progress-bar-container")
+const progressBar = document.querySelector(".progress-bar")
+const progressContainer = document.querySelector(".img-progress")
+const goalImg = document.querySelector(".img-container img")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 
 const getApiData = async () => {
@@ -82,19 +88,29 @@ const addTaskToList = task => {
   if (glowedUsers.some(user => user.username === task.username)) {
     shouldGlow = true
   }
+  const themeColors = {
+    purple: "#a35fb4",
+    pink: "#c14b67",
+    green: "#736b44",
+    brown: "#8e5e42",
+  }
+  const colorToShow =
+    fieldData.showCustomColors === "true"
+      ? task.completed
+        ? fieldData.completedTasksColor
+        : fieldData.tasksColor
+      : themeColors[fieldData.theme]
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-        stroke="${
-          task.completed ? fieldData.completeColor : "#a35fb4"
-        }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      <svg class="${task.completed ? "completed" : ""}" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+        stroke="${colorToShow}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
         <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
       </svg>
-      <p class="task-title ${task.completed ? "completed" : ""}">
+      <p class="task-title ${task.completed ? "completed" : ""}" style="color: ${colorToShow}">
         <span class="username-glow ${shouldGlow ? "glow" : ""}">${String(task.username.toLowerCase()).trim()}:</span>
         <span>${task.task.toLowerCase()}</span>
       </p>
@@ -107,6 +123,65 @@ const addTaskToList = task => {
     top: taskList.scrollHeight,
     behavior: "smooth",
   })
+  // const tasksTitleSpans = document.querySelectorAll(".task-title span")
+  // const tasksTitles = document.querySelectorAll(".task-title")
+  // const svgs = document.querySelectorAll(".task svg")
+  // if (fieldData.showCustomColors === "true") {
+  //   tasksTitles.forEach(title => {
+  //     title.style.color = fieldData.tasksColor
+  //   })
+  //   tasksTitleSpans.forEach(span => {
+  //     span.style.color = fieldData.tasksColor
+  //   })
+  //   svgs.forEach(svg => {
+  //     svg.style.stroke = fieldData.svgColor
+  //   })
+  // } else {
+  //   if (fieldData.theme === "purple") {
+  //     tasksTitleSpans.forEach(span => {
+  //       span.style.color = "#a35fb4"
+  //     })
+  //     tasksTitles.forEach(title => {
+  //       title.style.color = "#a35fb4"
+  //     })
+  //     svgs.forEach(svg => {
+  //       svg.style.stroke = "#a35fb4"
+  //     })
+  //   }
+  //   if (fieldData.theme === "pink") {
+  //     tasksTitles.forEach(title => {
+  //       title.style.color = "#c14b67"
+  //     })
+  //     tasksTitleSpans.forEach(span => {
+  //       span.style.color = "#c14b67"
+  //     })
+  //     svgs.forEach(svg => {
+  //       svg.style.stroke = "#c14b67"
+  //     })
+  //   }
+  //   if (fieldData.theme === "green") {
+  //     tasksTitles.forEach(title => {
+  //       title.style.color = "#736b44"
+  //     })
+  //     tasksTitleSpans.forEach(span => {
+  //       span.style.color = "#736b44"
+  //     })
+  //     svgs.forEach(svg => {
+  //       svg.style.stroke = "#736b44"
+  //     })
+  //   }
+  //   if (fieldData.theme === "brown") {
+  //     tasksTitleSpans.forEach(span => {
+  //       span.style.color = "#8e5e42"
+  //     })
+  //     tasksTitles.forEach(title => {
+  //       title.style.color = "#8e5e42"
+  //     })
+  //     svgs.forEach(svg => {
+  //       svg.style.stroke = "#8e5e42"
+  //     })
+  //   }
+  // }
 }
 
 const completeTask = task => {
@@ -223,7 +298,7 @@ window.addEventListener("onWidgetLoad", async obj => {
   mainGoal.style.width = `${width}rem`
   // container.style.width = `${ninetyPercent - 2}rem`
   round.style.width = `${width}rem`
-  progressBarContainer.style.width = `${width - 6}rem`
+  progressBarContainer.style.width = `${width - 6.5}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
@@ -232,6 +307,69 @@ window.addEventListener("onWidgetLoad", async obj => {
   tasks.map(task => addTaskToList(task))
   const taskList = document.querySelector(".tasks-list")
   const allInvisible = taskList.querySelectorAll(".invisible")
+  if (fieldData.showCustomColors === "true") {
+    titleContainer.style.backgroundColor = fieldData.titleBackgroundColor
+    title.style.color = fieldData.titleColor
+    tasksContainer.style.backgroundColor = fieldData.tasksBackgroundColor
+    tasksContainer.style.borderColor = fieldData.tasksBorderColor
+    progressBarContainer.style.backgroundColor = fieldData.progressBarBackgroundColor
+    progressBar.style.backgroundColor = fieldData.progressBarColor
+    progression.style.color = fieldData.progressionColor
+    goalImg.src = fieldData.goalImage
+    if (fieldData.goalImage === "purple") {
+      goalImg.src = "https://utfs.io/f/aa6876e2-d203-467d-b297-616b82a029e2-nu1eyx.png"
+    }
+    if (fieldData.goalImage === "pink") {
+      goalImg.src = "https://utfs.io/f/6b9d5519-e00d-4a58-a56e-15fe50576a68-ntxgfk.png"
+    }
+    if (fieldData.goalImage === "green") {
+      goalImg.src = "https://utfs.io/f/1b542e97-651a-42e3-8356-d51cff720fa3-sentq9.png"
+    }
+    if (fieldData.goalImage === "brown") {
+      goalImg.src = "https://utfs.io/f/90fd15f6-17af-42df-a96d-4d1d0eec4b5a-wkrf48.png"
+    }
+  } else {
+    if (fieldData.theme === "purple") {
+      titleContainer.style.backgroundColor = "#df9bf0"
+      title.style.color = "#ffefe6"
+      tasksContainer.style.backgroundColor = "#f8e0ff"
+      tasksContainer.style.borderColor = "#f4e5db"
+      progressBarContainer.style.backgroundColor = "#f2c1fe"
+      progressBar.style.backgroundColor = "#df9bf0"
+      progression.style.color = "#d79fe6"
+      goalImg.src = "https://utfs.io/f/aa6876e2-d203-467d-b297-616b82a029e2-nu1eyx.png"
+    }
+    if (fieldData.theme === "pink") {
+      titleContainer.style.backgroundColor = "#ffa4bb"
+      title.style.color = "#ffefe6"
+      tasksContainer.style.backgroundColor = "#ffefe6"
+      tasksContainer.style.borderColor = "#ffefe5"
+      progressBarContainer.style.backgroundColor = "#ffc3d2"
+      progressBar.style.backgroundColor = "#f4809d"
+      progression.style.color = "#c5566f"
+      goalImg.src = "https://utfs.io/f/6b9d5519-e00d-4a58-a56e-15fe50576a68-ntxgfk.png"
+    }
+    if (fieldData.theme === "green") {
+      titleContainer.style.backgroundColor = "#c4bc95"
+      title.style.color = "#ffefe6"
+      tasksContainer.style.backgroundColor = "#ffefe6"
+      tasksContainer.style.borderColor = "#ffefe5"
+      progressBarContainer.style.backgroundColor = "#e0d8b1"
+      progressBar.style.backgroundColor = "#b0a881"
+      progression.style.color = "#736b44"
+      goalImg.src = "https://utfs.io/f/1b542e97-651a-42e3-8356-d51cff720fa3-sentq9.png"
+    }
+    if (fieldData.theme === "brown") {
+      titleContainer.style.backgroundColor = "#cb9b7f"
+      title.style.color = "#ffefe6"
+      tasksContainer.style.backgroundColor = "#ffefe6"
+      tasksContainer.style.borderColor = "#ffefe5"
+      progressBarContainer.style.backgroundColor = "#fbcbaf"
+      progressBar.style.backgroundColor = "#cb9b7f"
+      progression.style.color = "#8e5e42"
+      goalImg.src = "https://utfs.io/f/90fd15f6-17af-42df-a96d-4d1d0eec4b5a-wkrf48.png"
+    }
+  }
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
   console.log(widgetApiData, "widgetApiData")
@@ -305,8 +443,6 @@ function stringToArray(string = "", separator = ",") {
   }, [])
 }
 
-const progressContainer = document.querySelector(".img-progress")
-const progressBar = document.querySelector(".progress-bar")
 const getStep = (container, objective) => {
   if (objective === 0) return
   const containerWidth = container.offsetWidth
@@ -411,3 +547,21 @@ function smoothScroll(element, target, duration) {
 
   requestAnimationFrame(scroll)
 }
+
+const button = document.querySelector(".click")
+button.addEventListener("click", () => {
+  const task = {
+    task: "test",
+    username: "test",
+    completed: false,
+    id: 1,
+  }
+  addTaskToList(task)
+})
+
+const complete = document.querySelector(".complete")
+complete.addEventListener("click", () => {
+  completeTask({
+    id: 1,
+  })
+})

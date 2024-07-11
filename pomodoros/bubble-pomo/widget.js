@@ -132,6 +132,7 @@ function displayTime() {
     hours = 0
     minutes = 0
     seconds = 0
+    const svg = document.querySelector("svg")
   }
   if (showHours) {
     document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(

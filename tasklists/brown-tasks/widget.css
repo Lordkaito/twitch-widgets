@@ -26,8 +26,8 @@ main {
 }
 
 .tasks-container {
-  background-color: #f8e0ff;
-  border: 3px solid #ffefe6;
+  background-color: {{tasksBackgroundColor}};
+  border: 3px solid {{tasksBorderColor}};
   height: 30rem;
   width: 100%;
   border-radius: 20px;
@@ -40,13 +40,13 @@ main {
 .title {
   width: 100%;
   text-align: center;
-  background-color: #df9bf0;
+  background-color: {{titleBackgroundColor}};
   padding: 1rem 0;
 }
 
 h1 {
   font-size: 2.25rem;
-  color: #ffefe6;
+  color: {{titleColor}};
   text-align: left;
   margin: 0 30px;
 }
@@ -75,13 +75,15 @@ h1 {
 
 /* Track */
 .tasks-list::-webkit-scrollbar-track {
-  background: #f8e0ff;
+  visibility: hidden;
   margin-top: 2rem;
+  border-radius: 10px;
 }
 
 /* Handle */
 .tasks-list::-webkit-scrollbar-thumb {
-  background: #df9bf0;
+  visibility: {{showScrollBar}}
+  background: {{scrollbarColor}};
   border-radius: 10px;
 }
 
@@ -93,7 +95,7 @@ h1 {
   gap: 1rem;
   padding-left: 30px;
   padding-right: 1rem;
-  color: #775a41;
+  color: {{tasksColor}};
   display: flex;
   justify-content: flex-start;
   margin: 0.5rem 0;
@@ -106,12 +108,10 @@ h1 {
 .task-title {
   font-size: 2rem;
   width: 100%;
-  color: #a35fb4;
 }
 
 .task-title span {
   font-size: 2rem;
-  color: #a35fb4;
 }
 
 .progress {
@@ -126,7 +126,7 @@ h1 {
 
 .progress-bar {
   height: 0.5rem;
-  background-color: #ff8c00;
+  background-color: {{progressBarColor}};
   border-radius: 0.25rem;
   width: 50%;
 }
@@ -142,16 +142,12 @@ input {
 }
 
 .completed {
-  // replace with fieldData.completedColor
-  color: #cc88dd;
   opacity: 0.7;
   text-decoration: line-through;
   text-decoration-thickness: 0.2rem;
 }
 
 .task-completed {
-  // replace with fieldData.completedColor
-  color: #cc88dd;
   opacity: 0.7;
 }
 
@@ -192,7 +188,7 @@ input {
   width: 25rem;
   height: 10px;
   border-radius: 8px;
-  background-color: #f2c1fe;
+  background-color: {{progressBarBackgroundColor}};
   /* position: relative; */
   overflow: hidden;
 }
@@ -220,7 +216,7 @@ input {
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: #df9bf0;
+  background-color: {{progressBarColor}};
   height: 70px;
   transition: width 0.2s;
   position: relative;
@@ -243,7 +239,7 @@ input {
   position: absolute;
   z-index: 2;
   top: 2.5rem;
-  left: calc(-1rem - 30px);
+  left: -1rem;
   transition: left 0.2s;
   /* margin-left: 35px; */
 }
@@ -270,7 +266,8 @@ input {
   justify-content: center;
   z-index: 1;
   text-transform: uppercase;
-  color: #d79fe6;
+  color: {{progressionColor}};
+  transform: translate(-5px,0px)
 }
 
 .goal-name p {
@@ -300,7 +297,7 @@ input {
   bottom: 1rem;
   z-index: -1;
 }
-
+ 
 .glow {
   color: {{glowColor}}!important;
   text-shadow: 0 0 10px {{glowShadowColor}};

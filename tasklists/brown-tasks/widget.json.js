@@ -1,14 +1,23 @@
 let fieldData = {
-  width: {
-    type: "number",
-    label: "Width:",
-    value: 50,
+  streamerWidget: {
+    type: "dropdown",
+    label: "Is streamer only widget?",
+    value: "false",
+    options: {
+      true: "Yes",
+      false: "No",
+    },
     group: "Customization",
   },
-  pointsTitle: {
+  title: { type: "text", label: "Task list title", value: "Test task list", group: "Customization" },
+  width: { type: "number", label: "Width:", value: 50, group: "Customization" },
+  pointsTitle: { type: "text", label: "Glow title:", value: "Lurk", group: "Customization" },
+  glowColor: { type: "colorpicker", label: "Glow color:", value: "#fef5ec", group: "Customization" },
+  glowShadowColor: { type: "colorpicker", label: "Glow shadow color:", value: "#b38cff", group: "Customization" },
+  randomTaskTitle: {
     type: "text",
-    label: "Points title:",
-    value: "Lurk",
+    label: "Random task title:",
+    value: "Random task",
     group: "Customization",
   },
   randomTasks: {
@@ -17,36 +26,17 @@ let fieldData = {
     value: "Take a shower, pet the dog, drink water",
     group: "Customization",
   },
-  randomTaskTitle: {
-    type: "text",
-    label: "Random task title:",
-    value: "Brown tasks",
-    group: "Customization"
-  },
-  streamerName: {
-    type: "text",
-    label: "Streamer name:",
-    value: "Streamer",
+  showScrollBar: {
+    type: "dropdown",
+    label: "Show scrollbar",
+    value: "visible",
+    options: {
+      visible: "Yes",
+      hidden: "No",
+    },
     group: "Customization",
   },
-  glowColor: {
-    type: "text",
-    label: "Glow color:",
-    value: "#ff0000",
-    group: "Customization",
-  },
-  glowShadowColor: {
-    type: "text",
-    label: "Glow shadow color:",
-    value: "#ff0000",
-    group: "Customization",
-  },
-  command: {
-    type: "text",
-    label: "Add task command:",
-    value: "!addtask",
-    group: "Customization",
-  },
+  command: { type: "text", label: "Add task command:", value: "!addtask", group: "Customization" },
   removeCommand: {
     type: "text",
     label: "Remove task command:",
@@ -59,12 +49,7 @@ let fieldData = {
     value: "!completetask",
     group: "Customization",
   },
-  scrollUpCommand: {
-    type: "text",
-    label: "Scroll up command:",
-    value: "!scrollup",
-    group: "Customization",
-  },
+  scrollUpCommand: { type: "text", label: "Scroll up command:", value: "!scrollup", group: "Customization" },
   scrollDownCommand: {
     type: "text",
     label: "Scroll down command:",
@@ -74,19 +59,7 @@ let fieldData = {
   removeFromCommand: {
     type: "text",
     label: "Remove from command:",
-    value: "!removefrom",
-    group: "Customization",
-  },
-  username: {
-    type: "text",
-    label: "Username:",
-    value: "Username",
-    group: "Customization",
-  },
-  width: {
-    type: "number",
-    label: "Width:",
-    value: 50,
+    value: "!modremove",
     group: "Customization",
   },
   givePowerToMods: {
@@ -94,15 +67,48 @@ let fieldData = {
     label: "Give power to mods:",
     value: "false",
     group: "Customization",
+    options: { true: "Yes", false: "No" },
+  },
+  theme: {
+    type: "dropdown",
+    label: "Theme",
+    value: "purple",
+    group: "Colors",
     options: {
-      true: "Yes",
-      false: "No",
+      purple: "Purple",
+      green: "Green",
+      pink: "Pink",
+      brown: "Brown",
     },
   },
-  resetGoalData: {
-    type: "button",
-    label: "Reset goal",
-    value: "reset",
-    group: "Customization",
-  }
+  resetGoalData: { type: "button", label: "Reset goal", value: "reset", group: "Customization" },
+  showCustomColors: {
+    type: "dropdown",
+    label: "Use custom colors",
+    value: "false",
+    group: "Colors",
+    options: { true: "Yes", false: "No" },
+  },
+  titleBackgroundColor: { type: "colorpicker", label: "Title background color", value: "#df9bf0", group: "Colors" },
+  titleColor: { type: "colorpicker", label: "Title color", value: "#df9bf0", group: "Colors" },
+  tasksBackgroundColor: { type: "colorpicker", label: "Tasks background color", value: "#df9bf0", group: "Colors" },
+  tasksBorderColor: { type: "colorpicker", label: "Tasks border color", value: "#ffefe6", group: "Colors" },
+  tasksColor: { type: "colorpicker", label: "Tasks color", value: "#df9bf0", group: "Colors" },
+  completedTasksColor: { type: "colorpicker", label: "Tasks color (completed)", value: "#df9bf0", group: "Colors" },
+  progressBarBackgroundColor: {
+    type: "colorpicker",
+    label: "Progress bar background color",
+    value: "#df9bf0",
+    group: "Colors",
+  },
+  progressBarColor: { type: "colorpicker", label: "Progress bar color", value: "#df9bf0", group: "Colors" },
+  progressionColor: { type: "colorpicker", label: "Progression text color", value: "#df9bf0", group: "Colors" },
+  scrollbarColor: { type: "colorpicker", label: "Scrollbar color", value: "#df9bf0", group: "Colors" },
+  goalImage: {
+    type: "dropdown",
+    label: "Vase image",
+    value: "purple",
+    options: { purple: "Purple", green: "Green", pink: "Pink", brown: "Brown" },
+    group: "Colors",
+  },
 }
