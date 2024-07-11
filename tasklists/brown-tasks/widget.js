@@ -343,6 +343,7 @@ window.addEventListener("onEventReceived", async obj => {
   if (event.type === "channelPoints") {
     redeemChannelPoints(event)
     return
+    
   }
 
   const task = checkForCommand(event)
