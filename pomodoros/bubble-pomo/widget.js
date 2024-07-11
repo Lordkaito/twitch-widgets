@@ -17,9 +17,6 @@ let circle1, circle2, circle3, circle4, circle5
 let pomosLeft
 // let fieldData // Variable para almacenar los datos del campo
 
-const button = document.querySelector(".click")
-button.addEventListener("click", startPomodoro)
-
 window.addEventListener("onWidgetLoad", obj => {
   fieldData = obj.detail.fieldData
   workHours = parseInt(fieldData.targetHours) || 0
@@ -28,7 +25,7 @@ window.addEventListener("onWidgetLoad", obj => {
   breakHours = parseInt(fieldData.breakHours) || 0
   breakMinutes = parseInt(fieldData.breakMinutes) || 0
   breakSeconds = parseInt(fieldData.breakSeconds) || 0
-  maxPomos = parseInt(fieldData.maxPomos.value) || 5 // Asegúrate de convertir a entero
+  maxPomos = parseInt(fieldData.maxPomos) || 5 // Asegúrate de convertir a entero
   countDirection = fieldData.goUp === "true" ? "up" : "down"
   workTime = workHours * 3600 + workMinutes * 60 + workSeconds
   breakTime = breakHours * 3600 + breakMinutes * 60 + breakSeconds
@@ -43,6 +40,79 @@ window.addEventListener("onWidgetLoad", obj => {
   pomosLeft.textContent = currentPomo + " | " + maxPomos
   displayTime()
   updateObjectiveText()
+  const pomoContainer = document.querySelector(".pomo-container")
+  const timer = document.querySelector("#timer")
+  const circles = document.querySelectorAll(".circle")
+  const pomoCounter = document.querySelector(".pomo-counter")
+  const pomoNameColor = document.querySelector(".title-counter p")
+  const textObjective = document.querySelector(".text-objective")
+  const pomosLeftContainer = document.querySelector(".pomos-left")
+  const svg = document.querySelector(".svg-container svg")
+  const separator = document.querySelector(".counter-separator")
+  if (fieldData.theme === "purple") {
+    if (fieldData.showCustomColors === "false") {
+      timer.style.color = "#ffefe6"
+      circles.forEach(circle => (circle.style.backgroundColor = "#8f4ba0"))
+      pomoCounter.style.backgroundColor = "#cc88dd"
+      pomoCounter.style.borderColor = "#ffefdb"
+      pomoNameColor.style.color = "#ffefdb"
+      textObjective.style.color = "#8f4ba0"
+      pomosLeftContainer.style.color = "#ffefdb"
+      svg.style.color = "#8f4ba0"
+      separator.style.backgroundColor = "#ffefdb"
+      timer.style.textShadow = "0 0 10px #8f4ba0"
+    }
+    pomoContainer.style.background =
+      "url('https://utfs.io/f/348c068a-1e63-4f7c-990b-841c5d3d4e14-szp3se.png') no-repeat center"
+  }
+  if (fieldData.theme === "pink") {
+    if (fieldData.showCustomColors === "false") {
+      timer.style.color = "#ffefe6"
+      circles.forEach(circle => (circle.style.backgroundColor = "#c14b67"))
+      pomoCounter.style.backgroundColor = "#ffa4bb"
+      pomoCounter.style.borderColor = "#ffefdb"
+      pomoNameColor.style.color = "#ffefdb"
+      textObjective.style.color = "#c14b67"
+      pomosLeftContainer.style.color = "#ffefdb"
+      svg.style.color = "#c14b67"
+      separator.style.backgroundColor = "#ffefdb"
+      timer.style.textShadow = "0 0 10px #c14b67"
+    }
+    pomoContainer.style.background =
+      "url('https://utfs.io/f/98431f00-d5d8-4dd1-b269-7223a2e3bec5-szl591.png') no-repeat center"
+  }
+  if (fieldData.theme === "green") {
+    if (fieldData.showCustomColors === "false") {
+      timer.style.color = "#ffefe6"
+      circles.forEach(circle => (circle.style.backgroundColor = "#8e5e42"))
+      pomoCounter.style.backgroundColor = "#b0a881"
+      pomoCounter.style.borderColor = "#ffefdb"
+      pomoNameColor.style.color = "#ffefdb"
+      textObjective.style.color = "#736b44"
+      pomosLeftContainer.style.color = "#ffefdb"
+      svg.style.color = "#736b44"
+      separator.style.backgroundColor = "#ffefdb"
+      timer.style.textShadow = "0 0 10px #736b44"
+    }
+    pomoContainer.style.background =
+      "url('https://utfs.io/f/be045d88-5f9a-4084-a1b5-751f3b87ad09-ot9ytg.png') no-repeat center"
+  }
+  if (fieldData.theme === "brown") {
+    if (fieldData.showCustomColors === "false") {
+      timer.style.color = "#ffefe6"
+      circles.forEach(circle => (circle.style.backgroundColor = "#8e5e42"))
+      pomoCounter.style.backgroundColor = "#cb9b7f"
+      pomoCounter.style.borderColor = "#ffefdb"
+      pomoNameColor.style.color = "#ffefdb"
+      textObjective.style.color = "#8e5e42"
+      pomosLeftContainer.style.color = "#ffefdb"
+      svg.style.color = "#8e5e42"
+      separator.style.backgroundColor = "#ffefdb"
+      timer.style.textShadow = "0 0 10px #8e5e42"
+    }
+    pomoContainer.style.background =
+      "url('https://utfs.io/f/56734d71-d008-46d4-9622-0e17bd5d4033-gg93l9.png') no-repeat center"
+  }
 })
 
 window.addEventListener("onEventReceived", obj => {
@@ -59,7 +129,7 @@ function startPomodoro() {
   workTime = workHours * 3600 + workMinutes * 60 + workSeconds
   breakTime = breakHours * 3600 + breakMinutes * 60 + breakSeconds
 
-  maxPomos = parseInt(fieldData.maxPomos.value) || 5 // Asegúrate de convertir a entero
+  maxPomos = parseInt(fieldData.maxPomos) || 5 // Asegúrate de convertir a entero
   countDirection = fieldData.goUp === "true" ? "up" : "down"
   currentPomo = 0
   isWorkPeriod = true
@@ -132,15 +202,15 @@ function displayTime() {
     hours = 0
     minutes = 0
     seconds = 0
-    const svg = document.querySelector("svg")
   }
   if (showHours) {
-    document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")} : ${String(minutes).padStart(
+    document.getElementById("timer").textContent = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
       2,
       "0"
     )}:${String(seconds).padStart(2, "0")}`
+    document.getElementById("timer").style.transform = "scale(0.7)"
   } else {
-    document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")} : ${String(seconds).padStart(
+    document.getElementById("timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
       2,
       "0"
     )}`

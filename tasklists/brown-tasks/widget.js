@@ -10,6 +10,7 @@ let defaultWidgetApiData = {
 let widgetApiData = {}
 let tasks = []
 let glowedUsers = []
+let channel
 
 const taskList = document.querySelector(".tasks-list")
 const allInvisible = taskList.querySelectorAll(".invisible")
@@ -28,12 +29,11 @@ const goalImg = document.querySelector(".img-container img")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 
 const getApiData = async () => {
-  let data = await SE_API.store.get("newTest")
+  let data = await SE_API.store.get("beniartsCustomWidgetTaskListFirst")
   if (data === null) {
     // tasks = defaultApiData
     widgetApiData = defaultWidgetApiData
   } else {
-    console.log(data, "data")
     widgetApiData = data
     tasks = widgetApiData.tasks
   }
@@ -52,7 +52,7 @@ const saveTask = task => {
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
     widgetApiData.tasks = tasks
-    SE_API.store.set("newTest", widgetApiData)
+    SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
     return
   }
   const taskToSave = {
@@ -65,7 +65,7 @@ const saveTask = task => {
   tasks.push(taskToSave)
   widgetApiData.tasks = tasks
 
-  SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -79,7 +79,7 @@ const removeTaskFromList = (id, username) => {
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
   widgetApiData.tasks = removedTask
-  SE_API.store.set("newTest", removedTask)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", removedTask)
 }
 
 const addTaskToList = task => {
@@ -103,7 +103,9 @@ const addTaskToList = task => {
   const taskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
-      <svg class="${task.completed ? "completed" : ""}" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+      <svg class="${
+        task.completed ? "completed" : ""
+      } xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
         stroke="${colorToShow}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
         class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -111,7 +113,7 @@ const addTaskToList = task => {
         <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
       </svg>
       <p class="task-title ${task.completed ? "completed" : ""}" style="color: ${colorToShow}">
-        <span class="username-glow ${shouldGlow ? "glow" : ""}">${String(task.username.toLowerCase()).trim()}:</span>
+        <span class="username-glow ${shouldGlow ? "glow" : ""}">${String(task.username.toLowerCase()).trim()}</span>:
         <span>${task.task.toLowerCase()}</span>
       </p>
     </div>
@@ -123,65 +125,6 @@ const addTaskToList = task => {
     top: taskList.scrollHeight,
     behavior: "smooth",
   })
-  // const tasksTitleSpans = document.querySelectorAll(".task-title span")
-  // const tasksTitles = document.querySelectorAll(".task-title")
-  // const svgs = document.querySelectorAll(".task svg")
-  // if (fieldData.showCustomColors === "true") {
-  //   tasksTitles.forEach(title => {
-  //     title.style.color = fieldData.tasksColor
-  //   })
-  //   tasksTitleSpans.forEach(span => {
-  //     span.style.color = fieldData.tasksColor
-  //   })
-  //   svgs.forEach(svg => {
-  //     svg.style.stroke = fieldData.svgColor
-  //   })
-  // } else {
-  //   if (fieldData.theme === "purple") {
-  //     tasksTitleSpans.forEach(span => {
-  //       span.style.color = "#a35fb4"
-  //     })
-  //     tasksTitles.forEach(title => {
-  //       title.style.color = "#a35fb4"
-  //     })
-  //     svgs.forEach(svg => {
-  //       svg.style.stroke = "#a35fb4"
-  //     })
-  //   }
-  //   if (fieldData.theme === "pink") {
-  //     tasksTitles.forEach(title => {
-  //       title.style.color = "#c14b67"
-  //     })
-  //     tasksTitleSpans.forEach(span => {
-  //       span.style.color = "#c14b67"
-  //     })
-  //     svgs.forEach(svg => {
-  //       svg.style.stroke = "#c14b67"
-  //     })
-  //   }
-  //   if (fieldData.theme === "green") {
-  //     tasksTitles.forEach(title => {
-  //       title.style.color = "#736b44"
-  //     })
-  //     tasksTitleSpans.forEach(span => {
-  //       span.style.color = "#736b44"
-  //     })
-  //     svgs.forEach(svg => {
-  //       svg.style.stroke = "#736b44"
-  //     })
-  //   }
-  //   if (fieldData.theme === "brown") {
-  //     tasksTitleSpans.forEach(span => {
-  //       span.style.color = "#8e5e42"
-  //     })
-  //     tasksTitles.forEach(title => {
-  //       title.style.color = "#8e5e42"
-  //     })
-  //     svgs.forEach(svg => {
-  //       svg.style.stroke = "#8e5e42"
-  //     })
-  //   }
-  // }
 }
 
 const completeTask = task => {
@@ -196,7 +139,6 @@ const completeTask = task => {
 }
 
 const getTask = (task, username) => {
-  console.log(task, "task in get task")
   return tasks.find(item => item.task === task && item.username === username && !item.completed)
 }
 
@@ -247,15 +189,12 @@ const checkForCommand = event => {
   }
 
   if (event.renderedText.startsWith(completeTaskCommand)) {
-    console.log(tasks, "tasks")
     const task = tasks.find(
       task => task.username === event.data.displayName && task.task === event.renderedText.split(" ").slice(1).join(" ")
     )
     const taskToFind = event.renderedText.split(" ").slice(1).join(" ")
     const firstIncompleteTask = getTask(taskToFind, event.data.displayName)
 
-    console.log(task, "task")
-    console.log(firstIncompleteTask, "otherTask")
     const args = {
       streamerTask: event.isTest,
       id: task.id,
@@ -287,10 +226,11 @@ const checkTimeForUserGlow = () => {
   // remove from widgetApiData.glowedUsers all the users that have been glowed for more than 24 hours
   const usersToGlow = widgetApiData.glowedUsers.filter(user => currentDate - user.date < millisecondsIn24Hours)
   widgetApiData.glowedUsers = usersToGlow
-  SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
+  channel = obj.detail.channel.username
   streamerName = obj.detail.fieldData.username
   title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
   const width = obj.detail.fieldData.width
@@ -372,7 +312,6 @@ window.addEventListener("onWidgetLoad", async obj => {
   }
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
-  console.log(widgetApiData, "widgetApiData")
   await loadGoal()
 })
 
@@ -390,8 +329,14 @@ window.addEventListener("onEventReceived", async obj => {
 
   let { event } = obj.detail
   const isMod = event.data?.tags?.mod === "1" ?? false
-  const isStreamer =
-    (event.data?.displayName === fieldData.username || event.data?.channel === fieldData.username) ?? false
+  console.log(event, channel, "event")
+  let isStreamer
+  if (event.type === "channelPoints") {
+    isStreamer = event.data.username === channel
+  } else {
+    isStreamer = event.data.displayName.toLowerCase() === channel
+  }
+  if (fieldData.streamerWidget === "true" && !isStreamer) return
   const givePowerToMods = fieldData.givePowerToMods === "true"
   if ((isMod && givePowerToMods) || isStreamer) hasPower = true
   if (event.isCommunityGift) return
@@ -405,7 +350,6 @@ window.addEventListener("onEventReceived", async obj => {
   let success = false
   switch (task.command) {
     case fieldData.command:
-      if (isStreamer) task.username = fieldData.username
       addTaskToList(task)
       saveTask(task)
       success = true
@@ -432,7 +376,7 @@ window.addEventListener("onEventReceived", async obj => {
 })
 
 const clearApiData = () => {
-  SE_API.store.set("newTest", defaultWidgetApiData)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -454,7 +398,7 @@ const loadGoal = async () => {
   progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
   progressBar.style.width = `${completedTasks * getStep(progressContainer, totalTasks)}px`
   console.log(completedTasks, totalTasks, "step")
-  imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 10}px`
+  imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 28}px`
   if (completedTasks === totalTasks) {
     imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 40}px`
   }
@@ -472,13 +416,13 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const saveGlowedUsers = async () => {
   widgetApiData.glowedUsers = glowedUsers
   console.log(widgetApiData, "widgetApiData", glowedUsers, "saving")
-  SE_API.store.set("newTest", widgetApiData)
+  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const redeemChannelPoints = async event => {
@@ -547,21 +491,3 @@ function smoothScroll(element, target, duration) {
 
   requestAnimationFrame(scroll)
 }
-
-const button = document.querySelector(".click")
-button.addEventListener("click", () => {
-  const task = {
-    task: "test",
-    username: "test",
-    completed: false,
-    id: 1,
-  }
-  addTaskToList(task)
-})
-
-const complete = document.querySelector(".complete")
-complete.addEventListener("click", () => {
-  completeTask({
-    id: 1,
-  })
-})
