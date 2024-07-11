@@ -297,7 +297,7 @@ input {
   bottom: 1rem;
   z-index: -1;
 }
- 
+
 .glow {
   color: {{glowColor}}!important;
   text-shadow: 0 0 10px {{glowShadowColor}};
