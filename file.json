@@ -1,190 +1,48 @@
 {
-  "emotesId": { "type": "text", "label": "Set your 7TV ID:", "value": "", "group": "Customization" },
-  "widgetHeight": {
-    "label": "Widget height (recommended 1080)",
-    "type": "text",
-    "group": "Customization",
-    "value": "1080"
-  },
-  "messageMaxWidth": {
-    "label": "Max width for messages(sized on REM)",
-    "type": "text",
-    "group": "Customization",
-    "value": "22"
-  },
-  "limitSize": {
-    "label": "Limit size nickname on/off:",
+  "svg": {
     "type": "dropdown",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "colorPickerNickname": {
-    "type": "colorpicker",
-    "label": "Select color for nickname users:",
-    "group": "Customization",
-    "value": "#e7ccff"
-  },
-  "colorPickerRoleText": {
-    "type": "colorpicker",
-    "label": "Select color for role text:",
-    "group": "Customization",
-    "value": "#5e77da"
-  },
-  "colorPickerRoleBox": {
-    "type": "colorpicker",
-    "label": "Select color for role box:",
-    "group": "Customization",
-    "value": "#fffff"
-  },
-  "colorPickerForCircle": {
-    "type": "colorpicker",
-    "label": "Select color for circle badge detail:",
-    "group": "Customization",
-    "value": "#ffefdb"
-  },
-  "colorPickerMessageText": {
-    "type": "colorpicker",
-    "label": "Select color for messages text:",
-    "group": "Customization",
-    "value": "#ffefdb"
-  },
-  "colorPickerEventText": {
-    "type": "colorpicker",
-    "label": "Select color for events text:",
-    "group": "Customization",
-    "value": "#5e77da"
-  },
-  "colorPickerEventContainer": {
-    "type": "colorpicker",
-    "label": "Select color for nickname users:",
-    "group": "Customization",
-    "value": "#b6baea"
-  },
-  "colorPickerConstallationLines": {
-    "type": "colorpicker",
-    "label": "Select color for nickname users:",
-    "group": "Customization",
-    "value": "#ffefdb"
-  },
-  "deleteMessages": {
-    "label": "Time to delete messages (max 60):",
-    "type": "number",
-    "group": "Customization",
-    "value": 60,
-    "min": 1,
-    "max": 60,
-    "step": 1
-  },
-  "deleteMessagesOption": {
-    "label": "How to delete messages:",
-    "type": "dropdown",
-    "group": "Customization",
-    "value": "amount",
-    "options": { "timer": "Timer", "amount": "Messages amount" }
-  },
-  "maxMessages": {
-    "label": "Max messages to show:",
-    "type": "number",
-    "group": "Customization",
-    "value": 3,
-    "min": 1,
-    "max": 100,
-    "step": 1
-  },
-  "deleteMessagesTimer": {
-    "label": "Delete messages timer (in seconds):",
-    "type": "number",
-    "group": "Customization",
-    "value": 2,
-    "min": 1,
-    "max": 60,
-    "step": 1
-  },
-  "allowDeleteMessages": {
-    "type": "dropdown",
-    "label": "Delete messages on/off:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "displayBadges": {
-    "type": "dropdown",
-    "label": "Show badges:",
-    "value": "false",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "allowPronouns": {
-    "type": "dropdown",
-    "label": "Show pronouns:",
-    "value": "true",
-    "group": "Customization",
-    "options": { "true": "Yes", "false": "No" }
-  },
-  "usersBlackList": {
-    "type": "text",
-    "label": "Users blacklist (separated by comma)",
-    "value": "",
+    "label": "SVG",
+    "value": "star",
+    "options": { "star": "Star", "heart": "Heart", "flower": "Flower", "moon": "Moon" },
     "group": "Customization"
   },
-  "specialCharsBlackList": {
-    "type": "text",
-    "label": "Special chars (separated by comma)",
-    "value": "",
-    "group": "Customization"
-  },
-  "subText": {
-    "type": "text",
-    "label": "Custom text for SUB (max 40)",
-    "value": "(user) just suscribed!",
-    "group": "Events"
-  },
-  "followText": {
-    "type": "text",
-    "label": "Custom text for FOLLOW (max 40)",
-    "value": "(user) just followed!",
-    "group": "Events"
-  },
-  "cheerText": {
-    "type": "text",
-    "label": "Custom text for Cheers (max 40)",
-    "value": "cheered x(amount)!",
-    "group": "Events"
-  },
-  "tipText": {
-    "type": "text",
-    "label": "Custom text for Tips (max 40)",
-    "value": "Tipped $(amount)!",
-    "group": "Events"
-  },
-  "giftSubText": {
-    "type": "text",
-    "label": "Custom text for gifted SUB (max 40)",
-    "value": "(sender) gifted a sub to (user)!",
-    "group": "Events"
-  },
-  "bulkGiftText": {
-    "type": "text",
-    "label": "Custom text for many gifts at once (max 40)",
-    "value": "(sender) (amount) sub(s)!",
-    "group": "Events"
-  },
-  "raidText": {
-    "type": "text",
-    "label": "Custom text for raids (max 40)",
-    "value": "(sender) sent (amount) raiders!",
-    "group": "Events"
-  },
+  "color": { "type": "colorpicker", "label": "Color", "value": "#df9bf0", "group": "Customization" },
   "theme": {
     "type": "dropdown",
-    "label": "Theme:",
-    "value": "pink",
+    "label": "Theme",
+    "value": "dark",
     "group": "Customization",
-    "options": { "pink": "Pink", "purple": "Purple" }
+    "options": { "light": "Light", "dark": "Dark" }
   },
-  "firstStep": { "type": "number", "label": "First step:", "value": 1500, "group": "Customization", "min": 1 },
-  "secondStep": { "type": "number", "label": "First step:", "value": 1750, "group": "Customization", "min": 1 },
-  "resetGoalData": { "type": "button", "label": "Reset goal", "value": "reset", "group": "Customization" },
-  "currency": { "type": "text", "label": "Currency:", "value": "$", "group": "Customization" }
+  "rainbowMode": { "type": "checkbox", "label": "Rainbow Mode", "value": false, "group": "Customization" },
+  "animationTime": { "type": "number", "label": "Animation Time", "value": 2000, "group": "Customization" },
+  "animation": {
+    "type": "dropdown",
+    "label": "Animation",
+    "value": "random",
+    "options": { "random": "Random pop-in", "fromBottom": "From bottom" },
+    "group": "Customization"
+  },
+  "redeemMethod": {
+    "type": "dropdown",
+    "label": "Redeem method",
+    "value": "channelPoints",
+    "options": {
+      "channelPoints": "Channel points",
+      "command": "Command"
+    },
+    "group": "Customization"
+  },
+  "command": {
+    "type": "text",
+    "label": "Redeem command",
+    "value": "!yeah",
+    "group": "Customization"
+  },
+  "channelPointsName": {
+    "type": "text",
+    "label": "Channel points name",
+    "value": "!yeah",
+    "group": "Customization"
+  }
 }
