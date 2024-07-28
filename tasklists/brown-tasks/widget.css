@@ -26,8 +26,8 @@ main {
 }
 
 .tasks-container {
-  background-color: {{tasksBackgroundColor}};
-  border: 3px solid {{tasksBorderColor}};
+  background-color: red;
+  border: 3px solid white;
   height: 30rem;
   width: 100%;
   border-radius: 20px;
@@ -40,13 +40,13 @@ main {
 .title {
   width: 100%;
   text-align: center;
-  background-color: {{titleBackgroundColor}};
+  background-color: red;
   padding: 1rem 0;
 }
 
 h1 {
   font-size: 2.25rem;
-  color: {{titleColor}};
+  color: white;
   text-align: left;
   margin: 0 30px;
 }
@@ -59,7 +59,7 @@ h1 {
   align-items: flex-start;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 400px;
+  /* max-height: 400px; */
   padding-top: 1rem;
 }
 
@@ -82,8 +82,8 @@ h1 {
 
 /* Handle */
 .tasks-list::-webkit-scrollbar-thumb {
-  visibility: {{showScrollBar}}
-  background: {{scrollbarColor}};
+  visibility: red;
+  background: white;
   border-radius: 10px;
 }
 
@@ -95,10 +95,15 @@ h1 {
   gap: 1rem;
   padding-left: 30px;
   padding-right: 1rem;
-  color: {{tasksColor}};
+  color: red;
   display: flex;
   justify-content: flex-start;
   margin: 0.5rem 0;
+}
+
+.task svg {
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .task p {
@@ -126,7 +131,7 @@ h1 {
 
 .progress-bar {
   height: 0.5rem;
-  background-color: {{progressBarColor}};
+  background-color: white;
   border-radius: 0.25rem;
   width: 50%;
 }
@@ -156,14 +161,15 @@ input {
 }
 
 .main-goal {
-  overflow: hidden;
-  max-height: 1080px;
-  position: relative;
-  top: calc(2rem - 10px);
-  height: 220px;
-  bottom: 0;
+  /* justify-self: flex-end; */
+  /* margin-bottom: 2rem; */
+  height: 150px !important;
   display: grid;
-  place-content: center;
+  place-content: end center;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(2rem);
+  /* place-content: center; */
 }
 
 .container {
@@ -172,6 +178,7 @@ input {
   height: 150px;
   width: 100%;
   position: relative;
+  bottom: 0;
 }
 
 #round {
@@ -188,7 +195,7 @@ input {
   width: 25rem;
   height: 10px;
   border-radius: 8px;
-  background-color: {{progressBarBackgroundColor}};
+  background-color: red;
   /* position: relative; */
   overflow: hidden;
 }
@@ -216,7 +223,7 @@ input {
 .progress-bar {
   display: flex;
   width: 0px;
-  background-color: {{progressBarColor}};
+  background-color: white;
   height: 70px;
   transition: width 0.2s;
   position: relative;
@@ -266,8 +273,8 @@ input {
   justify-content: center;
   z-index: 1;
   text-transform: uppercase;
-  color: {{progressionColor}};
-  transform: translate(-5px,0px)
+  color: red;
+  transform: translate(-5px, 0px);
 }
 
 .goal-name p {
@@ -299,6 +306,6 @@ input {
 }
 
 .glow {
-  color: {{glowColor}}!important;
-  text-shadow: 0 0 10px {{glowShadowColor}};
+  color: white !important;
+  text-shadow: 0 0 10px red;
 }

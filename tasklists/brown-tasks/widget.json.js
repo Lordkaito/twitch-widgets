@@ -10,7 +10,8 @@ let fieldData = {
     group: "Customization",
   },
   title: { type: "text", label: "Task list title", value: "Test task list", group: "Customization" },
-  width: { type: "number", label: "Width:", value: 50, group: "Customization" },
+  width: { type: "number", label: "Width:", value: 30, group: "Customization" },
+  height: { type: "number", label: "Height:", value: 70, group: "Customization" },
   pointsTitle: { type: "text", label: "Glow title:", value: "Lurk", group: "Customization" },
   glowColor: { type: "colorpicker", label: "Glow color:", value: "#fef5ec", group: "Customization" },
   glowShadowColor: { type: "colorpicker", label: "Glow shadow color:", value: "#b38cff", group: "Customization" },
@@ -60,6 +61,12 @@ let fieldData = {
     type: "text",
     label: "Remove from command:",
     value: "!modremove",
+    group: "Customization",
+  },
+  usersBlackList: {
+    type: "text",
+    label: "Users blacklist (separated by comma)",
+    value: "",
     group: "Customization",
   },
   givePowerToMods: {

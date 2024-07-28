@@ -11,6 +11,8 @@ let widgetApiData = {}
 let tasks = []
 let glowedUsers = []
 let channel
+let autoScroll = false
+let autoScrollTime = 0
 
 const taskList = document.querySelector(".tasks-list")
 const allInvisible = taskList.querySelectorAll(".invisible")
@@ -29,16 +31,16 @@ const goalImg = document.querySelector(".img-container img")
 const randomId = () => Math.random().toString(36).substr(2, 9)
 
 const getApiData = async () => {
-  let data = await SE_API.store.get("beniartsCustomWidgetTaskListFirst")
-  if (data === null) {
-    // tasks = defaultApiData
-    widgetApiData = defaultWidgetApiData
-  } else {
-    widgetApiData = data
-    tasks = widgetApiData.tasks
-  }
+  // let data = await SE_API.store.get("beniartsCustomWidgetTaskListFirst")
+  // if (data === null) {
+  //   // tasks = defaultApiData
+  //   widgetApiData = defaultWidgetApiData
+  // } else {
+  //   widgetApiData = data
+  //   tasks = widgetApiData.tasks
+  // }
 
-  // widgetApiData = defaultWidgetApiData
+  widgetApiData = defaultWidgetApiData
 }
 
 const saveTask = task => {
@@ -52,7 +54,7 @@ const saveTask = task => {
     }
     tasks = tasks.map(t => (t.id === task.id ? taskToSave : t))
     widgetApiData.tasks = tasks
-    SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
+    // SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
     return
   }
   const taskToSave = {
@@ -65,7 +67,7 @@ const saveTask = task => {
   tasks.push(taskToSave)
   widgetApiData.tasks = tasks
 
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const removeTaskFromList = (id, username) => {
@@ -79,7 +81,7 @@ const removeTaskFromList = (id, username) => {
 const deleteTask = (id, username) => {
   const removedTask = tasks.filter(task => !(task.id === id && task.username === username))
   widgetApiData.tasks = removedTask
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", removedTask)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", removedTask)
 }
 
 const addTaskToList = task => {
@@ -100,7 +102,7 @@ const addTaskToList = task => {
         ? fieldData.completedTasksColor
         : fieldData.tasksColor
       : themeColors[fieldData.theme]
-  const taskItem = `
+  const regularTaskItem = `
   <div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
     <div class="task">
       <svg class="${
@@ -118,9 +120,31 @@ const addTaskToList = task => {
       </p>
     </div>
   </div>`
-  const taskList = document.querySelector(".tasks-list")
 
-  taskList.innerHTML += taskItem
+  const streamerOnlyTaskItem = `
+	<div class="flex-wrap" id=${task.id} ${task.completed ? "low-opacity" : ""}>
+    <div class="task">
+      <svg class="${
+        task.completed ? "completed" : ""
+      } xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+        stroke="${colorToShow}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 11l3 3l8 -8" class="${task.completed ? "" : "invisible"}"/>
+        <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+      </svg>
+      <p class="task-title ${task.completed ? "completed" : ""}" style="color: ${colorToShow}">
+        <span>${task.task.toLowerCase()}</span>
+      </p>
+    </div>
+  </div>
+`
+  const taskList = document.querySelector(".tasks-list")
+  if (fieldData.streamerWidget === "true") {
+    taskList.innerHTML += streamerOnlyTaskItem
+  } else {
+    taskList.innerHTML += regularTaskItem
+  }
   taskList.scrollTo({
     top: taskList.scrollHeight,
     behavior: "smooth",
@@ -142,6 +166,10 @@ const getTask = (task, username) => {
   return tasks.find(item => item.task === task && item.username === username && !item.completed)
 }
 
+const isSameCommand = (userCommand, fieldCommand) => {
+  return userCommand.toLowerCase() === fieldCommand.toLowerCase()
+}
+
 const checkForCommand = event => {
   if (!event.renderedText) return
   const addTaskCommand = fieldData.command
@@ -150,7 +178,11 @@ const checkForCommand = event => {
   const scrollUpCommand = fieldData.scrollUpCommand
   const scrollDownCommand = fieldData.scrollDownCommand
   const removeFromCommand = fieldData.removeFromCommand
-  if (event.renderedText.startsWith(addTaskCommand)) {
+  const completeAllTasksForUserCommand = fieldData.completeAllTasksForUserCommand
+
+  const command = event.renderedText.split(" ")[0]
+  const taskArgs = event.renderedText.split(" ").slice(1).join(" ")
+  if (isSameCommand(command, addTaskCommand)) {
     const args = {
       task: event.renderedText.split(" ").slice(1).join(" "),
       username: event.data.displayName,
@@ -162,7 +194,7 @@ const checkForCommand = event => {
     return args
   }
 
-  if (event.renderedText.startsWith(removeTaskCommand)) {
+  if (isSameCommand(command, removeTaskCommand)) {
     const task = tasks.find(
       task => task.username === event.data.displayName && task.task === event.renderedText.split(" ").slice(1).join(" ")
     )
@@ -174,7 +206,7 @@ const checkForCommand = event => {
     return args
   }
 
-  if (event.renderedText.startsWith(removeFromCommand)) {
+  if (isSameCommand(command, removeFromCommand)) {
     const splitTask = event.renderedText.split(" ")
     const userToRemoveFrom = splitTask[1]
     const taskText = splitTask[2]
@@ -188,12 +220,10 @@ const checkForCommand = event => {
     return args
   }
 
-  if (event.renderedText.startsWith(completeTaskCommand)) {
+  if (isSameCommand(command, completeTaskCommand)) {
     const task = tasks.find(
       task => task.username === event.data.displayName && task.task === event.renderedText.split(" ").slice(1).join(" ")
     )
-    const taskToFind = event.renderedText.split(" ").slice(1).join(" ")
-    const firstIncompleteTask = getTask(taskToFind, event.data.displayName)
 
     const args = {
       streamerTask: event.isTest,
@@ -206,12 +236,38 @@ const checkForCommand = event => {
     return args
   }
 
-  if (event.renderedText.startsWith(scrollUpCommand)) {
+  if (isSameCommand(command, completeAllTasksForUserCommand)) {
+    console.log("asdfasdf")
+    const user = event.data.displayName
+    const userTasks = tasks.filter(task => task.username === user && !task.completed)
+    let args = {
+      command: completeAllTasksForUserCommand,
+      tasks: [],
+    }
+    console.log(user, userTasks, args)
+
+    userTasks.map(task => {
+      args.tasks.push({
+        streamerTask: event.isTest,
+        id: task.id,
+        command: completeTaskCommand,
+        completed: true,
+        task: task.task,
+        username: task.username,
+      })
+    })
+    console.log(args)
+    return args
+  }
+
+  if (isSameCommand(command, scrollUpCommand)) {
+    if (autoScroll) return
     smoothScroll(document.querySelector(".tasks-list"), 0, 5000)
     return
   }
 
-  if (event.renderedText.startsWith(scrollDownCommand)) {
+  if (isSameCommand(command, scrollDownCommand)) {
+    if (autoScroll) return
     smoothScroll(document.querySelector(".tasks-list"), document.querySelector(".tasks-list").scrollHeight, 5000)
     return
   }
@@ -226,7 +282,7 @@ const checkTimeForUserGlow = () => {
   // remove from widgetApiData.glowedUsers all the users that have been glowed for more than 24 hours
   const usersToGlow = widgetApiData.glowedUsers.filter(user => currentDate - user.date < millisecondsIn24Hours)
   widgetApiData.glowedUsers = usersToGlow
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 window.addEventListener("onWidgetLoad", async obj => {
@@ -234,14 +290,24 @@ window.addEventListener("onWidgetLoad", async obj => {
   streamerName = obj.detail.fieldData.username
   title.textContent = obj.detail.fieldData.title?.toUpperCase() ?? "Task List".toUpperCase()
   const width = obj.detail.fieldData.width
+  const height = obj.detail.fieldData.height
   tasksContainer.style.width = `${width ?? 30}rem`
+  tasksContainer.style.height = `${height ?? 20}rem`
   mainGoal.style.width = `${width}rem`
+  if (height > 40) {
+    mainGoal.style.marginBottom = "0"
+  } else {
+    mainGoal.style.marginBottom = "2rem"
+  }
   // container.style.width = `${ninetyPercent - 2}rem`
   round.style.width = `${width}rem`
   progressBarContainer.style.width = `${width - 6.5}rem`
+  // progressBarContainer.style.height = `${height - 6.5}rem`
   await getApiData()
   tasks = widgetApiData.tasks ?? []
   fieldData = obj.detail.fieldData
+  autoScroll = fieldData.autoScroll === "true"
+  autoScrollTime = fieldData.autoScrollTime
   glowedUsers = widgetApiData.glowedUsers ?? []
   checkTimeForUserGlow()
   tasks.map(task => addTaskToList(task))
@@ -313,11 +379,46 @@ window.addEventListener("onWidgetLoad", async obj => {
   totalTasks = taskList.childElementCount
   completedTasks = totalTasks - allInvisible.length
   await loadGoal()
+
+  if (autoScroll) {
+    const taskList = document.querySelector(".tasks-list")
+
+    const cycleScroll = () => {
+      // if (!autoScrollActive) return
+      smoothScroll(taskList, taskList.scrollHeight, autoScrollTime * 1000)
+      console.log("scrolling down")
+
+      setTimeout(() => {
+        console.log("pause at bottom")
+
+        setTimeout(() => {
+          smoothScroll(taskList, 0, autoScrollTime * 1000)
+          console.log("scrolling up")
+
+          setTimeout(() => {
+            console.log("pause at top")
+
+            setTimeout(() => {
+              cycleScroll()
+            }, autoScrollTime * 1000)
+          }, autoScrollTime * 1000)
+        }, autoScrollTime * 1000)
+      }, autoScrollTime * 1000)
+    }
+
+    cycleScroll()
+  }
 })
 
-// const isStreamer = event => {
-//   return event.data?.displayName === event.data?.channel ?? false
-// }
+const blacklisted = name => {
+  let username = name.toLowerCase().trim()
+  let blacklist = []
+  let blackListFieldData = fieldData.usersBlackList.split(",")
+  blackListFieldData.forEach(nick => {
+    blacklist.push(nick.toLowerCase().trim())
+  })
+  return blacklist.includes(username)
+}
 
 window.addEventListener("onEventReceived", async obj => {
   let hasPower = false
@@ -327,9 +428,12 @@ window.addEventListener("onEventReceived", async obj => {
     return
   }
 
-  let { event } = obj.detail
+  let { event, listener } = obj.detail
+  if (listener === "message") {
+    let isBlackListed = blacklisted(event.data.displayName)
+    if (isBlackListed) return
+  }
   const isMod = event.data?.tags?.mod === "1" ?? false
-  console.log(event, channel, "event")
   let isStreamer
   if (event.type === "channelPoints") {
     isStreamer = event.data.username === channel
@@ -343,9 +447,9 @@ window.addEventListener("onEventReceived", async obj => {
   if (event.type === "channelPoints") {
     redeemChannelPoints(event)
     return
-    
   }
 
+  // this is a single item unless the user wants to delete all tasks, in that case it's an array of items
   const task = checkForCommand(event)
   if (!task || task.task === "") return
   let success = false
@@ -358,6 +462,13 @@ window.addEventListener("onEventReceived", async obj => {
     case fieldData.completeCommand:
       completeTask(task)
       saveTask(task)
+      success = true
+      break
+    case fieldData.completeAllTasksForUserCommand:
+      task.tasks.map(t => {
+        completeTask(t)
+        saveTask(t)
+      })
       success = true
       break
     case fieldData.removeCommand:
@@ -377,7 +488,7 @@ window.addEventListener("onEventReceived", async obj => {
 })
 
 const clearApiData = () => {
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", defaultWidgetApiData)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", defaultWidgetApiData)
   window.location.reload()
 }
 function stringToArray(string = "", separator = ",") {
@@ -398,7 +509,6 @@ const getStep = (container, objective) => {
 const loadGoal = async () => {
   progression.textContent = `${completedTasks ?? 0}/${totalTasks ?? 0} DONE`
   progressBar.style.width = `${completedTasks * getStep(progressContainer, totalTasks)}px`
-  console.log(completedTasks, totalTasks, "step")
   imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 28}px`
   if (completedTasks === totalTasks) {
     imgGoal.style.left = `${completedTasks * getStep(progressContainer, totalTasks) - 40}px`
@@ -417,13 +527,12 @@ const updateGoal = step => {
 const saveGoalData = async () => {
   widgetApiData.completedTasks = completedTasks
   widgetApiData.totalTasks = totalTasks
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const saveGlowedUsers = async () => {
   widgetApiData.glowedUsers = glowedUsers
-  console.log(widgetApiData, "widgetApiData", glowedUsers, "saving")
-  SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
+  // SE_API.store.set("beniartsCustomWidgetTaskListFirst", widgetApiData)
 }
 
 const redeemChannelPoints = async event => {
@@ -434,7 +543,6 @@ const redeemChannelPoints = async event => {
     }
     glowedUsers.push(user)
     const task = tasks.filter(task => task.username === user.username)
-    console.log(glowedUsers, "glowedUsers")
     glowUser(task)
     await saveGlowedUsers()
   }
