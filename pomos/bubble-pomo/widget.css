@@ -72,11 +72,13 @@
   gap: 2rem;
   font-weight: 600;
   color: {{objectiveTextColor}};
-  width: 100%;
+  width: 200px;
 }
 
 .objective-heart span {
-	margin-left: 5rem;
+	/* margin-left: 5rem; */
+  position: absolute;
+  right: 4rem;
 }
 
 .objective-heart p {
