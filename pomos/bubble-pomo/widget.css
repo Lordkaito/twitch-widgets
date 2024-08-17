@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.main {
+  height: 100%;
+  display: grid;
+  place-content: center;
+  font-family: "Fredoka", sans-serif;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+}
+.widget {
+  width: 800px;
+  height: 1000px;
+}
+
+.pomo-container {
+  transform: scale(1);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 350px;
+  width: 250px;
+  font-weight: bold;
+  color: {{countdownColor}};
+  font-size: 3rem;
+  background: url("https://i.ibb.co/LvCHdDs/vasograndelila.png") no-repeat center;
+  background-size: contain;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 7rem;
+}
+
+.title-counter {
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  gap: 2rem;
+  font-weight: 600;
+}
+
+.pomo-counter p {
+    font-size: 3rem;
+    padding: 1rem 0;
+    color: {{pomoNameColor}};
+  }
+
+.pomo-counter span {
+    font-size: 3rem;
+    padding: 1rem 0;
+    color: {{pomoNumbersColor}};
+  }
+
+.counter-separator {
+  width: 300px;
+  height: 3px;
+  background-color: {{pomoCounterLineColor}};
+  border-radius: 50px;
+}
+
+.objective-heart {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-weight: 600;
+  color: {{objectiveTextColor}};
+  width: 200px;
+}
+
+.objective-heart span {
+	/* margin-left: 5rem; */
+  position: absolute;
+  right: 4rem;
+}
+
+.objective-heart p {
+	font-size: 3rem;
+    padding: 1rem 0;
+}
+
+.pomo-counter {
+  transform: scale(0.7) translate(-100px, 0);
+  width: 400px;
+  height: 200px;
+  display: grid;
+  place-content: center;
+  background-color: {{pomoCounterBackgroundColor}};
+  border-radius: 70px;
+  border: 4px solid {{pomoCounterBorderColor}};
+  margin-top: 4rem;
+}
+
+.main-cont {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: {{circleColor}};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  font-weight: 600;
+}
+
+.circle-1 {
+  position: absolute;
+  bottom: 3.5rem;
+  left: 5.9rem;
+  visibility: hidden;
+}
+
+.circle-2 {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 5.9rem;
+  visibility: hidden;
+}
+
+.circle-3 {
+  position: absolute;
+  bottom: 5.5rem;
+  left: 4.7rem;
+  visibility: hidden;
+}
+
+.circle-4 {
+  position: absolute;
+  bottom: 5.5rem;
+  right: 4.7rem;
+  visibility: hidden;
+}
+
+.circle-5 {
+  position: absolute;
+  bottom: 5.5rem;
+  left: 7rem;
+  visibility: hidden;
+}
+
+#timer {
+  text-shadow: 0 0 10px {{pomoShadowColor}};
+}
+
+.svg-container svg {
+  color: {{heartColor}};
+  height: 50px;
+  width: 50px;
+}
