@@ -1,4 +1,50 @@
 {
+  "svg": {
+    "type": "dropdown",
+    "label": "SVG",
+    "value": "star",
+    "options": { "star": "Star", "heart": "Heart", "flower": "Flower", "moon": "Moon" },
+    "group": "Customization"
+  },
+  "color": { "type": "colorpicker", "label": "Color", "value": "#df9bf0", "group": "Customization" },
+  "theme": {
+    "type": "dropdown",
+    "label": "Theme",
+    "value": "dark",
+    "group": "Customization",
+    "options": { "light": "Light", "dark": "Dark" }
+  },
+  "rainbowMode": { "type": "checkbox", "label": "Rainbow Mode", "value": false, "group": "Customization" },
+  "animationTime": { "type": "number", "label": "Animation Time", "value": 2000, "group": "Customization" },
+  "animation": {
+    "type": "dropdown",
+    "label": "Animation",
+    "value": "random",
+    "options": { "random": "Random pop-in", "fromBottom": "From bottom" },
+    "group": "Customization"
+  },
+  "redeemMethod": {
+    "type": "dropdown",
+    "label": "Redeem method",
+    "value": "channelPoints",
+    "options": {
+      "channelPoints": "Channel points",
+      "command": "Command"
+    },
+    "group": "Customization"
+  },
+  "command": {
+    "type": "text",
+    "label": "Redeem command",
+    "value": "!yeah",
+    "group": "Customization"
+  },
+  "channelPointsName": {
+    "type": "text",
+    "label": "Channel points name",
+    "value": "!yeah",
+    "group": "Customization"
+  }
   "hoursLeft": { "type": "number", "value": 0, "label": "Starting hours" },
   "minutesLeft": { "type": "number", "value": 0, "label": "Starting minutes" },
   "secondsLeft": { "type": "number", "value": 2, "label": "Starting seconds" },
