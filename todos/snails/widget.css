@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+}
+
+.widget-container {
+  display: flex;
+}
+
+.card1 {
+  border: 2px rgba(65, 31, 0, 0.726) solid;
+  position: relative;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 238, 214);
+}
+
+.title-container {
+  padding: 0 20px;
+  background-color: rgb(228, 176, 109);
+  border-radius: 14px 14px 0 0;
+}
+
+.title-container h2 {
+  margin: 8px 0;
+}
+
+.tasks-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 20px;
+}
+
+.tasks-container label {
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+}
+
+.tasks-container input {
+  margin-bottom: 0;
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.card1 h3 {
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+
+.progress-bar {
+  position: relative;
+  bottom: 0;
+  align-self: center;
+  margin-bottom: 10px;
+  width: 80%;
+  border-radius: 20px;
+  background-color: rgb(228, 176, 109);
+  height: 8px;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  border-radius: 20px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+  background-color: rgb(228, 144, 35);
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: -230%;
+  left: 20%;
+  height: 240%;
+  width: 20px; /* Ancho de la imagen */
+  background-image: url('assets/snail.png');
+  background-size: cover; /* Esto hace que la imagen se ajuste al tamaño del contenedor */
+}
